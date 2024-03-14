@@ -1,0 +1,72 @@
+#container {
+    color: #47D068;
+    position: relative;
+    padding-bottom: 10px;
+    font-family: Inconsolata,monospace;
+    height: 90%;
+    font-size: 14px;
+}
+#commandheader{
+    height: 10%;
+    position: relative; color: #A280FF; font-size: 16px; font-family: Montserrat; font-weight: 500; letter-spacing: 0.80px; word-wrap: break-word;
+    vertical-align: middle;
+    line-height: 100%;
+    background-color:#101010a8;
+}
+#containerPrompt::-webkit-scrollbar{
+    display: none;
+}
+#containerPrompt::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+#container output {
+    color: aliceblue;
+    clear: both;
+    width: 100%;
+}
+#prompt {
+    float: left;
+    color: #47D068;
+    margin-right: 7px;
+    align-self: baseline;
+    align-items: baseline;
+}
+#promptBox{
+    display: flex;
+    flex-direction: row;
+    vertical-align: text-top;
+    overflow: hidden;
+}
+#cmdline {
+    color: white;
+    float: left;
+    margin: 0;
+    width: 100%;
+    font: inherit;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: inherit;  
+}
+#containerPrompt{
+    height: 100%;
+    overflow-y: scroll;
+}
+.cmd-output{
+    white-space: pre-line;
+}
+.cmd-output-error{
+    color: red;
+}
+#output .cmd-output .filesystem-ls span {
+    margin-right: 2%;
+}
+#output .cmd-output .filesystem-ls-l span {
+    display: block;
+
+}
+#output .cmd-output div .is-dir {
+    color: rgb(0, 82, 255);
+}

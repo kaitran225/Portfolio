@@ -1,0 +1,110 @@
+#bg {
+  opacity: 0.1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-image: url("../images/background.png");
+  background-repeat: no-repeat;
+  background-blend-mode: darken;
+}
+.base {
+  width: 1920px;
+  height: 1080px;
+  padding-top: 10px;
+  position: absolute;
+  display: inline-flex;
+}
+.container {
+  position: relative;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  background: #ffffff15;
+}
+.CC {
+  display: inline;
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 740px;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+.DD{
+  float: left;
+  display: inline;
+  position: relative;
+  width: 360px;
+  height: 100%;
+  margin-right: 20px;
+}
+.FF{
+  float: left;
+  display: inline;
+  position: relative;
+  width: 740px; 
+  height: 100%;
+}
+.group_I {
+  width: 100%;
+  position: relative;
+  display: inline-flex;
+}
+.group_I .c_I {
+  display: inline;
+}
+#c {
+  width: 360px;
+  height: 180px;
+  color: aliceblue;
+}
+#j {
+  color: aliceblue;
+  width: 360px;
+  height: 360px;
+}
+.group_I .c_II {
+  display: inline;
+}
+#g {
+  color: aliceblue;
+  width: 360px;
+  height: 180px;
+}
+
+#h {
+  color: aliceblue;
+  width: 360px;
+  height: 360px;
+}
+#music {
+  width: 740px;
+  height: 160px;
+  color: aliceblue;
+}
+#commandPrompt {
+  width: 740px;
+  height: 280px;
+}
+
+#d {
+  width: 360px;
+  height: 360px;
+  color: aliceblue;
+}
+#f {
+  color: aliceblue;
+  width: 360px;
+  height: 520px;
+}
+
+#i {
+  color: aliceblue;
+  width: 360px;
+  height: 120px;
+}
+#chatbox {
+  width: 740px;
+  height: 1040px;
+}
