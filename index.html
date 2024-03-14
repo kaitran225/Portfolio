@@ -1,1 +1,99 @@
-<div>Hello<div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=2">
+  <title>Cybria Chat UI</title>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/load.js"></script>
+  <script src="./js/script.js"></script>
+  <script src="./js/terminal.js"></script>
+  <script>
+    $(document).ready(function () {
+      var text = [
+        "batch_size = int(args.batch_size)",
+        "block_size = 128",
+        "max_iters = 200",
+        "learning_rate = 3e-4",
+        "eval_iters = 100",
+      ];
+      var spec = document.getElementsByClassName('specs');
+      function generate() {
+        for (let i = 0; i < text.length; i++) {
+          let txt = document.createElement("div").className("item");
+        }
+      }
+
+    })
+  </script>
+</head>
+
+<body>
+  <div id="bg"></div>
+  <div class="base">
+    <div class="CC">
+      <div class="group_I">
+        <div class="c_I">
+          <div id="j" class="container">
+            <div class="logo">
+              <video id="logoVideoSquare" autoplay="true" loop="true" muted="true">
+                <source src="images\Logo_Square.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div id="c" class="container">c</div> 
+        </div>
+        <div class="c_II">
+          <div id="g" class="container">g</div>
+          <div id="h" class="container">h</div>
+        </div>
+      </div>
+      <div id="music" class="container">
+        <iframe style="border-radius:12px"
+          src="https://open.spotify.com/embed/album/3a6PHMBJmFYQtjkFU7hP6e?utm_source=generator" width="100%"
+          loop="true"
+          height="152" frameborder="0" allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div id="commandPrompt" class="container">
+        <div id="commandheader">Command Prompt</div>
+        <div id="container">
+          <div id="containerPrompt">
+            <output id="output">
+            </output>
+            <div id="promptBox">
+              <div id="prompt">
+                $Project_Cybriaz&gt;
+              </div>
+              <input id="cmdline" autofocus="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="DD">
+      <div id="d" class="container">d 
+      </div>
+      <div id="f" class="container">f</div>
+      <div id="i" class="container">i</div>
+    </div>
+    <div class="FF">
+      <div id="chatbox" class="container">
+        <div class="conversation">
+          <div class="box" id="messages">
+
+          </div>
+          <div class="user-input">
+            <div class="box input-box">
+              <textarea id="message-input" placeholder="Ask a question" cols="30" rows="10" spellcheck="false"></textarea>
+            </div>
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
