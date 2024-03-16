@@ -1,0 +1,9 @@
+#imagesDisplay{
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    }
+#imagesDisplay iframe{
+    height:  100%;
+    width: 100%;
+}

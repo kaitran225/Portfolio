@@ -3,6 +3,7 @@ const cssFiles = [
   "./css/global.css",
   "./css/layout.css",
   "./css/slider.css",
+  "./css/iDispaly.css",
   "./css/logo.css",
   "./css/message.css",
   "./css/terminal.css",
