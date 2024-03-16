@@ -4,7 +4,7 @@
     padding-bottom: 10px;
     font-family: Inconsolata,monospace;
     height: 90%;
-    font-size: 14px;
+    font-size: 16px;
 }
 #commandheader{
     height: 10%;
@@ -56,6 +56,14 @@
 }
 .cmd-output{
     white-space: pre-line;
+}
+.cmd-output-green{
+    white-space: pre-line;
+    color:#47D068;
+}
+#output a{
+    white-space: pre-line;
+    color:#47D068;
 }
 .cmd-output-error{
     color: red;

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=2">
   <title>Cybria Chat UI</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script scr="./js/jquery-3.1.0.min.js"></script>
   <script src="./js/load.js"></script>
   <script src="./js/script.js"></script>
   <script src="./js/terminal.js"></script>
@@ -36,9 +36,13 @@
         <div class="c_I">
           <div id="j" class="container">
             <div class="logo">
-              <video id="logoVideoSquare" autoplay="true" loop="true" muted="true">
-                <source src="images\Logo_Square.mp4" type="video/mp4">
-              </video>
+              <iframe width="315" height="315"
+              
+              src="https://youtube.com/embed/R8OGWxJgNsY?controls=0&autoplay=1&mute=1&loop=1"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
             </div>
           </div>
           <div id="c" class="container">c</div> 
@@ -60,6 +64,12 @@
         <div id="container">
           <div id="containerPrompt">
             <output id="output">
+              <div class="cmd-output-green">&gt; This is just a temporary portfolio website.</div>
+              <div class="cmd-output-green">&gt; The official one is still under developing.</div>
+              <div class="cmd-output-green">&gt; Thank you for visting our website</div>
+              <div class="cmd-output-green">&gt; For further infomation please contact.</div>
+              <a href="https://www.instagram.com/kaitran.prt">https://www.instagram.com/kaitran.prt</a>
+              <div class="cmd-output-green">&gt;</div>
             </output>
             <div id="promptBox">
               <div id="prompt">
@@ -78,18 +88,15 @@
       <div id="i" class="container">i</div>
     </div>
     <div class="FF">
-      <div id="chatbox" class="container">
-        <div class="conversation">
-          <div class="box" id="messages">
-
-          </div>
-          <div class="user-input">
-            <div class="box input-box">
-              <textarea id="message-input" placeholder="Ask a question" cols="30" rows="10" spellcheck="false"></textarea>
-            </div>
-          </div>
-        </div>
-        <div>
+      <div id="chatbox" class="container">  
+        <div id="imagesDisplay">
+           <iframe width="630" height="1020"
+            controls=0
+              src="https://youtube.com/embed/dj4cn4-7sos?controls=0&autoplay=1&mute=1&loop=1"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
         </div>
       </div>
     </div>
