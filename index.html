@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=2">
   <title>Cybria Chat UI</title>
-  <script scr="./js/jquery-3.1.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js" async></script>
   <script src="./js/load.js"></script>
+  <script src="./js/slider.js"></script>
   <script src="./js/script.js"></script>
   <script src="./js/terminal.js"></script>
   <script>
@@ -36,27 +41,27 @@
         <div class="c_I">
           <div id="j" class="container">
             <div class="logo">
-              <iframe width="315" height="315"
-              
-              src="https://youtube.com/embed/R8OGWxJgNsY?controls=0&autoplay=1&mute=1&loop=1"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
+              <iframe width="325" height="325"
+                src="https://youtube.com/embed/R8OGWxJgNsY?controls=0&autoplay=1&mute=1&loop=1&iv_load_policy=3&playlist=R8OGWxJgNsY"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
             </div>
           </div>
-          <div id="c" class="container">c</div> 
+          <div id="c" class="container">c</div>
         </div>
         <div class="c_II">
           <div id="g" class="container">g</div>
-          <div id="h" class="container">h</div>
+          <div id="h" class="container">
+            <video loop="true" autoplay="true">
+              <source src="portfolio\Calantha0001-0259.mp4" type="video/mp4">
+          </div>
         </div>
       </div>
       <div id="music" class="container">
         <iframe style="border-radius:12px"
-          src="https://open.spotify.com/embed/album/3a6PHMBJmFYQtjkFU7hP6e?utm_source=generator" width="100%"
-          loop="true"
-          height="152" frameborder="0" allowfullscreen=""
+          src="https://open.spotify.com/embed/track/0OIed6UFpfT2nW4BffD7Js?utm_source=generator&theme=0" width="100%"
+          height="170" frameBorder="0" allowfullscreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
       <div id="commandPrompt" class="container">
@@ -82,23 +87,13 @@
       </div>
     </div>
     <div class="DD">
-      <div id="d" class="container">d 
+      <div id="d" class="container">d
       </div>
       <div id="f" class="container">f</div>
       <div id="i" class="container">i</div>
     </div>
     <div class="FF">
-      <div id="chatbox" class="container">  
-        <div id="imagesDisplay">
-           <iframe width="630" height="1020"
-            controls=0
-              src="https://youtube.com/embed/dj4cn4-7sos?controls=0&autoplay=1&mute=1&loop=1"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-        </div>
-      </div>
+      <div class="imgHolder"></div>
     </div>
   </div>
 </body>

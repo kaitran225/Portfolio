@@ -3,11 +3,12 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  background-size: contain;
+  background-size:cover;
   background-image: url("../images/background.png");
   background-repeat: no-repeat;
   background-blend-mode: darken;
 }
+
 .base {
   width: 1920px;
   height: 1080px;
@@ -15,6 +16,7 @@
   position: absolute;
   display: inline-flex;
 }
+
 .container {
   position: relative;
   float: left;
@@ -22,6 +24,7 @@
   margin-right: 20px;
   background: #ffffff15;
 }
+
 .CC {
   display: inline;
   position: relative;
@@ -31,7 +34,8 @@
   margin-right: 20px;
   margin-left: 10px;
 }
-.DD{
+
+.DD {
   float: left;
   display: inline;
   position: relative;
@@ -40,33 +44,63 @@
   margin-right: 20px;
 }
 .FF{
+  width: 740px;
+  height: 1040px;
+  position: relative; 
+}
+.FF .imgHolder {
+  top: 0;
+  left: 0;
   float: left;
-  display: inline;
-  position: relative;
-  width: 740px; 
+  display: grid;
+  overflow: scroll;
+  scroll-snap-points-y: repeat();
+  scroll-snap-type: y mandatory;
+  scroll-snap-align: center;
+  scrollbar-width: 0px;
+  position: absolute;
+  width: 100%;
   height: 100%;
+  box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
+}
+
+.FF .imgHolder::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+.imgHolder img {
+  scroll-snap-align: center;
+  position: relative;
+  margin: 20px;
+  width: 100%;
 }
 .group_I {
   width: 100%;
   position: relative;
   display: inline-flex;
 }
+
 .group_I .c_I {
   display: inline;
 }
+
 #c {
   width: 360px;
   height: 180px;
   color: aliceblue;
 }
+
 #j {
   color: aliceblue;
   width: 360px;
   height: 360px;
 }
+
 .group_I .c_II {
   display: inline;
 }
+
 #g {
   color: aliceblue;
   width: 360px;
@@ -78,11 +112,17 @@
   width: 360px;
   height: 360px;
 }
+#h video{
+  height: 100%;
+  width: 100%;
+}
+
 #music {
   width: 740px;
   height: 160px;
   color: aliceblue;
 }
+
 #commandPrompt {
   width: 740px;
   height: 280px;
@@ -93,6 +133,7 @@
   height: 360px;
   color: aliceblue;
 }
+
 #f {
   color: aliceblue;
   width: 360px;
@@ -104,6 +145,7 @@
   width: 360px;
   height: 120px;
 }
+
 #chatbox {
   width: 740px;
   height: 1040px;

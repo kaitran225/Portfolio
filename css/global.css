@@ -27,10 +27,10 @@ body {
   background: none;
 }
 
-ol,
+/* ol,
 ul {
   padding-left: 20px;
-}
+} */
 
 .shown {
   display: flex !important;
