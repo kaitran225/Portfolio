@@ -1,0 +1,9 @@
+For each portfolio category folder, create two placeholder images:
+- placeholder1.jpg
+- placeholder2.jpg
+
+You can either:
+1. Copy existing images from the Portfolio folders (Zena, Slab, Personal, GateWay, Cloud)
+2. Create new placeholder images
+
+The image files should be placed in their respective folders under public/assets/[CategoryName]/ 
