@@ -49,20 +49,6 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     useEffect(() => {
         const loadVanta = async () => {
             try {
-                // Load p5.js first
-                if (!window.p5) {
-                    const script1 = document.createElement('script');
-                    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
-                    script1.crossOrigin = 'anonymous';
-                    document.head.appendChild(script1);
-
-                    await new Promise((resolve, reject) => {
-                        script1.onload = resolve;
-                        script1.onerror = reject;
-                        setTimeout(reject, 10000); // 10s timeout
-                    });
-                }
-
                 // Load Vanta.js topology effect
                 if (!window.VANTA) {
                     const script2 = document.createElement('script');
@@ -610,8 +596,8 @@ const ProjectContainer = styled.div`
     left: 0;
     width: 100% !important;
     height: 100% !important;
-    z-index: -1;
-    pointer-events: none;
+    z-index: -10 !important; /* Further behind */
+    pointer-events: none !important; /* Prevent interaction blocking */
   }
 `;
 
@@ -620,6 +606,7 @@ const ProjectHeader = styled.header`
   background: linear-gradient(135deg, var(--color-black-primary) 0%, var(--color-black-secondary) 50%, var(--color-purple-primary) 100%);
   position: relative;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 5; /* Lower than links but above background */
   
   &::before {
     content: '';
@@ -628,8 +615,8 @@ const ProjectHeader = styled.header`
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 50%, var(--color-purple-primary)25, transparent 50%),
-                radial-gradient(circle at 70% 30%, var(--color-green-primary)20, transparent 40%);
+    background: radial-gradient(circle at 30% 50%, rgba(105, 51, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.20) 0%, transparent 40%);
     opacity: 0.15;
     z-index: 1;
   }
@@ -646,7 +633,7 @@ const BackButton = styled.button`
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-weight: 600;
   position: relative;
-  z-index: 2;
+  z-index: 15; /* Above background overlays */
   overflow: hidden;
   
   &::before {
@@ -663,7 +650,7 @@ const BackButton = styled.button`
   &:hover {
     background: var(--color-purple-primary);
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 20px var(--color-purple-primary)30;
+    box-shadow: 0 10px 20px rgba(105, 51, 255, 0.30);
     border-color: var(--color-green-primary);
   }
   
@@ -680,6 +667,8 @@ const BackButton = styled.button`
 const HeaderContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 10; /* Above background overlays */
 `;
 
 const ProjectTitle = styled.h1`
@@ -768,6 +757,8 @@ const ProjectLinks = styled.div`
   gap: 20px;
   margin-bottom: 30px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 15; /* Above other elements */
   
   & > * {
     animation: slideInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -801,45 +792,29 @@ const ProjectLink = styled.a`
   position: relative;
   overflow: hidden;
   display: inline-block;
+  z-index: 10; /* Ensure link is above other elements */
   
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    width: 0;
+    left: -100%;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
-    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 0;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: inherit;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
     z-index: 1;
-    transition: opacity 0.3s ease;
-  }
-  
-  & > * {
-    position: relative;
-    z-index: 2;
   }
   
   &:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 25px var(--color-purple-primary)40;
+    box-shadow: 0 15px 25px rgba(105, 51, 255, 0.40);
     border-color: var(--color-green-primary);
+    background: var(--color-purple-primary);
   }
   
   &:hover::before {
-    width: 100%;
-  }
-  
-  &:hover::after {
-    opacity: 0.8;
+    left: 100%;
   }
   
   &:active {
@@ -891,6 +866,7 @@ const TechTag = styled.span`
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  z-index: 5; /* Ensure it's clickable if needed */
   
   &::before {
     content: '';
@@ -899,7 +875,7 @@ const TechTag = styled.span`
     left: 50%;
     width: 0;
     height: 0;
-    background: radial-gradient(circle, var(--color-green-primary)30, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.30) 0%, transparent 70%);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: translate(-50%, -50%);
     border-radius: 50%;
@@ -908,7 +884,7 @@ const TechTag = styled.span`
   &:hover {
     background: var(--color-purple-primary);
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 5px 15px var(--color-purple-primary)40;
+    box-shadow: 0 5px 15px rgba(105, 51, 255, 0.40);
     border-color: var(--color-green-primary);
   }
   
@@ -1023,18 +999,6 @@ const Tab = styled.button<{ active: boolean }>`
     transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform: translateX(-50%);
-  }
-  
   /* Enhanced click animation */
   &:active {
     transform: translateY(1px) scale(0.98);
@@ -1056,27 +1020,6 @@ const Tab = styled.button<{ active: boolean }>`
   &:hover::before {
     left: 100%;
   }
-  
-  &:hover::after {
-    width: 90%;
-  }
-  
-  /* Enhanced active state with pulsing effect */
-  ${props => props.active && `
-    &::after {
-      width: 100%;
-      animation: tabPulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes tabPulse {
-      0%, 100% {
-        box-shadow: 0 0 5px var(--color-green-primary);
-      }
-      50% {
-        box-shadow: 0 0 20px var(--color-green-primary), 0 0 30px var(--color-green-primary);
-      }
-    }
-  `}
   
   /* Responsive adjustments for sticky state */
   ${TabNavigation}[data-nav="tab-navigation"] & {
@@ -1107,6 +1050,8 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
   min-height: calc(100vh - 200px);
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
   transition: padding-top 0.3s ease;
+  position: relative;
+  z-index: 1; /* Above Vanta background but below content */
 
   ${props => props.$hasSticky && `
     padding-top: 80px; /* Add space for sticky nav */
@@ -1440,7 +1385,7 @@ const FeatureItem = styled.li`
     top: 50%;
     width: 4px;
     height: 0;
-    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+    background: var(--color-green-primary);
     transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: translateY(-50%);
     border-radius: 2px;

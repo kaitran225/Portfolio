@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+
+// Vanta.js topology effect
+declare global {
+  interface Window {
+    VANTA: any;
+    p5: any;
+  }
+}
 
 interface Project {
   id: string;
@@ -13,6 +21,77 @@ interface Project {
 
 const LandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design'>('all');
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
+
+  // Initialize Vanta.js topology background
+  useEffect(() => {
+    const loadVanta = async () => {
+      try {
+        // Load Vanta.js topology effect
+        if (!window.VANTA) {
+          const script2 = document.createElement('script');
+          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
+          script2.crossOrigin = 'anonymous';
+          document.head.appendChild(script2);
+
+          await new Promise((resolve, reject) => {
+            script2.onload = resolve;
+            script2.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
+        // Wait a bit for scripts to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Initialize Vanta effect
+        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          vantaEffect.current = window.VANTA.TOPOLOGY({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x6933ff, // Purple primary
+            backgroundColor: 0x0a0a0a, // Black primary
+            points: 12.00,
+            maxDistance: 25.00,
+            spacing: 18.00,
+            showDots: true
+          });
+        }
+      } catch (error) {
+        console.warn('Failed to load Vanta.js:', error);
+        // Fallback: Create a simple animated background
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+            radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(105, 51, 255, 0.1) 0%, transparent 50%)
+          `;
+        }
+      }
+    };
+
+    // Delay loading to ensure DOM is ready
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (e) {
+          console.warn('Error destroying Vanta effect:', e);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
 
   // Dummy projects - you can replace with real data
   const projects: Project[] = [
@@ -100,9 +179,10 @@ const LandingPage: React.FC = () => {
   const featuredProjects = projects.filter(project => project.featured);
 
   return (
-    <LandingContainer>
+    <LandingContainer ref={vantaRef}>
       {/* Hero Section */}
-      <HeroSection>
+      <ContentBGContainer>
+        <HeroSection>
         <HeroContent>
           <ProfilePicture>
             <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran" />
@@ -315,6 +395,7 @@ const LandingPage: React.FC = () => {
           </ContactLinks>
         </ContactContent>
       </ContactSection>
+      </ContentBGContainer>
     </LandingContainer>
   );
 };
@@ -327,6 +408,17 @@ const LandingContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+  
+  /* Ensure Vanta.js background is behind content */
+  & > canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -10 !important; /* Further behind */
+    pointer-events: none !important; /* Prevent interaction blocking */
+  }
   
   /* Smooth page load animation */
   opacity: 0;
@@ -342,32 +434,13 @@ const LandingContainer = styled.div`
       transform: translateY(0);
     }
   }
-  
-  /* Elegant background pattern */
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(105, 51, 255, 0.05) 0%, transparent 50%);
-    z-index: -1;
-    pointer-events: none;
-    animation: backgroundPulse 8s ease-in-out infinite alternate;
-  }
-  
-  @keyframes backgroundPulse {
-    from {
-      opacity: 0.5;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+`;
+
+const ContentBGContainer = styled.div`
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  min-height: 100vh;
+  position: relative;
+  z-index: 1; /* Above Vanta background but below content */
 `;
 
 const HeroSection = styled.section`
@@ -827,12 +900,14 @@ const ContactLink = styled.a`
   background: transparent;
   border-radius: 25px;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 10; /* Ensure links are clickable */
   
   &:hover {
     background: var(--color-purple-primary);
     color: var(--color-text-primary);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px var(--color-purple-primary)30;
+    box-shadow: 0 10px 20px rgba(105, 51, 255, 0.30);
   }
 `;
 

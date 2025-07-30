@@ -318,9 +318,10 @@ The final identity system includes a custom logotype, comprehensive color palett
       </TabNavigation>
 
       {/* Content Sections */}
-      <ContentContainer $navHeight={isScrolled ? 70 : 0}>
-        <ContentTransition $isTransitioning={isTransitioning}>
-          {activeTab === 'overview' && (
+      <ContentBGContainer $navHeight={isScrolled ? 70 : 0}>
+        <ContentContainer $navHeight={isScrolled ? 70 : 0}>
+          <ContentTransition $isTransitioning={isTransitioning}>
+            {activeTab === 'overview' && (
             <OverviewSection key={`overview-${tabKey}`}>
               <Section>
                 <SectionTitle>Project Overview</SectionTitle>
@@ -499,6 +500,7 @@ The final identity system includes a custom logotype, comprehensive color palett
         )}
         </ContentTransition>
       </ContentContainer>
+      </ContentBGContainer>
     </ProjectContainer>
   );
 };
@@ -529,8 +531,8 @@ const ProjectContainer = styled.div`
     left: 0;
     width: 100% !important;
     height: 100% !important;
-    z-index: -1;
-    pointer-events: none;
+    z-index: -10 !important; /* Further behind */
+    pointer-events: none !important; /* Prevent interaction blocking */
   }
 `;
 
@@ -922,7 +924,7 @@ const Tab = styled.button<{ active: boolean }>`
     transform: translateY(-1px);
   }
   
-  /* Sliver bar shimmer effect */
+  /* Shimmer effect */
   &::before {
     content: '';
     position: absolute;
@@ -961,6 +963,28 @@ const Tab = styled.button<{ active: boolean }>`
         opacity: 1;
       }
     }
+  }
+`;
+
+const ContentBGContainer = styled.div<ContentContainerProps>`
+  margin: 0 auto;
+  padding: 60px 20px;
+  min-height: calc(100vh - 200px);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  transition: padding-top 0.3s ease;
+  position: relative;
+  z-index: 1; /* Above Vanta background but below content */
+
+  ${props => props.$navHeight > 0 && `
+    padding-top: ${props.$navHeight + 20}px;
+  `}
+  
+  @media (max-width: 768px) {
+    padding: 40px 15px;
+    
+    ${props => props.$navHeight > 0 && `
+      padding-top: ${props.$navHeight + 20}px;
+    `}
   }
 `;
 
