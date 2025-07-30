@@ -323,10 +323,51 @@ const LandingPage: React.FC = () => {
 const LandingContainer = styled.div`
   min-height: 100vh;
   width: 100%;
-  background: var(--color-black-primary);
   color: var(--color-text-primary);
   overflow-y: auto;
   overflow-x: hidden;
+  position: relative;
+  
+  /* Smooth page load animation */
+  opacity: 0;
+  animation: pageLoadIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+  
+  @keyframes pageLoadIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Elegant background pattern */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(105, 51, 255, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+    animation: backgroundPulse 8s ease-in-out infinite alternate;
+  }
+  
+  @keyframes backgroundPulse {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 const HeroSection = styled.section`
@@ -335,6 +376,18 @@ const HeroSection = styled.section`
   background: linear-gradient(135deg, var(--color-black-primary) 0%, var(--color-black-secondary) 50%, var(--color-purple-primary) 100%);
   position: relative;
   overflow: hidden;
+  animation: heroSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
+  
+  @keyframes heroSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
   
   &::before {
     content: '';
@@ -367,23 +420,66 @@ const HeroContent = styled.div`
 
 const ProfilePicture = styled.div`
   flex-shrink: 0;
+  animation: profileFloatIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+  
+  @keyframes profileFloatIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.8) rotateY(-15deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotateY(0);
+    }
+  }
   
   img {
     width: 200px;
     height: 200px;
-    border-radius: 20px;  /* Squared with slight rounding */
+    border-radius: 8px;  /* Smaller corner radius */
     object-fit: cover;
     border: 4px solid var(--color-purple-primary);
     box-shadow: 0 10px 30px var(--color-purple-primary)30, 0 0 40px var(--color-green-primary)20;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    
+    &:hover {
+      transform: translateY(-10px) scale(1.05) rotateY(5deg);
+      box-shadow: 0 20px 40px var(--color-purple-primary)40, 0 0 60px var(--color-green-primary)30;
+      border-color: var(--color-green-primary);
+    }
   }
 `;
 
 const HeroText = styled.div`
   flex: 1;
   text-align: left;
+  animation: heroTextSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both;
+  
+  @keyframes heroTextSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
   
   @media (max-width: 768px) {
     text-align: center;
+    
+    @keyframes heroTextSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   }
 `;
 
@@ -395,9 +491,65 @@ const Name = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: nameReveal 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+  position: relative;
+  
+  @keyframes nameReveal {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      background-position: 200% center;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      background-position: 0% center;
+    }
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    animation: underlineGrow 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+    border-radius: 2px;
+  }
+  
+  @keyframes underlineGrow {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100px;
+    }
+  }
   
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    
+    &::after {
+      @keyframes underlineGrow {
+        to {
+          width: 80px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    
+    &::after {
+      @keyframes underlineGrow {
+        to {
+          width: 80px;
+        }
+      }
+    }
   }
 `;
 
@@ -420,6 +572,40 @@ const SkillPills = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  animation: skillPillsStagger 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+  
+  @keyframes skillPillsStagger {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Stagger children animations */
+  & > * {
+    animation: skillPillFloat 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: both;
+  }
+  
+  & > *:nth-child(1) { animation-delay: 1.4s; }
+  & > *:nth-child(2) { animation-delay: 1.5s; }
+  & > *:nth-child(3) { animation-delay: 1.6s; }
+  & > *:nth-child(4) { animation-delay: 1.7s; }
+  
+  @keyframes skillPillFloat {
+    from {
+      opacity: 0;
+      transform: translateY(15px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
   
   @media (max-width: 768px) {
     justify-content: center;
@@ -430,17 +616,47 @@ const SkillPill = styled.span`
   background: var(--color-purple-primary)30;
   backdrop-filter: blur(10px);
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 6px; /* Smaller corner radius */
   font-size: 0.9rem;
   border: 1px solid var(--color-purple-primary);
   color: var(--color-text-primary);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  &:hover {
+    background: var(--color-purple-primary);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 20px var(--color-purple-primary)40;
+    border-color: var(--color-green-primary);
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+  }
 `;
 
 const Section = styled.section`
   padding: 80px 20px;
   max-width: 1200px;
   margin: 0 auto;
-  background: var(--color-black-primary);
 `;
 
 const SectionHeader = styled.h2`
@@ -625,7 +841,6 @@ const TechStackSection = styled.section`
   padding: 80px 20px;
   max-width: 1200px;
   margin: 0 auto;
-  background: var(--color-black-primary);
 `;
 
 const TechStackGrid = styled.div`

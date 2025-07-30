@@ -49,7 +49,7 @@ const getFileIcon = (fileName: string): string => {
   return iconMap[extension || ''] || '📄';
 };
 
-const IDECodePreview: React.FC<CodePreviewProps> = ({ files, height = "500px", theme: initialTheme = 'vs-dark' }) => {
+const IDECodePreview: React.FC<CodePreviewProps> = ({ files, height = "800px", theme: initialTheme = 'vs-dark' }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [theme, setTheme] = useState<'vs-dark' | 'light'>(
     initialTheme === 'dark' ? 'vs-dark' : initialTheme === 'light' ? 'light' : 'vs-dark'

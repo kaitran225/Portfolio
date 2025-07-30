@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import IDECodePreview from './IDECodePreview';
 import MarkdownRenderer from './MarkdownRenderer';
+
+// Vanta.js topology effect
+declare global {
+  interface Window {
+    VANTA: any;
+    THREE: any;
+  }
+}
 
 interface DevProjectProps {
   projectId: string;
@@ -32,6 +40,110 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
+
+  // Initialize Vanta.js topology background
+  useEffect(() => {
+    const loadVanta = async () => {
+      try {
+        // Load Three.js first
+        if (!window.THREE) {
+          const script1 = document.createElement('script');
+          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+          script1.crossOrigin = 'anonymous';
+          document.head.appendChild(script1);
+          
+          await new Promise((resolve, reject) => {
+            script1.onload = resolve;
+            script1.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
+        // Load Vanta.js topology effect
+        if (!window.VANTA) {
+          const script2 = document.createElement('script');
+          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
+          script2.crossOrigin = 'anonymous';
+          document.head.appendChild(script2);
+          
+          await new Promise((resolve, reject) => {
+            script2.onload = resolve;
+            script2.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
+        // Wait a bit for scripts to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Initialize Vanta effect
+        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          vantaEffect.current = window.VANTA.TOPOLOGY({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x6933ff, // Purple primary
+            backgroundColor: 0x0a0a0a, // Black primary
+            points: 12.00,
+            maxDistance: 25.00,
+            spacing: 18.00,
+            showDots: true
+          });
+        }
+      } catch (error) {
+        console.warn('Failed to load Vanta.js:', error);
+        // Fallback: Create a simple animated background
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+            radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(105, 51, 255, 0.1) 0%, transparent 50%)
+          `;
+        }
+      }
+    };
+
+    // Delay loading to ensure DOM is ready
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (e) {
+          console.warn('Error destroying Vanta effect:', e);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
+
+  // Enhanced tab switching with transition
+  const handleTabSwitch = (newTab: 'overview' | 'code' | 'readme' | 'demo') => {
+    if (newTab === activeTab) return;
+    
+    setIsTransitioning(true);
+    
+    // Smooth transition timing
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTabKey(prev => prev + 1); // Force animation restart
+      
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 100);
+    }, 150);
+  };
 
   // Handle scroll for sticky navigation
   useEffect(() => {
@@ -43,14 +155,27 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
         setHeaderHeight(header.offsetHeight);
       }
       
-      // Navigation becomes sticky when header is fully scrolled past
-      setIsScrolled(scrollTop >= headerHeight);
+      // Calculate when navigation should become sticky
+      const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
+      setIsScrolled(shouldBeSticky);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Check initial state
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [headerHeight]);
 
   // Dummy project data - replace with real data based on projectId
@@ -300,7 +425,7 @@ kubectl apply -f k8s/
   };
 
   return (
-    <ProjectContainer>
+    <ProjectContainer ref={vantaRef}>
       {/* Header */}
       <ProjectHeader data-header="project-header">
         <BackButton onClick={() => window.history.back()}>
@@ -328,124 +453,129 @@ kubectl apply -f k8s/
       </ProjectHeader>
 
       {/* Navigation Tabs */}
-      <TabNavigation $isSticky={isScrolled} data-sticky={isScrolled}>
+      <TabNavigation 
+        $isSticky={isScrolled} 
+        data-nav="tab-navigation"
+      >
         <Tab 
           active={activeTab === 'overview'} 
-          onClick={() => setActiveTab('overview')}
-          style={{ '--tab-index': 0 } as React.CSSProperties}
+          onClick={() => handleTabSwitch('overview')}
         >
-          📋 Overview
+          <span>📋</span> Overview
         </Tab>
         <Tab 
           active={activeTab === 'code'} 
-          onClick={() => setActiveTab('code')}
-          style={{ '--tab-index': 1 } as React.CSSProperties}
+          onClick={() => handleTabSwitch('code')}
         >
-          💻 Code Preview
+          <span>💻</span> Code Preview
         </Tab>
         <Tab 
           active={activeTab === 'readme'} 
-          onClick={() => setActiveTab('readme')}
-          style={{ '--tab-index': 2 } as React.CSSProperties}
+          onClick={() => handleTabSwitch('readme')}
         >
-          📖 Documentation
+          <span>📖</span> Documentation
         </Tab>
         <Tab 
           active={activeTab === 'demo'} 
-          onClick={() => setActiveTab('demo')}
-          style={{ '--tab-index': 3 } as React.CSSProperties}
+          onClick={() => handleTabSwitch('demo')}
         >
-          🎥 Demo
+          <span>🎥</span> Demo
         </Tab>
       </TabNavigation>
 
       {/* Content Sections */}
-      <ContentContainer $navHeight={isScrolled ? 70 : 0}>
-        {activeTab === 'overview' && (
-          <OverviewSection>
-            <Section>
-              <SectionTitle>Project Overview</SectionTitle>
-              <LongDescription>{projectData.longDescription}</LongDescription>
-            </Section>
+      <ContentContainer $hasSticky={isScrolled}>
+        <ContentTransition $isTransitioning={isTransitioning}>
+          {activeTab === 'overview' && (
+            <OverviewSection key={`overview-${tabKey}`}>
+              <Section>
+                <SectionTitle>Project Overview</SectionTitle>
+                <LongDescription>{projectData.longDescription}</LongDescription>
+              </Section>
 
-            <ImageGallery>
-              <MainImage>
-                <img 
-                  src={projectData.images[selectedImage]} 
-                  alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                />
-              </MainImage>
-              <ImageThumbnails>
-                {projectData.images.map((image, index) => (
-                  <Thumbnail 
-                    key={index}
-                    active={index === selectedImage}
-                    onClick={() => setSelectedImage(index)}
-                  >
-                    <img src={image} alt={`Thumbnail ${index + 1}`} />
-                  </Thumbnail>
-                ))}
-              </ImageThumbnails>
-            </ImageGallery>
-
-            <FeaturesGrid>
-              <FeatureColumn>
-                <SectionTitle>Key Features</SectionTitle>
-                <FeatureList>
-                  {projectData.features.map((feature, index) => (
-                    <FeatureItem key={index}>✅ {feature}</FeatureItem>
+              <ImageGallery>
+                <MainImage>
+                  <img 
+                    src={projectData.images[selectedImage]} 
+                    alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                  />
+                </MainImage>
+                <ImageThumbnails>
+                  {projectData.images.map((image, index) => (
+                    <Thumbnail 
+                      key={index}
+                      active={index === selectedImage}
+                      onClick={() => setSelectedImage(index)}
+                    >
+                      <img src={image} alt={`Thumbnail ${index + 1}`} />
+                    </Thumbnail>
                   ))}
-                </FeatureList>
-              </FeatureColumn>
-              <FeatureColumn>
-                <SectionTitle>Technical Challenges</SectionTitle>
-                <FeatureList>
-                  {projectData.challenges.map((challenge, index) => (
-                    <FeatureItem key={index}>🔧 {challenge}</FeatureItem>
-                  ))}
-                </FeatureList>
-              </FeatureColumn>
-            </FeaturesGrid>
-          </OverviewSection>
-        )}
+                </ImageThumbnails>
+              </ImageGallery>
 
-        {activeTab === 'code' && (
-          <CodeSection>
-            <SectionTitle>Code Preview</SectionTitle>
-            <IDECodePreview files={projectData.codePreview} theme="dark" />
-          </CodeSection>
-        )}
+              <FeaturesGrid>
+                <FeatureColumn>
+                  <SectionTitle>Key Features</SectionTitle>
+                  <FeatureList>
+                    {projectData.features.map((feature, index) => (
+                      <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
+                        ✅ {feature}
+                      </FeatureItem>
+                    ))}
+                  </FeatureList>
+                </FeatureColumn>
+                <FeatureColumn>
+                  <SectionTitle>Technical Challenges</SectionTitle>
+                  <FeatureList>
+                    {projectData.challenges.map((challenge, index) => (
+                      <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
+                        🔧 {challenge}
+                      </FeatureItem>
+                    ))}
+                  </FeatureList>
+                </FeatureColumn>
+              </FeaturesGrid>
+            </OverviewSection>
+          )}
 
-        {activeTab === 'readme' && (
-          <ReadmeSection>
-            <SectionTitle>Project Documentation</SectionTitle>
-            <MarkdownRenderer content={projectData.readme || ''} theme="github-dark" />
-          </ReadmeSection>
-        )}
+          {activeTab === 'code' && (
+            <CodeSection key={`code-${tabKey}`}>
+              <SectionTitle>Code Preview</SectionTitle>
+              <IDECodePreview files={projectData.codePreview} theme="dark" />
+            </CodeSection>
+          )}
 
-        {activeTab === 'demo' && (
-          <DemoSection>
-            <SectionTitle>Project Demo</SectionTitle>
-            {projectData.videoDemo && (
-              <VideoDemo>
-                <video controls width="100%">
-                  <source src={projectData.videoDemo} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </VideoDemo>
-            )}
-            <DemoLinks>
-              <ProjectLink href={projectData.githubUrl} target="_blank">
-                📂 View Source Code
-              </ProjectLink>
-              {projectData.liveUrl && (
-                <ProjectLink href={projectData.liveUrl} target="_blank">
-                  🌐 Try Live Demo
-                </ProjectLink>
+          {activeTab === 'readme' && (
+            <ReadmeSection key={`readme-${tabKey}`}>
+              <SectionTitle>Project Documentation</SectionTitle>
+              <MarkdownRenderer content={projectData.readme || ''} theme="github-dark" />
+            </ReadmeSection>
+          )}
+
+          {activeTab === 'demo' && (
+            <DemoSection key={`demo-${tabKey}`}>
+              <SectionTitle>Project Demo</SectionTitle>
+              {projectData.videoDemo && (
+                <VideoDemo>
+                  <video controls width="100%">
+                    <source src={projectData.videoDemo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </VideoDemo>
               )}
-            </DemoLinks>
-          </DemoSection>
-        )}
+              <DemoLinks>
+                <ProjectLink href={projectData.githubUrl} target="_blank">
+                  📂 View Source Code
+                </ProjectLink>
+                {projectData.liveUrl && (
+                  <ProjectLink href={projectData.liveUrl} target="_blank">
+                    🌐 Try Live Demo
+                  </ProjectLink>
+                )}
+              </DemoLinks>
+            </DemoSection>
+          )}
+        </ContentTransition>
       </ContentContainer>
     </ProjectContainer>
   );
@@ -457,13 +587,29 @@ interface TabNavigationProps {
 }
 
 interface ContentContainerProps {
-  $navHeight: number;
+  $hasSticky: boolean;
+}
+
+interface ContentTransitionProps {
+  $isTransitioning: boolean;
 }
 
 const ProjectContainer = styled.div`
   min-height: 100vh;
   background: var(--color-black-primary);
   color: var(--color-text-primary);
+  position: relative;
+  
+  /* Ensure Vanta.js background is behind content */
+  & > canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -1;
+    pointer-events: none;
+  }
 `;
 
 const ProjectHeader = styled.header`
@@ -491,18 +637,40 @@ const BackButton = styled.button`
   color: var(--color-text-primary);
   border: 2px solid var(--color-purple-primary);
   padding: 12px 24px;
-  border-radius: 25px;
+  border-radius: 8px;
   cursor: pointer;
   margin-bottom: 30px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-weight: 600;
   position: relative;
   z-index: 2;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
   
   &:hover {
     background: var(--color-purple-primary);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 0 10px 20px var(--color-purple-primary)30;
+    border-color: var(--color-green-primary);
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
   }
 `;
 
@@ -521,9 +689,52 @@ const ProjectTitle = styled.h1`
   background-clip: text;
   position: relative;
   z-index: 2;
+  animation: titleReveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    animation: underlineGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+    border-radius: 2px;
+  }
+  
+  @keyframes titleReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+      background-position: 200% center;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      background-position: 0% center;
+    }
+  }
+  
+  @keyframes underlineGrow {
+    from {
+      width: 0;
+    }
+    to {
+      width: 120px;
+    }
+  }
   
   @media (max-width: 768px) {
     font-size: 2rem;
+    
+    &::after {
+      @keyframes underlineGrow {
+        to {
+          width: 80px;
+        }
+      }
+    }
   }
 `;
 
@@ -535,6 +746,18 @@ const ProjectDescription = styled.p`
   max-width: 800px;
   position: relative;
   z-index: 2;
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const ProjectLinks = styled.div`
@@ -542,6 +765,25 @@ const ProjectLinks = styled.div`
   gap: 20px;
   margin-bottom: 30px;
   flex-wrap: wrap;
+  
+  & > * {
+    animation: slideInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: both;
+  }
+  
+  & > *:nth-child(1) { animation-delay: 0.5s; }
+  & > *:nth-child(2) { animation-delay: 0.6s; }
+  
+  @keyframes slideInScale {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 `;
 
 const ProjectLink = styled.a`
@@ -549,15 +791,57 @@ const ProjectLink = styled.a`
   color: var(--color-text-primary);
   text-decoration: none;
   padding: 12px 24px;
-  border-radius: 25px;
+  border-radius: 8px;
   border: 2px solid var(--color-purple-primary);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
   
   &:hover {
-    background: var(--color-purple-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px var(--color-purple-primary)40;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 25px var(--color-purple-primary)40;
+    border-color: var(--color-green-primary);
+  }
+  
+  &:hover::before {
+    width: 100%;
+  }
+  
+  &:hover::after {
+    opacity: 0.8;
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
   }
 `;
 
@@ -565,21 +849,74 @@ const TechStack = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  
+  /* Stagger animation for tech tags */
+  & > * {
+    animation: slideInScale 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: both;
+  }
+  
+  & > *:nth-child(1) { animation-delay: 0.1s; }
+  & > *:nth-child(2) { animation-delay: 0.15s; }
+  & > *:nth-child(3) { animation-delay: 0.2s; }
+  & > *:nth-child(4) { animation-delay: 0.25s; }
+  & > *:nth-child(5) { animation-delay: 0.3s; }
+  & > *:nth-child(6) { animation-delay: 0.35s; }
+  & > *:nth-child(n+7) { animation-delay: 0.4s; }
+  
+  @keyframes slideInScale {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 `;
 
 const TechTag = styled.span`
   background: var(--color-purple-secondary);
   color: var(--color-text-primary);
   padding: 6px 12px;
-  border-radius: 15px;
+  border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 500;
   border: 1px solid var(--color-purple-primary);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--color-green-primary)30, transparent 70%);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
   
   &:hover {
     background: var(--color-purple-primary);
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 15px var(--color-purple-primary)40;
+    border-color: var(--color-green-primary);
+  }
+  
+  &:hover::before {
+    width: 200px;
+    height: 200px;
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.95);
+    transition: all 0.1s ease;
   }
 `;
 
@@ -592,6 +929,7 @@ const TabNavigation = styled.nav<TabNavigationProps>`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
   
   ${props => props.$isSticky && `
     position: fixed;
@@ -606,7 +944,7 @@ const TabNavigation = styled.nav<TabNavigationProps>`
     padding: 0 20px;
     height: 60px;
     
-    /* Sliver bar animation */
+    /* Smooth slide-in animation */
     animation: slideInFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     
     @keyframes slideInFromTop {
@@ -620,7 +958,7 @@ const TabNavigation = styled.nav<TabNavigationProps>`
       }
     }
     
-    /* Sliver bar glow effect */
+    /* Elegant glow effect */
     &::before {
       content: '';
       position: absolute;
@@ -647,6 +985,11 @@ const TabNavigation = styled.nav<TabNavigationProps>`
       }
     }
   `}
+  
+  @media (max-width: 768px) {
+    padding: 0 10px;
+    gap: 0;
+  }
 `;
 
 const Tab = styled.button<{ active: boolean }>`
@@ -657,17 +1000,11 @@ const Tab = styled.button<{ active: boolean }>`
   cursor: pointer;
   font-weight: 600;
   border-bottom: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
   
-  &:hover {
-    background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
-    border-bottom-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
-    transform: translateY(-1px);
-  }
-  
-  /* Sliver bar shimmer effect */
   &::before {
     content: '';
     position: absolute;
@@ -680,31 +1017,84 @@ const Tab = styled.button<{ active: boolean }>`
       rgba(255, 255, 255, 0.1), 
       transparent
     );
-    transition: all 0.6s ease;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(-50%);
+  }
+  
+  /* Enhanced click animation */
+  &:active {
+    transform: translateY(1px) scale(0.98);
+    transition: all 0.1s ease;
+    
+    &::before {
+      left: 100%;
+      transition: all 0.2s ease;
+    }
+  }
+  
+  &:hover {
+    background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
+    border-bottom-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(105, 51, 255, 0.3);
   }
   
   &:hover::before {
     left: 100%;
   }
   
-  /* Individual tab slide-in animation when nav becomes sticky */
-  ${TabNavigation}[data-sticky="true"] & {
-    padding: 12px 25px;
-    font-size: 0.9rem;
-    border-bottom-width: 2px;
-    animation: tabSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    animation-delay: calc(var(--tab-index, 0) * 0.1s);
-    animation-fill-mode: both;
+  &:hover::after {
+    width: 90%;
+  }
+  
+  /* Enhanced active state with pulsing effect */
+  ${props => props.active && `
+    &::after {
+      width: 100%;
+      animation: tabPulse 2s ease-in-out infinite;
+    }
     
-    @keyframes tabSlideIn {
-      from {
-        transform: translateY(-20px);
-        opacity: 0;
+    @keyframes tabPulse {
+      0%, 100% {
+        box-shadow: 0 0 5px var(--color-green-primary);
       }
-      to {
-        transform: translateY(0);
-        opacity: 1;
+      50% {
+        box-shadow: 0 0 20px var(--color-green-primary), 0 0 30px var(--color-green-primary);
       }
+    }
+  `}
+  
+  /* Responsive adjustments for sticky state */
+  ${TabNavigation}[data-nav="tab-navigation"] & {
+    ${props => props.active && `
+      border-bottom-color: var(--color-green-primary);
+    `}
+  }
+  
+  @media (max-width: 768px) {
+    padding: 12px 15px;
+    font-size: 0.85rem;
+    border-bottom-width: 2px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    
+    /* Hide emoji on very small screens */
+    span:first-child {
+      display: none;
     }
   }
 `;
@@ -713,17 +1103,79 @@ const ContentContainer = styled.div<ContentContainerProps>`
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - ${props => props.$navHeight}px);
+  min-height: calc(100vh - 200px);
+  transition: padding-top 0.3s ease;
   
-  ${props => props.$navHeight > 0 && `
-    padding-top: ${props.$navHeight + 20}px;
+  ${props => props.$hasSticky && `
+    padding-top: 80px; /* Add space for sticky nav */
   `}
+  
+  @media (max-width: 768px) {
+    padding: 40px 15px;
+    
+    ${props => props.$hasSticky && `
+      padding-top: 80px;
+    `}
+  }
 `;
 
-const OverviewSection = styled.div``;
+const ContentTransition = styled.div<ContentTransitionProps>`
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  ${props => props.$isTransitioning && `
+    opacity: 0.7;
+    transform: translateY(10px);
+    filter: blur(2px);
+  `}
+  
+  /* Particle effect overlay during transitions */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 25% 25%, var(--color-purple-primary)10, transparent 50%),
+                radial-gradient(circle at 75% 75%, var(--color-green-primary)10, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--color-purple-primary)05, transparent 60%);
+    opacity: ${props => props.$isTransitioning ? 0.3 : 0};
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+`;
+
+const OverviewSection = styled.div`
+  animation: catalogAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogAppear {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+`;
 
 const Section = styled.section`
   margin-bottom: 60px;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -731,6 +1183,37 @@ const SectionTitle = styled.h2`
   font-weight: 600;
   margin-bottom: 30px;
   color: white;
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 2px;
+  }
+  
+  &:hover::after {
+    width: 60px;
+  }
+  
+  animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 `;
 
 const LongDescription = styled.p`
@@ -742,18 +1225,56 @@ const LongDescription = styled.p`
 
 const ImageGallery = styled.div`
   margin-bottom: 60px;
+  animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
 
 const MainImage = styled.div`
   margin-bottom: 20px;
-  border-radius: 15px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
   
   img {
     width: 100%;
     height: 400px;
     object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
   }
 `;
 
@@ -762,24 +1283,71 @@ const ImageThumbnails = styled.div`
   gap: 15px;
   overflow-x: auto;
   padding: 10px 0;
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, var(--color-green-primary), var(--color-purple-primary));
+  }
 `;
 
 const Thumbnail = styled.div<{ active: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  border: 3px solid ${props => props.active ? 'white' : 'transparent'};
-  transition: all 0.3s ease;
+  border: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-purple-primary)30, var(--color-green-primary)30);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
   
   img {
     width: 80px;
     height: 60px;
     object-fit: cover;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
   &:hover {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  &:hover::before {
+    opacity: 0.2;
+  }
+  
+  &:hover img {
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(1);
+    transition: all 0.1s ease;
   }
 `;
 
@@ -794,7 +1362,25 @@ const FeaturesGrid = styled.div`
   }
 `;
 
-const FeatureColumn = styled.div``;
+const FeatureColumn = styled.div`
+  animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
 
 const FeatureList = styled.ul`
   list-style: none;
@@ -806,22 +1392,132 @@ const FeatureItem = styled.li`
   margin-bottom: 15px;
   font-size: 1rem;
   line-height: 1.5;
+  padding: 8px 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: featureItemAppear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  
+  @keyframes featureItemAppear {
+    from {
+      opacity: 0;
+      transform: translateX(-20px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 4px;
+    height: 0;
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(-50%);
+    border-radius: 2px;
+  }
+  
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: translateX(8px) scale(1.02);
+    padding-left: 15px;
+  }
+  
+  &:hover::before {
+    height: 100%;
+    box-shadow: 0 0 10px var(--color-green-primary);
+  }
 `;
 
-const CodeSection = styled.div``;
+const CodeSection = styled.div`
+  animation: catalogSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(60px) rotateY(10deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotateY(0deg);
+    }
+  }
+`;
 
-const ReadmeSection = styled.div``;
+const ReadmeSection = styled.div`
+  animation: catalogFlipIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogFlipIn {
+    from {
+      opacity: 0;
+      transform: rotateX(20deg) translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: rotateX(0deg) translateY(0);
+    }
+  }
+`;
 
-const DemoSection = styled.div``;
+const DemoSection = styled.div`
+  animation: catalogZoomReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogZoomReveal {
+    from {
+      opacity: 0;
+      transform: scale(0.8) rotateZ(5deg);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotateZ(0deg);
+      filter: blur(0px);
+    }
+  }
+`;
 
 const VideoDemo = styled.div`
   margin-bottom: 40px;
-  border-radius: 15px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
   
   video {
-    border-radius: 15px;
+    border-radius: 8px;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  &:hover video {
+    transform: scale(1.02);
   }
 `;
 

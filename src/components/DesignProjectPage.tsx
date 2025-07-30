@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+
+// Vanta.js topology effect
+declare global {
+  interface Window {
+    VANTA: any;
+    THREE: any;
+  }
+}
 
 interface DesignProjectProps {
   projectId: string;
@@ -41,6 +49,110 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
+
+  // Initialize Vanta.js topology background
+  useEffect(() => {
+    const loadVanta = async () => {
+      try {
+        // Load Three.js first
+        if (!window.THREE) {
+          const script1 = document.createElement('script');
+          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+          script1.crossOrigin = 'anonymous';
+          document.head.appendChild(script1);
+          
+          await new Promise((resolve, reject) => {
+            script1.onload = resolve;
+            script1.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
+        // Load Vanta.js topology effect
+        if (!window.VANTA) {
+          const script2 = document.createElement('script');
+          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
+          script2.crossOrigin = 'anonymous';
+          document.head.appendChild(script2);
+          
+          await new Promise((resolve, reject) => {
+            script2.onload = resolve;
+            script2.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
+        // Wait a bit for scripts to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Initialize Vanta effect
+        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          vantaEffect.current = window.VANTA.TOPOLOGY({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x00ff88, // Green primary for design
+            backgroundColor: 0x0a0a0a, // Black primary
+            points: 10.00,
+            maxDistance: 22.00,
+            spacing: 17.00,
+            showDots: true
+          });
+        }
+      } catch (error) {
+        console.warn('Failed to load Vanta.js:', error);
+        // Fallback: Create a simple animated background
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+            radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(0, 255, 136, 0.1) 0%, transparent 50%)
+          `;
+        }
+      }
+    };
+
+    // Delay loading to ensure DOM is ready
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (e) {
+          console.warn('Error destroying Vanta effect:', e);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
+
+  // Enhanced tab switching with transition
+  const handleTabSwitch = (newTab: 'overview' | 'process' | 'typography' | 'mockups') => {
+    if (newTab === activeTab) return;
+    
+    setIsTransitioning(true);
+    
+    // Smooth transition timing
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTabKey(prev => prev + 1); // Force animation restart
+      
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 100);
+    }, 150);
+  };
 
   // Handle scroll for sticky navigation
   useEffect(() => {
@@ -52,14 +164,27 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         setHeaderHeight(header.offsetHeight);
       }
       
-      // Navigation becomes sticky when header is fully scrolled past
-      setIsScrolled(scrollTop >= headerHeight);
+      // Calculate when navigation should become sticky
+      const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
+      setIsScrolled(shouldBeSticky);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Check initial state
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [headerHeight]);
 
   // Dummy design project data - replace with real data based on projectId
@@ -128,7 +253,7 @@ The final identity system includes a custom logotype, comprehensive color palett
   const currentImages = projectData.images[selectedImageCategory];
 
   return (
-    <ProjectContainer>
+    <ProjectContainer ref={vantaRef}>
       {/* Header */}
       <ProjectHeader data-header="design-project-header">
         <BackButton onClick={() => window.history.back()}>
@@ -164,28 +289,28 @@ The final identity system includes a custom logotype, comprehensive color palett
       <TabNavigation $isSticky={isScrolled} data-sticky={isScrolled}>
         <Tab 
           active={activeTab === 'overview'} 
-          onClick={() => setActiveTab('overview')}
+          onClick={() => handleTabSwitch('overview')}
           style={{ '--tab-index': 0 } as React.CSSProperties}
         >
           🎨 Overview
         </Tab>
         <Tab 
           active={activeTab === 'process'} 
-          onClick={() => setActiveTab('process')}
+          onClick={() => handleTabSwitch('process')}
           style={{ '--tab-index': 1 } as React.CSSProperties}
         >
           🧠 Thought Process
         </Tab>
         <Tab 
           active={activeTab === 'typography'} 
-          onClick={() => setActiveTab('typography')}
+          onClick={() => handleTabSwitch('typography')}
           style={{ '--tab-index': 2 } as React.CSSProperties}
         >
           🔤 Typography & Colors
         </Tab>
         <Tab 
           active={activeTab === 'mockups'} 
-          onClick={() => setActiveTab('mockups')}
+          onClick={() => handleTabSwitch('mockups')}
           style={{ '--tab-index': 3 } as React.CSSProperties}
         >
           📱 Applications
@@ -194,15 +319,16 @@ The final identity system includes a custom logotype, comprehensive color palett
 
       {/* Content Sections */}
       <ContentContainer $navHeight={isScrolled ? 70 : 0}>
-        {activeTab === 'overview' && (
-          <OverviewSection>
-            <Section>
-              <SectionTitle>Project Overview</SectionTitle>
-              <LongDescription>{projectData.longDescription}</LongDescription>
-            </Section>
+        <ContentTransition $isTransitioning={isTransitioning}>
+          {activeTab === 'overview' && (
+            <OverviewSection key={`overview-${tabKey}`}>
+              <Section>
+                <SectionTitle>Project Overview</SectionTitle>
+                <LongDescription>{projectData.longDescription}</LongDescription>
+              </Section>
 
-            {/* Image Gallery */}
-            <ImageGallerySection>
+              {/* Image Gallery */}
+              <ImageGallerySection>
               <GalleryHeader>
                 <SectionTitle>Final Designs</SectionTitle>
                 <ImageCategoryTabs>
@@ -271,7 +397,7 @@ The final identity system includes a custom logotype, comprehensive color palett
         )}
 
         {activeTab === 'process' && (
-          <ProcessSection>
+          <ProcessSection key={`process-${tabKey}`}>
             <SectionTitle>Design Thinking Process</SectionTitle>
             
             <ProcessGrid>
@@ -315,7 +441,7 @@ The final identity system includes a custom logotype, comprehensive color palett
         )}
 
         {activeTab === 'typography' && (
-          <TypographySection>
+          <TypographySection key={`typography-${tabKey}`}>
             <Section>
               <SectionTitle>Color Palette</SectionTitle>
               <ColorPalette>
@@ -360,7 +486,7 @@ The final identity system includes a custom logotype, comprehensive color palett
         )}
 
         {activeTab === 'mockups' && (
-          <MockupsSection>
+          <MockupsSection key={`mockups-${tabKey}`}>
             <SectionTitle>Brand Applications</SectionTitle>
             <MockupGrid>
               {projectData.images.mockups.map((mockup, index) => (
@@ -371,6 +497,7 @@ The final identity system includes a custom logotype, comprehensive color palett
             </MockupGrid>
           </MockupsSection>
         )}
+        </ContentTransition>
       </ContentContainer>
     </ProjectContainer>
   );
@@ -385,10 +512,26 @@ interface ContentContainerProps {
   $navHeight: number;
 }
 
+interface ContentTransitionProps {
+  $isTransitioning: boolean;
+}
+
 const ProjectContainer = styled.div`
   min-height: 100vh;
   background: var(--color-black-primary);
   color: var(--color-text-primary);
+  position: relative;
+  
+  /* Ensure Vanta.js background is behind content */
+  & > canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -1;
+    pointer-events: none;
+  }
 `;
 
 const ProjectHeader = styled.header`
@@ -654,10 +797,95 @@ const ContentContainer = styled.div<ContentContainerProps>`
   `}
 `;
 
-const OverviewSection = styled.div``;
-const ProcessSection = styled.div``;
-const TypographySection = styled.div``;
-const MockupsSection = styled.div``;
+const ContentTransition = styled.div<ContentTransitionProps>`
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+  
+  ${props => props.$isTransitioning && `
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.99);
+    filter: blur(1px);
+  `}
+  
+  /* Particle effect overlay during transitions */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(105, 51, 255, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 60%);
+    opacity: ${props => props.$isTransitioning ? '1' : '0'};
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 12px;
+  }
+`;
+
+const OverviewSection = styled.div`
+  animation: catalogAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogAppear {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+`;
+
+const ProcessSection = styled.div`
+  animation: catalogSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50px) rotateY(-15deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+    }
+  }
+`;
+
+const TypographySection = styled.div`
+  animation: catalogFlipIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogFlipIn {
+    from {
+      opacity: 0;
+      transform: rotateX(-20deg) translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: rotateX(0) translateY(0);
+    }
+  }
+`;
+
+const MockupsSection = styled.div`
+  animation: catalogZoomReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes catalogZoomReveal {
+    from {
+      opacity: 0;
+      transform: scale(1.1) rotateZ(-2deg);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotateZ(0);
+      filter: blur(0);
+    }
+  }
+`;
 
 const Section = styled.section`
   margin-bottom: 60px;
