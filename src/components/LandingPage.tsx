@@ -29,7 +29,7 @@ const LandingPage: React.FC = () => {
     const loadVanta = async () => {
       try {
         console.log('Starting Vanta.js loading process...');
-        
+
         // Load p5.js first
         if (!window.p5) {
           console.log('Loading p5.js...');
@@ -90,7 +90,12 @@ const LandingPage: React.FC = () => {
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00
+            scaleMobile: 1.00,
+            color: 0x6933ff, // Purple primary (portfolio theme)
+            backgroundColor: 0x0a0a0a, // Dark background
+            points: 10.00,
+            maxDistance: 20.00,
+            spacing: 15.00
           });
           console.log('Vanta effect initialized:', vantaEffect.current);
         } else {
@@ -145,7 +150,7 @@ const LandingPage: React.FC = () => {
     {
       id: 'ecommerce-dashboard',
       title: 'E-Commerce Management System',
-      category: 'development', 
+      category: 'development',
       description: 'Modern admin dashboard with analytics, inventory management, and payment processing.',
       thumbnail: '/assets/dev-thumbnails/ecommerce.jpg',
       tags: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL'],
@@ -209,8 +214,8 @@ const LandingPage: React.FC = () => {
     }
   ];
 
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
+  const filteredProjects = selectedCategory === 'all'
+    ? projects
     : projects.filter(project => project.category === selectedCategory);
 
   const featuredProjects = projects.filter(project => project.featured);
@@ -220,218 +225,218 @@ const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <ContentBGContainer>
         <HeroSection>
-        <HeroContent>
-          <ProfilePicture>
-            <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran" />
-          </ProfilePicture>
-          <HeroText>
-            <Name>Kai Tran</Name>
-            <Title>Graphic Designer & Software Developer</Title>
-            <Description>
-              Creative professional bridging the gap between design and technology. 
-              I craft beautiful visual experiences and build robust digital solutions 
-              that bring ideas to life.
-            </Description>
-            <SkillPills>
-              <SkillPill>UI/UX Design</SkillPill>
-              <SkillPill>React Development</SkillPill>
-              <SkillPill>Brand Identity</SkillPill>
-              <SkillPill>Full-Stack Development</SkillPill>
-            </SkillPills>
-          </HeroText>
-        </HeroContent>
-      </HeroSection>
+          <HeroContent>
+            <ProfilePicture>
+              <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran" />
+            </ProfilePicture>
+            <HeroText>
+              <Name>Kai Tran</Name>
+              <Title>Graphic Designer & Software Developer</Title>
+              <Description>
+                Creative professional bridging the gap between design and technology.
+                I craft beautiful visual experiences and build robust digital solutions
+                that bring ideas to life.
+              </Description>
+              <SkillPills>
+                <SkillPill>UI/UX Design</SkillPill>
+                <SkillPill>React Development</SkillPill>
+                <SkillPill>Brand Identity</SkillPill>
+                <SkillPill>Full-Stack Development</SkillPill>
+              </SkillPills>
+            </HeroText>
+          </HeroContent>
+        </HeroSection>
 
-      {/* Tech Stack Section */}
-      <TechStackSection>
-        <SectionHeader>Tech Stack & Expertise</SectionHeader>
-        <TechStackGrid>
-          <TechCategory>
-            <TechCategoryTitle>🎨 Design Tools</TechCategoryTitle>
-            <TechStack>
-              <TechItem>
-                <TechIcon>🎨</TechIcon>
-                <TechInfo>
-                  <TechName>Adobe Creative Suite</TechName>
-                  <TechDesc>Photoshop, Illustrator, InDesign for professional design work</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>🖼️</TechIcon>
-                <TechInfo>
-                  <TechName>Figma</TechName>
-                  <TechDesc>Collaborative interface design and prototyping</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>✨</TechIcon>
-                <TechInfo>
-                  <TechName>After Effects</TechName>
-                  <TechDesc>Motion graphics and animation design</TechDesc>
-                </TechInfo>
-              </TechItem>
-            </TechStack>
-          </TechCategory>
-          
-          <TechCategory>
-            <TechCategoryTitle>💻 Development</TechCategoryTitle>
-            <TechStack>
-              <TechItem>
-                <TechIcon>⚛️</TechIcon>
-                <TechInfo>
-                  <TechName>React & TypeScript</TechName>
-                  <TechDesc>Modern frontend development with type safety</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>🟢</TechIcon>
-                <TechInfo>
-                  <TechName>Node.js</TechName>
-                  <TechDesc>Server-side JavaScript and API development</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>🗄️</TechIcon>
-                <TechInfo>
-                  <TechName>PostgreSQL & MongoDB</TechName>
-                  <TechDesc>Database design and management</TechDesc>
-                </TechInfo>
-              </TechItem>
-            </TechStack>
-          </TechCategory>
-          
-          <TechCategory>
-            <TechCategoryTitle>☁️ DevOps & Tools</TechCategoryTitle>
-            <TechStack>
-              <TechItem>
-                <TechIcon>🐳</TechIcon>
-                <TechInfo>
-                  <TechName>Docker</TechName>
-                  <TechDesc>Containerization and deployment</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>☁️</TechIcon>
-                <TechInfo>
-                  <TechName>AWS</TechName>
-                  <TechDesc>Cloud infrastructure and services</TechDesc>
-                </TechInfo>
-              </TechItem>
-              <TechItem>
-                <TechIcon>🔧</TechIcon>
-                <TechInfo>
-                  <TechName>Git & CI/CD</TechName>
-                  <TechDesc>Version control and automation</TechDesc>
-                </TechInfo>
-              </TechItem>
-            </TechStack>
-          </TechCategory>
-        </TechStackGrid>
-      </TechStackSection>
+        {/* Tech Stack Section */}
+        <TechStackSection>
+          <SectionHeader>Tech Stack & Expertise</SectionHeader>
+          <TechStackGrid>
+            <TechCategory>
+              <TechCategoryTitle>🎨 Design Tools</TechCategoryTitle>
+              <TechStack>
+                <TechItem>
+                  <TechIcon>🎨</TechIcon>
+                  <TechInfo>
+                    <TechName>Adobe Creative Suite</TechName>
+                    <TechDesc>Photoshop, Illustrator, InDesign for professional design work</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>🖼️</TechIcon>
+                  <TechInfo>
+                    <TechName>Figma</TechName>
+                    <TechDesc>Collaborative interface design and prototyping</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>✨</TechIcon>
+                  <TechInfo>
+                    <TechName>After Effects</TechName>
+                    <TechDesc>Motion graphics and animation design</TechDesc>
+                  </TechInfo>
+                </TechItem>
+              </TechStack>
+            </TechCategory>
 
-      {/* Featured Projects */}
-      <Section>
-        <SectionHeader>Featured Work</SectionHeader>
-        <ProjectGrid>
-          {featuredProjects.map(project => (
-            <ProjectCard 
-              key={project.id} 
-              onClick={() => window.location.href = `/project/${project.id}`}
-              featured
+            <TechCategory>
+              <TechCategoryTitle>💻 Development</TechCategoryTitle>
+              <TechStack>
+                <TechItem>
+                  <TechIcon>⚛️</TechIcon>
+                  <TechInfo>
+                    <TechName>React & TypeScript</TechName>
+                    <TechDesc>Modern frontend development with type safety</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>🟢</TechIcon>
+                  <TechInfo>
+                    <TechName>Node.js</TechName>
+                    <TechDesc>Server-side JavaScript and API development</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>🗄️</TechIcon>
+                  <TechInfo>
+                    <TechName>PostgreSQL & MongoDB</TechName>
+                    <TechDesc>Database design and management</TechDesc>
+                  </TechInfo>
+                </TechItem>
+              </TechStack>
+            </TechCategory>
+
+            <TechCategory>
+              <TechCategoryTitle>☁️ DevOps & Tools</TechCategoryTitle>
+              <TechStack>
+                <TechItem>
+                  <TechIcon>🐳</TechIcon>
+                  <TechInfo>
+                    <TechName>Docker</TechName>
+                    <TechDesc>Containerization and deployment</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>☁️</TechIcon>
+                  <TechInfo>
+                    <TechName>AWS</TechName>
+                    <TechDesc>Cloud infrastructure and services</TechDesc>
+                  </TechInfo>
+                </TechItem>
+                <TechItem>
+                  <TechIcon>🔧</TechIcon>
+                  <TechInfo>
+                    <TechName>Git & CI/CD</TechName>
+                    <TechDesc>Version control and automation</TechDesc>
+                  </TechInfo>
+                </TechItem>
+              </TechStack>
+            </TechCategory>
+          </TechStackGrid>
+        </TechStackSection>
+
+        {/* Featured Projects */}
+        <Section>
+          <SectionHeader>Featured Work</SectionHeader>
+          <ProjectGrid>
+            {featuredProjects.map(project => (
+              <ProjectCard
+                key={project.id}
+                onClick={() => window.location.href = `/project/${project.id}`}
+                featured
+              >
+                <ProjectThumbnail>
+                  <img src={project.thumbnail} alt={project.title} />
+                  <ProjectOverlay>
+                    <CategoryBadge category={project.category}>
+                      {project.category === 'development' ? '💻 Development' : '🎨 Design'}
+                    </CategoryBadge>
+                  </ProjectOverlay>
+                </ProjectThumbnail>
+                <ProjectInfo>
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <TagList>
+                    {project.tags.slice(0, 3).map(tag => (
+                      <Tag key={tag}>{tag}</Tag>
+                    ))}
+                  </TagList>
+                </ProjectInfo>
+              </ProjectCard>
+            ))}
+          </ProjectGrid>
+        </Section>
+
+        {/* Project Catalog */}
+        <Section>
+          <SectionHeader>Project Catalog</SectionHeader>
+
+          {/* Category Filter */}
+          <CategoryFilter>
+            <FilterButton
+              $active={selectedCategory === 'all'}
+              onClick={() => setSelectedCategory('all')}
             >
-              <ProjectThumbnail>
-                <img src={project.thumbnail} alt={project.title} />
-                <ProjectOverlay>
-                  <CategoryBadge category={project.category}>
-                    {project.category === 'development' ? '💻 Development' : '🎨 Design'}
-                  </CategoryBadge>
-                </ProjectOverlay>
-              </ProjectThumbnail>
-              <ProjectInfo>
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
-                <TagList>
-                  {project.tags.slice(0, 3).map(tag => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </TagList>
-              </ProjectInfo>
-            </ProjectCard>
-          ))}
-        </ProjectGrid>
-      </Section>
-
-      {/* Project Catalog */}
-      <Section>
-        <SectionHeader>Project Catalog</SectionHeader>
-        
-        {/* Category Filter */}
-        <CategoryFilter>
-          <FilterButton 
-            $active={selectedCategory === 'all'}
-            onClick={() => setSelectedCategory('all')}
-          >
-            All Projects ({projects.length})
-          </FilterButton>
-          <FilterButton 
-            $active={selectedCategory === 'development'}
-            onClick={() => setSelectedCategory('development')}
-          >
-            💻 Development ({projects.filter(p => p.category === 'development').length})
-          </FilterButton>
-          <FilterButton 
-            $active={selectedCategory === 'design'}
-            onClick={() => setSelectedCategory('design')}
-          >
-            🎨 Design ({projects.filter(p => p.category === 'design').length})
-          </FilterButton>
-        </CategoryFilter>
-
-        {/* Project Grid */}
-        <ProjectGrid>
-          {filteredProjects.map(project => (
-            <ProjectCard 
-              key={project.id}
-              onClick={() => window.location.href = `/project/${project.id}`}
+              All Projects ({projects.length})
+            </FilterButton>
+            <FilterButton
+              $active={selectedCategory === 'development'}
+              onClick={() => setSelectedCategory('development')}
             >
-              <ProjectThumbnail>
-                <img src={project.thumbnail} alt={project.title} />
-                <ProjectOverlay>
-                  <CategoryBadge category={project.category}>
-                    {project.category === 'development' ? '💻' : '🎨'}
-                  </CategoryBadge>
-                </ProjectOverlay>
-              </ProjectThumbnail>
-              <ProjectInfo>
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
-                <TagList>
-                  {project.tags.map(tag => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </TagList>
-              </ProjectInfo>
-            </ProjectCard>
-          ))}
-        </ProjectGrid>
-      </Section>
+              💻 Development ({projects.filter(p => p.category === 'development').length})
+            </FilterButton>
+            <FilterButton
+              $active={selectedCategory === 'design'}
+              onClick={() => setSelectedCategory('design')}
+            >
+              🎨 Design ({projects.filter(p => p.category === 'design').length})
+            </FilterButton>
+          </CategoryFilter>
 
-      {/* Contact Section */}
-      <ContactSection>
-        <SectionHeader>Let's Work Together</SectionHeader>
-        <ContactContent>
-          <ContactText>
-            Available for OJT opportunities Fall 2025 (September - December).
-            Open to both design and development projects.
-          </ContactText>
-          <ContactLinks>
-            <ContactLink href="https://github.com/kaitran225">GitHub</ContactLink>
-            <ContactLink href="https://www.instagram.com/kaitran.prt">Instagram</ContactLink>
-            <ContactLink href="mailto:contact@kaitran.dev">Email</ContactLink>
-            <ContactLink href="?view=simple">📄 Download CV</ContactLink>
-          </ContactLinks>
-        </ContactContent>
-      </ContactSection>
+          {/* Project Grid */}
+          <ProjectGrid>
+            {filteredProjects.map(project => (
+              <ProjectCard
+                key={project.id}
+                onClick={() => window.location.href = `/project/${project.id}`}
+              >
+                <ProjectThumbnail>
+                  <img src={project.thumbnail} alt={project.title} />
+                  <ProjectOverlay>
+                    <CategoryBadge category={project.category}>
+                      {project.category === 'development' ? '💻' : '🎨'}
+                    </CategoryBadge>
+                  </ProjectOverlay>
+                </ProjectThumbnail>
+                <ProjectInfo>
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <TagList>
+                    {project.tags.map(tag => (
+                      <Tag key={tag}>{tag}</Tag>
+                    ))}
+                  </TagList>
+                </ProjectInfo>
+              </ProjectCard>
+            ))}
+          </ProjectGrid>
+        </Section>
+
+        {/* Contact Section */}
+        <ContactSection>
+          <SectionHeader>Let's Work Together</SectionHeader>
+          <ContactContent>
+            <ContactText>
+              Available for OJT opportunities Fall 2025 (September - December).
+              Open to both design and development projects.
+            </ContactText>
+            <ContactLinks>
+              <ContactLink href="https://github.com/kaitran225">GitHub</ContactLink>
+              <ContactLink href="https://www.instagram.com/kaitran.prt">Instagram</ContactLink>
+              <ContactLink href="mailto:contact@kaitran.dev">Email</ContactLink>
+              <ContactLink href="?view=simple">📄 Download CV</ContactLink>
+            </ContactLinks>
+          </ContactContent>
+        </ContactSection>
       </ContentBGContainer>
     </LandingContainer>
   );
@@ -474,7 +479,7 @@ const LandingContainer = styled.div`
 `;
 
 const ContentBGContainer = styled.div`
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
   min-height: 100vh;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */

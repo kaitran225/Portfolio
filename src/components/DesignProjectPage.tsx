@@ -58,32 +58,52 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   useEffect(() => {
     const loadVanta = async () => {
       try {
+        console.log('Starting Vanta.js loading process...');
+        
         // Load p5.js first
         if (!window.p5) {
+          console.log('Loading p5.js...');
           const script1 = document.createElement('script');
           script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
           script1.crossOrigin = 'anonymous';
           document.head.appendChild(script1);
           
           await new Promise((resolve, reject) => {
-            script1.onload = resolve;
-            script1.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
+            script1.onload = () => {
+              console.log('p5.js loaded successfully');
+              resolve(null);
+            };
+            script1.onerror = (error) => {
+              console.error('Failed to load p5.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
           });
+        } else {
+          console.log('p5.js already loaded');
         }
 
         // Load Vanta.js topology effect
         if (!window.VANTA) {
+          console.log('Loading Vanta.js...');
           const script2 = document.createElement('script');
           script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
           script2.crossOrigin = 'anonymous';
           document.head.appendChild(script2);
           
           await new Promise((resolve, reject) => {
-            script2.onload = resolve;
-            script2.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
+            script2.onload = () => {
+              console.log('Vanta.js loaded successfully');
+              resolve(null);
+            };
+            script2.onerror = (error) => {
+              console.error('Failed to load Vanta.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
           });
+        } else {
+          console.log('Vanta.js already loaded');
         }
 
         // Wait a bit for scripts to fully initialize
@@ -94,13 +114,18 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
           console.log('Initializing Vanta TOPOLOGY effect...');
           vantaEffect.current = window.VANTA.TOPOLOGY({
             el: vantaRef.current,
-            mouseControls: true,
-            touchControls: true,
+            mouseControls: false,
+            touchControls: false,
             gyroControls: false,
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00
+            scaleMobile: 1.00,
+            color: 0x00ff88, // Green primary (design theme)
+            backgroundColor: 0x0a0a0a, // Dark background
+            points: 8.00,
+            maxDistance: 22.00,
+            spacing: 16.00
           });
           console.log('Vanta effect initialized:', vantaEffect.current);
         } else {
@@ -256,7 +281,7 @@ The final identity system includes a custom logotype, comprehensive color palett
   const currentImages = projectData.images[selectedImageCategory];
 
   return (
-    <ProjectContainer ref={vantaRef}>
+    <ProjectContainer>
       {/* Header */}
       <ProjectHeader data-header="design-project-header">
         <BackButton onClick={() => window.history.back()}>
@@ -321,7 +346,7 @@ The final identity system includes a custom logotype, comprehensive color palett
       </TabNavigation>
 
       {/* Content Sections */}
-      <ContentBGContainer $navHeight={isScrolled ? 70 : 0}>
+      <ContentBGContainer $navHeight={isScrolled ? 70 : 0} ref={vantaRef}>
         <ContentContainer $navHeight={isScrolled ? 70 : 0}>
           <ContentTransition $isTransitioning={isTransitioning}>
             {activeTab === 'overview' && (
@@ -973,7 +998,7 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
   min-height: calc(100vh - 200px);
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */

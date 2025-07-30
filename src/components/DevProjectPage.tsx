@@ -8,6 +8,7 @@ declare global {
     interface Window {
         VANTA: any;
         p5: any;
+        THREE: any; // Ensure THREE.js is available globally
     }
 }
 
@@ -49,18 +50,29 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     useEffect(() => {
         const loadVanta = async () => {
             try {
+                console.log('Starting Vanta.js loading process...');
+                
                 // Load p5.js first
                 if (!window.p5) {
+                    console.log('Loading p5.js...');
                     const script1 = document.createElement('script');
                     script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
                     script1.crossOrigin = 'anonymous';
                     document.head.appendChild(script1);
 
                     await new Promise((resolve, reject) => {
-                        script1.onload = resolve;
-                        script1.onerror = reject;
-                        setTimeout(reject, 10000); // 10s timeout
+                        script1.onload = () => {
+                            console.log('p5.js loaded successfully');
+                            resolve(null);
+                        };
+                        script1.onerror = (error) => {
+                            console.error('Failed to load p5.js:', error);
+                            reject(error);
+                        };
+                        setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
                     });
+                } else {
+                    console.log('p5.js already loaded');
                 }
 
                 // Load Vanta.js topology effect
@@ -71,10 +83,18 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                     document.head.appendChild(script2);
 
                     await new Promise((resolve, reject) => {
-                        script2.onload = resolve;
-                        script2.onerror = reject;
-                        setTimeout(reject, 10000); // 10s timeout
+                        script2.onload = () => {
+                            console.log('Vanta.js loaded successfully');
+                            resolve(null);
+                        };
+                        script2.onerror = (error) => {
+                            console.error('Failed to load Vanta.js:', error);
+                            reject(error);
+                        };
+                        setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
                     });
+                } else {
+                    console.log('Vanta.js already loaded');
                 }
 
                 // Wait a bit for scripts to fully initialize
@@ -85,13 +105,18 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                     console.log('Initializing Vanta TOPOLOGY effect...');
                     vantaEffect.current = window.VANTA.TOPOLOGY({
                         el: vantaRef.current,
-                        mouseControls: true,
-                        touchControls: true,
+                        mouseControls: false,
+                        touchControls: false,
                         gyroControls: false,
                         minHeight: 200.00,
                         minWidth: 200.00,
                         scale: 1.00,
-                        scaleMobile: 1.00
+                        scaleMobile: 1.00,
+                        color: 0x6933ff, // Purple primary (development theme)
+                        backgroundColor: 0x0a0a0a, // Dark background
+                        points: 12.00,
+                        maxDistance: 25.00,
+                        spacing: 18.00
                     });
                     console.log('Vanta effect initialized:', vantaEffect.current);
                 } else {
@@ -487,7 +512,7 @@ kubectl apply -f k8s/
             </TabNavigation>
 
             {/* Content Sections */}
-            <ContentBGContainer $hasSticky={isScrolled}>
+            <ContentBGContainer $hasSticky={isScrolled} >
 
                 <ContentContainer $hasSticky={isScrolled}>
                     <ContentTransition $isTransitioning={isTransitioning}>
@@ -605,17 +630,6 @@ const ProjectContainer = styled.div`
   background: var(--color-black-primary);
   color: var(--color-text-primary);
   position: relative;
-  
-  /* Ensure Vanta.js background is behind content */
-  & > canvas {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: -10 !important; /* Further behind */
-    pointer-events: none !important; /* Prevent interaction blocking */
-  }
 `;
 
 const ProjectHeader = styled.header`
@@ -1065,7 +1079,7 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
   min-height: calc(100vh - 200px);
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
