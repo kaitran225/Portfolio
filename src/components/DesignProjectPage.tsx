@@ -553,12 +553,13 @@ const ProjectContainer = styled.div`
   position: relative;
   
   /* Ensure Vanta.js background is behind content */
+  /* Ensure Vanta.js background covers full content */
   & > canvas {
-    position: fixed !important;
+    position: absolute !important;
     top: 0;
     left: 0;
     width: 100% !important;
-    height: 100% !important;
+    height: 100% !important; /* Will match container height */
     z-index: -10 !important; /* Further behind */
     pointer-events: none !important; /* Prevent interaction blocking */
   }
@@ -997,11 +998,31 @@ const Tab = styled.button<{ $active: boolean }>`
 const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - 200px);
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+  max-height: 100vh;
+  overflow-y: auto;
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
+
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+  }
 
   ${props => props.$navHeight > 0 && `
     padding-top: ${props.$navHeight + 20}px;
@@ -1020,7 +1041,6 @@ const ContentContainer = styled.div<ContentContainerProps>`
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - ${props => props.$navHeight}px);
   
   ${props => props.$navHeight > 0 && `
     padding-top: ${props.$navHeight + 20}px;
@@ -1071,7 +1091,28 @@ const OverviewSection = styled.div`
 `;
 
 const ProcessSection = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
   animation: catalogSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom scrollbar for process section */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+  }
   
   @keyframes catalogSlideIn {
     from {
@@ -1086,7 +1127,28 @@ const ProcessSection = styled.div`
 `;
 
 const TypographySection = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
   animation: catalogFlipIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom scrollbar for typography section */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+  }
   
   @keyframes catalogFlipIn {
     from {
@@ -1101,7 +1163,28 @@ const TypographySection = styled.div`
 `;
 
 const MockupsSection = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
   animation: catalogZoomReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom scrollbar for mockups section */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+  }
   
   @keyframes catalogZoomReveal {
     from {

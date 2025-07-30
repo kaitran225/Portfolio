@@ -479,7 +479,6 @@ const LandingContainer = styled.div`
 `;
 
 const ContentBGContainer = styled.div`
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
   min-height: 100vh;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */

@@ -1078,11 +1078,31 @@ const Tab = styled.button<{ $active: boolean }>`
 const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - 200px);
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+  max-height: 100vh;
+  overflow-y: auto;
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
+
+  /* Custom scrollbar for content background container */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+  }
 
   ${props => props.$hasSticky && `
     padding-top: 80px; /* Add space for sticky nav */
@@ -1101,7 +1121,6 @@ const ContentContainer = styled.div<ContentContainerProps>`
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - 200px);
   transition: padding-top 0.3s ease;
   
   ${props => props.$hasSticky && `
@@ -1435,7 +1454,28 @@ const FeatureItem = styled.li`
 `;
 
 const CodeSection = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
   animation: catalogSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom scrollbar for code section */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+  }
   
   @keyframes catalogSlideIn {
     from {
@@ -1450,7 +1490,28 @@ const CodeSection = styled.div`
 `;
 
 const ReadmeSection = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
   animation: catalogFlipIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom scrollbar for readme section */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
+  }
   
   @keyframes catalogFlipIn {
     from {
