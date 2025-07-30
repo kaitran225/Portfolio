@@ -15,12 +15,14 @@
     "@types/react-dom": "^19.1.5",
     "@types/react-grid-layout": "^1.3.5",
     "@types/react-resizable": "^3.0.8",
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.34",
     "@types/three": "^0.176.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-grid-layout": "^1.5.1",
     "react-resizable": "^3.0.5",
+    "react-router-dom": "^7.7.1",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.18",
     "three": "^0.176.0",
@@ -33,7 +35,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "copy-assets": "node ./scripts/copyAssets.js",
-    "setup": "npm run copy-assets && npm start"
+    "generate-placeholders": "node ./scripts/generatePlaceholders.js",
+    "setup": "npm run copy-assets && npm run generate-placeholders && npm start",
+    "build-portfolio": "npm run copy-assets && npm run generate-placeholders && npm run build",
+    "deploy-prep": "npm run build-portfolio && node -e \"console.log('\\n🎯 Portfolio built successfully!\\n\\nTwo versions available:\\n• Full Interactive: Build folder or host /\\n• Simple Clean: Add ?view=simple to URL\\n\\n📤 Ready for deployment!')\"",
+    "preview": "npx serve build -s"
   },
   "eslintConfig": {
     "extends": [

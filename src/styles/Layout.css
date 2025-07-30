@@ -2,6 +2,46 @@
 :root {
   --container-border: 1px solid rgb(29, 27, 27);
   --container-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  --grid-column-width: 320px;
+  --grid-row-height: 160px;
+  --grid-line-color: rgba(100, 100, 100, 0.2);
+}
+
+/* Grid Guidelines */
+.grid-guidelines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* Allow clicking through the grid */
+}
+
+/* Vertical grid guidelines */
+.grid-guidelines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: var(--grid-column-width) 100%;
+  background-image: linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px);
+  background-position: 0 0;
+}
+
+/* Horizontal grid guidelines */
+.grid-guidelines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% var(--grid-row-height);
+  background-image: linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
+  background-position: 0 0;
 }
 
 .base {
@@ -13,6 +53,51 @@
   grid-template-areas: "CC DD FF";
   gap: 10px;
   padding: 10px;
+}
+
+/* Layout specific to react-grid-layout */
+.layout {
+  display: grid;
+  width: 100%;
+}
+
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, width, height;
+  min-width: var(--grid-column-width) !important;
+  min-height: var(--grid-row-height) !important;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform, width, height;
+}
+
+.react-grid-item.resizing {
+  z-index: 1;
+  will-change: width, height;
+}
+
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px dashed #2196f3;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+/* Remove the forced sizing that was added before */
+.react-grid-item.react-grid-item--custom {
+  /* These styles will now only enforce minimum sizes */
 }
 
 .CC {

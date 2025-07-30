@@ -20,6 +20,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ trackId, theme = '0' }) => {
 
   return (
     <iframe 
+      title={`Spotify Track ${trackId}`}
       style={{ borderRadius: '12px' }}
       src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=${theme}`} 
       width="100%"

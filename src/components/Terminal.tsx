@@ -4,11 +4,9 @@ import '../styles/Terminal.css';
 const Terminal: React.FC = () => {
   const [input, setInput] = useState('');
   const [outputs, setOutputs] = useState([
-    { text: 'This is just a temporary portfolio website.', type: 'cmd-output-green' },
-    { text: 'The official one is still under developing.', type: 'cmd-output-green' },
-    { text: 'Thank you for visting our website', type: 'cmd-output-green' },
-    { text: 'For further infomation please contact.', type: 'cmd-output-green' },
-    { text: 'https://www.instagram.com/kaitran.prt', type: 'link' },
+    { text: 'Welcome to Kai Tran\'s Portfolio Terminal', type: 'cmd-output-blue' },
+    { text: 'Type "help" to see available commands', type: 'cmd-output-green' },
+    { text: 'Available for OJT internship opportunities Fall 2025', type: 'cmd-output-green' },
     { text: '', type: 'cmd-output-green' }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,17 +34,72 @@ const Terminal: React.FC = () => {
     // Add the command to output
     const newOutputs = [
       ...outputs,
-      { text: `$Project_Cybriaz> ${cmd}`, type: 'cmd-input' }
+      { text: `$Portfolio> ${cmd}`, type: 'cmd-input' }
     ];
 
-    // Process command (can be expanded)
-    let response = { text: 'Command not recognized.', type: 'cmd-output-red' };
-    if (cmd.toLowerCase() === 'help') {
-      response = { text: 'Available commands: help, about, contact', type: 'cmd-output-green' };
-    } else if (cmd.toLowerCase() === 'about') {
-      response = { text: 'Portfolio website showcasing projects and skills.', type: 'cmd-output-green' };
-    } else if (cmd.toLowerCase() === 'contact') {
-      response = { text: 'https://www.instagram.com/kaitran.prt', type: 'link' };
+    // Process command
+    let response = { text: 'Command not recognized. Type "help" for available commands.', type: 'cmd-output-red' };
+    
+    const command = cmd.toLowerCase().trim();
+    
+    if (command === 'help') {
+      const helpCommands = [
+        'Available commands:',
+        '• help - Show this help message',
+        '• about - About Kai Tran',
+        '• skills - Technical skills',
+        '• projects - Featured projects',
+        '• contact - Contact information',
+        '• education - Educational background',
+        '• clear - Clear terminal output'
+      ];
+      setOutputs([...newOutputs, ...helpCommands.map(cmd => ({ text: cmd, type: 'cmd-output-green' })), { text: '', type: 'cmd-output-green' }]);
+      setInput('');
+      return;
+    } else if (command === 'about') {
+      response = { text: 'Full-Stack Developer passionate about modern web technologies. Experienced in React, TypeScript, Node.js, and cloud solutions.', type: 'cmd-output-green' };
+    } else if (command === 'skills') {
+      const skills = [
+        'Technical Skills:',
+        '• Frontend: React, TypeScript, Next.js, Three.js',
+        '• Backend: Node.js, Python, MongoDB, PostgreSQL',
+        '• Cloud: AWS, Docker, Kubernetes, Terraform',
+        '• Tools: Git, Webpack, Jest, CI/CD'
+      ];
+      setOutputs([...newOutputs, ...skills.map(skill => ({ text: skill, type: 'cmd-output-green' })), { text: '', type: 'cmd-output-green' }]);
+      setInput('');
+      return;
+    } else if (command === 'projects') {
+      const projects = [
+        'Featured Projects:',
+        '• Calantha - Interactive Media Platform',
+        '• Zena - UI/UX Design System',
+        '• Slab - E-commerce Solution',
+        '• GateWay - API Gateway Service',
+        '• Cloud - Infrastructure Solutions'
+      ];
+      setOutputs([...newOutputs, ...projects.map(proj => ({ text: proj, type: 'cmd-output-green' })), { text: '', type: 'cmd-output-green' }]);
+      setInput('');
+      return;
+    } else if (command === 'contact') {
+      const contacts = [
+        'Contact Information:',
+        '• GitHub: https://github.com/kaitran225',
+        '• Instagram: https://www.instagram.com/kaitran.prt',
+        '• Email: Available upon request'
+      ];
+      setOutputs([...newOutputs, ...contacts.map(contact => ({ text: contact, type: contact.includes('http') ? 'link' : 'cmd-output-green' })), { text: '', type: 'cmd-output-green' }]);
+      setInput('');
+      return;
+    } else if (command === 'education') {
+      response = { text: 'Currently pursuing degree at FPT University - High-ranking institution preparing for OJT Fall 2025', type: 'cmd-output-green' };
+    } else if (command === 'clear') {
+      setOutputs([
+        { text: 'Terminal cleared. Type "help" for available commands.', type: 'cmd-output-green' },
+        { text: '', type: 'cmd-output-green' }
+      ]);
+      setInput('');
+      return;
     }
 
     setOutputs([...newOutputs, response, { text: '', type: 'cmd-output-green' }]);
@@ -55,26 +108,27 @@ const Terminal: React.FC = () => {
 
   return (
     <>
-      <div id="commandheader">Command Prompt</div>
+      <div id="commandheader">Portfolio Terminal</div>
       <div id="container">
         <div id="containerPrompt">
           <div id="output">
             {outputs.map((output, index) => (
               output.type === 'link' ? (
-                <a href={output.text} key={index}>{output.text}</a>
+                <a href={output.text} key={index} target="_blank" rel="noopener noreferrer">{output.text}</a>
               ) : (
                 <div className={output.type} key={index}>&gt; {output.text}</div>
               )
             ))}
           </div>
           <div id="promptBox">
-            <div id="prompt">$Project_Cybriaz&gt;</div>
+            <div id="prompt">$Portfolio&gt;</div>
             <input 
               id="cmdline" 
               ref={inputRef}
               value={input}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
+              placeholder="Type a command..."
             />
           </div>
         </div>
@@ -83,4 +137,4 @@ const Terminal: React.FC = () => {
   );
 };
 
-export default Terminal; 
+export default Terminal;

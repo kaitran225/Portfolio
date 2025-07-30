@@ -35,7 +35,7 @@
   flex: 1;
   overflow-y: auto;
   margin-bottom: 5px;
-  white-space: pre-wrap;
+  white-space: pre-wrap;  
   word-wrap: break-word;
   padding: 5px;
   font-size: 14px;
@@ -71,6 +71,11 @@
   color: #0f0;
 }
 
+.cmd-output-blue {
+  color: #0af;
+  font-weight: bold;
+}
+
 .cmd-output-red {
   color: #f00;
 }
@@ -86,4 +91,9 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+#cmdline::placeholder {
+  color: #555;
+  font-style: italic;
 } 
