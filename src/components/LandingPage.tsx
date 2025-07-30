@@ -28,32 +28,52 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const loadVanta = async () => {
       try {
+        console.log('Starting Vanta.js loading process...');
+        
         // Load p5.js first
         if (!window.p5) {
+          console.log('Loading p5.js...');
           const script1 = document.createElement('script');
-          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+          script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
           script1.crossOrigin = 'anonymous';
           document.head.appendChild(script1);
 
           await new Promise((resolve, reject) => {
-            script1.onload = resolve;
-            script1.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
+            script1.onload = () => {
+              console.log('p5.js loaded successfully');
+              resolve(null);
+            };
+            script1.onerror = (error) => {
+              console.error('Failed to load p5.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
           });
+        } else {
+          console.log('p5.js already loaded');
         }
 
         // Load Vanta.js topology effect
         if (!window.VANTA) {
+          console.log('Loading Vanta.js...');
           const script2 = document.createElement('script');
           script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
           script2.crossOrigin = 'anonymous';
           document.head.appendChild(script2);
 
           await new Promise((resolve, reject) => {
-            script2.onload = resolve;
-            script2.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
+            script2.onload = () => {
+              console.log('Vanta.js loaded successfully');
+              resolve(null);
+            };
+            script2.onerror = (error) => {
+              console.error('Failed to load Vanta.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
           });
+        } else {
+          console.log('Vanta.js already loaded');
         }
 
         // Wait a bit for scripts to fully initialize
@@ -61,6 +81,7 @@ const LandingPage: React.FC = () => {
 
         // Initialize Vanta effect
         if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          console.log('Initializing Vanta TOPOLOGY effect...');
           vantaEffect.current = window.VANTA.TOPOLOGY({
             el: vantaRef.current,
             mouseControls: true,
@@ -69,13 +90,15 @@ const LandingPage: React.FC = () => {
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x6933ff, // Purple primary
-            backgroundColor: 0x0a0a0a, // Black primary
-            points: 12.00,
-            maxDistance: 25.00,
-            spacing: 18.00,
-            showDots: true
+            scaleMobile: 1.00
+          });
+          console.log('Vanta effect initialized:', vantaEffect.current);
+        } else {
+          console.log('Vanta initialization failed:', {
+            VANTA: !!window.VANTA,
+            TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
+            element: !!vantaRef.current,
+            alreadyExists: !!vantaEffect.current
           });
         }
       } catch (error) {

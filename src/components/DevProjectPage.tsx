@@ -52,7 +52,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                 // Load p5.js first
                 if (!window.p5) {
                     const script1 = document.createElement('script');
-                    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+                    script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
                     script1.crossOrigin = 'anonymous';
                     document.head.appendChild(script1);
 
@@ -82,6 +82,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
 
                 // Initialize Vanta effect
                 if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+                    console.log('Initializing Vanta TOPOLOGY effect...');
                     vantaEffect.current = window.VANTA.TOPOLOGY({
                         el: vantaRef.current,
                         mouseControls: true,
@@ -91,6 +92,14 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                         minWidth: 200.00,
                         scale: 1.00,
                         scaleMobile: 1.00
+                    });
+                    console.log('Vanta effect initialized:', vantaEffect.current);
+                } else {
+                    console.log('Vanta initialization failed:', {
+                        VANTA: !!window.VANTA,
+                        TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
+                        element: !!vantaRef.current,
+                        alreadyExists: !!vantaEffect.current
                     });
                 }
             } catch (error) {

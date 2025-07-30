@@ -61,7 +61,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         // Load p5.js first
         if (!window.p5) {
           const script1 = document.createElement('script');
-          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+          script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
           script1.crossOrigin = 'anonymous';
           document.head.appendChild(script1);
           
@@ -73,7 +73,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         }
 
         // Load Vanta.js topology effect
-        if (!window.p5) {
+        if (!window.VANTA) {
           const script2 = document.createElement('script');
           script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
           script2.crossOrigin = 'anonymous';
@@ -91,6 +91,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
         // Initialize Vanta effect
         if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          console.log('Initializing Vanta TOPOLOGY effect...');
           vantaEffect.current = window.VANTA.TOPOLOGY({
             el: vantaRef.current,
             mouseControls: true,
@@ -99,13 +100,15 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x00ff88, // Green primary for design
-            backgroundColor: 0x0a0a0a, // Black primary
-            points: 10.00,
-            maxDistance: 22.00,
-            spacing: 17.00,
-            showDots: true
+            scaleMobile: 1.00
+          });
+          console.log('Vanta effect initialized:', vantaEffect.current);
+        } else {
+          console.log('Vanta initialization failed:', {
+            VANTA: !!window.VANTA,
+            TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
+            element: !!vantaRef.current,
+            alreadyExists: !!vantaEffect.current
           });
         }
       } catch (error) {
