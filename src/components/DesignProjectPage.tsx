@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 interface DesignProjectProps {
@@ -39,6 +39,28 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'typography' | 'mockups'>('overview');
   const [selectedImageCategory, setSelectedImageCategory] = useState<'final' | 'process' | 'mockups'>('final');
   const [selectedImage, setSelectedImage] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  // Handle scroll for sticky navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const header = document.querySelector('[data-header="design-project-header"]') as HTMLElement;
+      
+      if (header && headerHeight === 0) {
+        setHeaderHeight(header.offsetHeight);
+      }
+      
+      // Navigation becomes sticky when header is fully scrolled past
+      setIsScrolled(scrollTop >= headerHeight);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [headerHeight]);
 
   // Dummy design project data - replace with real data based on projectId
   const projectData: DesignProjectData = {
@@ -108,7 +130,7 @@ The final identity system includes a custom logotype, comprehensive color palett
   return (
     <ProjectContainer>
       {/* Header */}
-      <ProjectHeader>
+      <ProjectHeader data-header="design-project-header">
         <BackButton onClick={() => window.history.back()}>
           ← Back to Projects
         </BackButton>
@@ -139,35 +161,39 @@ The final identity system includes a custom logotype, comprehensive color palett
       </ProjectHeader>
 
       {/* Navigation Tabs */}
-      <TabNavigation>
+      <TabNavigation $isSticky={isScrolled} data-sticky={isScrolled}>
         <Tab 
           active={activeTab === 'overview'} 
           onClick={() => setActiveTab('overview')}
+          style={{ '--tab-index': 0 } as React.CSSProperties}
         >
           🎨 Overview
         </Tab>
         <Tab 
           active={activeTab === 'process'} 
           onClick={() => setActiveTab('process')}
+          style={{ '--tab-index': 1 } as React.CSSProperties}
         >
           🧠 Thought Process
         </Tab>
         <Tab 
           active={activeTab === 'typography'} 
           onClick={() => setActiveTab('typography')}
+          style={{ '--tab-index': 2 } as React.CSSProperties}
         >
           🔤 Typography & Colors
         </Tab>
         <Tab 
           active={activeTab === 'mockups'} 
           onClick={() => setActiveTab('mockups')}
+          style={{ '--tab-index': 3 } as React.CSSProperties}
         >
           📱 Applications
         </Tab>
       </TabNavigation>
 
       {/* Content Sections */}
-      <ContentContainer>
+      <ContentContainer $navHeight={isScrolled ? 70 : 0}>
         {activeTab === 'overview' && (
           <OverviewSection>
             <Section>
@@ -351,6 +377,14 @@ The final identity system includes a custom logotype, comprehensive color palett
 };
 
 // Styled Components
+interface TabNavigationProps {
+  $isSticky: boolean;
+}
+
+interface ContentContainerProps {
+  $navHeight: number;
+}
+
 const ProjectContainer = styled.div`
   min-height: 100vh;
   background: var(--color-black-primary);
@@ -481,7 +515,7 @@ const ToolTag = styled.span`
   }
 `;
 
-const TabNavigation = styled.nav`
+const TabNavigation = styled.nav<TabNavigationProps>`
   background: rgba(0, 0, 0, 0.2);
   padding: 0 20px;
   display: flex;
@@ -489,6 +523,63 @@ const TabNavigation = styled.nav`
   gap: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   overflow-x: auto;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  ${props => props.$isSticky && `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(105, 51, 255, 0.3);
+    padding: 0 20px;
+    height: 60px;
+    
+    /* Sliver bar animation */
+    animation: slideInFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    @keyframes slideInFromTop {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Sliver bar glow effect */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--color-purple-primary), 
+        var(--color-green-primary), 
+        var(--color-purple-primary), 
+        transparent
+      );
+      animation: sliverGlow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes sliverGlow {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  `}
 `;
 
 const Tab = styled.button<{ active: boolean }>`
@@ -499,19 +590,68 @@ const Tab = styled.button<{ active: boolean }>`
   cursor: pointer;
   font-weight: 600;
   border-bottom: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
   
   &:hover {
     background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
     border-bottom-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
+    transform: translateY(-1px);
+  }
+  
+  /* Sliver bar shimmer effect */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.1), 
+      transparent
+    );
+    transition: all 0.6s ease;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  /* Individual tab slide-in animation when nav becomes sticky */
+  ${TabNavigation}[data-sticky="true"] & {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+    border-bottom-width: 2px;
+    animation: tabSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: calc(var(--tab-index, 0) * 0.1s);
+    animation-fill-mode: both;
+    
+    @keyframes tabSlideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   }
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.div<ContentContainerProps>`
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
+  min-height: calc(100vh - ${props => props.$navHeight}px);
+  
+  ${props => props.$navHeight > 0 && `
+    padding-top: ${props.$navHeight + 20}px;
+  `}
 `;
 
 const OverviewSection = styled.div``;
