@@ -28,6 +28,20 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const loadVanta = async () => {
       try {
+        // Load p5.js first
+        if (!window.p5) {
+          const script1 = document.createElement('script');
+          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+          script1.crossOrigin = 'anonymous';
+          document.head.appendChild(script1);
+
+          await new Promise((resolve, reject) => {
+            script1.onload = resolve;
+            script1.onerror = reject;
+            setTimeout(reject, 10000); // 10s timeout
+          });
+        }
+
         // Load Vanta.js topology effect
         if (!window.VANTA) {
           const script2 = document.createElement('script');
@@ -331,19 +345,19 @@ const LandingPage: React.FC = () => {
         {/* Category Filter */}
         <CategoryFilter>
           <FilterButton 
-            active={selectedCategory === 'all'}
+            $active={selectedCategory === 'all'}
             onClick={() => setSelectedCategory('all')}
           >
             All Projects ({projects.length})
           </FilterButton>
           <FilterButton 
-            active={selectedCategory === 'development'}
+            $active={selectedCategory === 'development'}
             onClick={() => setSelectedCategory('development')}
           >
             💻 Development ({projects.filter(p => p.category === 'development').length})
           </FilterButton>
           <FilterButton 
-            active={selectedCategory === 'design'}
+            $active={selectedCategory === 'design'}
             onClick={() => setSelectedCategory('design')}
           >
             🎨 Design ({projects.filter(p => p.category === 'design').length})
@@ -751,10 +765,10 @@ const CategoryFilter = styled.div`
   flex-wrap: wrap;
 `;
 
-const FilterButton = styled.button<{ active?: boolean }>`
-  background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-black-secondary)'};
-  color: ${props => props.active ? 'var(--color-text-primary)' : 'var(--color-text-muted)'};
-  border: 2px solid ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-gray-dark)'};
+const FilterButton = styled.button<{ $active?: boolean }>`
+  background: ${props => props.$active ? 'var(--color-purple-primary)' : 'var(--color-black-secondary)'};
+  color: ${props => props.$active ? 'var(--color-text-primary)' : 'var(--color-text-muted)'};
+  border: 2px solid ${props => props.$active ? 'var(--color-purple-primary)' : 'var(--color-gray-dark)'};
   padding: 12px 24px;
   border-radius: 25px;
   font-weight: 600;

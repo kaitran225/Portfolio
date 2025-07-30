@@ -73,7 +73,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         }
 
         // Load Vanta.js topology effect
-        if (!window.VANTA) {
+        if (!window.p5) {
           const script2 = document.createElement('script');
           script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
           script2.crossOrigin = 'anonymous';
@@ -288,28 +288,28 @@ The final identity system includes a custom logotype, comprehensive color palett
       {/* Navigation Tabs */}
       <TabNavigation $isSticky={isScrolled} data-sticky={isScrolled}>
         <Tab 
-          active={activeTab === 'overview'} 
+          $active={activeTab === 'overview'} 
           onClick={() => handleTabSwitch('overview')}
           style={{ '--tab-index': 0 } as React.CSSProperties}
         >
           🎨 Overview
         </Tab>
         <Tab 
-          active={activeTab === 'process'} 
+          $active={activeTab === 'process'} 
           onClick={() => handleTabSwitch('process')}
           style={{ '--tab-index': 1 } as React.CSSProperties}
         >
           🧠 Thought Process
         </Tab>
         <Tab 
-          active={activeTab === 'typography'} 
+          $active={activeTab === 'typography'} 
           onClick={() => handleTabSwitch('typography')}
           style={{ '--tab-index': 2 } as React.CSSProperties}
         >
           🔤 Typography & Colors
         </Tab>
         <Tab 
-          active={activeTab === 'mockups'} 
+          $active={activeTab === 'mockups'} 
           onClick={() => handleTabSwitch('mockups')}
           style={{ '--tab-index': 3 } as React.CSSProperties}
         >
@@ -334,7 +334,7 @@ The final identity system includes a custom logotype, comprehensive color palett
                 <SectionTitle>Final Designs</SectionTitle>
                 <ImageCategoryTabs>
                   <CategoryTab 
-                    active={selectedImageCategory === 'final'}
+                    $active={selectedImageCategory === 'final'}
                     onClick={() => {
                       setSelectedImageCategory('final');
                       setSelectedImage(0);
@@ -343,7 +343,7 @@ The final identity system includes a custom logotype, comprehensive color palett
                     Final Designs
                   </CategoryTab>
                   <CategoryTab 
-                    active={selectedImageCategory === 'process'}
+                    $active={selectedImageCategory === 'process'}
                     onClick={() => {
                       setSelectedImageCategory('process');
                       setSelectedImage(0);
@@ -352,7 +352,7 @@ The final identity system includes a custom logotype, comprehensive color palett
                     Process Work
                   </CategoryTab>
                   <CategoryTab 
-                    active={selectedImageCategory === 'mockups'}
+                    $active={selectedImageCategory === 'mockups'}
                     onClick={() => {
                       setSelectedImageCategory('mockups');
                       setSelectedImage(0);
@@ -374,7 +374,7 @@ The final identity system includes a custom logotype, comprehensive color palett
                 {currentImages.map((image, index) => (
                   <Thumbnail 
                     key={index}
-                    active={index === selectedImage}
+                    $active={index === selectedImage}
                     onClick={() => setSelectedImage(index)}
                   >
                     <img src={image} alt={`Thumbnail ${index + 1}`} />
@@ -905,22 +905,22 @@ const TabNavigation = styled.nav<TabNavigationProps>`
   `}
 `;
 
-const Tab = styled.button<{ active: boolean }>`
-  background: ${props => props.active ? 'var(--color-purple-primary)' : 'transparent'};
+const Tab = styled.button<{ $active: boolean }>`
+  background: ${props => props.$active ? 'var(--color-purple-primary)' : 'transparent'};
   color: var(--color-text-primary);
   border: none;
   padding: 15px 30px;
   cursor: pointer;
   font-weight: 600;
-  border-bottom: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
+  border-bottom: 3px solid ${props => props.$active ? 'var(--color-green-primary)' : 'transparent'};
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   position: relative;
   overflow: hidden;
   
   &:hover {
-    background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
-    border-bottom-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
+    background: ${props => props.$active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
+    border-bottom-color: ${props => props.$active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
     transform: translateY(-1px);
   }
   
@@ -1167,9 +1167,9 @@ const ImageCategoryTabs = styled.div`
   gap: 10px;
 `;
 
-const CategoryTab = styled.button<{ active: boolean }>`
-  background: ${props => props.active ? 'white' : 'rgba(255, 255, 255, 0.1)'};
-  color: ${props => props.active ? '#ff6b6b' : 'white'};
+const CategoryTab = styled.button<{ $active: boolean }>`
+  background: ${props => props.$active ? 'white' : 'rgba(255, 255, 255, 0.1)'};
+  color: ${props => props.$active ? '#ff6b6b' : 'white'};
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -1204,12 +1204,12 @@ const ImageThumbnails = styled.div`
   padding: 10px 0;
 `;
 
-const Thumbnail = styled.div<{ active: boolean }>`
+const Thumbnail = styled.div<{ $active: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
-  border: 3px solid ${props => props.active ? 'white' : 'transparent'};
+  border: 3px solid ${props => props.$active ? 'white' : 'transparent'};
   transition: all 0.3s ease;
   
   img {

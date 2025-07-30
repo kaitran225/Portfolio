@@ -49,6 +49,20 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     useEffect(() => {
         const loadVanta = async () => {
             try {
+                // Load p5.js first
+                if (!window.p5) {
+                    const script1 = document.createElement('script');
+                    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+                    script1.crossOrigin = 'anonymous';
+                    document.head.appendChild(script1);
+
+                    await new Promise((resolve, reject) => {
+                        script1.onload = resolve;
+                        script1.onerror = reject;
+                        setTimeout(reject, 10000); // 10s timeout
+                    });
+                }
+
                 // Load Vanta.js topology effect
                 if (!window.VANTA) {
                     const script2 = document.createElement('script');
@@ -76,13 +90,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                         minHeight: 200.00,
                         minWidth: 200.00,
                         scale: 1.00,
-                        scaleMobile: 1.00,
-                        color: 0x6933ff, // Purple primary
-                        backgroundColor: 0x0a0a0a, // Black primary
-                        points: 12.00,
-                        maxDistance: 25.00,
-                        spacing: 18.00,
-                        showDots: true
+                        scaleMobile: 1.00
                     });
                 }
             } catch (error) {
@@ -444,25 +452,25 @@ kubectl apply -f k8s/
                 data-nav="tab-navigation"
             >
                 <Tab
-                    active={activeTab === 'overview'}
+                    $active={activeTab === 'overview'}
                     onClick={() => handleTabSwitch('overview')}
                 >
                     <span>📋</span> Overview
                 </Tab>
                 <Tab
-                    active={activeTab === 'code'}
+                    $active={activeTab === 'code'}
                     onClick={() => handleTabSwitch('code')}
                 >
                     <span>💻</span> Code Preview
                 </Tab>
                 <Tab
-                    active={activeTab === 'readme'}
+                    $active={activeTab === 'readme'}
                     onClick={() => handleTabSwitch('readme')}
                 >
                     <span>📖</span> Documentation
                 </Tab>
                 <Tab
-                    active={activeTab === 'demo'}
+                    $active={activeTab === 'demo'}
                     onClick={() => handleTabSwitch('demo')}
                 >
                     <span>🎥</span> Demo
@@ -492,7 +500,7 @@ kubectl apply -f k8s/
                                         {projectData.images.map((image, index) => (
                                             <Thumbnail
                                                 key={index}
-                                                active={index === selectedImage}
+                                                $active={index === selectedImage}
                                                 onClick={() => setSelectedImage(index)}
                                             >
                                                 <img src={image} alt={`Thumbnail ${index + 1}`} />
@@ -971,14 +979,14 @@ const TabNavigation = styled.nav<TabNavigationProps>`
   }
 `;
 
-const Tab = styled.button<{ active: boolean }>`
-  background: ${props => props.active ? 'var(--color-purple-primary)' : 'transparent'};
+const Tab = styled.button<{ $active: boolean }>`
+  background: ${props => props.$active ? 'var(--color-purple-primary)' : 'transparent'};
   color: var(--color-text-primary);
   border: none;
   padding: 15px 30px;
   cursor: pointer;
   font-weight: 600;
-  border-bottom: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
+  border-bottom: 3px solid ${props => props.$active ? 'var(--color-green-primary)' : 'transparent'};
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
@@ -1011,8 +1019,8 @@ const Tab = styled.button<{ active: boolean }>`
   }
   
   &:hover {
-    background: ${props => props.active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
-    border-bottom-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
+    background: ${props => props.$active ? 'var(--color-purple-primary)' : 'var(--color-purple-secondary)'};
+    border-bottom-color: ${props => props.$active ? 'var(--color-green-primary)' : 'var(--color-green-secondary)'};
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 8px 25px rgba(105, 51, 255, 0.3);
   }
@@ -1023,7 +1031,7 @@ const Tab = styled.button<{ active: boolean }>`
   
   /* Responsive adjustments for sticky state */
   ${TabNavigation}[data-nav="tab-navigation"] & {
-    ${props => props.active && `
+    ${props => props.$active && `
       border-bottom-color: var(--color-green-primary);
     `}
   }
@@ -1272,12 +1280,12 @@ const ImageThumbnails = styled.div`
   }
 `;
 
-const Thumbnail = styled.div<{ active: boolean }>`
+const Thumbnail = styled.div<{ $active: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
-  border: 3px solid ${props => props.active ? 'var(--color-green-primary)' : 'transparent'};
+  border: 3px solid ${props => props.$active ? 'var(--color-green-primary)' : 'transparent'};
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   
@@ -1299,7 +1307,7 @@ const Thumbnail = styled.div<{ active: boolean }>`
   }
   
   &:hover {
-    border-color: ${props => props.active ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
+    border-color: ${props => props.$active ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
