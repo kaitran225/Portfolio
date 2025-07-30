@@ -5,204 +5,204 @@ import MarkdownRenderer from './MarkdownRenderer';
 
 // Vanta.js topology effect
 declare global {
-  interface Window {
-    VANTA: any;
-    THREE: any;
-  }
+    interface Window {
+        VANTA: any;
+        p5: any;
+    }
 }
 
 interface DevProjectProps {
-  projectId: string;
+    projectId: string;
 }
 
 interface ProjectData {
-  id: string;
-  title: string;
-  description: string;
-  longDescription: string;
-  technologies: string[];
-  githubUrl: string;
-  liveUrl?: string;
-  images: string[];
-  videoDemo?: string;
-  codePreview: {
-    fileName: string;
-    language: string;
-    code: string;
-  }[];
-  readme: string;
-  features: string[];
-  challenges: string[];
+    id: string;
+    title: string;
+    description: string;
+    longDescription: string;
+    technologies: string[];
+    githubUrl: string;
+    liveUrl?: string;
+    images: string[];
+    videoDemo?: string;
+    codePreview: {
+        fileName: string;
+        language: string;
+        code: string;
+    }[];
+    readme: string;
+    features: string[];
+    challenges: string[];
 }
 
 const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'readme' | 'demo'>('overview');
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [tabKey, setTabKey] = useState(0); // Force re-render for animations
-  const vantaRef = useRef<HTMLDivElement>(null);
-  const vantaEffect = useRef<any>(null);
+    const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'readme' | 'demo'>('overview');
+    const [selectedImage, setSelectedImage] = useState(0);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [headerHeight, setHeaderHeight] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+    const vantaRef = useRef<HTMLDivElement>(null);
+    const vantaEffect = useRef<any>(null);
 
-  // Initialize Vanta.js topology background
-  useEffect(() => {
-    const loadVanta = async () => {
-      try {
-        // Load Three.js first
-        if (!window.THREE) {
-          const script1 = document.createElement('script');
-          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
-          script1.crossOrigin = 'anonymous';
-          document.head.appendChild(script1);
-          
-          await new Promise((resolve, reject) => {
-            script1.onload = resolve;
-            script1.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
-          });
-        }
+    // Initialize Vanta.js topology background
+    useEffect(() => {
+        const loadVanta = async () => {
+            try {
+                // Load p5.js first
+                if (!window.p5) {
+                    const script1 = document.createElement('script');
+                    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js';
+                    script1.crossOrigin = 'anonymous';
+                    document.head.appendChild(script1);
 
-        // Load Vanta.js topology effect
-        if (!window.VANTA) {
-          const script2 = document.createElement('script');
-          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
-          script2.crossOrigin = 'anonymous';
-          document.head.appendChild(script2);
-          
-          await new Promise((resolve, reject) => {
-            script2.onload = resolve;
-            script2.onerror = reject;
-            setTimeout(reject, 10000); // 10s timeout
-          });
-        }
+                    await new Promise((resolve, reject) => {
+                        script1.onload = resolve;
+                        script1.onerror = reject;
+                        setTimeout(reject, 10000); // 10s timeout
+                    });
+                }
 
-        // Wait a bit for scripts to fully initialize
-        await new Promise(resolve => setTimeout(resolve, 100));
+                // Load Vanta.js topology effect
+                if (!window.VANTA) {
+                    const script2 = document.createElement('script');
+                    script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
+                    script2.crossOrigin = 'anonymous';
+                    document.head.appendChild(script2);
 
-        // Initialize Vanta effect
-        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
-          vantaEffect.current = window.VANTA.TOPOLOGY({
-            el: vantaRef.current,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x6933ff, // Purple primary
-            backgroundColor: 0x0a0a0a, // Black primary
-            points: 12.00,
-            maxDistance: 25.00,
-            spacing: 18.00,
-            showDots: true
-          });
-        }
-      } catch (error) {
-        console.warn('Failed to load Vanta.js:', error);
-        // Fallback: Create a simple animated background
-        if (vantaRef.current) {
-          vantaRef.current.style.background = `
+                    await new Promise((resolve, reject) => {
+                        script2.onload = resolve;
+                        script2.onerror = reject;
+                        setTimeout(reject, 10000); // 10s timeout
+                    });
+                }
+
+                // Wait a bit for scripts to fully initialize
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Initialize Vanta effect
+                if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+                    vantaEffect.current = window.VANTA.TOPOLOGY({
+                        el: vantaRef.current,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: 0x6933ff, // Purple primary
+                        backgroundColor: 0x0a0a0a, // Black primary
+                        points: 12.00,
+                        maxDistance: 25.00,
+                        spacing: 18.00,
+                        showDots: true
+                    });
+                }
+            } catch (error) {
+                console.warn('Failed to load Vanta.js:', error);
+                // Fallback: Create a simple animated background
+                if (vantaRef.current) {
+                    vantaRef.current.style.background = `
             radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
             radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
             radial-gradient(circle at 40% 60%, rgba(105, 51, 255, 0.1) 0%, transparent 50%)
           `;
-        }
-      }
+                }
+            }
+        };
+
+        // Delay loading to ensure DOM is ready
+        const timer = setTimeout(loadVanta, 100);
+
+        return () => {
+            clearTimeout(timer);
+            if (vantaEffect.current) {
+                try {
+                    vantaEffect.current.destroy();
+                } catch (e) {
+                    console.warn('Error destroying Vanta effect:', e);
+                }
+                vantaEffect.current = null;
+            }
+        };
+    }, []);
+
+    // Enhanced tab switching with transition
+    const handleTabSwitch = (newTab: 'overview' | 'code' | 'readme' | 'demo') => {
+        if (newTab === activeTab) return;
+
+        setIsTransitioning(true);
+
+        // Smooth transition timing
+        setTimeout(() => {
+            setActiveTab(newTab);
+            setTabKey(prev => prev + 1); // Force animation restart
+
+            setTimeout(() => {
+                setIsTransitioning(false);
+            }, 100);
+        }, 150);
     };
 
-    // Delay loading to ensure DOM is ready
-    const timer = setTimeout(loadVanta, 100);
+    // Handle scroll for sticky navigation
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            const header = document.querySelector('[data-header="project-header"]') as HTMLElement;
 
-    return () => {
-      clearTimeout(timer);
-      if (vantaEffect.current) {
-        try {
-          vantaEffect.current.destroy();
-        } catch (e) {
-          console.warn('Error destroying Vanta effect:', e);
-        }
-        vantaEffect.current = null;
-      }
-    };
-  }, []);
+            if (header && headerHeight === 0) {
+                setHeaderHeight(header.offsetHeight);
+            }
 
-  // Enhanced tab switching with transition
-  const handleTabSwitch = (newTab: 'overview' | 'code' | 'readme' | 'demo') => {
-    if (newTab === activeTab) return;
-    
-    setIsTransitioning(true);
-    
-    // Smooth transition timing
-    setTimeout(() => {
-      setActiveTab(newTab);
-      setTabKey(prev => prev + 1); // Force animation restart
-      
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 100);
-    }, 150);
-  };
+            // Calculate when navigation should become sticky
+            const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
+            setIsScrolled(shouldBeSticky);
+        };
 
-  // Handle scroll for sticky navigation
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const header = document.querySelector('[data-header="project-header"]') as HTMLElement;
-      
-      if (header && headerHeight === 0) {
-        setHeaderHeight(header.offsetHeight);
-      }
-      
-      // Calculate when navigation should become sticky
-      const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
-      setIsScrolled(shouldBeSticky);
-    };
+        // Throttle scroll events for better performance
+        let ticking = false;
+        const throttledHandleScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
 
-    // Throttle scroll events for better performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+        window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+        handleScroll(); // Check initial state
 
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    handleScroll(); // Check initial state
-    
-    return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, [headerHeight]);
+        return () => window.removeEventListener('scroll', throttledHandleScroll);
+    }, [headerHeight]);
 
-  // Dummy project data - replace with real data based on projectId
-  const projectData: ProjectData = {
-    id: 'calantha-platform',
-    title: 'Calantha Interactive Platform',
-    description: 'Full-stack web application with real-time video processing and interactive media features.',
-    longDescription: `Calantha is a comprehensive interactive media platform that combines real-time video processing with social features. Built using modern web technologies, it provides users with tools to create, edit, and share multimedia content seamlessly.
+    // Dummy project data - replace with real data based on projectId
+    const projectData: ProjectData = {
+        id: 'calantha-platform',
+        title: 'Calantha Interactive Platform',
+        description: 'Full-stack web application with real-time video processing and interactive media features.',
+        longDescription: `Calantha is a comprehensive interactive media platform that combines real-time video processing with social features. Built using modern web technologies, it provides users with tools to create, edit, and share multimedia content seamlessly.
 
 The platform features a microservices architecture with separate services for user management, media processing, real-time communication, and content delivery. The frontend is built with React and TypeScript, providing a responsive and intuitive user interface.
 
 Key technical achievements include implementing WebRTC for real-time video communication, optimizing media processing pipelines, and creating a scalable backend infrastructure capable of handling thousands of concurrent users.`,
-    technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS S3', 'Docker', 'Kubernetes'],
-    githubUrl: 'https://github.com/kaitran225/calantha-platform',
-    liveUrl: 'https://calantha-demo.vercel.app',
-    images: [
-      '/assets/projects/calantha/screenshot-1.jpg',
-      '/assets/projects/calantha/screenshot-2.jpg',
-      '/assets/projects/calantha/screenshot-3.jpg',
-      '/assets/projects/calantha/architecture.jpg'
-    ],
-    videoDemo: '/assets/projects/calantha/demo-video.mp4',
-    codePreview: [
-      {
-        fileName: 'components/VideoPlayer.tsx',
-        language: 'typescript',
-        code: `import React, { useRef, useEffect, useState } from 'react';
+        technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS S3', 'Docker', 'Kubernetes'],
+        githubUrl: 'https://github.com/kaitran225/calantha-platform',
+        liveUrl: 'https://calantha-demo.vercel.app',
+        images: [
+            '/assets/projects/calantha/screenshot-1.jpg',
+            '/assets/projects/calantha/screenshot-2.jpg',
+            '/assets/projects/calantha/screenshot-3.jpg',
+            '/assets/projects/calantha/architecture.jpg'
+        ],
+        videoDemo: '/assets/projects/calantha/demo-video.mp4',
+        codePreview: [
+            {
+                fileName: 'components/VideoPlayer.tsx',
+                language: 'typescript',
+                code: `import React, { useRef, useEffect, useState } from 'react';
 import { WebRTCService } from '../services/webrtc';
 
 interface VideoPlayerProps {
@@ -265,11 +265,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     </VideoContainer>
   );
 };`
-      },
-      {
-        fileName: 'services/webrtc.ts',
-        language: 'typescript',
-        code: `export class WebRTCService {
+            },
+            {
+                fileName: 'services/webrtc.ts',
+                language: 'typescript',
+                code: `export class WebRTCService {
   private static peerConnections: Map<string, RTCPeerConnection> = new Map();
   private static localStream: MediaStream | null = null;
 
@@ -321,9 +321,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     return pc;
   }
 }`
-      }
-    ],
-    readme: `# Calantha Interactive Platform
+            }
+        ],
+        readme: `# Calantha Interactive Platform
 
 A modern full-stack web application for interactive media sharing and real-time communication.
 
@@ -405,193 +405,196 @@ kubectl apply -f k8s/
 - **Bundle Size**: < 200KB gzipped
 - **API Response Time**: < 100ms average
 - **Video Processing**: Real-time at 30fps`,
-    features: [
-      'Real-time video streaming with WebRTC',
-      'Scalable microservices architecture',
-      'Advanced media processing pipeline',
-      'Social networking features',
-      'Progressive Web App (PWA)',
-      'Mobile-responsive design',
-      'Real-time notifications',
-      'Content moderation system'
-    ],
-    challenges: [
-      'Implementing low-latency video streaming across different network conditions',
-      'Optimizing media processing for various file formats and sizes',
-      'Designing scalable architecture to handle concurrent users',
-      'Managing real-time state synchronization across multiple clients',
-      'Ensuring cross-browser compatibility for WebRTC features'
-    ]
-  };
+        features: [
+            'Real-time video streaming with WebRTC',
+            'Scalable microservices architecture',
+            'Advanced media processing pipeline',
+            'Social networking features',
+            'Progressive Web App (PWA)',
+            'Mobile-responsive design',
+            'Real-time notifications',
+            'Content moderation system'
+        ],
+        challenges: [
+            'Implementing low-latency video streaming across different network conditions',
+            'Optimizing media processing for various file formats and sizes',
+            'Designing scalable architecture to handle concurrent users',
+            'Managing real-time state synchronization across multiple clients',
+            'Ensuring cross-browser compatibility for WebRTC features'
+        ]
+    };
 
-  return (
-    <ProjectContainer ref={vantaRef}>
-      {/* Header */}
-      <ProjectHeader data-header="project-header">
-        <BackButton onClick={() => window.history.back()}>
-          ← Back to Projects
-        </BackButton>
-        <HeaderContent>
-          <ProjectTitle>{projectData.title}</ProjectTitle>
-          <ProjectDescription>{projectData.description}</ProjectDescription>
-          <ProjectLinks>
-            <ProjectLink href={projectData.githubUrl} target="_blank">
-              📂 GitHub Repository
-            </ProjectLink>
-            {projectData.liveUrl && (
-              <ProjectLink href={projectData.liveUrl} target="_blank">
-                🌐 Live Demo
-              </ProjectLink>
-            )}
-          </ProjectLinks>
-          <TechStack>
-            {projectData.technologies.map(tech => (
-              <TechTag key={tech}>{tech}</TechTag>
-            ))}
-          </TechStack>
-        </HeaderContent>
-      </ProjectHeader>
+    return (
+        <ProjectContainer ref={vantaRef}>
+            {/* Header */}
+            <ProjectHeader data-header="project-header">
+                <BackButton onClick={() => window.history.back()}>
+                    ← Back to Projects
+                </BackButton>
+                <HeaderContent>
+                    <ProjectTitle>{projectData.title}</ProjectTitle>
+                    <ProjectDescription>{projectData.description}</ProjectDescription>
+                    <ProjectLinks>
+                        <ProjectLink href={projectData.githubUrl} target="_blank">
+                            📂 GitHub Repository
+                        </ProjectLink>
+                        {projectData.liveUrl && (
+                            <ProjectLink href={projectData.liveUrl} target="_blank">
+                                🌐 Live Demo
+                            </ProjectLink>
+                        )}
+                    </ProjectLinks>
+                    <TechStack>
+                        {projectData.technologies.map(tech => (
+                            <TechTag key={tech}>{tech}</TechTag>
+                        ))}
+                    </TechStack>
+                </HeaderContent>
+            </ProjectHeader>
 
-      {/* Navigation Tabs */}
-      <TabNavigation 
-        $isSticky={isScrolled} 
-        data-nav="tab-navigation"
-      >
-        <Tab 
-          active={activeTab === 'overview'} 
-          onClick={() => handleTabSwitch('overview')}
-        >
-          <span>📋</span> Overview
-        </Tab>
-        <Tab 
-          active={activeTab === 'code'} 
-          onClick={() => handleTabSwitch('code')}
-        >
-          <span>💻</span> Code Preview
-        </Tab>
-        <Tab 
-          active={activeTab === 'readme'} 
-          onClick={() => handleTabSwitch('readme')}
-        >
-          <span>📖</span> Documentation
-        </Tab>
-        <Tab 
-          active={activeTab === 'demo'} 
-          onClick={() => handleTabSwitch('demo')}
-        >
-          <span>🎥</span> Demo
-        </Tab>
-      </TabNavigation>
+            {/* Navigation Tabs */}
+            <TabNavigation
+                $isSticky={isScrolled}
+                data-nav="tab-navigation"
+            >
+                <Tab
+                    active={activeTab === 'overview'}
+                    onClick={() => handleTabSwitch('overview')}
+                >
+                    <span>📋</span> Overview
+                </Tab>
+                <Tab
+                    active={activeTab === 'code'}
+                    onClick={() => handleTabSwitch('code')}
+                >
+                    <span>💻</span> Code Preview
+                </Tab>
+                <Tab
+                    active={activeTab === 'readme'}
+                    onClick={() => handleTabSwitch('readme')}
+                >
+                    <span>📖</span> Documentation
+                </Tab>
+                <Tab
+                    active={activeTab === 'demo'}
+                    onClick={() => handleTabSwitch('demo')}
+                >
+                    <span>🎥</span> Demo
+                </Tab>
+            </TabNavigation>
 
-      {/* Content Sections */}
-      <ContentContainer $hasSticky={isScrolled}>
-        <ContentTransition $isTransitioning={isTransitioning}>
-          {activeTab === 'overview' && (
-            <OverviewSection key={`overview-${tabKey}`}>
-              <Section>
-                <SectionTitle>Project Overview</SectionTitle>
-                <LongDescription>{projectData.longDescription}</LongDescription>
-              </Section>
+            {/* Content Sections */}
+            <ContentBGContainer $hasSticky={isScrolled}>
 
-              <ImageGallery>
-                <MainImage>
-                  <img 
-                    src={projectData.images[selectedImage]} 
-                    alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                  />
-                </MainImage>
-                <ImageThumbnails>
-                  {projectData.images.map((image, index) => (
-                    <Thumbnail 
-                      key={index}
-                      active={index === selectedImage}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <img src={image} alt={`Thumbnail ${index + 1}`} />
-                    </Thumbnail>
-                  ))}
-                </ImageThumbnails>
-              </ImageGallery>
+                <ContentContainer $hasSticky={isScrolled}>
+                    <ContentTransition $isTransitioning={isTransitioning}>
+                        {activeTab === 'overview' && (
+                            <OverviewSection key={`overview-${tabKey}`}>
+                                <Section>
+                                    <SectionTitle>Project Overview</SectionTitle>
+                                    <LongDescription>{projectData.longDescription}</LongDescription>
+                                </Section>
 
-              <FeaturesGrid>
-                <FeatureColumn>
-                  <SectionTitle>Key Features</SectionTitle>
-                  <FeatureList>
-                    {projectData.features.map((feature, index) => (
-                      <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
-                        ✅ {feature}
-                      </FeatureItem>
-                    ))}
-                  </FeatureList>
-                </FeatureColumn>
-                <FeatureColumn>
-                  <SectionTitle>Technical Challenges</SectionTitle>
-                  <FeatureList>
-                    {projectData.challenges.map((challenge, index) => (
-                      <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
-                        🔧 {challenge}
-                      </FeatureItem>
-                    ))}
-                  </FeatureList>
-                </FeatureColumn>
-              </FeaturesGrid>
-            </OverviewSection>
-          )}
+                                <ImageGallery>
+                                    <MainImage>
+                                        <img
+                                            src={projectData.images[selectedImage]}
+                                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                                        />
+                                    </MainImage>
+                                    <ImageThumbnails>
+                                        {projectData.images.map((image, index) => (
+                                            <Thumbnail
+                                                key={index}
+                                                active={index === selectedImage}
+                                                onClick={() => setSelectedImage(index)}
+                                            >
+                                                <img src={image} alt={`Thumbnail ${index + 1}`} />
+                                            </Thumbnail>
+                                        ))}
+                                    </ImageThumbnails>
+                                </ImageGallery>
 
-          {activeTab === 'code' && (
-            <CodeSection key={`code-${tabKey}`}>
-              <SectionTitle>Code Preview</SectionTitle>
-              <IDECodePreview files={projectData.codePreview} theme="dark" />
-            </CodeSection>
-          )}
+                                <FeaturesGrid>
+                                    <FeatureColumn>
+                                        <SectionTitle>Key Features</SectionTitle>
+                                        <FeatureList>
+                                            {projectData.features.map((feature, index) => (
+                                                <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
+                                                    ✅ {feature}
+                                                </FeatureItem>
+                                            ))}
+                                        </FeatureList>
+                                    </FeatureColumn>
+                                    <FeatureColumn>
+                                        <SectionTitle>Technical Challenges</SectionTitle>
+                                        <FeatureList>
+                                            {projectData.challenges.map((challenge, index) => (
+                                                <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
+                                                    🔧 {challenge}
+                                                </FeatureItem>
+                                            ))}
+                                        </FeatureList>
+                                    </FeatureColumn>
+                                </FeaturesGrid>
+                            </OverviewSection>
+                        )}
 
-          {activeTab === 'readme' && (
-            <ReadmeSection key={`readme-${tabKey}`}>
-              <SectionTitle>Project Documentation</SectionTitle>
-              <MarkdownRenderer content={projectData.readme || ''} theme="github-dark" />
-            </ReadmeSection>
-          )}
+                        {activeTab === 'code' && (
+                            <CodeSection key={`code-${tabKey}`}>
+                                <SectionTitle>Code Preview</SectionTitle>
+                                <IDECodePreview files={projectData.codePreview} theme="dark" />
+                            </CodeSection>
+                        )}
 
-          {activeTab === 'demo' && (
-            <DemoSection key={`demo-${tabKey}`}>
-              <SectionTitle>Project Demo</SectionTitle>
-              {projectData.videoDemo && (
-                <VideoDemo>
-                  <video controls width="100%">
-                    <source src={projectData.videoDemo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </VideoDemo>
-              )}
-              <DemoLinks>
-                <ProjectLink href={projectData.githubUrl} target="_blank">
-                  📂 View Source Code
-                </ProjectLink>
-                {projectData.liveUrl && (
-                  <ProjectLink href={projectData.liveUrl} target="_blank">
-                    🌐 Try Live Demo
-                  </ProjectLink>
-                )}
-              </DemoLinks>
-            </DemoSection>
-          )}
-        </ContentTransition>
-      </ContentContainer>
-    </ProjectContainer>
-  );
+                        {activeTab === 'readme' && (
+                            <ReadmeSection key={`readme-${tabKey}`}>
+                                <SectionTitle>Project Documentation</SectionTitle>
+                                <MarkdownRenderer content={projectData.readme || ''} theme="github-dark" />
+                            </ReadmeSection>
+                        )}
+
+                        {activeTab === 'demo' && (
+                            <DemoSection key={`demo-${tabKey}`}>
+                                <SectionTitle>Project Demo</SectionTitle>
+                                {projectData.videoDemo && (
+                                    <VideoDemo>
+                                        <video controls width="100%">
+                                            <source src={projectData.videoDemo} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </VideoDemo>
+                                )}
+                                <DemoLinks>
+                                    <ProjectLink href={projectData.githubUrl} target="_blank">
+                                        📂 View Source Code
+                                    </ProjectLink>
+                                    {projectData.liveUrl && (
+                                        <ProjectLink href={projectData.liveUrl} target="_blank">
+                                            🌐 Try Live Demo
+                                        </ProjectLink>
+                                    )}
+                                </DemoLinks>
+                            </DemoSection>
+                        )}
+                    </ContentTransition>
+                </ContentContainer>
+            </ContentBGContainer>
+        </ProjectContainer>
+    );
 };
 
 // Styled Components
 interface TabNavigationProps {
-  $isSticky: boolean;
+    $isSticky: boolean;
 }
 
 interface ContentContainerProps {
-  $hasSticky: boolean;
+    $hasSticky: boolean;
 }
 
 interface ContentTransitionProps {
-  $isTransitioning: boolean;
+    $isTransitioning: boolean;
 }
 
 const ProjectContainer = styled.div`
@@ -1096,6 +1099,25 @@ const Tab = styled.button<{ active: boolean }>`
     span:first-child {
       display: none;
     }
+  }
+`;
+const ContentBGContainer = styled.div<ContentContainerProps>`
+  margin: 0 auto;
+  padding: 60px 20px;
+  min-height: calc(100vh - 200px);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  transition: padding-top 0.3s ease;
+
+  ${props => props.$hasSticky && `
+    padding-top: 80px; /* Add space for sticky nav */
+  `}
+  
+  @media (max-width: 768px) {
+    padding: 40px 15px;
+    
+    ${props => props.$hasSticky && `
+      padding-top: 80px;
+    `}
   }
 `;
 
