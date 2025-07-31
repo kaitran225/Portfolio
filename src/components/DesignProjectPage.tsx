@@ -171,15 +171,15 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     
     setIsTransitioning(true);
     
-    // Smooth transition timing
+    // Smooth transition timing with better feel
     setTimeout(() => {
       setActiveTab(newTab);
       setTabKey(prev => prev + 1); // Force animation restart
       
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 100);
-    }, 150);
+      }, 200);
+    }, 200);
   };
 
   // Handle scroll for sticky navigation
@@ -998,31 +998,10 @@ const Tab = styled.button<{ $active: boolean }>`
 const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
-  max-height: 100vh;
-  overflow-y: auto;
+  min-height: 100vh;
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
-
-  /* Custom scrollbar */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
-  }
 
   ${props => props.$navHeight > 0 && `
     padding-top: ${props.$navHeight + 20}px;
@@ -1049,29 +1028,39 @@ const ContentContainer = styled.div<ContentContainerProps>`
 
 const ContentTransition = styled.div<ContentTransitionProps>`
   position: relative;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: center;
   
   ${props => props.$isTransitioning && `
-    opacity: 0.7;
-    transform: translateY(10px) scale(0.99);
-    filter: blur(1px);
+    opacity: 0.3;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(3px);
   `}
   
-  /* Particle effect overlay during transitions */
+  /* Enhanced particle effect overlay during transitions */
   &::before {
     content: '';
     position: absolute;
     inset: -20px;
     background: 
-      radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(105, 51, 255, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 60%);
-    opacity: ${props => props.$isTransitioning ? '1' : '0'};
-    transition: opacity 0.3s ease;
+      radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(105, 51, 255, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 60%);
+    opacity: ${props => props.$isTransitioning ? '0.4' : '0'};
+    transition: opacity 0.4s ease;
     pointer-events: none;
     z-index: -1;
     border-radius: 12px;
+    animation: ${props => props.$isTransitioning ? 'particleFlow 1s ease-in-out infinite alternate' : 'none'};
+  }
+  
+  @keyframes particleFlow {
+    0% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    100% {
+      transform: translateY(-5px) rotate(1deg);
+    }
   }
 `;
 
@@ -1091,28 +1080,8 @@ const OverviewSection = styled.div`
 `;
 
 const ProcessSection = styled.div`
-  max-height: 80vh;
-  overflow-y: auto;
   animation: catalogSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  
-  /* Custom scrollbar for process section */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
-  }
+  padding: 20px 0;
   
   @keyframes catalogSlideIn {
     from {
@@ -1127,28 +1096,8 @@ const ProcessSection = styled.div`
 `;
 
 const TypographySection = styled.div`
-  max-height: 80vh;
-  overflow-y: auto;
   animation: catalogFlipIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  
-  /* Custom scrollbar for typography section */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
-  }
+  padding: 20px 0;
   
   @keyframes catalogFlipIn {
     from {
@@ -1163,28 +1112,8 @@ const TypographySection = styled.div`
 `;
 
 const MockupsSection = styled.div`
-  max-height: 80vh;
-  overflow-y: auto;
   animation: catalogZoomReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  
-  /* Custom scrollbar for mockups section */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-green-primary), var(--color-purple-primary));
-    border-radius: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--color-purple-primary), var(--color-green-primary));
-  }
+  padding: 20px 0;
   
   @keyframes catalogZoomReveal {
     from {
@@ -1201,7 +1130,29 @@ const MockupsSection = styled.div`
 `;
 
 const Section = styled.section`
-  margin-bottom: 60px;
+  margin-bottom: 80px;
+  padding: 20px 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Progressive reveal for sections */
+  &:nth-child(even) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(odd) {
+    animation-delay: 0.2s;
+  }
 `;
 
 const SectionTitle = styled.h2`
