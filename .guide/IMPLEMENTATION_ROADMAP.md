@@ -1,17 +1,45 @@
 # 🚀 Portfolio UX Implementation Roadmap
-## Google UX-Optimized Implementation Guide
+## FPT Software + Google UX-Optimized Implementation Guide
 
 > **Implementation Timeline**: 8 weeks  
 > **Approach**: Incremental phases with continuous testing  
-> **Goal**: Transform current portfolio to Google UX standards for HR success
+> **Primary Goal**: Optimize for FPT Software recruitment (High probability target)  
+> **Secondary Goal**: Google UX standards for broader HR success  
+> **FPT University Advantage**: Leverage academic connection for career acceleration
 
 ---
 
-## 📦 **PHASE 1: FOUNDATION SETUP (Week 1)**
+## 📦 **PHASE 1: FOUNDATION SETUP (Week 1) - FPT SOFTWARE PRIORITY**
+
+### **FPT Software-Specific Requirements (High Priority)**
+
+#### **1. Enterprise Technology Stack Alignment**
+```bash
+# Java/Spring Boot integration for FPT Software alignment
+npm install --save-dev @types/java-bridge
+npm install spring-boot-admin-client
+
+# .NET Core demonstration (if adding .NET examples)
+# Note: This would require separate .NET Core project setup
+# dotnet new webapi -n PortfolioBackendDemo
+
+# Enterprise database drivers
+npm install mssql pg oracle
+```
+
+#### **2. FPT University Branding Integration**
+```bash
+# Professional styling for FPT alignment
+npm install @emotion/react @emotion/styled
+npm install @mui/material @mui/icons-material
+
+# FPT-style professional components
+npm install @mui/lab @mui/x-date-pickers
+```
 
 ### **Required Installations & Downloads**
 
-#### **1. Material Design 3 Dependencies**
+#### **1. Material Design 3 Dependencies (Enterprise Focus)**
 ```bash
 # Install Material-UI v5 with emotion
 npm install @mui/material @emotion/react @emotion/styled
@@ -142,25 +170,41 @@ npm install --save-dev @testing-library/react @testing-library/jest-dom @testing
 - Mobile-first bottom navigation with thumb-friendly targets
 - Accessibility-compliant focus management
 
-#### **Task 2.2: Hero Section Redesign for HR**
+#### **Task 2.2: Hero Section Redesign for FPT Software Recruitment**
 **Files to Modify:**
 - `src/components/LandingPage.tsx` (MAJOR UPDATE)
-- Create new `src/components/HeroSection/` directory with modular components
+- Create new `src/components/HeroSection/` directory with FPT-focused components
 
 **New Components to Create:**
 ```
 src/components/HeroSection/
 ├── HeroContainer.tsx
+├── FPTUniversityBadge.tsx (NEW - Highlight academic connection)
 ├── ProfileCard.tsx
-├── SkillsQuickView.tsx
-├── ContactCTA.tsx
-└── AvailabilityStatus.tsx
+├── SkillsQuickView.tsx (Enterprise-focused skills)
+├── ContactCTA.tsx (FPT Software application ready)
+└── AvailabilityStatus.tsx (Graduate program 2025)
+```
+
+**FPT Software-Optimized Hero Content:**
+```
+Current: "Full-Stack Developer building the future with React, AI & Cloud"
+Updated: "FPT University Student | Enterprise Full-Stack Developer
+         Specializing in React, Java, Cloud Solutions & AI Innovation"
+
+Key Information Display:
+├── "FPT University - Software Engineering Student" (Prominent badge)
+├── "Available for FPT Software Graduate Program 2025"
+├── "3+ years development experience | English proficient"
+├── "Enterprise-ready: React, Java, .NET, AWS, Azure"
+└── "Open to: Full-time | Internship | Graduate Program"
 ```
 
 **Expected Outcome:**
-- 5-second HR scanning optimization
-- Key information prominently displayed
-- Multiple conversion opportunities
+- FPT University connection prominently displayed
+- Enterprise technology stack highlighted
+- FPT Software recruitment-ready messaging
+- Professional academic credibility established
 
 #### **Task 2.3: Project Card Redesign**
 **Files to Modify:**
