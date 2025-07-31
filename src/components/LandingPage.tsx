@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+// Navigation utility
+const navigateTo = (path: string) => {
+  window.history.pushState({}, '', path);
+  window.location.reload();
+};
+
 // Vanta.js topology effect
 declare global {
   interface Window {
@@ -8,6 +14,72 @@ declare global {
     p5: any;
   }
 }
+
+// Helper component for colored terminal lines
+const ColoredLine: React.FC<{ line: string }> = ({ line }) => {
+  // Color patterns for different types of terminal content
+  if (line.includes('Microsoft Windows') || line.includes('(c) Microsoft Corporation')) {
+    return <span style={{ color: '#00ff00' }}>{line}</span>;
+  }
+  if (line.includes('C:\\Users\\kai-tran>') || line.includes('C:\\Users\\kai-tran\\portfolio>')) {
+    const parts = line.split('>');
+    if (parts.length >= 2) {
+      return (
+        <span>
+          <span style={{ color: '#ffff00' }}>{parts[0]}&gt;</span>
+          <span style={{ color: '#ffffff' }}>{parts.slice(1).join('>')}</span>
+        </span>
+      );
+    }
+  }
+  if (line.includes('Directory of') || line.includes('Volume')) {
+    return <span style={{ color: '#00ffff' }}>{line}</span>;
+  }
+  if (line.includes('.exe')) {
+    return (
+      <span style={{ color: '#cccccc' }}>
+        {line.split('.exe').map((part, index, array) => (
+          <React.Fragment key={index}>
+            {part}
+            {index < array.length - 1 && <span style={{ color: '#ff6b35' }}>.exe</span>}
+          </React.Fragment>
+        ))}
+      </span>
+    );
+  }
+  if (line.includes('.md')) {
+    return (
+      <span style={{ color: '#cccccc' }}>
+        {line.split('.md').map((part, index, array) => (
+          <React.Fragment key={index}>
+            {part}
+            {index < array.length - 1 && <span style={{ color: '#ff6b35' }}>.md</span>}
+          </React.Fragment>
+        ))}
+      </span>
+    );
+  }
+  if (line.includes('Welcome to') || line.includes('System initialized')) {
+    return <span style={{ color: '#90ee90' }}>{line}</span>;
+  }
+  if (line.includes('<DIR>')) {
+    return (
+      <span style={{ color: '#cccccc' }}>
+        {line.split('<DIR>').map((part, index, array) => (
+          <React.Fragment key={index}>
+            {part}
+            {index < array.length - 1 && <span style={{ color: '#87ceeb' }}>&lt;DIR&gt;</span>}
+          </React.Fragment>
+        ))}
+      </span>
+    );
+  }
+  if (line.includes('File(s)') || line.includes('Dir(s)') || line.includes('bytes')) {
+    return <span style={{ color: '#ffa500' }}>{line}</span>;
+  }
+  
+  return <span style={{ color: '#cccccc' }}>{line}</span>;
+};
 
 interface Project {
   id: string;
@@ -20,7 +92,7 @@ interface Project {
 }
 
 const LandingPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
   const [terminalText, setTerminalText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -271,6 +343,26 @@ C:\\Users\\kai-tran\\portfolio>`;
 
   return (
     <LandingContainer ref={vantaRef}>
+      {/* Slim Header */}
+      <SiteHeader>
+        <HeaderContent>
+          <Logo>
+            <LogoText>Kai Tran</LogoText>
+            <LogoSubText>Full-Stack Developer</LogoSubText>
+          </Logo>
+          <TechStackHeader>
+            <TechStackItem>React</TechStackItem>
+            <TechStackItem>TypeScript</TechStackItem>
+            <TechStackItem>Node.js</TechStackItem>
+            <TechStackItem>Python</TechStackItem>
+            <TechStackItem>AWS</TechStackItem>
+          </TechStackHeader>
+          <HeaderCVButton href="?view=simple">
+            📄 CV
+          </HeaderCVButton>
+        </HeaderContent>
+      </SiteHeader>
+
       {/* Hero Section */}
       <ContentBGContainer>
         <HeroSection>
@@ -283,13 +375,7 @@ C:\\Users\\kai-tran\\portfolio>`;
           </FloatingParticles>
           
           <HeroContent>
-            <CVButtonContainer>
-              <CVButton href="?view=simple">
-                📄 View My CV
-              </CVButton>
-            </CVButtonContainer>
-            
-            <IntegratedSection>
+            <SlimIntegratedSection>
               <TerminalSection>
                 <TerminalWindow>
                   <TerminalHeader>
@@ -305,7 +391,7 @@ C:\\Users\\kai-tran\\portfolio>`;
                     <TerminalText>
                       {terminalText.split('\n').map((line, index) => (
                         <TerminalLine key={index}>
-                          {line}
+                          <ColoredLine line={line} />
                           {index === terminalText.split('\n').length - 1 && showCursor && (
                             <TerminalCursor>_</TerminalCursor>
                           )}
@@ -322,180 +408,59 @@ C:\\Users\\kai-tran\\portfolio>`;
                   <ProfileGlow />
                 </ProfilePicture>
                 <HeroText>
-                  <Name>Kai Tran</Name>
-                  <Title>Graphic Designer & Software Developer</Title>
+                  <Name>Full-Stack Developer</Name>
+                  <Title>Specializing in React, Node.js & Cloud Solutions</Title>
                   <Description>
-                    Creative professional bridging the gap between design and technology.
-                    I craft beautiful visual experiences and build robust digital solutions
-                    that bring ideas to life.
+                    Building scalable web applications and robust backend systems.
+                    Passionate about clean code, modern architecture, and delivering
+                    high-performance solutions for business growth.
                   </Description>
                   <SkillPills>
-                    <SkillPill>UI/UX Design</SkillPill>
                     <SkillPill>React Development</SkillPill>
-                    <SkillPill>Brand Identity</SkillPill>
-                    <SkillPill>Full-Stack Development</SkillPill>
+                    <SkillPill>Backend APIs</SkillPill>
+                    <SkillPill>Cloud Architecture</SkillPill>
+                    <SkillPill>Database Design</SkillPill>
                   </SkillPills>
-                  
-                  <StatsGrid>
-                    <StatItem>
-                      <StatNumber>50+</StatNumber>
-                      <StatLabel>Projects Completed</StatLabel>
-                    </StatItem>
-                    <StatItem>
-                      <StatNumber>3+</StatNumber>
-                      <StatLabel>Years Experience</StatLabel>
-                    </StatItem>
-                    <StatItem>
-                      <StatNumber>15+</StatNumber>
-                      <StatLabel>Technologies</StatLabel>
-                    </StatItem>
-                  </StatsGrid>
                 </HeroText>
               </ProfileSection>
-            </IntegratedSection>
+            </SlimIntegratedSection>
+            
+            {/* Featured Development Projects */}
+            <FeaturedSection>
+              <FeaturedHeader>Featured Development Projects</FeaturedHeader>
+              <FeaturedGrid>
+                {featuredProjects.filter(project => project.category === 'development').map(project => (
+                  <FeaturedCard
+                    key={project.id}
+                    onClick={() => window.location.href = `/project/${project.id}`}
+                  >
+                    <FeaturedThumbnail>
+                      <img src={project.thumbnail} alt={project.title} />
+                      <FeaturedOverlay>
+                        <CategoryBadge category={project.category}>
+                          💻 Development
+                        </CategoryBadge>
+                      </FeaturedOverlay>
+                    </FeaturedThumbnail>
+                    <FeaturedInfo>
+                      <FeaturedTitle>{project.title}</FeaturedTitle>
+                      <FeaturedDescription>{project.description}</FeaturedDescription>
+                      <TagList>
+                        {project.tags.slice(0, 3).map(tag => (
+                          <Tag key={tag}>{tag}</Tag>
+                        ))}
+                      </TagList>
+                    </FeaturedInfo>
+                  </FeaturedCard>
+                ))}
+              </FeaturedGrid>
+            </FeaturedSection>
           </HeroContent>
         </HeroSection>
 
-        {/* Tech Stack Section */}
-        <TechStackSection>
-          <SectionHeader>Tech Stack & Expertise</SectionHeader>
-          <TechStackGrid>
-            <TechCategory>
-              <TechCategoryTitle>🎨 Design Tools</TechCategoryTitle>
-              <TechStack>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/photoshop/photoshop-plain.svg" alt="Adobe Creative Suite" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>Adobe Creative Suite</TechName>
-                    <TechDesc>Photoshop, Illustrator, InDesign for professional design work</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/figma/figma-original.svg" alt="Figma" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>Figma</TechName>
-                    <TechDesc>Collaborative interface design and prototyping</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/aftereffects/aftereffects-plain.svg" alt="After Effects" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>After Effects</TechName>
-                    <TechDesc>Motion graphics and animation design</TechDesc>
-                  </TechInfo>
-                </TechItem>
-              </TechStack>
-            </TechCategory>
-
-            <TechCategory>
-              <TechCategoryTitle>💻 Development</TechCategoryTitle>
-              <TechStack>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/react/react-original.svg" alt="React & TypeScript" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>React & TypeScript</TechName>
-                    <TechDesc>Modern frontend development with type safety</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/nodejs/nodejs-original.svg" alt="Node.js" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>Node.js</TechName>
-                    <TechDesc>Server-side JavaScript and API development</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/mongodb/mongodb-original.svg" alt="Database Technologies" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>PostgreSQL & MongoDB</TechName>
-                    <TechDesc>Database design and management</TechDesc>
-                  </TechInfo>
-                </TechItem>
-              </TechStack>
-            </TechCategory>
-
-            <TechCategory>
-              <TechCategoryTitle>☁️ DevOps & Tools</TechCategoryTitle>
-              <TechStack>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/docker/docker-original.svg" alt="Docker" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>Docker</TechName>
-                    <TechDesc>Containerization and deployment</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>AWS</TechName>
-                    <TechDesc>Cloud infrastructure and services</TechDesc>
-                  </TechInfo>
-                </TechItem>
-                <TechItem>
-                  <TechIcon>
-                    <img src="/assets/icons/git/git-original.svg" alt="Git & CI/CD" />
-                  </TechIcon>
-                  <TechInfo>
-                    <TechName>Git & CI/CD</TechName>
-                    <TechDesc>Version control and automation</TechDesc>
-                  </TechInfo>
-                </TechItem>
-              </TechStack>
-            </TechCategory>
-          </TechStackGrid>
-        </TechStackSection>
-
-        {/* Featured Projects */}
+        {/* Development Project Catalog */}
         <Section>
-          <SectionHeader>Featured Work</SectionHeader>
-          <ProjectGrid>
-            {featuredProjects.map(project => (
-              <ProjectCard
-                key={project.id}
-                onClick={() => window.location.href = `/project/${project.id}`}
-                featured
-              >
-                <ProjectThumbnail>
-                  <img src={project.thumbnail} alt={project.title} />
-                  <ProjectOverlay>
-                    <CategoryBadge category={project.category}>
-                      {project.category === 'development' ? '💻 Development' : '🎨 Design'}
-                    </CategoryBadge>
-                  </ProjectOverlay>
-                </ProjectThumbnail>
-                <ProjectInfo>
-                  <ProjectTitle>{project.title}</ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <TagList>
-                    {project.tags.slice(0, 3).map(tag => (
-                      <Tag key={tag}>{tag}</Tag>
-                    ))}
-                  </TagList>
-                </ProjectInfo>
-              </ProjectCard>
-            ))}
-          </ProjectGrid>
-        </Section>
-
-        {/* Project Catalog */}
-        <Section>
-          <SectionHeader>Project Catalog</SectionHeader>
+          <SectionHeader>Development Portfolio</SectionHeader>
 
           {/* Category Filter */}
           <CategoryFilter>
@@ -503,25 +468,25 @@ C:\\Users\\kai-tran\\portfolio>`;
               $active={selectedCategory === 'all'}
               onClick={() => setSelectedCategory('all')}
             >
-              All Projects ({projects.length})
+              All Development Projects ({projects.filter(p => p.category === 'development').length})
             </FilterButton>
             <FilterButton
               $active={selectedCategory === 'development'}
               onClick={() => setSelectedCategory('development')}
             >
-              💻 Development ({projects.filter(p => p.category === 'development').length})
+              💻 Web Applications ({projects.filter(p => p.category === 'development' && p.tags.some(tag => tag.includes('React') || tag.includes('Next'))).length})
             </FilterButton>
             <FilterButton
-              $active={selectedCategory === 'design'}
-              onClick={() => setSelectedCategory('design')}
+              $active={selectedCategory === 'backend'}
+              onClick={() => setSelectedCategory('backend')}
             >
-              🎨 Design ({projects.filter(p => p.category === 'design').length})
+              ⚙️ Backend & APIs ({projects.filter(p => p.category === 'development' && p.tags.some(tag => tag.includes('Node') || tag.includes('API'))).length})
             </FilterButton>
           </CategoryFilter>
 
           {/* Project Grid */}
           <ProjectGrid>
-            {filteredProjects.map(project => (
+            {projects.filter(project => project.category === 'development').map(project => (
               <ProjectCard
                 key={project.id}
                 onClick={() => window.location.href = `/project/${project.id}`}
@@ -530,7 +495,7 @@ C:\\Users\\kai-tran\\portfolio>`;
                   <img src={project.thumbnail} alt={project.title} />
                   <ProjectOverlay>
                     <CategoryBadge category={project.category}>
-                      {project.category === 'development' ? '💻' : '🎨'}
+                      💻
                     </CategoryBadge>
                   </ProjectOverlay>
                 </ProjectThumbnail>
@@ -548,29 +513,33 @@ C:\\Users\\kai-tran\\portfolio>`;
           </ProjectGrid>
         </Section>
 
-        {/* Contact Section - Slim Footer */}
+        {/* Contact Section - Development Focus */}
         <SlimFooter>
           <FooterContent>
             <FooterText>
-              Available for OJT opportunities Fall 2025 • Open to design & development projects
+              Available for OJT opportunities Fall 2025 • Full-Stack Developer seeking development roles
             </FooterText>
             <FooterLinks>
               <FooterLink href="https://github.com/kaitran225">
                 <GitHubIcon>⚡</GitHubIcon>
                 GitHub
               </FooterLink>
-              <FooterLink href="https://www.instagram.com/kaitran.prt">
-                <InstagramIcon>📸</InstagramIcon>
-                Instagram
+              <FooterLink href="https://linkedin.com/in/kaitran-dev">
+                <LinkedInIcon>�</LinkedInIcon>
+                LinkedIn
               </FooterLink>
-              <FooterLink href="mailto:contact@kaitran.dev">
+              <FooterLink onClick={() => navigateTo('/design')}>
+                <DesignIcon>🎨</DesignIcon>
+                Design Portfolio
+              </FooterLink>
+              <FooterLink href="mailto:dev@kaitran.dev">
                 <EmailIcon>✉️</EmailIcon>
                 Email
               </FooterLink>
             </FooterLinks>
           </FooterContent>
           <FooterBottom>
-            <Copyright>© 2025 Kai Tran. Crafted with 💜 and ☕</Copyright>
+            <Copyright>© 2025 Kai Tran. Built with 💜 and modern tech</Copyright>
           </FooterBottom>
         </SlimFooter>
       </ContentBGContainer>
@@ -621,7 +590,7 @@ const ContentBGContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  padding: 100px 20px;
+  padding: 100px 20px 60px;
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(10px);
   position: relative;
@@ -648,10 +617,127 @@ const HeroSection = styled.section`
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, 
-      rgba(105, 51, 255, 0.05) 0%, 
-      rgba(0, 255, 136, 0.03) 50%, 
-      rgba(105, 51, 255, 0.05) 100%);
+      rgba(0, 255, 136, 0.05) 0%, 
+      rgba(105, 51, 255, 0.03) 50%, 
+      rgba(0, 255, 136, 0.05) 100%);
     z-index: 1;
+  }
+`;
+
+// Header Components
+const SiteHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+`;
+
+const HeaderContent = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+`;
+
+const Logo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+`;
+
+const LogoText = styled.div`
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+`;
+
+const LogoSubText = styled.div`
+  color: #a0a0a0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1;
+`;
+
+const TechStackHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+  
+  @media (max-width: 900px) {
+    gap: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+const TechStackItem = styled.span`
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: #c7d2fe;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  
+  &:hover {
+    background: rgba(99, 102, 241, 0.25);
+    border-color: rgba(99, 102, 241, 0.6);
+    color: #e0e7ff;
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 900px) {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+`;
+
+const HeaderCVButton = styled.a`
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 80px;
+  justify-content: center;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  }
+  
+  @media (max-width: 600px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
   }
 `;
 
@@ -680,6 +766,122 @@ const IntegratedSection = styled.div`
   @media (max-width: 768px) {
     gap: 1.5rem;
   }
+`;
+
+const SlimIntegratedSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 3rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+`;
+
+const FeaturedSection = styled.div`
+  margin-top: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: featuredSlideUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+  
+  @keyframes featuredSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const FeaturedHeader = styled.h3`
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #00ff88 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const FeaturedGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+`;
+
+const FeaturedCard = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 255, 136, 0.2);
+    border-color: #00ff88;
+  }
+`;
+
+const FeaturedThumbnail = styled.div`
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+`;
+
+const FeaturedOverlay = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const FeaturedInfo = styled.div`
+  padding: 1.2rem;
+`;
+
+const FeaturedTitle = styled.h4`
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+`;
+
+const FeaturedDescription = styled.p`
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
 `;
 
 const TerminalSection = styled.div`
@@ -1639,7 +1841,7 @@ const FooterLinks = styled.div`
   }
 `;
 
-const FooterLink = styled.a`
+const FooterLink = styled.div<{ href?: string; onClick?: () => void }>`
   color: var(--color-text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
@@ -1651,6 +1853,7 @@ const FooterLink = styled.a`
   position: relative;
   padding: 8px 12px;
   border-radius: 8px;
+  cursor: pointer;
   
   &:hover {
     color: var(--color-text-primary);
@@ -1685,7 +1888,17 @@ const GitHubIcon = styled.span`
   }
 `;
 
-const InstagramIcon = styled.span`
+const LinkedInIcon = styled.span`
+  font-size: 1rem;
+  filter: grayscale(1) brightness(0.8);
+  transition: all 0.3s ease;
+  
+  ${FooterLink}:hover & {
+    filter: grayscale(0) brightness(1.2);
+  }
+`;
+
+const DesignIcon = styled.span`
   font-size: 1rem;
   filter: grayscale(1) brightness(0.8);
   transition: all 0.3s ease;

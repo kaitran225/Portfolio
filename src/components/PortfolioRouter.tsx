@@ -1,10 +1,16 @@
 import React from 'react';
 import LandingPage from './LandingPage';
+import DesignLandingPage from './DesignLandingPage';
 import DevProjectPage from './DevProjectPage';
 import DesignProjectPage from './DesignProjectPage';
 
 const PortfolioRouter: React.FC = () => {
   const path = window.location.pathname;
+  
+  // Handle design portfolio route
+  if (path === '/design' || path === '/design/') {
+    return <DesignLandingPage />;
+  }
   
   // Extract project ID from URL path like /project/project-id
   const projectMatch = path.match(/^\/project\/(.+)$/);
@@ -22,7 +28,7 @@ const PortfolioRouter: React.FC = () => {
     }
   }
   
-  // Default to landing page
+  // Default to development landing page
   return <LandingPage />;
 };
 
