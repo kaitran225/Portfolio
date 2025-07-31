@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { } from 'styled-components';
+import portfolioDataService from '../services/portfolioDataService';
 
 // Navigation utility
 const navigateTo = (path: string) => {
@@ -30,7 +31,10 @@ const LandingPage: React.FC = () => {
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
-  // Initialize Vanta.js topology background
+  // Get data from service
+  const personalInfo = portfolioDataService.getPersonalInfo();
+  const projects = portfolioDataService.getAllProjects();
+  const featuredProjects = portfolioDataService.getFeaturedDevelopmentProjects();
   useEffect(() => {
     const loadVanta = async () => {
       try {
@@ -141,95 +145,14 @@ const LandingPage: React.FC = () => {
     };
   }, []);
 
-  // Dummy projects - you can replace with real data
-  const projects: Project[] = [
-    // Development Projects
-    {
-      id: 'calantha-platform',
-      title: 'Calantha Interactive Platform',
-      category: 'development',
-      description: 'Full-stack web application with real-time video processing and interactive media features.',
-      thumbnail: '/assets/dev-thumbnails/calantha.jpg',
-      tags: ['React', 'Node.js', 'WebRTC', 'MongoDB'],
-      featured: true
-    },
-    {
-      id: 'ecommerce-dashboard',
-      title: 'E-Commerce Management System',
-      category: 'development',
-      description: 'Modern admin dashboard with analytics, inventory management, and payment processing.',
-      thumbnail: '/assets/dev-thumbnails/ecommerce.jpg',
-      tags: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL'],
-      featured: true
-    },
-    {
-      id: 'cloud-infrastructure',
-      title: 'Cloud Infrastructure Automation',
-      category: 'development',
-      description: 'DevOps solution for automated deployment and scaling using containerization.',
-      thumbnail: '/assets/dev-thumbnails/cloud.jpg',
-      tags: ['Docker', 'Kubernetes', 'AWS', 'Terraform'],
-      featured: false
-    },
-    {
-      id: 'mobile-app-api',
-      title: 'Mobile App Backend API',
-      category: 'development',
-      description: 'RESTful API with GraphQL integration for mobile application data management.',
-      thumbnail: '/assets/dev-thumbnails/api.jpg',
-      tags: ['Python', 'FastAPI', 'GraphQL', 'Redis'],
-      featured: false
-    },
-
-    // Design Projects
-    {
-      id: 'brand-identity-zena',
-      title: 'Zena Fashion Brand Identity',
-      category: 'design',
-      description: 'Complete brand identity design including logo, typography, and visual system.',
-      thumbnail: '/assets/design-thumbnails/zena-brand.jpg',
-      tags: ['Branding', 'Logo Design', 'Typography', 'Adobe Illustrator'],
-      featured: true
-    },
-    {
-      id: 'mobile-ui-design',
-      title: 'GateWay Mobile App UI/UX',
-      category: 'design',
-      description: 'User interface and experience design for a financial mobile application.',
-      thumbnail: '/assets/design-thumbnails/gateway-ui.jpg',
-      tags: ['UI/UX', 'Mobile Design', 'Figma', 'Prototyping'],
-      featured: true
-    },
-    {
-      id: 'packaging-design',
-      title: 'Slab Coffee Packaging Series',
-      category: 'design',
-      description: 'Product packaging design series for premium coffee brand with sustainable focus.',
-      thumbnail: '/assets/design-thumbnails/slab-packaging.jpg',
-      tags: ['Package Design', 'Print Design', 'Sustainability', 'Adobe InDesign'],
-      featured: false
-    },
-    {
-      id: 'web-design-portfolio',
-      title: 'Personal Creative Portfolio',
-      category: 'design',
-      description: 'Creative portfolio website design showcasing artistic and experimental works.',
-      thumbnail: '/assets/design-thumbnails/personal-web.jpg',
-      tags: ['Web Design', 'Creative Direction', 'Animation', 'Adobe XD'],
-      featured: false
-    }
-  ];
-
-  const featuredProjects = projects.filter(project => project.featured);
-
   return (
     <LandingContainer ref={vantaRef}>
       {/* Slim Header */}
       <SiteHeader>
         <HeaderContent>
           <Logo>
-            <LogoText>Kai Tran</LogoText>
-            <LogoSubText>Full-Stack Developer</LogoSubText>
+            <LogoText>{personalInfo.name}</LogoText>
+            <LogoSubText>{personalInfo.title}</LogoSubText>
           </Logo>
           <HeaderCVButton href="?view=simple">
             📄 CV
@@ -252,61 +175,17 @@ const LandingPage: React.FC = () => {
             <SlimIntegratedSection>
               <ProfileSection>
                 <ProfilePicture>
-                  <img src="/assets/profile/avatar.JPG" alt="Kai Tran" />
+                  <img src={personalInfo.avatar} alt={personalInfo.name} />
                   <ProfileGlow />
                 </ProfilePicture>
                 <HeroText>
                   <Name>Full-Stack Developer</Name>
-                  <Title>Specializing in React, Node.js & Cloud Solutions</Title>
+                  <Title>{personalInfo.subtitle}</Title>
                   <Description>
-                    Building scalable web applications and robust backend systems.
-                    Passionate about clean code, modern architecture, and delivering
-                    high-performance solutions for business growth.
+                    {personalInfo.description}
                   </Description>
                 </HeroText>
               </ProfileSection>
-              
-              <TechStackSection>
-                <TechStackTitle>Tech Stack</TechStackTitle>
-                <TechStackGrid>
-                  <TechCategory>
-                    <TechCategoryIcon>⚛️</TechCategoryIcon>
-                    <TechCategoryName>Frontend</TechCategoryName>
-                    <TechList>
-                      <TechItem>React</TechItem>
-                      <TechItem>Next.js</TechItem>
-                      <TechItem>TypeScript</TechItem>
-                    </TechList>
-                  </TechCategory>
-                  <TechCategory>
-                    <TechCategoryIcon>⚙️</TechCategoryIcon>
-                    <TechCategoryName>Backend</TechCategoryName>
-                    <TechList>
-                      <TechItem>Node.js</TechItem>
-                      <TechItem>Express</TechItem>
-                      <TechItem>MongoDB</TechItem>
-                    </TechList>
-                  </TechCategory>
-                  <TechCategory>
-                    <TechCategoryIcon>☁️</TechCategoryIcon>
-                    <TechCategoryName>Cloud</TechCategoryName>
-                    <TechList>
-                      <TechItem>AWS</TechItem>
-                      <TechItem>Docker</TechItem>
-                      <TechItem>CI/CD</TechItem>
-                    </TechList>
-                  </TechCategory>
-                  <TechCategory>
-                    <TechCategoryIcon>🛠️</TechCategoryIcon>
-                    <TechCategoryName>Tools</TechCategoryName>
-                    <TechList>
-                      <TechItem>Git</TechItem>
-                      <TechItem>VS Code</TechItem>
-                      <TechItem>Postman</TechItem>
-                    </TechList>
-                  </TechCategory>
-                </TechStackGrid>
-              </TechStackSection>
             </SlimIntegratedSection>
             
             {/* Featured Development Projects */}
@@ -410,10 +289,10 @@ const LandingPage: React.FC = () => {
         <SlimFooter>
           <FooterContent>
             <FooterText>
-              Available for OJT opportunities Fall 2025 • Full-Stack Developer seeking development roles
+              Available for OJT opportunities Fall 2025 • {personalInfo.title} seeking development roles
             </FooterText>
             <FooterLinks>
-              <FooterLink href="https://github.com/kaitran225">
+              <FooterLink href={personalInfo.contact.github}>
                 <GitHubIcon>⚡</GitHubIcon>
                 GitHub
               </FooterLink>
@@ -483,7 +362,7 @@ const ContentBGContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  padding: 100px 20px 60px;
+  padding: 4rem 1.5rem 2rem;
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(10px);
   position: relative;
@@ -606,20 +485,14 @@ const HeroContent = styled.div`
 
 
 const SlimIntegratedSection = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  align-items: start;
-  margin-bottom: 3rem;
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
+  margin-bottom: 2rem;
   
   @media (max-width: 768px) {
-    gap: 1rem;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -1075,87 +948,8 @@ const SkillPill = styled.span`
 `;
 
 // Tech Stack Components
-const TechStackSection = styled.div`
-  margin-top: 2rem;
-  animation: techStackFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s both;
-  
-  @keyframes techStackFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-`;
-
-const TechStackTitle = styled.h4`
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 1rem;
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-`;
-
-const TechStackGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-  }
-`;
-
-const TechCategory = styled.div`
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-green-primary);
-    transform: translateY(-2px);
-  }
-`;
-
-const TechCategoryIcon = styled.div`
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-`;
-
-const TechCategoryName = styled.h5`
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
-`;
-
-const TechList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-`;
-
-const TechItem = styled.span`
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-`;
-
 const Section = styled.section`
-  padding: 80px 20px;
+  padding: 3rem 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 `;

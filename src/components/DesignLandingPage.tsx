@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, {} from 'styled-components';
+import portfolioDataService from '../services/portfolioDataService';
 
 // Navigation utility
 const navigateTo = (path: string) => {
@@ -127,54 +128,9 @@ const DesignLandingPage: React.FC = () => {
     };
   }, []);
 
-  // Design projects data
-  const projects: Project[] = [
-    {
-      id: 'brand-identity-zena',
-      title: 'Zena Fashion Brand Identity',
-      category: 'design',
-      description: 'Complete brand identity design including logo, typography, and visual system.',
-      thumbnail: '/assets/design-thumbnails/zena-brand.jpg',
-      tags: ['Branding', 'Logo Design', 'Typography', 'Adobe Illustrator'],
-      featured: true
-    },
-    {
-      id: 'mobile-ui-design',
-      title: 'GateWay Mobile App UI/UX',
-      category: 'design',
-      description: 'User interface and experience design for a financial mobile application.',
-      thumbnail: '/assets/design-thumbnails/gateway-ui.jpg',
-      tags: ['UI/UX', 'Mobile Design', 'Figma', 'Prototyping'],
-      featured: true
-    },
-    {
-      id: 'packaging-design',
-      title: 'Slab Coffee Packaging Series',
-      category: 'design',
-      description: 'Product packaging design series for premium coffee brand with sustainable focus.',
-      thumbnail: '/assets/design-thumbnails/slab-packaging.jpg',
-      tags: ['Package Design', 'Print Design', 'Sustainability', 'Adobe InDesign'],
-      featured: false
-    },
-    {
-      id: 'web-design-portfolio',
-      title: 'Personal Creative Portfolio',
-      category: 'design',
-      description: 'Creative portfolio website design showcasing artistic and experimental works.',
-      thumbnail: '/assets/design-thumbnails/personal-web.jpg',
-      tags: ['Web Design', 'Creative Direction', 'Animation', 'Adobe XD'],
-      featured: false
-    },
-    {
-      id: 'calantha-branding',
-      title: 'Calantha Visual Identity',
-      category: 'design',
-      description: 'Modern visual identity system for creative agency with dynamic logo and brand guidelines.',
-      thumbnail: '/assets/design-thumbnails/calantha-brand.jpg',
-      tags: ['Branding', 'Visual Identity', 'Logo Design', 'Brand Guidelines'],
-      featured: true
-    }
-  ];
+  // Get data from service
+  const personalInfo = portfolioDataService.getPersonalInfo();
+  const projects = portfolioDataService.getDesignProjects();
 
   const filteredProjects = selectedCategory === 'all'
     ? projects
@@ -191,7 +147,7 @@ const DesignLandingPage: React.FC = () => {
       <SiteHeader>
         <HeaderContent>
           <Logo>
-            <LogoText>Kai Tran</LogoText>
+            <LogoText>{personalInfo.name}</LogoText>
             <LogoSubText>Creative Designer</LogoSubText>
           </Logo>
         </HeaderContent>
@@ -217,52 +173,9 @@ const DesignLandingPage: React.FC = () => {
                 </CreativeTitle>
                 <CreativeSubtitle>Crafting Visual Stories & Brand Experiences</CreativeSubtitle>
                 <CreativeDescription>
-                  Passionate about creating meaningful visual identities, intuitive user experiences, 
-                  and compelling design solutions that connect brands with their audiences.
+                  {personalInfo.designDescription}
                 </CreativeDescription>
               </HeroTextSection>
-              
-              <DesignStackSection>
-                <DesignStackTitle>Design Tools</DesignStackTitle>
-                <DesignStackGrid>
-                  <DesignCategory>
-                    <DesignCategoryIcon>🎨</DesignCategoryIcon>
-                    <DesignCategoryName>Visual</DesignCategoryName>
-                    <DesignList>
-                      <DesignItem>Photoshop</DesignItem>
-                      <DesignItem>Illustrator</DesignItem>
-                      <DesignItem>InDesign</DesignItem>
-                    </DesignList>
-                  </DesignCategory>
-                  <DesignCategory>
-                    <DesignCategoryIcon>📱</DesignCategoryIcon>
-                    <DesignCategoryName>UI/UX</DesignCategoryName>
-                    <DesignList>
-                      <DesignItem>Figma</DesignItem>
-                      <DesignItem>Sketch</DesignItem>
-                      <DesignItem>Principle</DesignItem>
-                    </DesignList>
-                  </DesignCategory>
-                  <DesignCategory>
-                    <DesignCategoryIcon>🎬</DesignCategoryIcon>
-                    <DesignCategoryName>Motion</DesignCategoryName>
-                    <DesignList>
-                      <DesignItem>After Effects</DesignItem>
-                      <DesignItem>Premiere</DesignItem>
-                      <DesignItem>Lottie</DesignItem>
-                    </DesignList>
-                  </DesignCategory>
-                  <DesignCategory>
-                    <DesignCategoryIcon>🖌️</DesignCategoryIcon>
-                    <DesignCategoryName>3D/AR</DesignCategoryName>
-                    <DesignList>
-                      <DesignItem>Blender</DesignItem>
-                      <DesignItem>Cinema 4D</DesignItem>
-                      <DesignItem>Reality Composer</DesignItem>
-                    </DesignList>
-                  </DesignCategory>
-                </DesignStackGrid>
-              </DesignStackSection>
             </HeroGrid>
           </HeroContent>
         </DesignHeroSection>
@@ -507,15 +420,12 @@ const HeroContent = styled.div`
 `;
 
 const HeroGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
+  @media (max-width: 768px) {
+    gap: 1.5rem;
   }
 `;
 
@@ -607,85 +517,6 @@ const CreativeSkillPill = styled.span`
 `;
 
 // Design Stack Components
-const DesignStackSection = styled.div`
-  margin-top: 2rem;
-  animation: designStackFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s both;
-  
-  @keyframes designStackFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-`;
-
-const DesignStackTitle = styled.h4`
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 1rem;
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-`;
-
-const DesignStackGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-  }
-`;
-
-const DesignCategory = styled.div`
-  background: rgba(255, 20, 147, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 20, 147, 0.2);
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(255, 20, 147, 0.1);
-    border-color: #ff69b4;
-    transform: translateY(-2px);
-  }
-`;
-
-const DesignCategoryIcon = styled.div`
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-`;
-
-const DesignCategoryName = styled.h5`
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
-`;
-
-const DesignList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-`;
-
-const DesignItem = styled.span`
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-`;
-
 const FloatingElements = styled.div`
   position: absolute;
   top: 0;

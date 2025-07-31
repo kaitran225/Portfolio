@@ -1,57 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-// import portfolioData from '../data/portfolioImages.json'; // Future use for dynamic content
+import portfolioDataService from '../services/portfolioDataService';
 
 const SimplePortfolio: React.FC = () => {
-  const projectCategories = [
-    {
-      name: 'Calantha',
-      title: 'Interactive Media Project',
-      description: 'Full-stack web application with video integration and real-time features.',
-      tech: ['React', 'TypeScript', 'Node.js', 'Video Processing']
-    },
-    {
-      name: 'Zena',
-      title: 'UI/UX Design System',
-      description: 'Comprehensive design system with component library and style guide.',
-      tech: ['Figma', 'React', 'Styled Components', 'Design Tokens']
-    },
-    {
-      name: 'Slab',
-      title: 'E-commerce Platform',
-      description: 'Modern e-commerce solution with advanced product management.',
-      tech: ['Next.js', 'MongoDB', 'Stripe API', 'AWS']
-    },
-    {
-      name: 'Personal',
-      title: 'Personal Development Projects',
-      description: 'Collection of personal coding projects and experiments.',
-      tech: ['Various Technologies', 'Open Source', 'Experiments']
-    },
-    {
-      name: 'GateWay',
-      title: 'API Gateway Service',
-      description: 'Microservices architecture with centralized API management.',
-      tech: ['Docker', 'Kubernetes', 'GraphQL', 'Microservices']
-    },
-    {
-      name: 'Cloud',
-      title: 'Cloud Infrastructure',
-      description: 'Scalable cloud solutions and DevOps implementations.',
-      tech: ['AWS', 'Terraform', 'CI/CD', 'Docker']
-    }
-  ];
+  // Get data from service
+  const personalInfo = portfolioDataService.getPersonalInfo();
+  const technicalSkills = portfolioDataService.getTechnicalSkills();
+  const projectCategories = portfolioDataService.getSimplePortfolioCategories();
 
   return (
     <SimpleWrapper>
       <Header>
         <ProfileSection>
           <Name>Kai Tran</Name>
-          <Title>Full-Stack Developer</Title>
+          <Title>{personalInfo.title}</Title>
           <Contact>
-            <ContactItem href="https://www.instagram.com/kaitran.prt">Instagram</ContactItem>
-            <ContactItem href="https://github.com/kaitran225">GitHub</ContactItem>
-            <ContactItem href="mailto:contact@kaitran.dev">Email</ContactItem>
+            <ContactItem href={personalInfo.contact.instagram}>Instagram</ContactItem>
+            <ContactItem href={personalInfo.contact.github}>GitHub</ContactItem>
+            <ContactItem href={`mailto:${personalInfo.contact.email}`}>Email</ContactItem>
           </Contact>
         </ProfileSection>
       </Header>
@@ -59,9 +25,7 @@ const SimplePortfolio: React.FC = () => {
       <Section>
         <SectionTitle>About</SectionTitle>
         <Description>
-          Passionate full-stack developer with expertise in modern web technologies. 
-          Experienced in building scalable applications, interactive user interfaces, 
-          and cloud-based solutions. Strong background in React, TypeScript, and DevOps practices.
+          {personalInfo.aboutDescription}
         </Description>
       </Section>
 
@@ -70,19 +34,19 @@ const SimplePortfolio: React.FC = () => {
         <SkillsGrid>
           <SkillCategory>
             <SkillTitle>Frontend</SkillTitle>
-            <SkillList>React, TypeScript, Next.js, Three.js, Styled Components</SkillList>
+            <SkillList>{technicalSkills.frontend.join(', ')}</SkillList>
           </SkillCategory>
           <SkillCategory>
             <SkillTitle>Backend</SkillTitle>
-            <SkillList>Node.js, Python, MongoDB, PostgreSQL, GraphQL</SkillList>
+            <SkillList>{technicalSkills.backend.join(', ')}</SkillList>
           </SkillCategory>
           <SkillCategory>
             <SkillTitle>DevOps</SkillTitle>
-            <SkillList>AWS, Docker, Kubernetes, Terraform, CI/CD</SkillList>
+            <SkillList>{technicalSkills.devops.join(', ')}</SkillList>
           </SkillCategory>
           <SkillCategory>
             <SkillTitle>Tools</SkillTitle>
-            <SkillList>Git, Figma, Webpack, Jest, ESLint</SkillList>
+            <SkillList>{technicalSkills.tools.join(', ')}</SkillList>
           </SkillCategory>
         </SkillsGrid>
       </Section>

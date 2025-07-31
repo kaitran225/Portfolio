@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import IDECodePreview from './IDECodePreview';
+import portfolioDataService from '../services/portfolioDataService';
 import MarkdownRenderer from './MarkdownRenderer';
+import { Project } from '../types/portfolioTypes';
 
 // Vanta.js topology effect
 declare global {
@@ -14,26 +16,6 @@ declare global {
 
 interface DevProjectProps {
     projectId: string;
-}
-
-interface ProjectData {
-    id: string;
-    title: string;
-    description: string;
-    longDescription: string;
-    technologies: string[];
-    githubUrl: string;
-    liveUrl?: string;
-    images: string[];
-    videoDemo?: string;
-    codePreview: {
-        fileName: string;
-        language: string;
-        code: string;
-    }[];
-    readme: string;
-    features: string[];
-    challenges: string[];
 }
 
 const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
@@ -206,251 +188,20 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
         return () => window.removeEventListener('scroll', throttledHandleScroll);
     }, [headerHeight]);
 
-    // Dummy project data - replace with real data based on projectId
-    const projectData: ProjectData = {
-        id: 'calantha-platform',
-        title: 'Calantha Interactive Platform',
-        description: 'Full-stack web application with real-time video processing and interactive media features.',
-        longDescription: `Calantha is a comprehensive interactive media platform that combines real-time video processing with social features. Built using modern web technologies, it provides users with tools to create, edit, and share multimedia content seamlessly.
-
-The platform features a microservices architecture with separate services for user management, media processing, real-time communication, and content delivery. The frontend is built with React and TypeScript, providing a responsive and intuitive user interface.
-
-Key technical achievements include implementing WebRTC for real-time video communication, optimizing media processing pipelines, and creating a scalable backend infrastructure capable of handling thousands of concurrent users.`,
-        technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS S3', 'Docker', 'Kubernetes'],
-        githubUrl: 'https://github.com/kaitran225/calantha-platform',
-        liveUrl: 'https://calantha-demo.vercel.app',
-        images: [
-            '/assets/projects/calantha/screenshot-1.jpg',
-            '/assets/projects/calantha/screenshot-2.jpg',
-            '/assets/projects/calantha/screenshot-3.jpg',
-            '/assets/projects/calantha/architecture.jpg'
-        ],
-        videoDemo: '/assets/projects/calantha/demo-video.mp4',
-        codePreview: [
-            {
-                fileName: 'components/VideoPlayer.tsx',
-                language: 'typescript',
-                code: `import React, { useRef, useEffect, useState } from 'react';
-import { WebRTCService } from '../services/webrtc';
-
-interface VideoPlayerProps {
-  streamId: string;
-  isLocal?: boolean;
-  onStreamEnd?: () => void;
-}
-
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ 
-  streamId, 
-  isLocal = false, 
-  onStreamEnd 
-}) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const initializeStream = async () => {
-      try {
-        if (!videoRef.current) return;
-        
-        const stream = await WebRTCService.getStream(streamId, isLocal);
-        videoRef.current.srcObject = stream;
-        
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play();
-          setIsPlaying(true);
-        };
-        
-        videoRef.current.onended = () => {
-          setIsPlaying(false);
-          onStreamEnd?.();
-        };
-        
-      } catch (err) {
-        setError('Failed to load video stream');
-        console.error('Video stream error:', err);
-      }
-    };
-
-    initializeStream();
-  }, [streamId, isLocal, onStreamEnd]);
-
-  return (
-    <VideoContainer>
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted={isLocal}
-        onError={() => setError('Video playback error')}
-      />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      <Controls>
-        <PlayButton onClick={() => videoRef.current?.play()}>
-          {isPlaying ? '⏸️' : '▶️'}
-        </PlayButton>
-      </Controls>
-    </VideoContainer>
-  );
-};`
-            },
-            {
-                fileName: 'services/webrtc.ts',
-                language: 'typescript',
-                code: `export class WebRTCService {
-  private static peerConnections: Map<string, RTCPeerConnection> = new Map();
-  private static localStream: MediaStream | null = null;
-
-  static async initializeMedia(): Promise<MediaStream> {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 1280, height: 720 },
-        audio: true
-      });
-      
-      this.localStream = stream;
-      return stream;
-    } catch (error) {
-      throw new Error('Failed to access media devices');
-    }
-  }
-
-  static async createPeerConnection(
-    streamId: string,
-    isInitiator: boolean = false
-  ): Promise<RTCPeerConnection> {
-    const configuration: RTCConfiguration = {
-      iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        {
-          urls: 'turn:your-turn-server.com:3478',
-          username: 'user',
-          credential: 'pass'
-        }
-      ]
-    };
-
-    const pc = new RTCPeerConnection(configuration);
+    // Get project data from service based on projectId
+    const projectData = portfolioDataService.getProjectById(projectId) || portfolioDataService.getDevelopmentProjects()[0];
+    const codePreview = portfolioDataService.getCodePreviewForProject(projectId);
     
-    // Add local stream tracks
-    if (this.localStream) {
-      this.localStream.getTracks().forEach(track => {
-        pc.addTrack(track, this.localStream!);
-      });
-    }
-
-    // Handle remote stream
-    pc.ontrack = (event) => {
-      const [remoteStream] = event.streams;
-      this.handleRemoteStream(streamId, remoteStream);
+    // Helper to get images array (handle both string[] and object with arrays)
+    const getProjectImages = () => {
+        if (!projectData.images) return [];
+        if (Array.isArray(projectData.images)) return projectData.images;
+        // If it's an object, combine all image arrays
+        const { final = [], process = [], mockups = [] } = projectData.images;
+        return [...final, ...process, ...mockups];
     };
-
-    this.peerConnections.set(streamId, pc);
-    return pc;
-  }
-}`
-            }
-        ],
-        readme: `# Calantha Interactive Platform
-
-A modern full-stack web application for interactive media sharing and real-time communication.
-
-## 🚀 Features
-
-- **Real-time Video Communication**: WebRTC-based video calling and streaming
-- **Media Processing**: Server-side video/audio processing and optimization
-- **Social Features**: User profiles, following, content sharing
-- **Responsive Design**: Mobile-first approach with PWA capabilities
-- **Scalable Architecture**: Microservices with Docker and Kubernetes
-
-## 🛠️ Tech Stack
-
-**Frontend:**
-- React 18 with TypeScript
-- Styled Components for styling
-- Socket.io for real-time communication
-- WebRTC for video/audio streaming
-
-**Backend:**
-- Node.js with Express
-- MongoDB with Mongoose
-- Redis for session management
-- AWS S3 for media storage
-
-**DevOps:**
-- Docker containerization
-- Kubernetes orchestration
-- CI/CD with GitHub Actions
-- Monitoring with Prometheus
-
-## 📦 Installation
-
-\`\`\`bash
-# Clone the repository
-git clone https://github.com/kaitran225/calantha-platform.git
-
-# Install dependencies
-cd calantha-platform
-npm install
-
-# Set up environment variables
-cp .env.example .env
-
-# Start development server
-npm run dev
-\`\`\`
-
-## 🔧 Configuration
-
-Create a \`.env\` file with the following variables:
-
-\`\`\`env
-NODE_ENV=development
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/calantha
-REDIS_URL=redis://localhost:6379
-AWS_ACCESS_KEY_ID=your_access_key
-AWS_SECRET_ACCESS_KEY=your_secret_key
-AWS_S3_BUCKET=calantha-media
-JWT_SECRET=your_jwt_secret
-\`\`\`
-
-## 🚀 Deployment
-
-The application is deployed using Docker and Kubernetes:
-
-\`\`\`bash
-# Build Docker image
-docker build -t calantha-platform .
-
-# Deploy to Kubernetes
-kubectl apply -f k8s/
-\`\`\`
-
-## 📊 Performance
-
-- **Lighthouse Score**: 95+ (Performance, Accessibility, SEO)
-- **Bundle Size**: < 200KB gzipped
-- **API Response Time**: < 100ms average
-- **Video Processing**: Real-time at 30fps`,
-        features: [
-            'Real-time video streaming with WebRTC',
-            'Scalable microservices architecture',
-            'Advanced media processing pipeline',
-            'Social networking features',
-            'Progressive Web App (PWA)',
-            'Mobile-responsive design',
-            'Real-time notifications',
-            'Content moderation system'
-        ],
-        challenges: [
-            'Implementing low-latency video streaming across different network conditions',
-            'Optimizing media processing for various file formats and sizes',
-            'Designing scalable architecture to handle concurrent users',
-            'Managing real-time state synchronization across multiple clients',
-            'Ensuring cross-browser compatibility for WebRTC features'
-        ]
-    };
+    
+    const projectImages = getProjectImages();
 
     return (
         <ProjectContainer ref={vantaRef}>
@@ -473,7 +224,9 @@ kubectl apply -f k8s/
                         )}
                     </ProjectLinks>
                     <TechStack>
-                        {projectData.technologies.map(tech => (
+                        {projectData.technologies?.map(tech => (
+                            <TechTag key={tech}>{tech}</TechTag>
+                        )) || projectData.tags?.map(tech => (
                             <TechTag key={tech}>{tech}</TechTag>
                         ))}
                     </TechStack>
@@ -524,46 +277,54 @@ kubectl apply -f k8s/
                                 </Section>
 
                                 <ImageGallery>
-                                    <MainImage>
-                                        <img
-                                            src={projectData.images[selectedImage]}
-                                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                                        />
-                                    </MainImage>
-                                    <ImageThumbnails>
-                                        {projectData.images.map((image, index) => (
-                                            <Thumbnail
-                                                key={index}
-                                                $active={index === selectedImage}
-                                                onClick={() => setSelectedImage(index)}
-                                            >
-                                                <img src={image} alt={`Thumbnail ${index + 1}`} />
-                                            </Thumbnail>
-                                        ))}
-                                    </ImageThumbnails>
+                                    {projectImages.length > 0 && (
+                                        <>
+                                            <MainImage>
+                                                <img
+                                                    src={projectImages[selectedImage] || projectData.thumbnail}
+                                                    alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                                                />
+                                            </MainImage>
+                                            <ImageThumbnails>
+                                                {projectImages.map((image: string, index: number) => (
+                                                    <Thumbnail
+                                                        key={index}
+                                                        $active={index === selectedImage}
+                                                        onClick={() => setSelectedImage(index)}
+                                                    >
+                                                        <img src={image} alt={`Thumbnail ${index + 1}`} />
+                                                    </Thumbnail>
+                                                ))}
+                                            </ImageThumbnails>
+                                        </>
+                                    )}
                                 </ImageGallery>
 
                                 <FeaturesGrid>
-                                    <FeatureColumn>
-                                        <SectionTitle>Key Features</SectionTitle>
-                                        <FeatureList>
-                                            {projectData.features.map((feature, index) => (
-                                                <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
-                                                    ✅ {feature}
-                                                </FeatureItem>
-                                            ))}
-                                        </FeatureList>
-                                    </FeatureColumn>
-                                    <FeatureColumn>
-                                        <SectionTitle>Technical Challenges</SectionTitle>
-                                        <FeatureList>
-                                            {projectData.challenges.map((challenge, index) => (
-                                                <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
-                                                    🔧 {challenge}
-                                                </FeatureItem>
-                                            ))}
-                                        </FeatureList>
-                                    </FeatureColumn>
+                                    {projectData.features && projectData.features.length > 0 && (
+                                        <FeatureColumn>
+                                            <SectionTitle>Key Features</SectionTitle>
+                                            <FeatureList>
+                                                {projectData.features.map((feature: string, index: number) => (
+                                                    <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
+                                                        ✅ {feature}
+                                                    </FeatureItem>
+                                                ))}
+                                            </FeatureList>
+                                        </FeatureColumn>
+                                    )}
+                                    {projectData.challenges && projectData.challenges.length > 0 && (
+                                        <FeatureColumn>
+                                            <SectionTitle>Technical Challenges</SectionTitle>
+                                            <FeatureList>
+                                                {projectData.challenges.map((challenge: string, index: number) => (
+                                                    <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
+                                                        🔧 {challenge}
+                                                    </FeatureItem>
+                                                ))}
+                                            </FeatureList>
+                                        </FeatureColumn>
+                                    )}
                                 </FeaturesGrid>
                             </OverviewSection>
                         )}
@@ -571,14 +332,14 @@ kubectl apply -f k8s/
                         {activeTab === 'code' && (
                             <CodeSection key={`code-${tabKey}`}>
                                 <SectionTitle>Code Preview</SectionTitle>
-                                <IDECodePreview files={projectData.codePreview} theme="dark" />
+                                <IDECodePreview files={codePreview} theme="dark" />
                             </CodeSection>
                         )}
 
                         {activeTab === 'readme' && (
                             <ReadmeSection key={`readme-${tabKey}`}>
                                 <SectionTitle>Project Documentation</SectionTitle>
-                                <MarkdownRenderer content={projectData.readme || ''} theme="github-dark" />
+                                <MarkdownRenderer content={projectData.longDescription || projectData.description || 'No documentation available for this project.'} theme="github-dark" />
                             </ReadmeSection>
                         )}
 
