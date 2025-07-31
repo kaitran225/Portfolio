@@ -89,11 +89,13 @@ const Footer: React.FC = () => {
 };
 
 const FooterContainer = styled.footer`
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  backdrop-filter: blur(20px) saturate(1.2);
   position: relative;
   overflow: hidden;
   margin-top: auto;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
   &::before {
     content: '';
@@ -102,8 +104,23 @@ const FooterContainer = styled.footer`
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-purple-primary), transparent);
-    opacity: 0.6;
+    background: linear-gradient(90deg, transparent, rgba(105, 51, 255, 0.4), transparent);
+    opacity: 0.8;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%, 
+                rgba(255, 255, 255, 0.01) 50%, 
+                rgba(255, 255, 255, 0.04) 100%);
+    pointer-events: none;
+    z-index: 0;
   }
 `;
 
@@ -111,6 +128,8 @@ const FooterContent = styled.div`
   max-width: 1600px;
   margin: 0 auto;
   padding: 2rem 2rem 1rem;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     padding: 1.5rem 1rem 1rem;
@@ -133,18 +152,20 @@ const FooterSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgba(40, 40, 60, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
   padding: 1.5rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px) saturate(1.1);
   transition: all 0.3s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-purple-primary);
+    background: rgba(40, 40, 60, 0.4);
+    border-color: rgba(105, 51, 255, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(105, 51, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(105, 51, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 `;
 
@@ -307,18 +328,21 @@ const TechItem = styled.span`
   color: var(--color-text-primary);
   font-size: 0.8rem;
   padding: 0.4rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(40, 40, 60, 0.25);
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) saturate(1.1);
   transition: all 0.3s ease;
   cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-purple-primary);
+    background: rgba(40, 40, 60, 0.35);
+    border-color: rgba(105, 51, 255, 0.5);
     transform: translateY(-2px);
     color: var(--color-purple-primary);
+    box-shadow: 0 4px 16px rgba(105, 51, 255, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 `;
 
