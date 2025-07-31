@@ -252,7 +252,7 @@ const LandingPage: React.FC = () => {
             <SlimIntegratedSection>
               <ProfileSection>
                 <ProfilePicture>
-                  <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran" />
+                  <img src="/assets/profile/avatar.JPG" alt="Kai Tran" />
                   <ProfileGlow />
                 </ProfilePicture>
                 <HeroText>
@@ -263,14 +263,50 @@ const LandingPage: React.FC = () => {
                     Passionate about clean code, modern architecture, and delivering
                     high-performance solutions for business growth.
                   </Description>
-                  <SkillPills>
-                    <SkillPill>React Development</SkillPill>
-                    <SkillPill>Backend APIs</SkillPill>
-                    <SkillPill>Cloud Architecture</SkillPill>
-                    <SkillPill>Database Design</SkillPill>
-                  </SkillPills>
                 </HeroText>
               </ProfileSection>
+              
+              <TechStackSection>
+                <TechStackTitle>Tech Stack</TechStackTitle>
+                <TechStackGrid>
+                  <TechCategory>
+                    <TechCategoryIcon>⚛️</TechCategoryIcon>
+                    <TechCategoryName>Frontend</TechCategoryName>
+                    <TechList>
+                      <TechItem>React</TechItem>
+                      <TechItem>Next.js</TechItem>
+                      <TechItem>TypeScript</TechItem>
+                    </TechList>
+                  </TechCategory>
+                  <TechCategory>
+                    <TechCategoryIcon>⚙️</TechCategoryIcon>
+                    <TechCategoryName>Backend</TechCategoryName>
+                    <TechList>
+                      <TechItem>Node.js</TechItem>
+                      <TechItem>Express</TechItem>
+                      <TechItem>MongoDB</TechItem>
+                    </TechList>
+                  </TechCategory>
+                  <TechCategory>
+                    <TechCategoryIcon>☁️</TechCategoryIcon>
+                    <TechCategoryName>Cloud</TechCategoryName>
+                    <TechList>
+                      <TechItem>AWS</TechItem>
+                      <TechItem>Docker</TechItem>
+                      <TechItem>CI/CD</TechItem>
+                    </TechList>
+                  </TechCategory>
+                  <TechCategory>
+                    <TechCategoryIcon>🛠️</TechCategoryIcon>
+                    <TechCategoryName>Tools</TechCategoryName>
+                    <TechList>
+                      <TechItem>Git</TechItem>
+                      <TechItem>VS Code</TechItem>
+                      <TechItem>Postman</TechItem>
+                    </TechList>
+                  </TechCategory>
+                </TechStackGrid>
+              </TechStackSection>
             </SlimIntegratedSection>
             
             {/* Featured Development Projects */}
@@ -361,22 +397,14 @@ const LandingPage: React.FC = () => {
           </ProjectGrid>
         </Section>
 
-        {/* Design Portfolio Introduction */}
-        <DesignIntroSection>
-          <DesignIntroContent>
-            <DesignIntroTitle>
-              Also passionate about <DesignHighlight>Design</DesignHighlight>?
-            </DesignIntroTitle>
-            <DesignIntroText>
-              Beyond development, I create beautiful visual experiences. Check out my design portfolio 
-              for brand identity, UI/UX design, and creative projects.
-            </DesignIntroText>
-            <DesignPortfolioButton onClick={() => navigateTo('/design')}>
-              <DesignIcon>🎨</DesignIcon>
-              View Design Portfolio
-            </DesignPortfolioButton>
-          </DesignIntroContent>
-        </DesignIntroSection>
+        {/* Design Portfolio Redirect */}
+        <SimpleRedirectSection>
+          <RedirectContent>
+            <RedirectText>
+              Also explore my <RedirectLink onClick={() => navigateTo('/design')}>Design Portfolio</RedirectLink> for creative projects
+            </RedirectText>
+          </RedirectContent>
+        </SimpleRedirectSection>
 
         {/* Contact Section - Development Focus */}
         <SlimFooter>
@@ -1046,6 +1074,86 @@ const SkillPill = styled.span`
   }
 `;
 
+// Tech Stack Components
+const TechStackSection = styled.div`
+  margin-top: 2rem;
+  animation: techStackFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s both;
+  
+  @keyframes techStackFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const TechStackTitle = styled.h4`
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const TechStackGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+`;
+
+const TechCategory = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-green-primary);
+    transform: translateY(-2px);
+  }
+`;
+
+const TechCategoryIcon = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const TechCategoryName = styled.h5`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+`;
+
+const TechList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`;
+
+const TechItem = styled.span`
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+`;
+
 const Section = styled.section`
   padding: 80px 20px;
   max-width: 1200px;
@@ -1091,17 +1199,9 @@ const FilterButton = styled.button<{ $active?: boolean }>`
 
 const ProjectGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
   margin-top: 40px;
-  
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -1196,101 +1296,34 @@ const Tag = styled.span`
   border: 1px solid var(--color-purple-primary);
 `;
 
-// Design Introduction Section
-const DesignIntroSection = styled.section`
-  background: linear-gradient(135deg, #1a0e1e 0%, #2d1b35 50%, #1a0e1e 100%);
-  padding: 3rem 2rem;
-  position: relative;
-  border-top: 1px solid rgba(255, 20, 147, 0.2);
-  border-bottom: 1px solid rgba(255, 20, 147, 0.2);
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.05) 0%, transparent 70%);
-  }
-`;
-
-const DesignIntroContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
+// Simple Redirect Section
+const SimpleRedirectSection = styled.section`
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
   text-align: center;
-  position: relative;
-  z-index: 1;
 `;
 
-const DesignIntroTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--color-text-primary);
-  
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
+const RedirectContent = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
-const DesignHighlight = styled.span`
-  background: linear-gradient(135deg, #ff69b4, #ff1493, #d8bfd8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-`;
-
-const DesignIntroText = styled.p`
-  font-size: 1.1rem;
+const RedirectText = styled.p`
+  font-size: 0.95rem;
   color: var(--color-text-secondary);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
+  margin: 0;
 `;
 
-const DesignPortfolioButton = styled.button`
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1rem;
+const RedirectLink = styled.span`
+  color: var(--color-green-primary);
   font-weight: 600;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-  }
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-  
-  &:active {
-    transform: translateY(0);
+    color: var(--color-text-primary);
+    text-decoration: underline;
   }
 `;
 

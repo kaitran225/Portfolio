@@ -220,13 +220,49 @@ const DesignLandingPage: React.FC = () => {
                   Passionate about creating meaningful visual identities, intuitive user experiences, 
                   and compelling design solutions that connect brands with their audiences.
                 </CreativeDescription>
-                <CreativeSkills>
-                  <CreativeSkillPill>Brand Identity</CreativeSkillPill>
-                  <CreativeSkillPill>UI/UX Design</CreativeSkillPill>
-                  <CreativeSkillPill>Print Design</CreativeSkillPill>
-                  <CreativeSkillPill>Creative Direction</CreativeSkillPill>
-                </CreativeSkills>
               </HeroTextSection>
+              
+              <DesignStackSection>
+                <DesignStackTitle>Design Tools</DesignStackTitle>
+                <DesignStackGrid>
+                  <DesignCategory>
+                    <DesignCategoryIcon>🎨</DesignCategoryIcon>
+                    <DesignCategoryName>Visual</DesignCategoryName>
+                    <DesignList>
+                      <DesignItem>Photoshop</DesignItem>
+                      <DesignItem>Illustrator</DesignItem>
+                      <DesignItem>InDesign</DesignItem>
+                    </DesignList>
+                  </DesignCategory>
+                  <DesignCategory>
+                    <DesignCategoryIcon>📱</DesignCategoryIcon>
+                    <DesignCategoryName>UI/UX</DesignCategoryName>
+                    <DesignList>
+                      <DesignItem>Figma</DesignItem>
+                      <DesignItem>Sketch</DesignItem>
+                      <DesignItem>Principle</DesignItem>
+                    </DesignList>
+                  </DesignCategory>
+                  <DesignCategory>
+                    <DesignCategoryIcon>🎬</DesignCategoryIcon>
+                    <DesignCategoryName>Motion</DesignCategoryName>
+                    <DesignList>
+                      <DesignItem>After Effects</DesignItem>
+                      <DesignItem>Premiere</DesignItem>
+                      <DesignItem>Lottie</DesignItem>
+                    </DesignList>
+                  </DesignCategory>
+                  <DesignCategory>
+                    <DesignCategoryIcon>🖌️</DesignCategoryIcon>
+                    <DesignCategoryName>3D/AR</DesignCategoryName>
+                    <DesignList>
+                      <DesignItem>Blender</DesignItem>
+                      <DesignItem>Cinema 4D</DesignItem>
+                      <DesignItem>Reality Composer</DesignItem>
+                    </DesignList>
+                  </DesignCategory>
+                </DesignStackGrid>
+              </DesignStackSection>
             </HeroGrid>
           </HeroContent>
         </DesignHeroSection>
@@ -292,22 +328,14 @@ const DesignLandingPage: React.FC = () => {
           </ProjectGrid>
         </Section>
 
-        {/* Dev Portfolio Introduction */}
-        <DevIntroSection>
-          <DevIntroContent>
-            <DevIntroTitle>
-              Also interested in <DevHighlight>Development</DevHighlight>?
-            </DevIntroTitle>
-            <DevIntroText>
-              Beyond design, I build robust web applications and scalable systems. 
-              Check out my development portfolio for full-stack projects and technical expertise.
-            </DevIntroText>
-            <DevPortfolioButton onClick={() => navigateTo('/')}>
-              <DevIcon>💻</DevIcon>
-              View Dev Portfolio
-            </DevPortfolioButton>
-          </DevIntroContent>
-        </DevIntroSection>
+        {/* Dev Portfolio Redirect */}
+        <SimpleRedirectSection>
+          <RedirectContent>
+            <RedirectText>
+              Need development work? Check out my <RedirectLink onClick={() => navigateTo('/')}>Development Portfolio</RedirectLink> for technical projects
+            </RedirectText>
+          </RedirectContent>
+        </SimpleRedirectSection>
 
         {/* Contact Section */}
         <SlimFooter>
@@ -576,6 +604,86 @@ const CreativeSkillPill = styled.span`
     color: #ffb6c1;
     transform: translateY(-2px);
   }
+`;
+
+// Design Stack Components
+const DesignStackSection = styled.div`
+  margin-top: 2rem;
+  animation: designStackFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s both;
+  
+  @keyframes designStackFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const DesignStackTitle = styled.h4`
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const DesignStackGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+`;
+
+const DesignCategory = styled.div`
+  background: rgba(255, 20, 147, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 20, 147, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 20, 147, 0.1);
+    border-color: #ff69b4;
+    transform: translateY(-2px);
+  }
+`;
+
+const DesignCategoryIcon = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const DesignCategoryName = styled.h5`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+`;
+
+const DesignList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`;
+
+const DesignItem = styled.span`
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
 `;
 
 const FloatingElements = styled.div`
@@ -859,6 +967,37 @@ const DevPortfolioButton = styled.button`
   
   &:active {
     transform: translateY(0);
+  }
+`;
+
+// Simple Redirect Section
+const SimpleRedirectSection = styled.section`
+  background: rgba(255, 20, 147, 0.02);
+  border-top: 1px solid rgba(255, 20, 147, 0.1);
+  padding: 1.5rem 2rem;
+  text-align: center;
+`;
+
+const RedirectContent = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+`;
+
+const RedirectText = styled.p`
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+`;
+
+const RedirectLink = styled.span`
+  color: #ff69b4;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
   }
 `;
 
