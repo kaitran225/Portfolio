@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { } from 'styled-components';
 
 // Navigation utility
 const navigateTo = (path: string) => {
@@ -15,72 +15,6 @@ declare global {
   }
 }
 
-// Helper component for colored terminal lines
-const ColoredLine: React.FC<{ line: string }> = ({ line }) => {
-  // Color patterns for different types of terminal content
-  if (line.includes('Microsoft Windows') || line.includes('(c) Microsoft Corporation')) {
-    return <span style={{ color: '#00ff00' }}>{line}</span>;
-  }
-  if (line.includes('C:\\Users\\kai-tran>') || line.includes('C:\\Users\\kai-tran\\portfolio>')) {
-    const parts = line.split('>');
-    if (parts.length >= 2) {
-      return (
-        <span>
-          <span style={{ color: '#ffff00' }}>{parts[0]}&gt;</span>
-          <span style={{ color: '#ffffff' }}>{parts.slice(1).join('>')}</span>
-        </span>
-      );
-    }
-  }
-  if (line.includes('Directory of') || line.includes('Volume')) {
-    return <span style={{ color: '#00ffff' }}>{line}</span>;
-  }
-  if (line.includes('.exe')) {
-    return (
-      <span style={{ color: '#cccccc' }}>
-        {line.split('.exe').map((part, index, array) => (
-          <React.Fragment key={index}>
-            {part}
-            {index < array.length - 1 && <span style={{ color: '#ff6b35' }}>.exe</span>}
-          </React.Fragment>
-        ))}
-      </span>
-    );
-  }
-  if (line.includes('.md')) {
-    return (
-      <span style={{ color: '#cccccc' }}>
-        {line.split('.md').map((part, index, array) => (
-          <React.Fragment key={index}>
-            {part}
-            {index < array.length - 1 && <span style={{ color: '#ff6b35' }}>.md</span>}
-          </React.Fragment>
-        ))}
-      </span>
-    );
-  }
-  if (line.includes('Welcome to') || line.includes('System initialized')) {
-    return <span style={{ color: '#90ee90' }}>{line}</span>;
-  }
-  if (line.includes('<DIR>')) {
-    return (
-      <span style={{ color: '#cccccc' }}>
-        {line.split('<DIR>').map((part, index, array) => (
-          <React.Fragment key={index}>
-            {part}
-            {index < array.length - 1 && <span style={{ color: '#87ceeb' }}>&lt;DIR&gt;</span>}
-          </React.Fragment>
-        ))}
-      </span>
-    );
-  }
-  if (line.includes('File(s)') || line.includes('Dir(s)') || line.includes('bytes')) {
-    return <span style={{ color: '#ffa500' }}>{line}</span>;
-  }
-  
-  return <span style={{ color: '#cccccc' }}>{line}</span>;
-};
-
 interface Project {
   id: string;
   title: string;
@@ -93,57 +27,8 @@ interface Project {
 
 const LandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
-  const [terminalText, setTerminalText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
-
-  // Terminal typing animation
-  const fullText = `Microsoft Windows [Version 10.0.22631.4037]
-(c) Microsoft Corporation. All rights reserved.
-
-C:\\Users\\kai-tran>cd portfolio
-
-C:\\Users\\kai-tran\\portfolio>dir
- Volume in drive C has no label.
- Volume Serial Number is A1B2-C3D4
- 
- Directory of C:\\Users\\kai-tran\\portfolio
-
-07/31/2025  10:30 AM    <DIR>          .
-07/31/2025  10:30 AM    <DIR>          ..
-07/31/2025  10:30 AM            4,096  portfolio.exe
-07/31/2025  10:30 AM            2,048  README.md
-               2 File(s)          6,144 bytes
-               2 Dir(s)  500,000,000,000 bytes free
-
-C:\\Users\\kai-tran\\portfolio>portfolio.exe
-Welcome to Kai Tran's Portfolio System!
-System initialized successfully.
-
-C:\\Users\\kai-tran\\portfolio>`;
-
-  useEffect(() => {
-    let currentIndex = 0;
-    const typeInterval = setInterval(() => {
-      if (currentIndex < fullText.length) {
-        setTerminalText(fullText.substring(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        clearInterval(typeInterval);
-      }
-    }, 50);
-
-    // Cursor blink effect
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 530);
-
-    return () => {
-      clearInterval(typeInterval);
-      clearInterval(cursorInterval);
-    };
-  }, []);
 
   // Initialize Vanta.js topology background
   useEffect(() => {
@@ -335,10 +220,6 @@ C:\\Users\\kai-tran\\portfolio>`;
     }
   ];
 
-  const filteredProjects = selectedCategory === 'all'
-    ? projects
-    : projects.filter(project => project.category === selectedCategory);
-
   const featuredProjects = projects.filter(project => project.featured);
 
   return (
@@ -350,13 +231,6 @@ C:\\Users\\kai-tran\\portfolio>`;
             <LogoText>Kai Tran</LogoText>
             <LogoSubText>Full-Stack Developer</LogoSubText>
           </Logo>
-          <TechStackHeader>
-            <TechStackItem>React</TechStackItem>
-            <TechStackItem>TypeScript</TechStackItem>
-            <TechStackItem>Node.js</TechStackItem>
-            <TechStackItem>Python</TechStackItem>
-            <TechStackItem>AWS</TechStackItem>
-          </TechStackHeader>
           <HeaderCVButton href="?view=simple">
             📄 CV
           </HeaderCVButton>
@@ -376,32 +250,6 @@ C:\\Users\\kai-tran\\portfolio>`;
           
           <HeroContent>
             <SlimIntegratedSection>
-              <TerminalSection>
-                <TerminalWindow>
-                  <TerminalHeader>
-                    <div></div>
-                    <TerminalTitle>Command Prompt</TerminalTitle>
-                    <TerminalControls>
-                      <TerminalButton type="minimize" />
-                      <TerminalButton type="maximize" />
-                      <TerminalButton type="close" />
-                    </TerminalControls>
-                  </TerminalHeader>
-                  <TerminalBody>
-                    <TerminalText>
-                      {terminalText.split('\n').map((line, index) => (
-                        <TerminalLine key={index}>
-                          <ColoredLine line={line} />
-                          {index === terminalText.split('\n').length - 1 && showCursor && (
-                            <TerminalCursor>_</TerminalCursor>
-                          )}
-                        </TerminalLine>
-                      ))}
-                    </TerminalText>
-                  </TerminalBody>
-                </TerminalWindow>
-              </TerminalSection>
-              
               <ProfileSection>
                 <ProfilePicture>
                   <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran" />
@@ -512,6 +360,23 @@ C:\\Users\\kai-tran\\portfolio>`;
             ))}
           </ProjectGrid>
         </Section>
+
+        {/* Design Portfolio Introduction */}
+        <DesignIntroSection>
+          <DesignIntroContent>
+            <DesignIntroTitle>
+              Also passionate about <DesignHighlight>Design</DesignHighlight>?
+            </DesignIntroTitle>
+            <DesignIntroText>
+              Beyond development, I create beautiful visual experiences. Check out my design portfolio 
+              for brand identity, UI/UX design, and creative projects.
+            </DesignIntroText>
+            <DesignPortfolioButton onClick={() => navigateTo('/design')}>
+              <DesignIcon>🎨</DesignIcon>
+              View Design Portfolio
+            </DesignPortfolioButton>
+          </DesignIntroContent>
+        </DesignIntroSection>
 
         {/* Contact Section - Development Focus */}
         <SlimFooter>
@@ -674,46 +539,6 @@ const LogoSubText = styled.div`
   line-height: 1;
 `;
 
-const TechStackHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex: 1;
-  justify-content: center;
-  
-  @media (max-width: 900px) {
-    gap: 0.5rem;
-  }
-  
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const TechStackItem = styled.span`
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.4);
-  color: #c7d2fe;
-  padding: 0.35rem 0.85rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  
-  &:hover {
-    background: rgba(99, 102, 241, 0.25);
-    border-color: rgba(99, 102, 241, 0.6);
-    color: #e0e7ff;
-    transform: translateY(-1px);
-  }
-  
-  @media (max-width: 900px) {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.6rem;
-  }
-`;
-
 const HeaderCVButton = styled.a`
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
@@ -751,22 +576,6 @@ const HeroContent = styled.div`
   z-index: 2;
 `;
 
-const IntegratedSection = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-  min-height: 80vh;
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  @media (max-width: 768px) {
-    gap: 1.5rem;
-  }
-`;
 
 const SlimIntegratedSection = styled.div`
   display: grid;
@@ -884,24 +693,6 @@ const FeaturedDescription = styled.p`
   font-size: 0.9rem;
 `;
 
-const TerminalSection = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  animation: terminalSlideDown 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
-  
-  @keyframes terminalSlideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-`;
-
 const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -924,289 +715,6 @@ const ProfileSection = styled.div`
   @media (max-width: 1024px) {
     order: -1;
     padding: 1rem 0;
-  }
-`;
-
-const TerminalWindow = styled.div`
-  background: #0c0c0c;
-  border: 1px solid #404040;
-  border-radius: 0;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  max-width: 800px;
-  width: 100%;
-  overflow: hidden;
-  font-family: 'Consolas', 'Courier New', monospace;
-  position: relative;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    box-shadow: 
-      0 6px 30px rgba(0, 0, 0, 0.9),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-`;
-
-const TerminalHeader = styled.div`
-  background: linear-gradient(180deg, #2d2d30 0%, #1e1e1e 100%);
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #404040;
-  height: 30px;
-  position: relative;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  }
-`;
-
-const TerminalControls = styled.div`
-  display: flex;
-  gap: 1px;
-  align-items: center;
-`;
-
-const TerminalButton = styled.div<{ type: 'minimize' | 'maximize' | 'close' }>`
-  width: 45px;
-  height: 29px;
-  background: ${props => {
-    switch(props.type) {
-      case 'minimize': return 'transparent';
-      case 'maximize': return 'transparent';
-      case 'close': return 'transparent';
-    }
-  }};
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: normal;
-  color: #ffffff;
-  transition: all 0.2s ease;
-  font-family: 'Segoe MDL2 Assets', 'Segoe UI Symbol', Arial;
-  
-  &:hover {
-    background: ${props => {
-      switch(props.type) {
-        case 'minimize': return 'rgba(255, 255, 255, 0.1)';
-        case 'maximize': return 'rgba(255, 255, 255, 0.1)';
-        case 'close': return '#e81123';
-      }
-    }};
-  }
-  
-  &::after {
-    content: ${props => {
-      switch(props.type) {
-        case 'minimize': return '"🗕"';
-        case 'maximize': return '"🗖"';
-        case 'close': return '"🗙"';
-      }
-    }};
-    font-size: 10px;
-  }
-`;
-
-const CVButton = styled.a`
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 
-    0 4px 20px rgba(99, 102, 241, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
-  
-  &:hover {
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 
-      0 8px 30px rgba(99, 102, 241, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-  
-  &:active {
-    transform: translateY(0) scale(1.02);
-  }
-`;
-
-const TerminalTitle = styled.div`
-  color: #cccccc;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: center;
-  margin: 0 10px;
-  
-  &::before {
-    content: '';
-    width: 16px;
-    height: 16px;
-    background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgMkgxNFYxNEgyVjJaIiBzdHJva2U9IiNjY2NjY2MiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0iIzAwMDAwMCIvPgo8cGF0aCBkPSJNNCAxMEw2IDhMNCAwIiBzdHJva2U9IiNjY2NjY2MiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K') no-repeat center;
-    margin-right: 8px;
-  }
-`;
-
-const CVButtonContainer = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  animation: cvButtonSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
-  
-  @keyframes cvButtonSlide {
-    from {
-      opacity: 0;
-      transform: translateY(-20px) scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-  
-  @media (max-width: 1024px) {
-    position: static;
-    margin: 0 auto 2rem;
-    text-align: center;
-    order: 1;
-  }
-  
-  @media (max-width: 768px) {
-    margin: 0 auto 1.5rem;
-  }
-`;
-
-const TerminalBody = styled.div`
-  background: #0c0c0c;
-  padding: 16px;
-  min-height: 160px;
-  position: relative;
-  color: #cccccc;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: transparent;
-    pointer-events: none;
-  }
-`;
-
-const TerminalText = styled.div`
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #cccccc;
-`;
-
-const TerminalLine = styled.div`
-  margin-bottom: 2px;
-  display: flex;
-  align-items: center;
-  font-weight: normal;
-  position: relative;
-  z-index: 2;
-  color: #cccccc;
-  
-  &:first-child {
-    color: #cccccc;
-    font-weight: normal;
-  }
-  
-  &:nth-child(2) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(3) {
-    margin-bottom: 8px;
-  }
-  
-  &:nth-child(4) {
-    margin-bottom: 8px;
-  }
-  
-  &:nth-child(5) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(6) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(7) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(8) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(9) {
-    color: #cccccc;
-  }
-  
-  &:nth-child(10) {
-    color: #cccccc;
-    margin-top: 8px;
-  }
-  
-  &:last-child {
-    color: #cccccc;
-  }
-`;
-
-const TerminalCursor = styled.span`
-  color: #cccccc;
-  animation: blink 1.2s infinite;
-  margin-left: 2px;
-  font-weight: normal;
-  
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
   }
 `;
 
@@ -1337,108 +845,6 @@ const Particle = styled.div<{ delay: number }>`
       opacity: 0.7;
     }
   }
-`;
-
-const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 40px;
-  animation: statsSlideUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s both;
-  
-  @keyframes statsSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 30px;
-  }
-`;
-
-const StatItem = styled.div`
-  text-align: center;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 20px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(105, 51, 255, 0.1), transparent);
-    transition: left 0.6s ease;
-  }
-  
-  &:hover {
-    transform: translateY(-5px) scale(1.02);
-    background: rgba(105, 51, 255, 0.1);
-    border-color: var(--color-purple-primary);
-    box-shadow: 0 10px 30px rgba(105, 51, 255, 0.2);
-  }
-  
-  &:hover::before {
-    left: 100%;
-  }
-  
-  /* Stagger animation for each stat */
-  &:nth-child(1) {
-    animation-delay: 2.1s;
-  }
-  
-  &:nth-child(2) {
-    animation-delay: 2.2s;
-  }
-  
-  &:nth-child(3) {
-    animation-delay: 2.3s;
-  }
-`;
-
-const StatNumber = styled.div`
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-green-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
-  animation: countUp 2s ease-out 2.5s both;
-  
-  @keyframes countUp {
-    from {
-      transform: scale(0.5);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 `;
 
 const HeroText = styled.div`
@@ -1790,6 +1196,104 @@ const Tag = styled.span`
   border: 1px solid var(--color-purple-primary);
 `;
 
+// Design Introduction Section
+const DesignIntroSection = styled.section`
+  background: linear-gradient(135deg, #1a0e1e 0%, #2d1b35 50%, #1a0e1e 100%);
+  padding: 3rem 2rem;
+  position: relative;
+  border-top: 1px solid rgba(255, 20, 147, 0.2);
+  border-bottom: 1px solid rgba(255, 20, 147, 0.2);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.05) 0%, transparent 70%);
+  }
+`;
+
+const DesignIntroContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+`;
+
+const DesignIntroTitle = styled.h3`
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const DesignHighlight = styled.span`
+  background: linear-gradient(135deg, #ff69b4, #ff1493, #d8bfd8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+`;
+
+const DesignIntroText = styled.p`
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const DesignPortfolioButton = styled.button`
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
 const SlimFooter = styled.footer`
   background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1931,112 +1435,6 @@ const Copyright = styled.p`
   margin: 0;
   opacity: 0.6;
   font-weight: 400;
-`;
-
-// Tech Stack Components
-const TechStackSection = styled.section`
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const TechStackGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 40px;
-  margin-top: 40px;
-`;
-
-const TechCategory = styled.div`
-  background: var(--color-black-secondary);
-  border-radius: 20px;
-  padding: 30px;
-  border: 1px solid var(--color-gray-dark);
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: var(--color-purple-primary);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px var(--color-purple-primary)20;
-  }
-`;
-
-const TechCategoryTitle = styled.h3`
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: var(--color-text-primary);
-  text-align: center;
-`;
-
-const TechStack = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const TechItem = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 15px;
-  background: var(--color-black-primary);
-  border-radius: 12px;
-  border: 1px solid var(--color-gray-dark);
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: var(--color-purple-primary);
-    background: var(--color-black-primary);
-  }
-`;
-
-const TechIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  
-  img {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
-    filter: brightness(1.1);
-    transition: all 0.3s ease;
-  }
-  
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-purple-primary);
-    transform: scale(1.05);
-    
-    img {
-      filter: brightness(1.3) drop-shadow(0 0 8px rgba(105, 51, 255, 0.4));
-    }
-  }
-`;
-
-const TechInfo = styled.div`
-  flex: 1;
-`;
-
-const TechName = styled.h4`
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 5px;
-`;
-
-const TechDesc = styled.p`
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  line-height: 1.4;
 `;
 
 export default LandingPage;

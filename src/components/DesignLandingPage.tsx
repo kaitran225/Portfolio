@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, {} from 'styled-components';
 
 // Navigation utility
 const navigateTo = (path: string) => {
@@ -185,8 +185,6 @@ const DesignLandingPage: React.FC = () => {
         return true;
       });
 
-  const featuredProjects = projects.filter(project => project.featured);
-
   return (
     <LandingContainer ref={vantaRef}>
       {/* Design Header */}
@@ -196,21 +194,6 @@ const DesignLandingPage: React.FC = () => {
             <LogoText>Kai Tran</LogoText>
             <LogoSubText>Creative Designer</LogoSubText>
           </Logo>
-          <DesignSkillsHeader>
-            <SkillItem>Branding</SkillItem>
-            <SkillItem>UI/UX</SkillItem>
-            <SkillItem>Packaging</SkillItem>
-            <SkillItem>Illustration</SkillItem>
-            <SkillItem>Typography</SkillItem>
-          </DesignSkillsHeader>
-          <HeaderActions>
-            <HeaderPortfolioButton href="/dev">
-              💻 Dev Portfolio
-            </HeaderPortfolioButton>
-            <HeaderCVButton href="?view=simple">
-              📄 Portfolio
-            </HeaderCVButton>
-          </HeaderActions>
         </HeaderContent>
       </SiteHeader>
 
@@ -244,38 +227,6 @@ const DesignLandingPage: React.FC = () => {
                   <CreativeSkillPill>Creative Direction</CreativeSkillPill>
                 </CreativeSkills>
               </HeroTextSection>
-              
-              <HeroVisualSection>
-                <CreativeProfilePicture>
-                  <img src="/assets/profile/kai-tran-profile.jpg" alt="Kai Tran - Creative Designer" />
-                  <CreativeGlow />
-                </CreativeProfilePicture>
-                
-                {/* Featured Design Showcase */}
-                <FeaturedShowcase>
-                  <ShowcaseHeader>Featured Designs</ShowcaseHeader>
-                  <ShowcaseGrid>
-                    {featuredProjects.slice(0, 3).map(project => (
-                      <ShowcaseCard
-                        key={project.id}
-                        onClick={() => window.location.href = `/project/${project.id}`}
-                      >
-                        <ShowcaseImage>
-                          <img src={project.thumbnail} alt={project.title} />
-                        </ShowcaseImage>
-                        <ShowcaseInfo>
-                          <ShowcaseTitle>{project.title}</ShowcaseTitle>
-                          <ShowcaseTags>
-                            {project.tags.slice(0, 2).map(tag => (
-                              <ShowcaseTag key={tag}>{tag}</ShowcaseTag>
-                            ))}
-                          </ShowcaseTags>
-                        </ShowcaseInfo>
-                      </ShowcaseCard>
-                    ))}
-                  </ShowcaseGrid>
-                </FeaturedShowcase>
-              </HeroVisualSection>
             </HeroGrid>
           </HeroContent>
         </DesignHeroSection>
@@ -340,6 +291,23 @@ const DesignLandingPage: React.FC = () => {
             ))}
           </ProjectGrid>
         </Section>
+
+        {/* Dev Portfolio Introduction */}
+        <DevIntroSection>
+          <DevIntroContent>
+            <DevIntroTitle>
+              Also interested in <DevHighlight>Development</DevHighlight>?
+            </DevIntroTitle>
+            <DevIntroText>
+              Beyond design, I build robust web applications and scalable systems. 
+              Check out my development portfolio for full-stack projects and technical expertise.
+            </DevIntroText>
+            <DevPortfolioButton onClick={() => navigateTo('/')}>
+              <DevIcon>💻</DevIcon>
+              View Dev Portfolio
+            </DevPortfolioButton>
+          </DevIntroContent>
+        </DevIntroSection>
 
         {/* Contact Section */}
         <SlimFooter>
@@ -466,98 +434,6 @@ const LogoSubText = styled.div`
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1;
-`;
-
-const DesignSkillsHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex: 1;
-  justify-content: center;
-  
-  @media (max-width: 900px) {
-    gap: 0.5rem;
-  }
-  
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const SkillItem = styled.span`
-  background: rgba(255, 20, 147, 0.15);
-  border: 1px solid rgba(255, 20, 147, 0.4);
-  color: #ff69b4;
-  padding: 0.35rem 0.85rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  
-  &:hover {
-    background: rgba(255, 20, 147, 0.25);
-    border-color: rgba(255, 20, 147, 0.6);
-    color: #ffb6c1;
-    transform: translateY(-1px);
-  }
-  
-  @media (max-width: 900px) {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.6rem;
-  }
-`;
-
-const HeaderActions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-`;
-
-const HeaderPortfolioButton = styled.a`
-  background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-  color: #000000;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
-  }
-`;
-
-const HeaderCVButton = styled.a`
-  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
-  color: white;
-  text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 25px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  min-width: 80px;
-  justify-content: center;
-  
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
-    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-  }
-  
-  @media (max-width: 600px) {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-  }
 `;
 
 const DesignHeroSection = styled.section`
@@ -702,70 +578,6 @@ const CreativeSkillPill = styled.span`
   }
 `;
 
-const HeroVisualSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  animation: heroVisualSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-  
-  @keyframes heroVisualSlideIn {
-    from {
-      opacity: 0;
-      transform: translateX(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-`;
-
-const CreativeProfilePicture = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    object-fit: cover;
-    border: 2px solid rgba(255, 20, 147, 0.3);
-    transition: all 0.4s ease;
-    
-    &:hover {
-      transform: scale(1.05);
-      border-color: rgba(255, 20, 147, 0.6);
-    }
-  }
-`;
-
-const CreativeGlow = styled.div`
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(45deg, #ff1493, #ff69b4);
-  border-radius: 30px;
-  opacity: 0.3;
-  filter: blur(15px);
-  z-index: -1;
-  animation: pulseGlow 3s ease-in-out infinite alternate;
-  
-  @keyframes pulseGlow {
-    from {
-      opacity: 0.2;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 0.4;
-      transform: scale(1.1);
-    }
-  }
-`;
-
 const FloatingElements = styled.div`
   position: absolute;
   top: 0;
@@ -819,86 +631,6 @@ const DesignElement = styled.div<{ delay: number; type: 'circle' | 'square' | 't
     }
   }
 `;
-
-const FeaturedShowcase = styled.div`
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 20, 147, 0.2);
-`;
-
-const ShowcaseHeader = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 1rem;
-  text-align: center;
-`;
-
-const ShowcaseGrid = styled.div`
-  display: grid;
-  gap: 1rem;
-`;
-
-const ShowcaseCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 0.75rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 1px solid rgba(255, 20, 147, 0.1);
-  
-  &:hover {
-    background: rgba(255, 20, 147, 0.1);
-    border-color: rgba(255, 20, 147, 0.3);
-    transform: translateX(5px);
-  }
-`;
-
-const ShowcaseImage = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  overflow: hidden;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ShowcaseInfo = styled.div`
-  flex: 1;
-`;
-
-const ShowcaseTitle = styled.h4`
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 0.25rem;
-`;
-
-const ShowcaseTags = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
-
-const ShowcaseTag = styled.span`
-  background: rgba(255, 20, 147, 0.2);
-  color: #ff69b4;
-  padding: 0.2rem 0.5rem;
-  border-radius: 8px;
-  font-size: 0.7rem;
-  font-weight: 500;
-`;
-
-// Rest of the styled components (Section, ProjectCard, etc.) would be similar to the main landing page
-// but with design-focused color schemes using the pink/magenta palette
 
 const Section = styled.section`
   padding: 80px 20px;
@@ -1030,6 +762,104 @@ const Tag = styled.span`
   font-size: 0.8rem;
   font-weight: 500;
   border: 1px solid rgba(255, 20, 147, 0.3);
+`;
+
+// Dev Introduction Section
+const DevIntroSection = styled.section`
+  background: linear-gradient(135deg, #0e1a0e 0%, #1b352d 50%, #0e1a0e 100%);
+  padding: 3rem 2rem;
+  position: relative;
+  border-top: 1px solid rgba(0, 255, 127, 0.2);
+  border-bottom: 1px solid rgba(0, 255, 127, 0.2);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 127, 0.05) 0%, transparent 70%);
+  }
+`;
+
+const DevIntroContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+`;
+
+const DevIntroTitle = styled.h3`
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const DevHighlight = styled.span`
+  background: linear-gradient(135deg, #00ff7f, #32cd32, #98fb98);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+`;
+
+const DevIntroText = styled.p`
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const DevPortfolioButton = styled.button`
+  background: linear-gradient(135deg, #00ff7f, #32cd32);
+  color: #000;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 255, 127, 0.3);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 const SlimFooter = styled.footer`
