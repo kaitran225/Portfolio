@@ -16,16 +16,6 @@ declare global {
   }
 }
 
-interface Project {
-  id: string;
-  title: string;
-  category: 'development' | 'design';
-  description: string;
-  thumbnail: string;
-  tags: string[];
-  featured: boolean;
-}
-
 const LandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -147,22 +137,9 @@ const LandingPage: React.FC = () => {
 
   return (
     <LandingContainer ref={vantaRef}>
-      {/* Slim Header */}
-      <SiteHeader>
-        <HeaderContent>
-          <Logo>
-            <LogoText>{personalInfo.name}</LogoText>
-            <LogoSubText>{personalInfo.title}</LogoSubText>
-          </Logo>
-          <HeaderCVButton href="?view=simple">
-            📄 CV
-          </HeaderCVButton>
-        </HeaderContent>
-      </SiteHeader>
-
       {/* Hero Section */}
       <ContentBGContainer>
-        <HeroSection>
+        <HeroSection id="hero">
           <FloatingParticles>
             <Particle delay={0} />
             <Particle delay={2} />
@@ -170,7 +147,7 @@ const LandingPage: React.FC = () => {
             <Particle delay={1.5} />
             <Particle delay={3.5} />
           </FloatingParticles>
-          
+
           <HeroContent>
             <SlimIntegratedSection>
               <ProfileSection>
@@ -179,7 +156,7 @@ const LandingPage: React.FC = () => {
                   <ProfileGlow />
                 </ProfilePicture>
                 <HeroText>
-                  <Name>Full-Stack Developer</Name>
+                                    <RoleTitle>Full-Stack Developer</RoleTitle>
                   <Title>{personalInfo.subtitle}</Title>
                   <Description>
                     {personalInfo.description}
@@ -187,7 +164,7 @@ const LandingPage: React.FC = () => {
                 </HeroText>
               </ProfileSection>
             </SlimIntegratedSection>
-            
+
             {/* Featured Development Projects */}
             <FeaturedSection>
               <FeaturedHeader>Featured Development Projects</FeaturedHeader>
@@ -200,9 +177,6 @@ const LandingPage: React.FC = () => {
                     <FeaturedThumbnail>
                       <img src={project.thumbnail} alt={project.title} />
                       <FeaturedOverlay>
-                        <CategoryBadge category={project.category}>
-                          💻 Development
-                        </CategoryBadge>
                       </FeaturedOverlay>
                     </FeaturedThumbnail>
                     <FeaturedInfo>
@@ -222,7 +196,7 @@ const LandingPage: React.FC = () => {
         </HeroSection>
 
         {/* Development Project Catalog */}
-        <Section>
+        <Section id="projects">
           <SectionHeader>Development Portfolio</SectionHeader>
 
           {/* Category Filter */}
@@ -257,9 +231,6 @@ const LandingPage: React.FC = () => {
                 <ProjectThumbnail>
                   <img src={project.thumbnail} alt={project.title} />
                   <ProjectOverlay>
-                    <CategoryBadge category={project.category}>
-                      💻
-                    </CategoryBadge>
                   </ProjectOverlay>
                 </ProjectThumbnail>
                 <ProjectInfo>
@@ -276,6 +247,47 @@ const LandingPage: React.FC = () => {
           </ProjectGrid>
         </Section>
 
+
+
+        {/* Skills Section */}
+        <Section id="skills">
+          <SectionHeader>Technical Skills</SectionHeader>
+          <SkillsGrid>
+            <SkillCategory>
+              <SkillCategoryTitle>Frontend</SkillCategoryTitle>
+              <SkillList>
+                {portfolioDataService.getSkills().technical.frontend.map(skill => (
+                  <SkillPill key={skill}>{skill}</SkillPill>
+                ))}
+              </SkillList>
+            </SkillCategory>
+            <SkillCategory>
+              <SkillCategoryTitle>Backend</SkillCategoryTitle>
+              <SkillList>
+                {portfolioDataService.getSkills().technical.backend.map(skill => (
+                  <SkillPill key={skill}>{skill}</SkillPill>
+                ))}
+              </SkillList>
+            </SkillCategory>
+            <SkillCategory>
+              <SkillCategoryTitle>DevOps</SkillCategoryTitle>
+              <SkillList>
+                {portfolioDataService.getSkills().technical.devops.map(skill => (
+                  <SkillPill key={skill}>{skill}</SkillPill>
+                ))}
+              </SkillList>
+            </SkillCategory>
+            <SkillCategory>
+              <SkillCategoryTitle>Tools</SkillCategoryTitle>
+              <SkillList>
+                {portfolioDataService.getSkills().technical.tools.map(skill => (
+                  <SkillPill key={skill}>{skill}</SkillPill>
+                ))}
+              </SkillList>
+            </SkillCategory>
+          </SkillsGrid>
+        </Section>
+
         {/* Design Portfolio Redirect */}
         <SimpleRedirectSection>
           <RedirectContent>
@@ -284,36 +296,6 @@ const LandingPage: React.FC = () => {
             </RedirectText>
           </RedirectContent>
         </SimpleRedirectSection>
-
-        {/* Contact Section - Development Focus */}
-        <SlimFooter>
-          <FooterContent>
-            <FooterText>
-              Available for OJT opportunities Fall 2025 • {personalInfo.title} seeking development roles
-            </FooterText>
-            <FooterLinks>
-              <FooterLink href={personalInfo.contact.github}>
-                <GitHubIcon>⚡</GitHubIcon>
-                GitHub
-              </FooterLink>
-              <FooterLink href="https://linkedin.com/in/kaitran-dev">
-                <LinkedInIcon>�</LinkedInIcon>
-                LinkedIn
-              </FooterLink>
-              <FooterLink onClick={() => navigateTo('/design')}>
-                <DesignIcon>🎨</DesignIcon>
-                Design Portfolio
-              </FooterLink>
-              <FooterLink href="mailto:dev@kaitran.dev">
-                <EmailIcon>✉️</EmailIcon>
-                Email
-              </FooterLink>
-            </FooterLinks>
-          </FooterContent>
-          <FooterBottom>
-            <Copyright>© 2025 Kai Tran. Built with 💜 and modern tech</Copyright>
-          </FooterBottom>
-        </SlimFooter>
       </ContentBGContainer>
     </LandingContainer>
   );
@@ -362,13 +344,16 @@ const ContentBGContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  padding: 4rem 1.5rem 2rem;
+  height: calc(100vh - 80px);
+  padding: 2rem 1.5rem;
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
   animation: heroSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
   
   @keyframes heroSlideIn {
     from {
@@ -394,113 +379,64 @@ const HeroSection = styled.section`
       rgba(0, 255, 136, 0.05) 100%);
     z-index: 1;
   }
-`;
-
-// Header Components
-const SiteHeader = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  z-index: 1000;
-  padding: 0.75rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-`;
-
-const HeaderContent = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  gap: 2rem;
   
   @media (max-width: 768px) {
-    padding: 0 1rem;
-    gap: 1rem;
-  }
-`;
-
-const Logo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 120px;
-`;
-
-const LogoText = styled.div`
-  color: #ffffff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1;
-`;
-
-const LogoSubText = styled.div`
-  color: #a0a0a0;
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1;
-`;
-
-const HeaderCVButton = styled.a`
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
-  text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 25px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  min-width: 80px;
-  justify-content: center;
-  
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  }
-  
-  @media (max-width: 600px) {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
+    height: calc(100vh - 70px);
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
   }
 `;
 
 const HeroContent = styled.div`
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  justify-content: center;
+  height: 100%;
+  gap: 2rem;
   position: relative;
   z-index: 2;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    gap: 1.5rem;
+    padding: 1rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+  }
 `;
 
 
 const SlimIntegratedSection = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+  
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
   
   @media (max-width: 768px) {
-    gap: 1.5rem;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
 const FeaturedSection = styled.div`
-  margin-top: 2rem;
-  padding: 2rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  padding: 1.5rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   animation: featuredSlideUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+  min-height: 0; /* Allow flex shrinking */
   
   @keyframes featuredSlideUp {
     from {
@@ -511,6 +447,11 @@ const FeaturedSection = styled.div`
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+    margin-top: 0.5rem;
   }
 `;
 
@@ -596,26 +537,35 @@ const FeaturedDescription = styled.p`
 
 const ProfileSection = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  text-align: center;
+  gap: 2rem;
+  text-align: left;
   padding: 2rem 0;
+  flex: 1;
   animation: profileFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both;
   
   @keyframes profileFadeIn {
     from {
       opacity: 0;
-      transform: translateX(30px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
   
   @media (max-width: 1024px) {
-    order: -1;
-    padding: 1rem 0;
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 0 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 0 0.5rem;
+    gap: 1rem;
   }
 `;
 
@@ -636,8 +586,8 @@ const ProfilePicture = styled.div`
   }
   
   img {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     border-radius: 12px;
     object-fit: cover;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -650,6 +600,16 @@ const ProfilePicture = styled.div`
       transform: translateY(-5px) scale(1.02);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
       border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    @media (max-width: 1024px) {
+      width: 160px;
+      height: 160px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 140px;
+      height: 140px;
     }
   }
 `;
@@ -749,24 +709,26 @@ const Particle = styled.div<{ delay: number }>`
 `;
 
 const HeroText = styled.div`
-  flex: 1;
   text-align: left;
+  flex: 1;
   animation: heroTextSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both;
   
   @keyframes heroTextSlideIn {
     from {
       opacity: 0;
-      transform: translateX(-40px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     text-align: center;
-    
+  }
+  
+  @media (max-width: 768px) {
     @keyframes heroTextSlideIn {
       from {
         opacity: 0;
@@ -848,30 +810,33 @@ const Name = styled.h1`
 `;
 
 const Title = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--color-text-secondary);
-  margin-bottom: 20px;
-`;
-
-const Description = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  margin-bottom: 30px;
-  max-width: 600px;
-`;
-
-const SkillPills = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  animation: skillPillsStagger 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  opacity: 0.9;
   
-  @keyframes skillPillsStagger {
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+`;
+
+const RoleTitle = styled.h1`
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.8rem;
+  background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-green-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: roleSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+  
+  @keyframes roleSlideIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(-20px);
     }
     to {
       opacity: 1;
@@ -879,30 +844,25 @@ const SkillPills = styled.div`
     }
   }
   
-  /* Stagger children animations */
-  & > * {
-    animation: skillPillFloat 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation-fill-mode: both;
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
   }
-  
-  & > *:nth-child(1) { animation-delay: 1.4s; }
-  & > *:nth-child(2) { animation-delay: 1.5s; }
-  & > *:nth-child(3) { animation-delay: 1.6s; }
-  & > *:nth-child(4) { animation-delay: 1.7s; }
-  
-  @keyframes skillPillFloat {
-    from {
-      opacity: 0;
-      transform: translateY(15px) scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
+`;
+
+const Description = styled.p`
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.85;
   
   @media (max-width: 768px) {
-    justify-content: center;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -945,6 +905,45 @@ const SkillPill = styled.span`
     transform: translateY(-1px) scale(0.98);
     transition: all 0.1s ease;
   }
+`;
+
+// Skills Section Components
+const SkillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+`;
+
+const SkillCategory = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(138, 43, 226, 0.1);
+  }
+`;
+
+const SkillCategoryTitle = styled.h3`
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const SkillList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 `;
 
 // Tech Stack Components
@@ -1003,24 +1002,24 @@ const ProjectGrid = styled.div`
 `;
 
 const ProjectCard = styled.div<{ featured?: boolean }>`
-  background: var(--color-black-secondary);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid var(--color-gray-dark);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   ${props => props.featured && `
     border: 2px solid var(--color-purple-primary);
-    box-shadow: 0 10px 30px var(--color-purple-primary)20;
+    background: rgba(105, 51, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(105, 51, 255, 0.2);
   `}
   
   &:hover {
+    background: rgba(255, 255, 255, 0.05);
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px var(--color-purple-primary)30;
+    box-shadow: 0 20px 40px rgba(105, 51, 255, 0.3);
     border-color: var(--color-purple-primary);
-  }
-    border-color: rgba(255, 255, 255, 0.4);
   }
 `;
 
@@ -1045,15 +1044,6 @@ const ProjectOverlay = styled.div`
   position: absolute;
   top: 15px;
   right: 15px;
-`;
-
-const CategoryBadge = styled.span<{ category: 'development' | 'design' }>`
-  background: ${props => props.category === 'development' ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
-  color: var(--color-text-primary);
-  padding: 6px 12px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: 600;
 `;
 
 const ProjectInfo = styled.div`
@@ -1081,13 +1071,21 @@ const TagList = styled.div`
 `;
 
 const Tag = styled.span`
-  background: var(--color-purple-primary)30;
+  background: rgba(105, 51, 255, 0.1);
   color: var(--color-text-primary);
   padding: 4px 10px;
-  border-radius: 12px;
+  border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
-  border: 1px solid var(--color-purple-primary);
+  border: 1px solid rgba(105, 51, 255, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(105, 51, 255, 0.2);
+    border-color: var(--color-purple-primary);
+    transform: translateY(-1px);
+  }
 `;
 
 // Simple Redirect Section
@@ -1119,149 +1117,6 @@ const RedirectLink = styled.span`
     color: var(--color-text-primary);
     text-decoration: underline;
   }
-`;
-
-const SlimFooter = styled.footer`
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-purple-primary), transparent);
-    opacity: 0.6;
-  }
-`;
-
-const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-`;
-
-const FooterText = styled.p`
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin: 0;
-  opacity: 0.8;
-`;
-
-const FooterLinks = styled.div`
-  display: flex;
-  gap: 25px;
-  
-  @media (max-width: 768px) {
-    gap: 20px;
-  }
-`;
-
-const FooterLink = styled.div<{ href?: string; onClick?: () => void }>`
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  
-  &:hover {
-    color: var(--color-text-primary);
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--color-purple-primary);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  &:hover::after {
-    width: 80%;
-  }
-`;
-
-const GitHubIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const LinkedInIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const DesignIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const EmailIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const FooterBottom = styled.div`
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 15px 20px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.3);
-`;
-
-const Copyright = styled.p`
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
-  margin: 0;
-  opacity: 0.6;
-  font-weight: 400;
 `;
 
 export default LandingPage;

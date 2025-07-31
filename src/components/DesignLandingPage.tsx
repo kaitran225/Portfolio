@@ -16,16 +16,6 @@ declare global {
   }
 }
 
-interface Project {
-  id: string;
-  title: string;
-  category: 'development' | 'design';
-  description: string;
-  thumbnail: string;
-  tags: string[];
-  featured: boolean;
-}
-
 const DesignLandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'branding' | 'ui-ux' | 'print'>('all');
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -143,19 +133,9 @@ const DesignLandingPage: React.FC = () => {
 
   return (
     <LandingContainer ref={vantaRef}>
-      {/* Design Header */}
-      <SiteHeader>
-        <HeaderContent>
-          <Logo>
-            <LogoText>{personalInfo.name}</LogoText>
-            <LogoSubText>Creative Designer</LogoSubText>
-          </Logo>
-        </HeaderContent>
-      </SiteHeader>
-
       {/* Hero Section */}
       <ContentBGContainer>
-        <DesignHeroSection>
+        <DesignHeroSection id="hero">
           <FloatingElements>
             <DesignElement delay={0} type="circle" />
             <DesignElement delay={1} type="square" />
@@ -181,7 +161,7 @@ const DesignLandingPage: React.FC = () => {
         </DesignHeroSection>
 
         {/* Design Portfolio Section */}
-        <Section>
+        <Section id="projects">
           <SectionHeader>Design Portfolio</SectionHeader>
 
           {/* Category Filter */}
@@ -222,9 +202,6 @@ const DesignLandingPage: React.FC = () => {
                 <ProjectThumbnail>
                   <img src={project.thumbnail} alt={project.title} />
                   <ProjectOverlay>
-                    <CategoryBadge category={project.category}>
-                      🎨
-                    </CategoryBadge>
                   </ProjectOverlay>
                 </ProjectThumbnail>
                 <ProjectInfo>
@@ -249,40 +226,6 @@ const DesignLandingPage: React.FC = () => {
             </RedirectText>
           </RedirectContent>
         </SimpleRedirectSection>
-
-        {/* Contact Section */}
-        <SlimFooter>
-          <FooterContent>
-            <FooterText>
-              Available for design projects & creative collaborations • Let's create something beautiful together
-            </FooterText>
-            <FooterLinks>
-              <FooterLink onClick={() => window.open('https://dribbble.com/kaitran', '_blank')}>
-                <DribbbleIcon>🏀</DribbbleIcon>
-                Dribbble
-              </FooterLink>
-              <FooterLink onClick={() => window.open('https://behance.net/kaitran', '_blank')}>
-                <BehanceIcon>🎨</BehanceIcon>
-                Behance
-              </FooterLink>
-              <FooterLink onClick={() => navigateTo('/')}>
-                <DevIcon>⚡</DevIcon>
-                Dev Portfolio
-              </FooterLink>
-              <FooterLink onClick={() => window.open('https://www.instagram.com/kaitran.prt', '_blank')}>
-                <InstagramIcon>📸</InstagramIcon>
-                Instagram
-              </FooterLink>
-              <FooterLink onClick={() => window.open('mailto:design@kaitran.dev', '_blank')}>
-                <EmailIcon>✉️</EmailIcon>
-                Email
-              </FooterLink>
-            </FooterLinks>
-          </FooterContent>
-          <FooterBottom>
-            <Copyright>© 2025 Kai Tran. Designed with 💜 and creativity</Copyright>
-          </FooterBottom>
-        </SlimFooter>
       </ContentBGContainer>
     </LandingContainer>
   );
@@ -328,55 +271,6 @@ const ContentBGContainer = styled.div`
   z-index: 1;
 `;
 
-const SiteHeader = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 20, 147, 0.2);
-  z-index: 1000;
-  padding: 0.75rem 0;
-  box-shadow: 0 2px 10px rgba(255, 20, 147, 0.1);
-`;
-
-const HeaderContent = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  gap: 2rem;
-  
-  @media (max-width: 768px) {
-    padding: 0 1rem;
-    gap: 1rem;
-  }
-`;
-
-const Logo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 120px;
-`;
-
-const LogoText = styled.div`
-  color: #ffffff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1;
-`;
-
-const LogoSubText = styled.div`
-  color: #ff69b4;
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1;
-`;
-
 const DesignHeroSection = styled.section`
   padding: 100px 20px 60px;
   background: rgba(10, 10, 10, 0.85);
@@ -413,7 +307,7 @@ const DesignHeroSection = styled.section`
 `;
 
 const HeroContent = styled.div`
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -486,34 +380,6 @@ const CreativeDescription = styled.p`
   color: var(--color-text-secondary);
   margin-bottom: 2rem;
   max-width: 500px;
-`;
-
-const CreativeSkills = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  
-  @media (max-width: 1024px) {
-    justify-content: center;
-  }
-`;
-
-const CreativeSkillPill = styled.span`
-  background: rgba(255, 20, 147, 0.15);
-  border: 1px solid rgba(255, 20, 147, 0.3);
-  color: #ff69b4;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(255, 20, 147, 0.25);
-    border-color: rgba(255, 20, 147, 0.5);
-    color: #ffb6c1;
-    transform: translateY(-2px);
-  }
 `;
 
 // Design Stack Components
@@ -622,15 +488,16 @@ const ProjectGrid = styled.div`
 `;
 
 const ProjectCard = styled.div`
-  background: var(--color-black-secondary);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 20, 147, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   
   &:hover {
+    background: rgba(255, 255, 255, 0.05);
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
     border-color: #ff1493;
@@ -660,15 +527,6 @@ const ProjectOverlay = styled.div`
   right: 15px;
 `;
 
-const CategoryBadge = styled.span<{ category: 'development' | 'design' }>`
-  background: #ff1493;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: 600;
-`;
-
 const ProjectInfo = styled.div`
   padding: 25px;
 `;
@@ -694,110 +552,20 @@ const TagList = styled.div`
 `;
 
 const Tag = styled.span`
-  background: rgba(255, 20, 147, 0.2);
+  background: rgba(255, 20, 147, 0.1);
   color: #ff69b4;
   padding: 4px 10px;
-  border-radius: 12px;
+  border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
   border: 1px solid rgba(255, 20, 147, 0.3);
-`;
-
-// Dev Introduction Section
-const DevIntroSection = styled.section`
-  background: linear-gradient(135deg, #0e1a0e 0%, #1b352d 50%, #0e1a0e 100%);
-  padding: 3rem 2rem;
-  position: relative;
-  border-top: 1px solid rgba(0, 255, 127, 0.2);
-  border-bottom: 1px solid rgba(0, 255, 127, 0.2);
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 127, 0.05) 0%, transparent 70%);
-  }
-`;
-
-const DevIntroContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-`;
-
-const DevIntroTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--color-text-primary);
-  
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-`;
-
-const DevHighlight = styled.span`
-  background: linear-gradient(135deg, #00ff7f, #32cd32, #98fb98);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-`;
-
-const DevIntroText = styled.p`
-  font-size: 1.1rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-`;
-
-const DevPortfolioButton = styled.button`
-  background: linear-gradient(135deg, #00ff7f, #32cd32);
-  color: #000;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-  }
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 255, 127, 0.3);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-  
-  &:active {
-    transform: translateY(0);
+    background: rgba(255, 20, 147, 0.2);
+    border-color: #ff1493;
+    transform: translateY(-1px);
   }
 `;
 
@@ -830,159 +598,6 @@ const RedirectLink = styled.span`
     color: var(--color-text-primary);
     text-decoration: underline;
   }
-`;
-
-const SlimFooter = styled.footer`
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-  border-top: 1px solid rgba(255, 20, 147, 0.2);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #ff1493, transparent);
-    opacity: 0.6;
-  }
-`;
-
-const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-`;
-
-const FooterText = styled.p`
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin: 0;
-  opacity: 0.8;
-`;
-
-const FooterLinks = styled.div`
-  display: flex;
-  gap: 25px;
-  
-  @media (max-width: 768px) {
-    gap: 20px;
-  }
-`;
-
-const FooterLink = styled.div<{ href?: string; onClick?: () => void }>`
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  
-  &:hover {
-    color: #ff69b4;
-    background: rgba(255, 20, 147, 0.1);
-    transform: translateY(-2px);
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #ff1493;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  &:hover::after {
-    width: 80%;
-  }
-`;
-
-const DribbbleIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const BehanceIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const DevIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const InstagramIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const EmailIcon = styled.span`
-  font-size: 1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${FooterLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const FooterBottom = styled.div`
-  border-top: 1px solid rgba(255, 20, 147, 0.1);
-  padding: 15px 20px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.3);
-`;
-
-const Copyright = styled.p`
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
-  margin: 0;
-  opacity: 0.6;
-  font-weight: 400;
 `;
 
 export default DesignLandingPage;
