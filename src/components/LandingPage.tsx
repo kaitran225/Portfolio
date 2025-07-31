@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { } from 'styled-components';
 import portfolioDataService from '../services/portfolioDataService';
 
@@ -8,92 +8,135 @@ const navigateTo = (path: string) => {
   window.location.reload();
 };
 
+// Vanta.js topology effect
+declare global {
+  interface Window {
+    VANTA: any;
+    p5: any;
+  }
+}
+
 const LandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
 
   // Get data from service
   const personalInfo = portfolioDataService.getPersonalInfo();
   const projects = portfolioDataService.getAllProjects();
   const featuredProjects = portfolioDataService.getFeaturedDevelopmentProjects();
+  useEffect(() => {
+    const loadVanta = async () => {
+      try {
+        console.log('Starting Vanta.js loading process...');
+
+        // Load p5.js first
+        if (!window.p5) {
+          console.log('Loading p5.js...');
+          const script1 = document.createElement('script');
+          script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
+          script1.crossOrigin = 'anonymous';
+          document.head.appendChild(script1);
+
+          await new Promise((resolve, reject) => {
+            script1.onload = () => {
+              console.log('p5.js loaded successfully');
+              resolve(null);
+            };
+            script1.onerror = (error) => {
+              console.error('Failed to load p5.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
+          });
+        } else {
+          console.log('p5.js already loaded');
+        }
+
+        // Load Vanta.js topology effect
+        if (!window.VANTA) {
+          console.log('Loading Vanta.js...');
+          const script2 = document.createElement('script');
+          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
+          script2.crossOrigin = 'anonymous';
+          document.head.appendChild(script2);
+
+          await new Promise((resolve, reject) => {
+            script2.onload = () => {
+              console.log('Vanta.js loaded successfully');
+              resolve(null);
+            };
+            script2.onerror = (error) => {
+              console.error('Failed to load Vanta.js:', error);
+              reject(error);
+            };
+            setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
+          });
+        } else {
+          console.log('Vanta.js already loaded');
+        }
+
+        // Wait a bit for scripts to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Initialize Vanta effect
+        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          console.log('Initializing Vanta TOPOLOGY effect...');
+          vantaEffect.current = window.VANTA.TOPOLOGY({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x6933ff, // Purple primary (portfolio theme)
+            backgroundColor: 0x0a0a0a, // Dark background
+            points: 10.00,
+            maxDistance: 20.00,
+            spacing: 15.00
+          });
+          console.log('Vanta effect initialized:', vantaEffect.current);
+        } else {
+          console.log('Vanta initialization failed:', {
+            VANTA: !!window.VANTA,
+            TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
+            element: !!vantaRef.current,
+            alreadyExists: !!vantaEffect.current
+          });
+        }
+      } catch (error) {
+        console.warn('Failed to load Vanta.js:', error);
+        // Fallback: Create a simple animated background
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+            radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(105, 51, 255, 0.1) 0%, transparent 50%)
+          `;
+        }
+      }
+    };
+
+    // Delay loading to ensure DOM is ready
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (e) {
+          console.warn('Error destroying Vanta effect:', e);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
 
   return (
-    <LandingContainer>
-      {/* Infinite Gliding Background */}
-      <AnimatedBackground>
-        <ScrollingRow delay={0} direction="left">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-        <ScrollingRow delay={1} direction="right">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-        <ScrollingRow delay={2} direction="left">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-        <ScrollingRow delay={3} direction="right">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-        <ScrollingRow delay={4} direction="left">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-        <ScrollingRow delay={5} direction="right">
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-          <RowImage />
-        </ScrollingRow>
-      </AnimatedBackground>
-
+    <LandingContainer ref={vantaRef}>
       {/* Hero Section */}
       <ContentBGContainer>
         <HeroSection id="hero">
@@ -266,7 +309,17 @@ const LandingContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  background: var(--color-black-primary);
+  
+  /* Ensure Vanta.js background is behind content */
+  & > canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -10 !important; /* Further behind */
+    pointer-events: none !important; /* Prevent interaction blocking */
+  }
   
   /* Smooth page load animation */
   opacity: 0;
@@ -281,90 +334,6 @@ const LandingContainer = styled.div`
       opacity: 1;
       transform: translateY(0);
     }
-  }
-`;
-
-const AnimatedBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-  background: linear-gradient(135deg, 
-    var(--color-black-primary) 0%, 
-    #0a0a12 50%, 
-    var(--color-black-primary) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-interface ScrollingRowProps {
-  delay: number;
-  direction: 'left' | 'right';
-}
-
-const ScrollingRow = styled.div<ScrollingRowProps>`
-  display: flex;
-  width: 200%;
-  animation: scroll${props => props.direction === 'left' ? 'Left' : 'Right'} 20s linear infinite;
-  animation-delay: ${props => props.delay}s;
-  opacity: 0.1;
-  gap: 2rem;
-  align-items: center;
-  
-  @keyframes scrollLeft {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  
-  @keyframes scrollRight {
-    from {
-      transform: translateX(-50%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    gap: 1rem;
-  }
-`;
-
-const RowImage = styled.div`
-  width: 80px;
-  height: 80px;
-  background-image: url('/assets/KoteZone/Asset 75.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0.7) contrast(1.1) saturate(0.8);
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-  
-  &:nth-child(odd) {
-    filter: brightness(0.7) contrast(1.1) saturate(0.8) hue-rotate(90deg);
-  }
-  
-  &:nth-child(3n) {
-    filter: brightness(0.7) contrast(1.1) saturate(0.8) hue-rotate(180deg);
-  }
-  
-  &:hover {
-    filter: brightness(1) contrast(1.3) saturate(1.2);
-    transform: scale(1.1);
-  }
-  
-  @media (max-width: 768px) {
-    width: 60px;
-    height: 60px;
   }
 `;
 
@@ -768,6 +737,73 @@ const HeroText = styled.div`
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+  }
+`;
+
+const Name = styled.h1`
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text-primary);
+  animation: nameReveal 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+  position: relative;
+  
+  @keyframes nameReveal {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      background-position: 200% center;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      background-position: 0% center;
+    }
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    animation: underlineGrow 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+    border-radius: 2px;
+  }
+  
+  @keyframes underlineGrow {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    
+    &::after {
+      @keyframes underlineGrow {
+        to {
+          width: 80px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    
+    &::after {
+      @keyframes underlineGrow {
+        to {
+          width: 80px;
+        }
       }
     }
   }
