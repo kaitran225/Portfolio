@@ -25,7 +25,6 @@ const LayoutContainer = styled.div`
   flex-direction: column;
   color: var(--color-text-primary);
   background: transparent;
-  /* Use a background color if needed */
 `;
 
 const MainContent = styled.main`

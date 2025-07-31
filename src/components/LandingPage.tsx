@@ -310,14 +310,14 @@ const LandingContainer = styled.div`
   overflow-x: hidden;
   position: relative;
   
-  /* Ensure Vanta.js background covers entire viewport including footer */
+  /* Ensure Vanta.js background is behind content */
   & > canvas {
     position: fixed !important;
     top: 0;
     left: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: -10 !important; /* Behind all content */
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -10 !important; /* Further behind */
     pointer-events: none !important; /* Prevent interaction blocking */
   }
   
