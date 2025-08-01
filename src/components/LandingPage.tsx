@@ -78,13 +78,14 @@ const LandingPage: React.FC = () => {
             gyroControls: false,
             minHeight: 200.00,
             minWidth: 200.00,
-            scale: 2.00,
-            scaleMobile: 0.8, // Reduce complexity on mobile
+            scale: 1.5, // Reduced scale
+            scaleMobile: 0.6, // More reduced for mobile
             color: 0x6933ff,
             backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
-            points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
-            maxDistance: window.innerWidth < 768 ? 15 : 20,
-            spacing: window.innerWidth < 768 ? 12 : 15
+            points: window.innerWidth < 768 ? 6 : 12, // Significantly fewer points
+            maxDistance: window.innerWidth < 768 ? 20 : 32, // Shorter connections
+            spacing: window.innerWidth < 768 ? 16 : 64, // More spacing between points
+            backgroundAlpha: 0.8 // Add transparency to reduce visual density
           });
           setTimeout(() => {
             if (vantaEffect.current?.scene) {
@@ -201,32 +202,26 @@ const LandingContainer = styled.div`
 `;
 
 const FeaturedSectionWrapper = styled.div`
-  padding: 1rem 1.5rem 2rem;
+  padding: 2rem 1.5rem;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
-  margin-top: -2rem;
-  
-  @media (max-width: 768px) {
-    padding: 0.5rem 1rem 1.5rem;
-    margin-top: -1rem;
-  }
 `;
 
 const Section = styled.section`
-  padding: 2rem 2rem 3rem;
+  padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 1.5rem 1rem 2rem;
+    padding: 2rem 1rem;
   }
 `;
 
 const SectionHeader = styled.h2`
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-purple-secondary) 100%);
   -webkit-background-clip: text;
@@ -234,8 +229,7 @@ const SectionHeader = styled.h2`
   background-clip: text;
 
   @media (max-width: 768px) {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
 `;
 
