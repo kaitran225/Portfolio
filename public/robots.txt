@@ -1,3 +1,26 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://kaitran.dev/sitemap.xml
+
+# Allow crawling of main pages
+Allow: /#home
+Allow: /#about
+Allow: /#skills
+Allow: /#projects
+Allow: /#contact
+Allow: /design
+Allow: /?view=simple
+
+# Block build assets and source maps
+Disallow: /static/
+Disallow: *.map
+
+# Block temporary files
+Disallow: /*.tmp
+Disallow: /*.temp
+
+# Crawl delay for politeness
+Crawl-delay: 1

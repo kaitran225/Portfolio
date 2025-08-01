@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Kai Tran Portfolio",
+  "name": "Kai Tran - Full-Stack Developer Portfolio",
+  "description": "Professional portfolio of Kai Tran, Full-Stack Developer specializing in React, TypeScript, Node.js & AI Integration. Available for OJT Fall 2025.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,30 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable any"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable any"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait-primary",
+  "theme_color": "#6366f1",
+  "background_color": "#0a0a0a",
+  "categories": ["portfolio", "developer", "technology"],
+  "lang": "en",
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/assets/portfolio-preview.jpg",
+      "type": "image/jpeg",
+      "sizes": "1200x630",
+      "form_factor": "wide"
+    }
+  ]
 }

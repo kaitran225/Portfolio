@@ -67,9 +67,32 @@ const Header: React.FC = () => {
         </DesktopNav>
 
         <HeaderActions>
-          <CVButton href="?view=simple">
-            📄 Resume
-          </CVButton>
+          <HeaderCTAGroup>
+            <GitHubStyleCTA onClick={() => window.open('mailto:kaitran225@gmail.com', '_blank')}>
+              <CTAIcon>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </CTAIcon>
+              <CTAText>Contact</CTAText>
+            </GitHubStyleCTA>
+            <GitHubStyleCTA onClick={() => window.open('/resume.pdf', '_blank')}>
+              <CTAIcon>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+              </CTAIcon>
+              <CTAText>Resume</CTAText>
+            </GitHubStyleCTA>
+            <GitHubStyleCTA onClick={() => window.open('https://github.com/kaitran225', '_blank')}>
+              <CTAIcon>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                </svg>
+              </CTAIcon>
+              <CTAText>GitHub</CTAText>
+            </GitHubStyleCTA>
+          </HeaderCTAGroup>
           <MobileMenuButton 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             $isOpen={isMenuOpen}
@@ -97,11 +120,17 @@ const Header: React.FC = () => {
         <MobileNavItem onClick={() => scrollToSection('contact')}>
           Contact
         </MobileNavItem>
-        <MobileNavItem>
-          <CVButton href="?view=simple" onClick={() => setIsMenuOpen(false)}>
-            📄 Download Resume
-          </CVButton>
-        </MobileNavItem>
+        <MobileCTASection>
+          <MobileCTA onClick={() => { window.open('mailto:kaitran225@gmail.com', '_blank'); setIsMenuOpen(false); }}>
+            📧 Email
+          </MobileCTA>
+          <MobileCTA onClick={() => { window.open('/resume.pdf', '_blank'); setIsMenuOpen(false); }}>
+            📄 Resume
+          </MobileCTA>
+          <MobileCTA onClick={() => { window.open('https://github.com/kaitran225', '_blank'); setIsMenuOpen(false); }}>
+            💻 GitHub
+          </MobileCTA>
+        </MobileCTASection>
       </MobileMenu>
     </HeaderContainer>
   );
@@ -315,6 +344,92 @@ const MobileNavItem = styled.div`
     color: var(--color-text-primary);
     background: rgba(255, 255, 255, 0.05);
     border-left-color: var(--color-purple-primary);
+  }
+`;
+
+// GitHub-Style CTA Components for Header
+const HeaderCTAGroup = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const GitHubStyleCTA = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const CTAIcon = styled.div`
+  display: flex;
+  align-items: center;
+  
+  svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease;
+  }
+  
+  ${GitHubStyleCTA}:hover & svg {
+    color: var(--color-text-primary);
+  }
+`;
+
+const CTAText = styled.span`
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 0.85rem;
+`;
+
+// Mobile CTA Components
+const MobileCTASection = styled.div`
+  padding: 1rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
+
+const MobileCTA = styled.button`
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 `;
 

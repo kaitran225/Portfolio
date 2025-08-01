@@ -3,89 +3,119 @@ import styled from 'styled-components';
 import portfolioDataService from '../../services/portfolioDataService';
 
 const Footer: React.FC = () => {
-    const personalInfo = portfolioDataService.getPersonalInfo();
-    const currentYear = new Date().getFullYear();
+  const personalInfo = portfolioDataService.getPersonalInfo();
+  const currentYear = new Date().getFullYear();
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-    return (
-        <FooterContainer id="contact">
-            <FooterContent>
-                <FooterTop>
-                    <FooterSection>
-                        <FooterTitle>Let's Work Together</FooterTitle>
-                        <FooterDescription>
-                            Available for freelance projects, full-time opportunities, and exciting collaborations.
-                            Let's create something amazing together!
-                        </FooterDescription>
-                        <ContactButton href={`mailto:${personalInfo.contact.email}`}>
-                            Get In Touch
-                        </ContactButton>
-                    </FooterSection>
+  return (
+    <FooterContainer id="contact">
+      <FooterContent>
+        <FooterTop>
+          <FooterSection>
+            <FooterTitle>Get In Touch</FooterTitle>
+            <FooterDescription>
+              Available for freelance projects, full-time opportunities, and exciting collaborations.
+              Let's create something amazing together!
+            </FooterDescription>
+            <ContactButton href={`mailto:${personalInfo.contact.email}`}>
+              Send Message
+            </ContactButton>
 
-                    <FooterSection>
-                        <FooterTitle>Quick Links</FooterTitle>
-                        <FooterLinks>
-                            <FooterLink onClick={() => window.history.pushState({}, '', '/')}>
-                                Development Portfolio
-                            </FooterLink>
-                            <FooterLink onClick={() => window.history.pushState({}, '', '/design')}>
-                                Design Portfolio
-                            </FooterLink>
-                            <FooterLink href="?view=simple">
-                                Resume / CV
-                            </FooterLink>
-                            <FooterLink onClick={scrollToTop}>
-                                Back to Top
-                            </FooterLink>
-                        </FooterLinks>
-                    </FooterSection>
+          </FooterSection>
 
-                    <FooterSection>
-                        <FooterTitle>Connect</FooterTitle>
-                        <SocialLinks>
-                            <SocialLink href={personalInfo.contact.github} target="_blank" rel="noopener noreferrer">
-                                <GitHubIcon>⚡</GitHubIcon>
-                                GitHub
-                            </SocialLink>
-                            <SocialLink href={personalInfo.contact.instagram} target="_blank" rel="noopener noreferrer">
-                                <InstagramIcon>📷</InstagramIcon>
-                                Instagram
-                            </SocialLink>
-                            <SocialLink href={`mailto:${personalInfo.contact.email}`}>
-                                <EmailIcon>✉️</EmailIcon>
-                                Email
-                            </SocialLink>
-                            <SocialLink href="https://linkedin.com/in/kaitran-dev" target="_blank" rel="noopener noreferrer">
-                                <LinkedInIcon>💼</LinkedInIcon>
-                                LinkedIn
-                            </SocialLink>
-                        </SocialLinks>
-                    </FooterSection>
-                </FooterTop>
+          <FooterSection>
+            <FooterTitle>Quick Links</FooterTitle>
+            <FooterLinks>
+              <FooterLink onClick={() => window.history.pushState({}, '', '/')}>
+                Development Portfolio
+              </FooterLink>
+              <FooterLink onClick={() => window.history.pushState({}, '', '/design')}>
+                Design Portfolio
+              </FooterLink>
+              <FooterLink href="?view=simple">
+                Resume / CV
+              </FooterLink>
+              <FooterLink onClick={scrollToTop}>
+                Back to Top
+              </FooterLink>
+            </FooterLinks>
+          </FooterSection>
 
-                <FooterDivider />
+          <FooterSection>
+            <FooterTitle>Connect</FooterTitle>
+            <SocialLinks>
 
-                <FooterBottom>
-                    <Copyright>
-                        © {currentYear} {personalInfo.name}. Built with 💜 using React & TypeScript
-                    </Copyright>
-                    <TechStack>
-                        <TechItem>React 19</TechItem>
-                        <TechItem>TypeScript</TechItem>
-                        <TechItem>Styled Components</TechItem>
-                        <TechItem>Three.js</TechItem>
-                    </TechStack>
-                </FooterBottom>
-            </FooterContent>
+              {/* Contact & Availability Section */}
+              <ContactCard onClick={() => window.open('mailto:kaitran225@gmail.com', '_blank')}>
+                <ContactIcon>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                  </svg>
+                </ContactIcon>
+                <ContactTitle>Email</ContactTitle>
+                <ContactDescription>kaitran225@gmail.com</ContactDescription>
+                <ContactAction>Send Message →</ContactAction>
+              </ContactCard>
 
-            <BackToTopButton onClick={scrollToTop}>
-                ↑
-            </BackToTopButton>
-        </FooterContainer>
-    );
+              <ContactCard onClick={() => window.open('https://linkedin.com/in/kaitran225', '_blank')}>
+                <ContactIcon>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </ContactIcon>
+                <ContactTitle>LinkedIn</ContactTitle>
+                <ContactDescription>Professional Network</ContactDescription>
+                <ContactAction>Connect →</ContactAction>
+              </ContactCard>
+
+              <ContactCard onClick={() => window.open('https://github.com/kaitran225', '_blank')}>
+                <ContactIcon>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
+                  </svg>
+                </ContactIcon>
+                <ContactTitle>GitHub</ContactTitle>
+                <ContactDescription>View My Code</ContactDescription>
+                <ContactAction>Explore →</ContactAction>
+              </ContactCard>
+
+              <ContactCard onClick={() => window.open('/resume.pdf', '_blank')}>
+                <ContactIcon>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                  </svg>
+                </ContactIcon>
+                <ContactTitle>Resume</ContactTitle>
+                <ContactDescription>Download PDF</ContactDescription>
+                <ContactAction>Download →</ContactAction>
+              </ContactCard>
+            </SocialLinks>
+          </FooterSection>
+        </FooterTop>
+
+        <FooterDivider />
+
+        <FooterBottom>
+          <Copyright>
+            © {currentYear} {personalInfo.name}. Built with 💜 using React & TypeScript
+          </Copyright>
+          <TechStack>
+            <TechItem>React 19</TechItem>
+            <TechItem>TypeScript</TechItem>
+            <TechItem>Styled Components</TechItem>
+            <TechItem>Three.js</TechItem>
+          </TechStack>
+        </FooterBottom>
+      </FooterContent>
+
+      <BackToTopButton onClick={scrollToTop}>
+        ↑
+      </BackToTopButton>
+    </FooterContainer>
+  );
 };
 
 const FooterContainer = styled.footer`
@@ -374,6 +404,110 @@ const BackToTopButton = styled.button`
     width: 45px;
     height: 45px;
   }
+`;
+
+const ContactCard = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.5rem 0;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-green-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.15);
+  }
+`;
+
+const ContactIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+  }
+  
+  ${ContactCard}:hover & svg {
+    color: var(--color-green-primary);
+  }
+`;
+
+const ContactTitle = styled.h4`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  min-width: 60px;
+`;
+
+const ContactDescription = styled.p`
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-size: 0.8rem;
+  flex: 1;
+`;
+
+const ContactAction = styled.span`
+  color: var(--color-green-primary);
+  font-weight: 500;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  
+  ${ContactCard}:hover & {
+    color: var(--color-text-primary);
+  }
+`;
+
+const AvailabilityStatus = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--color-green-primary);
+  border-radius: 25px;
+  padding: 1rem 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+`;
+
+const StatusIndicator = styled.div`
+  width: 10px;
+  height: 10px;
+  background: var(--color-green-primary);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+  }
+`;
+
+const StatusText = styled.span`
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
 `;
 
 export default Footer;
