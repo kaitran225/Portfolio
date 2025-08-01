@@ -39,7 +39,7 @@
         "tags": ["React", "TypeScript", "Node.js", "WebRTC", "Socket.io"],
         "technologies": ["React", "TypeScript", "Node.js", "Express", "MongoDB", "WebRTC", "Socket.io", "AWS S3", "Docker", "Kubernetes"],
         "githubUrl": "https://github.com/kaitran225/calantha-platform",
-        "liveUrl": "https://calantha-demo.vercel.app",
+        "liveUrl": "https://calantha-platform.vercel.app",
         "images": [
           "/assets/projects/calantha/screenshot-1.jpg",
           "/assets/projects/calantha/screenshot-2.jpg",
@@ -67,30 +67,120 @@
       },
       {
         "id": "ecommerce-platform",
-        "title": "Modern E-commerce Platform",
+        "title": "NextGen E-commerce Platform",
         "category": "development",
-        "description": "Scalable e-commerce solution with advanced features and payment integration.",
+        "description": "Full-featured e-commerce platform with advanced analytics, inventory management, and payment processing.",
+        "longDescription": "NextGen E-commerce is a comprehensive online shopping platform built with modern technologies and scalable architecture. The platform handles everything from product catalog management to order fulfillment, featuring real-time inventory tracking, advanced search capabilities, and integrated payment processing.\n\nThe system is designed with microservices architecture, ensuring high availability and scalability. It includes a robust admin dashboard for merchants, advanced analytics for business intelligence, and a seamless shopping experience for customers across all devices.\n\nKey features include multi-vendor support, subscription-based products, advanced product filtering, personalized recommendations using machine learning, and comprehensive order management system.",
         "thumbnail": "/assets/dev-thumbnails/ecommerce.jpg",
-        "tags": ["Next.js", "Stripe", "MongoDB", "TypeScript"],
+        "tags": ["Next.js", "Stripe", "MongoDB", "TypeScript", "Redis"],
+        "technologies": ["Next.js", "TypeScript", "Node.js", "MongoDB", "Redis", "Stripe API", "AWS S3", "Elasticsearch", "Docker"],
+        "githubUrl": "https://github.com/kaitran225/nextgen-ecommerce",
+        "liveUrl": "https://nextgen-ecommerce.vercel.app",
+        "images": [
+          "/assets/projects/ecommerce/homepage.jpg",
+          "/assets/projects/ecommerce/product-catalog.jpg",
+          "/assets/projects/ecommerce/checkout-process.jpg",
+          "/assets/projects/ecommerce/admin-dashboard.jpg"
+        ],
+        "videoDemo": "/assets/projects/ecommerce/demo-video.mp4",
+        "features": [
+          "Multi-vendor marketplace functionality",
+          "Advanced product search and filtering",
+          "Real-time inventory management",
+          "Secure payment processing with Stripe",
+          "Order tracking and management system",
+          "Customer review and rating system",
+          "Admin dashboard with analytics",
+          "Mobile-responsive design",
+          "SEO optimization for product pages",
+          "Email notifications and marketing automation"
+        ],
+        "challenges": [
+          "Implementing complex inventory tracking across multiple vendors",
+          "Ensuring PCI DSS compliance for payment processing",
+          "Optimizing search performance for large product catalogs",
+          "Managing real-time stock updates across multiple channels",
+          "Creating responsive design for complex e-commerce interfaces"
+        ],
         "featured": true
       },
       {
         "id": "cloud-infrastructure",
-        "title": "Cloud Infrastructure Solution",
+        "title": "Enterprise Cloud Infrastructure",
         "category": "development",
-        "description": "Scalable cloud architecture with Docker, Kubernetes, and CI/CD pipelines.",
+        "description": "Scalable cloud architecture with Docker, Kubernetes, and automated CI/CD pipelines for enterprise applications.",
+        "longDescription": "Enterprise Cloud Infrastructure is a comprehensive DevOps solution designed for high-availability applications. Built using Infrastructure as Code principles, it provides automated deployment, scaling, and monitoring capabilities for modern web applications.\n\nThe infrastructure leverages AWS services with Terraform for provisioning, Kubernetes for orchestration, and GitLab CI/CD for automated deployments. It includes monitoring with Prometheus and Grafana, logging with ELK stack, and security scanning integrated into the pipeline.\n\nThis project demonstrates expertise in cloud-native technologies, security best practices, and operational excellence in managing production-grade applications.",
         "thumbnail": "/assets/dev-thumbnails/cloud.jpg",
-        "tags": ["AWS", "Docker", "Kubernetes", "Terraform"],
-        "featured": false
+        "tags": ["AWS", "Docker", "Kubernetes", "Terraform", "GitLab CI"],
+        "technologies": ["AWS", "Terraform", "Kubernetes", "Docker", "GitLab CI/CD", "Prometheus", "Grafana", "Helm", "ArgoCD"],
+        "githubUrl": "https://github.com/kaitran225/enterprise-cloud-infrastructure",
+        "liveUrl": "https://infrastructure-docs.kaitran.dev",
+        "images": [
+          "/assets/projects/cloud/architecture-diagram.jpg",
+          "/assets/projects/cloud/kubernetes-dashboard.jpg",
+          "/assets/projects/cloud/monitoring-grafana.jpg",
+          "/assets/projects/cloud/ci-cd-pipeline.jpg"
+        ],
+        "videoDemo": "/assets/projects/cloud/infrastructure-demo.mp4",
+        "features": [
+          "Infrastructure as Code with Terraform",
+          "Kubernetes cluster management and auto-scaling",
+          "Automated CI/CD pipelines with GitLab",
+          "Comprehensive monitoring and alerting",
+          "Security scanning and compliance checks",
+          "Blue-green deployment strategies",
+          "Disaster recovery and backup automation",
+          "Cost optimization and resource management",
+          "Multi-environment support (dev, staging, prod)",
+          "Container registry and image scanning"
+        ],
+        "challenges": [
+          "Designing highly available multi-AZ architecture",
+          "Implementing zero-downtime deployment strategies",
+          "Managing Kubernetes cluster security and RBAC",
+          "Optimizing costs while maintaining performance",
+          "Ensuring compliance with enterprise security policies"
+        ],
+        "featured": true
       },
       {
         "id": "mobile-api",
-        "title": "Mobile Application API",
+        "title": "RESTful API Gateway Service",
         "category": "development",
-        "description": "RESTful API service with GraphQL integration for mobile applications.",
+        "description": "High-performance API gateway with GraphQL integration, rate limiting, and comprehensive authentication system.",
+        "longDescription": "The RESTful API Gateway Service is a robust backend solution designed to handle high-traffic mobile and web applications. Built with FastAPI and Python, it provides a unified interface for multiple microservices while ensuring security, performance, and scalability.\n\nThe service includes advanced features like intelligent rate limiting, API versioning, comprehensive logging, and real-time monitoring. It supports multiple authentication methods, including JWT, OAuth2, and API keys, with role-based access control.\n\nGraphQL integration allows for flexible data querying, while Redis caching ensures optimal performance. The API is fully documented with OpenAPI/Swagger and includes automated testing and deployment pipelines.",
         "thumbnail": "/assets/dev-thumbnails/api.jpg",
-        "tags": ["Python", "FastAPI", "GraphQL", "Redis"],
-        "featured": false
+        "tags": ["Python", "FastAPI", "GraphQL", "Redis", "PostgreSQL"],
+        "technologies": ["Python", "FastAPI", "GraphQL", "Redis", "PostgreSQL", "Docker", "Nginx", "JWT", "OpenAPI"],
+        "githubUrl": "https://github.com/kaitran225/api-gateway-service",
+        "liveUrl": "https://api-docs.kaitran.dev",
+        "images": [
+          "/assets/projects/api/swagger-docs.jpg",
+          "/assets/projects/api/graphql-playground.jpg",
+          "/assets/projects/api/monitoring-dashboard.jpg",
+          "/assets/projects/api/performance-metrics.jpg"
+        ],
+        "videoDemo": "/assets/projects/api/api-demo.mp4",
+        "features": [
+          "RESTful API design with OpenAPI documentation",
+          "GraphQL endpoint for flexible data queries",
+          "JWT-based authentication and authorization",
+          "Intelligent rate limiting and throttling",
+          "Redis caching for improved performance",
+          "Comprehensive request/response logging",
+          "API versioning and backward compatibility",
+          "Real-time monitoring and health checks",
+          "Automated testing with pytest",
+          "Docker containerization and deployment"
+        ],
+        "challenges": [
+          "Implementing efficient caching strategies for complex queries",
+          "Designing flexible rate limiting for different user tiers",
+          "Ensuring API security against common vulnerabilities",
+          "Optimizing database queries for high concurrency",
+          "Managing API versioning without breaking existing clients"
+        ],
+        "featured": true
       }
     ],
     "design": [

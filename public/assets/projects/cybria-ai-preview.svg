@@ -1,0 +1,15 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad-CybriaAIAssistant" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ffa726;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect width="600" height="400" fill="url(#grad-CybriaAIAssistant)" />
+    <rect x="50" y="50" width="500" height="300" fill="rgba(255,255,255,0.1)" rx="10" />
+    <text x="300" y="180" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="bold">Cybria AI Assistant</text>
+    <text x="300" y="220" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="14">Portfolio Project Preview</text>
+    <circle cx="500" cy="100" r="30" fill="rgba(255,255,255,0.2)" />
+    <circle cx="450" cy="320" r="20" fill="rgba(255,255,255,0.15)" />
+    <circle cx="150" cy="320" r="25" fill="rgba(255,255,255,0.1)" />
+  </svg>

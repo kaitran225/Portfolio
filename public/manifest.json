@@ -2,6 +2,7 @@
   "short_name": "Kai Tran Portfolio",
   "name": "Kai Tran - Full-Stack Developer Portfolio",
   "description": "Professional portfolio of Kai Tran, Full-Stack Developer specializing in React, TypeScript, Node.js & AI Integration. Available for OJT Fall 2025.",
+  "id": "kai-tran-portfolio-pwa",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,7 +22,7 @@
       "purpose": "maskable any"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#6366f1",
@@ -29,12 +30,87 @@
   "categories": ["portfolio", "developer", "technology"],
   "lang": "en",
   "scope": "/",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "shortcuts": [
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch directly",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View portfolio projects",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Resume",
+      "short_name": "Resume",
+      "description": "Download resume/CV",
+      "url": "/#resume",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "/#contact?email=%s"
+    }
+  ],
   "screenshots": [
     {
       "src": "/assets/portfolio-preview.jpg",
       "type": "image/jpeg",
       "sizes": "1200x630",
-      "form_factor": "wide"
+      "form_factor": "wide",
+      "label": "Portfolio Desktop View"
+    },
+    {
+      "src": "/assets/portfolio-mobile-preview.jpg",
+      "type": "image/jpeg",
+      "sizes": "375x812",
+      "form_factor": "narrow",
+      "label": "Portfolio Mobile View"
     }
-  ]
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }
