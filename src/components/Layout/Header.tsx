@@ -22,13 +22,10 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['hero', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
 
       sections.forEach(section => {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          // Future implementation: set active section state
         }
       });
     };
