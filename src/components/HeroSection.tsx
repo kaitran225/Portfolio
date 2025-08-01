@@ -51,10 +51,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                         <ExperienceIcon>📍</ExperienceIcon>
                         <ExperienceText>Ho Chi Minh City, Vietnam</ExperienceText>
                       </ExperienceBadge>
-                      <AvailabilityBadge>
-                        <ExperienceIcon>✅</ExperienceIcon>
-                        <ExperienceText>Available for OJT Fall 2025</ExperienceText>
-                      </AvailabilityBadge>
                     </ExperienceInfo>
                     <Description>
                       Enterprise-ready developer with production experience in React 19, Spring Boot microservices, and AI integration. Proven track record with live applications serving real users.

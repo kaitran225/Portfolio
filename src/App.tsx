@@ -14,6 +14,8 @@ const PortfolioRouter = lazy(() => import('./components/PortfolioRouter'));
 const LaTeXCV = lazy(() => import('./components/LaTeXCV'));
 const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
 const PWAManager = lazy(() => import('./components/PWAManager'));
+
+// Development-only components
 const PerformanceMonitor = lazy(() => import('./components/PerformanceMonitor'));
 
 // Loading fallback component
@@ -62,7 +64,7 @@ const AppContent: React.FC = () => {
   // Check URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   const isSimpleMode = urlParams.get('view') === 'simple';
-  const showPerformancePanel = urlParams.get('debug') === 'performance' || process.env.NODE_ENV === 'development';
+  const showPerformancePanel = process.env.NODE_ENV === 'development' && urlParams.get('debug') === 'performance';
 
   if (isSimpleMode) {
     return (
@@ -104,7 +106,7 @@ const AppContent: React.FC = () => {
               <PWAManager showInstallPrompt={true} enableOfflineMode={true} />
             </Suspense>
 
-            {/* Performance Monitor (Development Only) */}
+            {/* Performance Monitor (Development Only with Debug Flag) */}
             {showPerformancePanel && (
               <Suspense fallback={null}>
                 <PerformanceMonitor 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../services/portfolioDataService';
 import EnhancedSkillsVisualization from './EnhancedSkillsVisualization';
-import AvailabilityStatus from './AvailabilityStatus';
 import ContactSection from './ContactSection';
 import BackToTop from './BackToTop';
 import HeroSection from './HeroSection';
@@ -166,12 +165,7 @@ const LandingPage: React.FC = () => {
         {/* Enhanced Skills Section */}
         <EnhancedSkillsVisualization />
 
-        {/* Availability Status for HR Optimization */}
-        <Section>
-          <AvailabilityStatus />
-        </Section>
-
-        {/* Enhanced Contact Section */}
+        {/* Enhanced Contact Section (includes availability status) */}
         <ContactSection />
       </LandingContainer>
 
@@ -207,26 +201,32 @@ const LandingContainer = styled.div`
 `;
 
 const FeaturedSectionWrapper = styled.div`
-  padding: 2rem 1.5rem;
+  padding: 1rem 1.5rem 2rem;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
+  margin-top: -2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem 1.5rem;
+    margin-top: -1rem;
+  }
 `;
 
 const Section = styled.section`
-  padding: 4rem 2rem;
+  padding: 2rem 2rem 3rem;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem 2rem;
   }
 `;
 
 const SectionHeader = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-purple-secondary) 100%);
   -webkit-background-clip: text;
@@ -234,7 +234,8 @@ const SectionHeader = styled.h2`
   background-clip: text;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
   }
 `;
 

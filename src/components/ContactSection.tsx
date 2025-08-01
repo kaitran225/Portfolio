@@ -1,10 +1,9 @@
-import React, { useState, useCallback, lazy, Suspense } from 'react';
+import React, { useCallback, lazy, Suspense } from 'react';
 import styled, { keyframes } from 'styled-components';
-import ContactForm, { ContactFormData } from './ContactForm';
 
 // Lazy load heavy components for instant loading
-const AvailabilityStatus = lazy(() => import('./AvailabilityStatus'));
-const CalendarIntegration = lazy(() => import('./CalendarIntegration'));
+const CompactAvailability = lazy(() => import('./CompactAvailability'));
+const CompactCalendar = lazy(() => import('./CompactCalendar'));
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -27,7 +26,7 @@ const float = keyframes`
 
 // Styled Components
 const ContactSectionWrapper = styled.section`
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -78,10 +77,13 @@ const ContactSubtitle = styled.p`
 
 const ContactMethodsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-bottom: 3rem;
-
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  
   @media (max-width: 968px) {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -89,14 +91,24 @@ const ContactMethodsGrid = styled.div`
 `;
 
 const ContactCardsColumn = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ContactSidebar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-`;
-
-const FormColumn = styled.div`
-  display: flex;
-  flex-direction: column;
+  
+  @media (max-width: 968px) {
+    grid-column: 1;
+    order: -1;
+  }
 `;
 
 const ContactCard = styled.div`
@@ -104,7 +116,7 @@ const ContactCard = styled.div`
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   transition: all 0.3s ease;
   cursor: pointer;
   text-align: center;
@@ -115,25 +127,25 @@ const ContactCard = styled.div`
   &:hover {
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--color-purple-primary);
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 
   &:active {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 `;
 
 const ContactIcon = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
   animation: ${float} 3s ease-in-out infinite;
 `;
 
 const ContactMethodTitle = styled.h3`
   color: var(--color-text-primary);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 `;
 
 const ContactMethodDescription = styled.p`
@@ -212,41 +224,6 @@ const contactMethods = [
 
 // Component
 const ContactSection: React.FC = () => {
-  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
-
-  const handleFormSubmit = useCallback(async (formData: ContactFormData) => {
-    setIsSubmittingForm(true);
-    
-    try {
-      // Simulate API call - replace with actual implementation
-      console.log('Form submission:', formData);
-      
-      // Create mailto link with form data
-      const subject = encodeURIComponent(`${formData.projectType} Inquiry from ${formData.name}`);
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n` +
-        `Company: ${formData.company || 'Not specified'}\n` +
-        `Position: ${formData.position || 'Not specified'}\n` +
-        `Project Type: ${formData.projectType}\n` +
-        `Priority: ${formData.urgency}\n\n` +
-        `Message:\n${formData.message}`
-      );
-      
-      // Open email client
-      window.open(`mailto:kaitran225@gmail.com?subject=${subject}&body=${body}`);
-      
-      // Simulate delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-    } catch (error) {
-      console.error('Form submission error:', error);
-      throw error;
-    } finally {
-      setIsSubmittingForm(false);
-    }
-  }, []);
-
   const handleContactMethod = useCallback((method: typeof contactMethods[0]) => {
     if (method.href.startsWith('mailto:') || method.href.startsWith('http')) {
       window.open(method.href, '_blank', 'noopener,noreferrer');
@@ -257,22 +234,14 @@ const ContactSection: React.FC = () => {
     <ContactSectionWrapper id="contact">
       <ContactContainer>
         <ContactHeader>
-          <ContactTitle>Let's Create Something Amazing</ContactTitle>
+          <ContactTitle>Let's Connect</ContactTitle>
           <ContactSubtitle>
-            Ready to bring your ideas to life? I'm currently available for OJT opportunities 
-            and excited to collaborate on innovative projects.
+            Available for OJT Fall 2025 • Ready to collaborate on innovative projects
           </ContactSubtitle>
         </ContactHeader>
 
         <ContactMethodsGrid>
           <ContactCardsColumn>
-            {/* Enhanced Availability Status - Load After */}
-            <AvailabilityStatusWrapper>
-              <Suspense fallback={<div style={{height: '200px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading availability...</div>}>
-                <AvailabilityStatus />
-              </Suspense>
-            </AvailabilityStatusWrapper>
-
             {/* Contact Methods */}
             {contactMethods.map((method, index) => (
               <ContactCard 
@@ -286,18 +255,23 @@ const ContactSection: React.FC = () => {
                 <ResponseTimeChip>Response: {method.responseTime}</ResponseTimeChip>
               </ContactCard>
             ))}
-
-            {/* Calendar Integration - Load After */}
-            <CalendarWrapper>
-              <Suspense fallback={<div style={{height: '150px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading calendar...</div>}>
-                <CalendarIntegration />
-              </Suspense>
-            </CalendarWrapper>
           </ContactCardsColumn>
 
-          <FormColumn>
-            <ContactForm onSubmit={handleFormSubmit} isLoading={isSubmittingForm} />
-          </FormColumn>
+          <ContactSidebar>
+            {/* Compact Availability Status */}
+            <AvailabilityStatusWrapper>
+              <Suspense fallback={<div style={{height: '120px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading...</div>}>
+                <CompactAvailability />
+              </Suspense>
+            </AvailabilityStatusWrapper>
+
+            {/* Compact Calendar Integration */}
+            <CalendarWrapper>
+              <Suspense fallback={<div style={{height: '100px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading...</div>}>
+                <CompactCalendar />
+              </Suspense>
+            </CalendarWrapper>
+          </ContactSidebar>
         </ContactMethodsGrid>
       </ContactContainer>
     </ContactSectionWrapper>

@@ -115,29 +115,6 @@ const PWAManager: React.FC<PWAManagerProps> = ({
 
   return (
     <>
-      {/* Install Banner for HR Quick Access */}
-      {showInstallBanner && isInstallable && !isInstalled && (
-        <InstallBanner>
-          <BannerContent>
-            <InstallIcon>📱</InstallIcon>
-            <BannerText>
-              <BannerTitle>Quick Access for HR</BannerTitle>
-              <BannerDescription>
-                Install this portfolio for instant access - perfect for quick candidate reviews
-              </BannerDescription>
-            </BannerText>
-            <BannerActions>
-              <InstallButton onClick={handleInstallClick}>
-                Install App
-              </InstallButton>
-              <DismissButton onClick={dismissInstallBanner}>
-                ✕
-              </DismissButton>
-            </BannerActions>
-          </BannerContent>
-        </InstallBanner>
-      )}
-
       {/* Offline Status Indicator */}
       {enableOfflineMode && !isOnline && (
         <OfflineIndicator>
