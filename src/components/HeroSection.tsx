@@ -39,12 +39,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                     <ProfileGlow />
                   </ProfilePicture>
                   <HeroText>
+                                        <Name>Kai Tran</Name>
                     <RoleTitle>Full-Stack Developer</RoleTitle>
-                    <Title>{personalInfo.subtitle}</Title>
+                    <KeySkills>React • TypeScript • Spring Boot • AI Integration</KeySkills>
                     <ExperienceInfo>
                       <ExperienceBadge>
-                        <ExperienceIcon>🎓</ExperienceIcon>
-                        <ExperienceText>4+ Years Experience</ExperienceText>
+                        <ExperienceIcon>💼</ExperienceIcon>
+                        <ExperienceText>3+ Years Experience</ExperienceText>
                       </ExperienceBadge>
                       <ExperienceBadge>
                         <ExperienceIcon>📍</ExperienceIcon>
@@ -56,18 +57,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                       </AvailabilityBadge>
                     </ExperienceInfo>
                     <Description>
-                      {personalInfo.description}
+                      Enterprise-ready developer with production experience in React 19, Spring Boot microservices, and AI integration. Proven track record with live applications serving real users.
                     </Description>
                   </HeroText>
                 </ProfileSection>
 
                 <ActionButtonsWrapper>
                   <CTASection>
-                    <CTAButton href="#projects" className="primary">
-                      <span>View My Work</span>
-                      <ArrowIcon>→</ArrowIcon>
+                    <CTAButton href="/resume.pdf" className="primary" download>
+                      <span>Download Resume</span>
+                      <ArrowIcon>⬇</ArrowIcon>
                     </CTAButton>
-                    <CTAButton href="#contact" className="secondary">
+                    <CTAButton href="#projects" className="secondary">
+                      <span>View Projects</span>
+                      <ConnectIcon>🚀</ConnectIcon>
+                    </CTAButton>
+                    <CTAButton href="#contact" className="tertiary">
                       <span>Let's Connect</span>
                       <ConnectIcon>💬</ConnectIcon>
                     </CTAButton>
@@ -322,6 +327,27 @@ const RoleTitle = styled.h3`
   animation: slideInUp 0.8s ease-out 0.2s forwards;
 `;
 
+const Name = styled.h1`
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 900;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  opacity: 0;
+  animation: slideInUp 0.8s ease-out 0.1s forwards;
+`;
+
+const KeySkills = styled.h2`
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 500;
+  margin: 0.5rem 0 1rem 0;
+  line-height: 1.3;
+  color: var(--color-purple-primary);
+  opacity: 0;
+  animation: slideInUp 0.8s ease-out 0.3s forwards;
+  letter-spacing: 1px;
+`;
+
 const DesignRoleTitle = styled.h3`
   font-size: 1.2rem;
   color: var(--color-design-primary);
@@ -331,19 +357,6 @@ const DesignRoleTitle = styled.h3`
   margin: 0;
   opacity: 0;
   animation: slideInUp 0.8s ease-out 0.2s forwards;
-`;
-
-const Title = styled.h1`
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  margin: 0;
-  line-height: 1.1;
-  background: linear-gradient(135deg, #6933ff 0%, #00ff88 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0;
-  animation: slideInUp 0.8s ease-out 0.4s forwards;
 `;
 
 const DesignTitle = styled.h1`
@@ -509,6 +522,19 @@ const CTAButton = styled.a`
       color: white;
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(105, 51, 255, 0.4);
+    }
+  }
+  
+  &.tertiary {
+    background: transparent;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    
+    &:hover {
+      background: #00ff88;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
     }
   }
   
@@ -689,18 +715,6 @@ const DesignElement = styled.div<{ delay: number }>`
   &:nth-child(3) { top: 30%; left: 75%; }
   &:nth-child(4) { top: 80%; left: 15%; }
   &:nth-child(5) { top: 45%; left: 90%; }
-`;
-
-// Animations
-const slideInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 `;
 
 export default HeroSection;

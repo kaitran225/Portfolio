@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../services/portfolioDataService';
-import { useTheme } from '../../contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isDark } = useTheme();
   const personalInfo = portfolioDataService.getPersonalInfo();
 
   const navigateTo = (path: string) => {
@@ -70,6 +68,14 @@ const Header: React.FC = () => {
 
         <HeaderActions>
           <HeaderCTAGroup>
+            <PrimaryCTA onClick={() => window.open('/resume.pdf', '_blank')}>
+              <CTAIcon>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+              </CTAIcon>
+              <CTAText>Download Resume</CTAText>
+            </PrimaryCTA>
             <GitHubStyleCTA onClick={() => window.open('mailto:kaitran225@gmail.com', '_blank')}>
               <CTAIcon>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -77,14 +83,6 @@ const Header: React.FC = () => {
                 </svg>
               </CTAIcon>
               <CTAText>Contact</CTAText>
-            </GitHubStyleCTA>
-            <GitHubStyleCTA onClick={() => window.open('/resume.pdf', '_blank')}>
-              <CTAIcon>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                </svg>
-              </CTAIcon>
-              <CTAText>Resume</CTAText>
             </GitHubStyleCTA>
             <GitHubStyleCTA onClick={() => window.open('https://github.com/kaitran225', '_blank')}>
               <CTAIcon>
@@ -123,11 +121,11 @@ const Header: React.FC = () => {
           Contact
         </MobileNavItem>
         <MobileCTASection>
+          <PrimaryMobileCTA onClick={() => { window.open('/resume.pdf', '_blank'); setIsMenuOpen(false); }}>
+            � Download Resume
+          </PrimaryMobileCTA>
           <MobileCTA onClick={() => { window.open('mailto:kaitran225@gmail.com', '_blank'); setIsMenuOpen(false); }}>
-            📧 Email
-          </MobileCTA>
-          <MobileCTA onClick={() => { window.open('/resume.pdf', '_blank'); setIsMenuOpen(false); }}>
-            📄 Resume
+            � Email
           </MobileCTA>
           <MobileCTA onClick={() => { window.open('https://github.com/kaitran225', '_blank'); setIsMenuOpen(false); }}>
             💻 GitHub
@@ -253,32 +251,6 @@ const HeaderActions = styled.div`
   gap: 1rem;
 `;
 
-const CVButton = styled.a`
-  background: var(--color-purple-primary);
-  color: white;
-  text-decoration: none;
-  padding: 0.7rem 1.4rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 2px solid var(--color-purple-primary);
-  
-  &:hover {
-    background: transparent;
-    color: var(--color-purple-primary);
-    border-color: var(--color-purple-primary);
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.8rem;
-  }
-`;
-
 const MobileMenuButton = styled.button<{ $isOpen: boolean }>`
   display: none;
   flex-direction: column;
@@ -362,6 +334,36 @@ const HeaderCTAGroup = styled.div`
   }
 `;
 
+const PrimaryCTA = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #6933ff 0%, #00ff88 100%);
+  border: 1px solid transparent;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(105, 51, 255, 0.2);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(105, 51, 255, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  svg {
+    color: white;
+  }
+`;
+
 const GitHubStyleCTA = styled.button`
   display: flex;
   align-items: center;
@@ -418,6 +420,25 @@ const MobileCTASection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+`;
+
+const PrimaryMobileCTA = styled.button`
+  background: linear-gradient(135deg, #6933ff 0%, #00ff88 100%);
+  border: none;
+  color: white;
+  padding: 0.875rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(105, 51, 255, 0.2);
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(105, 51, 255, 0.3);
+  }
 `;
 
 const MobileCTA = styled.button`

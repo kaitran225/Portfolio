@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import LazyImage from './LazyImage';
 
 // Vanta.js topology effect
 declare global {

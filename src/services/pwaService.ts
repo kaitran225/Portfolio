@@ -1,4 +1,6 @@
 // PWA Service Worker Registration and Management
+import { useState, useEffect } from 'react';
+
 interface PWAInstallPrompt {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
@@ -301,8 +303,6 @@ class PWAService {
 }
 
 // React Hook for PWA integration
-import { useState, useEffect } from 'react';
-
 export const usePWA = () => {
   const [pwaService] = useState(() => new PWAService());
   const [isInstallable, setIsInstallable] = useState(false);

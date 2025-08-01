@@ -1,6 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
+import styled, { keyframes } from 'styled-components';
 import ContactForm, { ContactFormData } from './ContactForm';
+
+// Lazy load heavy components for instant loading
+const AvailabilityStatus = lazy(() => import('./AvailabilityStatus'));
+const CalendarIntegration = lazy(() => import('./CalendarIntegration'));
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -14,11 +18,6 @@ const fadeInUp = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
-`;
-
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
 `;
 
 const float = keyframes`
@@ -75,33 +74,6 @@ const ContactSubtitle = styled.p`
   @media (max-width: 768px) {
     font-size: 1rem;
   }
-`;
-
-const AvailabilityStatus = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid var(--color-green-primary);
-  color: var(--color-green-primary);
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.8rem;
-  }
-`;
-
-const StatusIndicator = styled.div`
-  width: 8px;
-  height: 8px;
-  background: var(--color-green-primary);
-  border-radius: 50%;
-  animation: ${pulse} 2s infinite;
 `;
 
 const ContactMethodsGrid = styled.div`
@@ -197,44 +169,17 @@ const ResponseTimeChip = styled.div`
   display: inline-block;
 `;
 
-const QuickStatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+// Integration Wrappers
+const AvailabilityStatusWrapper = styled.div`
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
 `;
 
-const StatCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.04);
-    transform: translateY(-2px);
-  }
-`;
-
-const StatNumber = styled.div`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-purple-primary);
-  margin-bottom: 0.25rem;
-`;
-
-const StatLabel = styled.div`
-  color: var(--color-text-secondary);
-  font-size: 0.8rem;
-  font-weight: 500;
+const CalendarWrapper = styled.div`
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
 `;
 
 // Contact Methods Data
@@ -263,13 +208,6 @@ const contactMethods = [
     responseTime: '< 24 hours',
     href: 'https://github.com/kaitran225'
   }
-];
-
-const quickStats = [
-  { number: '4+', label: 'Years Experience' },
-  { number: '17+', label: 'Projects Completed' },
-  { number: '24h', label: 'Response Time' },
-  { number: '95%', label: 'Client Satisfaction' }
 ];
 
 // Component
@@ -328,6 +266,14 @@ const ContactSection: React.FC = () => {
 
         <ContactMethodsGrid>
           <ContactCardsColumn>
+            {/* Enhanced Availability Status - Load After */}
+            <AvailabilityStatusWrapper>
+              <Suspense fallback={<div style={{height: '200px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading availability...</div>}>
+                <AvailabilityStatus />
+              </Suspense>
+            </AvailabilityStatusWrapper>
+
+            {/* Contact Methods */}
             {contactMethods.map((method, index) => (
               <ContactCard 
                 key={method.title}
@@ -340,6 +286,13 @@ const ContactSection: React.FC = () => {
                 <ResponseTimeChip>Response: {method.responseTime}</ResponseTimeChip>
               </ContactCard>
             ))}
+
+            {/* Calendar Integration - Load After */}
+            <CalendarWrapper>
+              <Suspense fallback={<div style={{height: '150px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading calendar...</div>}>
+                <CalendarIntegration />
+              </Suspense>
+            </CalendarWrapper>
           </ContactCardsColumn>
 
           <FormColumn>

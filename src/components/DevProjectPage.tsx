@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import IDECodePreview from './IDECodePreview';
 import portfolioDataService from '../services/portfolioDataService';
 import MarkdownRenderer from './MarkdownRenderer';
-import { Project } from '../types/portfolioTypes';
 
 // Vanta.js topology effect
 declare global {

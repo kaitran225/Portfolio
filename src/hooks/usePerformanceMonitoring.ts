@@ -2,14 +2,6 @@ import { useEffect, useCallback } from 'react';
 
 // ============= PERFORMANCE MONITORING HOOK =============
 
-interface PerformanceMetrics {
-  FCP?: number; // First Contentful Paint
-  LCP?: number; // Largest Contentful Paint
-  FID?: number; // First Input Delay
-  CLS?: number; // Cumulative Layout Shift
-  TTFB?: number; // Time to First Byte
-}
-
 interface UsePerformanceOptions {
   reportToAnalytics?: boolean;
   logToConsole?: boolean;

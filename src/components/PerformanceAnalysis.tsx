@@ -3,29 +3,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiActivity, FiClock, FiZap, FiMonitor, FiTrendingUp, FiAlertCircle } from './IconWrapper';
 
-// ============= HELPER FUNCTIONS =============
-
-const getResourceType = (url: string): string => {
-  if (url.includes('.js')) return 'script';
-  if (url.includes('.css')) return 'stylesheet';
-  if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) return 'image';
-  if (url.match(/\.(woff|woff2|ttf|eot)$/i)) return 'font';
-  return 'other';
-};
-
-const formatBytes = (bytes: number): string => {
-  if (bytes === 0) return '0 B';
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-};
-
-const formatTime = (ms: number): string => {
-  if (ms < 1000) return `${Math.round(ms)}ms`;
-  return `${(ms / 1000).toFixed(2)}s`;
-};
-
 const getStatusColor = (status: string): string => {
   switch (status) {
     case 'excellent': return '#2ed573';

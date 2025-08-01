@@ -173,8 +173,6 @@ export const LoadingManager: React.FC<LoadingManagerProps> = ({ children }) => {
     error: undefined
   });
 
-  const [loadingTasks, setLoadingTasks] = useState<Set<string>>(new Set());
-
   useEffect(() => {
     // Hide initial loading screen once React app is ready
     const hideInitialLoading = () => {
@@ -218,23 +216,11 @@ export const LoadingManager: React.FC<LoadingManagerProps> = ({ children }) => {
   };
 
   const addLoadingTask = (id: string) => {
-    setLoadingTasks(prev => {
-      const newSet = new Set(prev);
-      newSet.add(id);
-      return newSet;
-    });
     setLoading(true);
   };
 
   const removeLoadingTask = (id: string) => {
-    setLoadingTasks(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(id);
-      if (newSet.size === 0) {
-        setLoading(false);
-      }
-      return newSet;
-    });
+    setLoading(false);
   };
 
   const handleRetry = () => {

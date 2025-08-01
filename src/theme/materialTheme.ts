@@ -320,6 +320,10 @@ export const createMaterialTheme = (mode: 'light' | 'dark' = 'light'): ThemeOpti
         disabled: isLight ? colorTokens.neutral[70] : colorTokens.neutral[50],
         disabledBackground: isLight ? colorTokens.neutral[90] : colorTokens.neutral[20],
       },
+      common: {
+        black: '#000000',
+        white: '#FFFFFF',
+      },
     },
     
     typography: {
@@ -464,4 +468,13 @@ declare module '@mui/material/styles' {
   }
 }
 
-export default { lightTheme, darkTheme, colorTokens, typographyTokens };
+// Default export with theme utilities
+const themeExports = { 
+  lightTheme, 
+  darkTheme, 
+  colorTokens, 
+  typographyTokens,
+  createMaterialTheme
+};
+
+export default themeExports;

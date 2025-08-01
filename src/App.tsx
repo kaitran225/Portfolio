@@ -1,24 +1,20 @@
 import React, { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import PortfolioRouter from './components/PortfolioRouter';
-import LaTeXCV from './components/LaTeXCV';
 import { LoadingManager } from './components/LoadingManager';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
-import ThemeToggle from './components/ThemeToggle';
-import { usePerformanceMonitoring } from './hooks/usePerformanceMonitoring';
 import { AnalyticsProvider } from './services/PortfolioAnalytics';
 import { createMaterialTheme } from './theme/materialTheme';
-import PWABanner from './components/PWABanner';
 import './App.css';
 
-// Lazy load heavy components for better performance
-const SEOOptimizer = lazy(() => import('./components/SEOOptimizer'));
-const PerformanceAnalysis = lazy(() => import('./components/PerformanceAnalysis'));
-const AccessibilityControls = lazy(() => import('./components/AccessibilityControls'));
-const MobileNavigation = lazy(() => import('./components/MobileNavigation'));
+// Lazy load everything for instant loading
+const PortfolioRouter = lazy(() => import('./components/PortfolioRouter'));
+const LaTeXCV = lazy(() => import('./components/LaTeXCV'));
+const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
+const PWAManager = lazy(() => import('./components/PWAManager'));
+const PerformanceMonitor = lazy(() => import('./components/PerformanceMonitor'));
 
 // Loading fallback component
 const ComponentLoader: React.FC = () => (
@@ -37,28 +33,36 @@ const ComponentLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { theme: currentTheme } = useTheme();
   
-  // Create Material-UI theme based on current theme
-  const materialTheme = useMemo(() => 
-    createMaterialTheme(currentTheme), 
-    [currentTheme]
-  );
-
-  // Initialize performance monitoring
-  usePerformanceMonitoring({
-    reportToAnalytics: true, // Now using our analytics system
-    logToConsole: process.env.NODE_ENV === 'development',
-    thresholds: {
-      FCP: 1800,
-      LCP: 2500, 
-      FID: 100,
-      CLS: 0.1
+  // Create Material-UI theme based on current theme with fallback
+  const materialTheme = useMemo(() => {
+    try {
+      const themeOptions = createMaterialTheme(currentTheme || 'light');
+      const theme = createTheme(themeOptions);
+      
+      // Ensure required palette colors exist
+      if (!theme.palette.common) {
+        theme.palette.common = {
+          black: '#000000',
+          white: '#FFFFFF'
+        };
+      }
+      
+      return theme;
+    } catch (error) {
+      console.warn('Failed to create material theme, using MUI default:', error);
+      // Complete fallback to Material-UI default theme
+      return createTheme({
+        palette: {
+          mode: currentTheme === 'dark' ? 'dark' : 'light',
+        },
+      });
     }
-  });
+  }, [currentTheme]);
 
-  // Check if we're in simple mode (now LaTeX CV mode)
+  // Check URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   const isSimpleMode = urlParams.get('view') === 'simple';
-  const showPerformancePanel = urlParams.get('debug') === 'performance';
+  const showPerformancePanel = urlParams.get('debug') === 'performance' || process.env.NODE_ENV === 'development';
 
   if (isSimpleMode) {
     return (
@@ -66,18 +70,14 @@ const AppContent: React.FC = () => {
         <CssBaseline />
         <LoadingManager>
           <Suspense fallback={<ComponentLoader />}>
-            <SEOOptimizer 
-              title="Kai Tran - Portfolio"
-              description="Professional CV of Kai Tran - Full Stack Developer"
-              type="article"
-            />
+            <LaTeXCV />
           </Suspense>
-          <LaTeXCV />
-          <ThemeToggle />
-          <Suspense fallback={<ComponentLoader />}>
-            <AccessibilityControls position="bottom-right" />
+          <Suspense fallback={null}>
+            <ThemeToggle />
           </Suspense>
-          <PWABanner position="top" autoHide={true} />
+          <Suspense fallback={null}>
+            <PWAManager showInstallPrompt={true} enableOfflineMode={true} />
+          </Suspense>
         </LoadingManager>
       </MUIThemeProvider>
     );
@@ -89,37 +89,31 @@ const AppContent: React.FC = () => {
       <LoadingManager>
         <BrowserRouter>
           <div className="App">
-            {/* SEO Optimization */}
+            {/* Main Portfolio Content - Load First */}
             <Suspense fallback={<ComponentLoader />}>
-              <SEOOptimizer />
+              <PortfolioRouter />
             </Suspense>
 
-            {/* Main Portfolio Content */}
-            <PortfolioRouter />
-
-            {/* Mobile Navigation */}
-            <Suspense fallback={<ComponentLoader />}>
-              <MobileNavigation />
+            {/* Secondary Components - Load After */}
+            <Suspense fallback={null}>
+              <ThemeToggle />
             </Suspense>
 
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
-            {/* Accessibility Controls */}
-            <Suspense fallback={<ComponentLoader />}>
-              <AccessibilityControls position="bottom-left" />
+            {/* PWA Manager for HR Optimization */}
+            <Suspense fallback={null}>
+              <PWAManager showInstallPrompt={true} enableOfflineMode={true} />
             </Suspense>
 
-            {/* PWA Banner */}
-            <PWABanner position="bottom" autoHide={false} showCacheInfo={true} />
-
-            {/* Performance Monitoring (Debug Mode) */}
+            {/* Performance Monitor (Development Only) */}
             {showPerformancePanel && (
-              <Suspense fallback={<ComponentLoader />}>
-                <PerformanceAnalysis 
-                  showDetails={true} 
-                  autoHide={false}
-                  position="bottom-right"
+              <Suspense fallback={null}>
+                <PerformanceMonitor 
+                  isVisible={true} 
+                  onMetricsUpdate={(metrics) => {
+                    if (metrics.lcp && metrics.lcp > 3000) {
+                      console.warn('Loading too slow for HR - optimizing...');
+                    }
+                  }}
                 />
               </Suspense>
             )}

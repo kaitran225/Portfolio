@@ -260,63 +260,6 @@ const SocialLinks = styled.div`
   gap: 1rem;
 `;
 
-const SocialLink = styled.a`
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  transition: all 0.3s ease;
-  padding: 0.5rem 0;
-
-  &:hover {
-    color: var(--color-text-primary);
-    transform: translateX(5px);
-  }
-`;
-
-const GitHubIcon = styled.span`
-  font-size: 1.1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${SocialLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const InstagramIcon = styled.span`
-  font-size: 1.1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${SocialLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const EmailIcon = styled.span`
-  font-size: 1.1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${SocialLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
-const LinkedInIcon = styled.span`
-  font-size: 1.1rem;
-  filter: grayscale(1) brightness(0.8);
-  transition: all 0.3s ease;
-  
-  ${SocialLink}:hover & {
-    filter: grayscale(0) brightness(1.2);
-  }
-`;
-
 const FooterDivider = styled.div`
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
@@ -470,44 +413,6 @@ const ContactAction = styled.span`
   ${ContactCard}:hover & {
     color: var(--color-text-primary);
   }
-`;
-
-const AvailabilityStatus = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  background: rgba(0, 255, 136, 0.1);
-  border: 1px solid var(--color-green-primary);
-  border-radius: 25px;
-  padding: 1rem 2rem;
-  max-width: 400px;
-  margin: 0 auto;
-`;
-
-const StatusIndicator = styled.div`
-  width: 10px;
-  height: 10px;
-  background: var(--color-green-primary);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-  
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.6;
-      transform: scale(1.2);
-    }
-  }
-`;
-
-const StatusText = styled.span`
-  color: var(--color-text-primary);
-  font-weight: 500;
-  font-size: 0.95rem;
 `;
 
 export default Footer;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../services/portfolioDataService';
-import SkillsVisualization from './SkillsVisualization';
+import EnhancedSkillsVisualization from './EnhancedSkillsVisualization';
+import AvailabilityStatus from './AvailabilityStatus';
 import ContactSection from './ContactSection';
 import BackToTop from './BackToTop';
 import HeroSection from './HeroSection';
@@ -163,7 +164,12 @@ const LandingPage: React.FC = () => {
         </Section>
 
         {/* Enhanced Skills Section */}
-        <SkillsVisualization />
+        <EnhancedSkillsVisualization />
+
+        {/* Availability Status for HR Optimization */}
+        <Section>
+          <AvailabilityStatus />
+        </Section>
 
         {/* Enhanced Contact Section */}
         <ContactSection />

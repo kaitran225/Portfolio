@@ -24,19 +24,20 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  // Check for saved theme preference or default to dark
+  // Check for saved theme preference or default to light for professional appearance
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('portfolio-theme') as Theme;
       if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
         return savedTheme;
       }
-      // Check system preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
+      // For professional/HR optimization, default to light theme
+      // Check system preference as secondary option
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
       }
     }
-    return 'dark'; // Default to dark theme
+    return 'light'; // Default to light theme for professional appearance
   });
 
   // Update CSS custom properties when theme changes
@@ -120,12 +121,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   // Listen for system theme changes
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       // Only auto-switch if no manual preference is saved
       const savedTheme = localStorage.getItem('portfolio-theme');
       if (!savedTheme) {
-        setTheme(e.matches ? 'light' : 'dark');
+        // Default to light for professional appearance, only switch to dark if explicitly preferred
+        setTheme(e.matches ? 'dark' : 'light');
       }
     };
 

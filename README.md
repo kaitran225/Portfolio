@@ -1,14 +1,46 @@
-# React Portfolio
+# Professional Portfolio - Kai Tran
 
-This is a React implementation of the original portfolio website. It mimics the layout and functionality of the original static HTML/CSS/JS website.
+A modern, HR-optimized React portfolio built with **Material Design 3** standards and **WCAG 2.1 accessibility compliance**. Designed specifically for professional recruitment and OJT applications.
 
-## Features
-- Grid-based layout matching the original design
-- Command prompt terminal with interactive commands
-- YouTube video embedder
-- Spotify music player
-- Dynamic image gallery loading content from different portfolio categories
-- Responsive design for mobile and desktop
+## 🎯 **Professional Features**
+
+### **HR-Optimized Design**
+- **5-Second Rule Compliance**: Key information (name, role, skills, availability) immediately visible
+- **Light Theme Default**: Professional appearance suitable for corporate environments
+- **Material Design 3**: Google's enterprise design system implementation
+- **Professional Typography**: Systematic hierarchy for easy HR scanning
+
+### **Contact Conversion Optimization**
+- **Primary Resume CTA**: Download Resume prominently featured in navigation
+- **Multiple Contact Methods**: Email, calendar scheduling, direct contact forms
+- **Availability Status**: "Available for OJT Fall 2025" clearly displayed
+- **Response Promise**: "< 24 hours" response commitment
+
+### **Technical Credibility Display**
+- **Enhanced Skills Matrix**: Proficiency levels, project experience, years of experience
+- **Real Project Portfolio**: Live applications with business impact metrics
+- **Technology Stack**: Modern React 19, TypeScript, Spring Boot, AI integration
+- **Professional Development**: Continuous learning and skill advancement tracking
+
+## 🚀 **Technical Implementation**
+
+### **Modern React Architecture**
+- **React 19**: Latest features with Concurrent Rendering
+- **TypeScript**: Full type safety and professional development practices
+- **Material-UI Integration**: Professional component library
+- **PWA Support**: Progressive Web App with offline functionality
+
+### **Performance Optimization**
+- **Lazy Loading**: Component-based code splitting
+- **Service Worker**: Background sync and caching
+- **Bundle Analysis**: Optimized build size and performance
+- **Core Web Vitals**: Optimized for Google's performance standards
+
+### **Accessibility Standards**
+- **WCAG 2.1 Compliance**: Professional accessibility features
+- **Keyboard Navigation**: Full keyboard accessibility
+- **Screen Reader Support**: Comprehensive ARIA implementation
+- **High Contrast Options**: Corporate accessibility compliance
 
 ## Project Structure
 
