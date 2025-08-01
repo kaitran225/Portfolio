@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../services/portfolioDataService';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDark } = useTheme();
   const personalInfo = portfolioDataService.getPersonalInfo();
 
   const navigateTo = (path: string) => {
@@ -141,11 +143,12 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: var(--background-primary);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
   z-index: 1000;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
 
   &::before {
     content: '';
@@ -156,7 +159,7 @@ const HeaderContainer = styled.header`
     bottom: 0;
     background: linear-gradient(135deg, 
       rgba(105, 51, 255, 0.1) 0%, 
-      rgba(0, 0, 0, 0.95) 50%, 
+      var(--background-primary) 50%, 
       rgba(71, 208, 104, 0.05) 100%);
     z-index: -1;
   }
@@ -188,7 +191,7 @@ const Logo = styled.div`
 `;
 
 const LogoText = styled.div`
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1;
@@ -226,7 +229,7 @@ const NavItem = styled.button<{ $active?: boolean }>`
 
   &:hover {
     color: var(--color-text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--background-secondary);
   }
 
   ${props => props.$active && `
@@ -318,14 +321,15 @@ const MobileMenu = styled.div<{ $isOpen: boolean }>`
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.98);
+  background: var(--background-primary);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
   transform: translateY(${props => props.$isOpen ? '0' : '-100%'});
   opacity: ${props => props.$isOpen ? '1' : '0'};
   visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
   transition: all 0.3s ease;
   padding: 1rem 0;
+  box-shadow: var(--shadow-medium);
 
   @media (min-width: 769px) {
     display: none;
@@ -342,7 +346,7 @@ const MobileNavItem = styled.div`
 
   &:hover {
     color: var(--color-text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--background-secondary);
     border-left-color: var(--color-purple-primary);
   }
 `;
@@ -362,8 +366,8 @@ const GitHubStyleCTA = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
   color: var(--color-text-primary);
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
@@ -374,9 +378,10 @@ const GitHubStyleCTA = styled.button`
   backdrop-filter: blur(10px);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--background-tertiary);
+    border-color: var(--border-color-hover);
     transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
   }
   
   &:active {
@@ -409,15 +414,15 @@ const CTAText = styled.span`
 // Mobile CTA Components
 const MobileCTASection = styled.div`
   padding: 1rem 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 `;
 
 const MobileCTA = styled.button`
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
   color: var(--color-text-primary);
   padding: 0.75rem 1rem;
   border-radius: 6px;
@@ -428,8 +433,9 @@ const MobileCTA = styled.button`
   text-align: left;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--background-tertiary);
+    border-color: var(--border-color-hover);
+    box-shadow: var(--shadow-soft);
   }
 `;
 

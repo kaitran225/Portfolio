@@ -549,7 +549,7 @@ interface ContentTransitionProps {
 
 const ProjectContainer = styled.div`
   min-height: 100vh;
-  background: var(--color-black-primary);
+  background: var(--bg-primary);
   color: var(--color-text-primary);
   position: relative;
   
@@ -605,7 +605,7 @@ const ProjectHeader = styled.header`
 `;
 
 const BackButton = styled.button`
-  background: var(--color-black-secondary);
+  background: var(--bg-secondary);
   color: var(--color-text-primary);
   border: 2px solid var(--color-green-primary);
   padding: 12px 24px;

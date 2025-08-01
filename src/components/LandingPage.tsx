@@ -8,7 +8,7 @@ import HeroSection from './HeroSection';
 import FeaturedSection from './FeaturedSection';
 import CategoryFilter from './CategoryFilter';
 import ProjectGrid from './ProjectGrid';
-import RedirectSection from './RedirectSection';
+import { useTheme } from '../contexts/ThemeContext';
 
 // Vanta.js topology effect
 declare global {
@@ -20,6 +20,7 @@ declare global {
 
 const LandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
+  const { isDark } = useTheme();
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
@@ -80,7 +81,7 @@ const LandingPage: React.FC = () => {
             scale: 2.00,
             scaleMobile: 0.8, // Reduce complexity on mobile
             color: 0x6933ff,
-            backgroundColor: 0x0a0a0a,
+            backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
             points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
             maxDistance: window.innerWidth < 768 ? 15 : 20,
             spacing: window.innerWidth < 768 ? 12 : 15
@@ -128,7 +129,7 @@ const LandingPage: React.FC = () => {
         vantaEffect.current = null;
       }
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <>
@@ -166,9 +167,6 @@ const LandingPage: React.FC = () => {
 
         {/* Enhanced Contact Section */}
         <ContactSection />
-
-        {/* Design Portfolio Redirect */}
-        <RedirectSection isDevelopment={true} />
       </LandingContainer>
 
       {/* Back to Top Button */}
@@ -204,9 +202,8 @@ const LandingContainer = styled.div`
 
 const FeaturedSectionWrapper = styled.div`
   padding: 2rem 1.5rem;
-  background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
 `;
 
 const Section = styled.section`
@@ -225,7 +222,7 @@ const SectionHeader = styled.h2`
   text-align: center;
   margin-bottom: 60px;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-purple-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

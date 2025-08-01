@@ -62,19 +62,20 @@ const GridContainer = styled.div`
 `;
 
 const ProjectCard = styled.div<{ $isDevelopment?: boolean }>`
-  background: transparent;
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
   
   &:hover {
-    background: transparent;
+    background: var(--card-bg);
     transform: translateY(-10px);
     box-shadow: ${props => props.$isDevelopment 
-      ? '0 20px 40px rgba(105, 51, 255, 0.3)' 
+      ? 'var(--shadow-hover)' 
       : '0 20px 40px rgba(255, 107, 107, 0.3)'};
     border-color: ${props => props.$isDevelopment 
       ? 'var(--color-purple-primary)' 

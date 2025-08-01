@@ -103,7 +103,7 @@ const SkillsTitle = styled.h2`
 
 const SkillsSubtitle = styled.p`
   font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -150,7 +150,7 @@ const ExperienceNumber = styled.div`
 `;
 
 const ExperienceLabel = styled.div`
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-secondary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -177,7 +177,7 @@ const CategoryTab = styled.button<{ active?: boolean; color?: string }>`
   border: 2px solid ${props => props.active ? props.color : 'rgba(255, 255, 255, 0.1)'};
   border-radius: 50px;
   padding: 0.75rem 1.5rem;
-  color: ${props => props.active ? props.color : 'rgba(255, 255, 255, 0.7)'};
+  color: ${props => props.active ? props.color : 'var(--color-text-secondary)'};
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -260,14 +260,14 @@ const SkillInfo = styled.div`
 `;
 
 const SkillName = styled.div`
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 0.25rem;
 `;
 
 const SkillMeta = styled.div`
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   display: flex;
   gap: 1rem;
@@ -306,7 +306,7 @@ const SkillProgressFill = styled.div<{ proficiency: number; color: string; delay
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, var(--background-secondary), transparent);
     animation: ${float} 2s ease-in-out infinite;
   }
 `;
@@ -327,7 +327,7 @@ const LegendItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 `;
 

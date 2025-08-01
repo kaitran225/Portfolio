@@ -3,6 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import PortfolioRouter from './components/PortfolioRouter';
 import LaTeXCV from './components/LaTeXCV';
 import { LoadingManager } from './components/LoadingManager';
+import { ThemeProvider } from './contexts/ThemeContext';
+import ThemeToggle from './components/ThemeToggle';
 import { usePerformanceMonitoring } from './hooks/usePerformanceMonitoring';
 import './App.css';
 
@@ -25,20 +27,26 @@ function App(): React.ReactElement {
 
   if (isSimpleMode) {
     return (
-      <LoadingManager>
-        <LaTeXCV />
-      </LoadingManager>
+      <ThemeProvider>
+        <LoadingManager>
+          <LaTeXCV />
+          <ThemeToggle />
+        </LoadingManager>
+      </ThemeProvider>
     );
   }
 
   return (
-    <LoadingManager>
-      <BrowserRouter>
-        <div className="App">
-          <PortfolioRouter />
-        </div>
-      </BrowserRouter>
-    </LoadingManager>
+    <ThemeProvider>
+      <LoadingManager>
+        <BrowserRouter>
+          <div className="App">
+            <PortfolioRouter />
+            <ThemeToggle />
+          </div>
+        </BrowserRouter>
+      </LoadingManager>
+    </ThemeProvider>
   );
 }
 

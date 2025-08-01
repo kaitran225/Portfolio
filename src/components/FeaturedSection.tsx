@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import LazyImage from './LazyImage';
 import portfolioDataService from '../services/portfolioDataService';
 
@@ -53,17 +53,6 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ isDevelopment = true 
 };
 
 // Styled Components
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const FeaturedContainer = styled.div`
   width: 100%;
   max-width: 1400px;
@@ -114,18 +103,19 @@ const FeaturedGrid = styled.div`
 `;
 
 const FeaturedCard = styled.div`
-  background: transparent;
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
   
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 255, 136, 0.2);
-    border-color: #00ff88;
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-green-primary);
   }
 `;
 

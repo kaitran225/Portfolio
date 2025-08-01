@@ -50,15 +50,20 @@ const NavigationWrapper = styled.nav<{ scrolled: boolean }>`
   right: 0;
   z-index: 1000;
   background: ${props => props.scrolled ? 
-    'rgba(10, 10, 10, 0.95)' : 
-    'rgba(10, 10, 10, 0.8)'
+    'var(--bg-blur)' : 
+    'var(--card-bg)'
   };
   backdrop-filter: blur(20px);
   border-bottom: 1px solid ${props => props.scrolled ? 
-    'rgba(255, 255, 255, 0.2)' : 
-    'rgba(255, 255, 255, 0.1)'
+    'var(--border-color)' : 
+    'var(--border-color)'
   };
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+  
+  ${props => props.scrolled && css`
+    box-shadow: var(--shadow-medium);
+  `}
   
   ${props => props.scrolled && css`
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);

@@ -388,14 +388,14 @@ interface ContentTransitionProps {
 
 const ProjectContainer = styled.div`
   min-height: 100vh;
-  background: var(--color-black-primary);
+  background: var(--bg-primary);
   color: var(--color-text-primary);
   position: relative;
 `;
 
 const ProjectHeader = styled.header`
   padding: 40px 20px;
-  background: linear-gradient(135deg, var(--color-black-primary) 0%, var(--color-black-secondary) 50%, var(--color-purple-primary) 100%);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--color-purple-primary) 100%);
   position: relative;
   transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 5; /* Lower than links but above background */

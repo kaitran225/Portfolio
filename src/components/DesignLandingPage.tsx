@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../services/portfolioDataService';
-import DesignSkillsVisualization from './DesignSkillsVisualization';
 import ContactSection from './ContactSection'; // Using the dev contact section
 import BackToTop from './BackToTop';
 import HeroSection from './HeroSection';
 import CategoryFilter from './CategoryFilter';
 import ProjectGrid from './ProjectGrid';
 import RedirectSection from './RedirectSection';
+import { useTheme } from '../contexts/ThemeContext';
 
 // Vanta.js topology effect
 declare global {
@@ -19,6 +19,7 @@ declare global {
 
 const DesignLandingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'branding' | 'ui-ux' | 'print'>('all');
+  const { isDark } = useTheme();
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
@@ -100,7 +101,7 @@ const DesignLandingPage: React.FC = () => {
             scale: 1.00,
             scaleMobile: 0.8, // Reduce complexity on mobile
             color: 0xff6b6b, // Design-specific coral color
-            backgroundColor: 0x0a0a0a,
+            backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
             points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
             maxDistance: window.innerWidth < 768 ? 15 : 20,
             spacing: window.innerWidth < 768 ? 12 : 15
@@ -147,7 +148,7 @@ const DesignLandingPage: React.FC = () => {
         vantaEffect.current = null;
       }
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <LandingContainer ref={vantaRef}>
@@ -169,9 +170,6 @@ const DesignLandingPage: React.FC = () => {
         {/* Project Grid */}
         <ProjectGrid projects={filteredProjects} isDevelopment={false} />
       </Section>
-
-      {/* Enhanced Design Skills Section */}
-      <DesignSkillsVisualization />
 
       {/* Enhanced Contact Section */}
       <ContactSection />
@@ -225,7 +223,7 @@ const SectionHeader = styled.h2`
   text-align: center;
   margin-bottom: 60px;
   font-weight: 700;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff6b6b 50%, #4ecdc4 100%);
+  background: linear-gradient(135deg, var(--color-design-primary) 0%, var(--color-design-primary) 50%, var(--color-design-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

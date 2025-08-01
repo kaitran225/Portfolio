@@ -170,9 +170,10 @@ const ContentBGContainer = styled.div`
   margin: 0 auto;
   padding: 2rem;
   backdrop-filter: blur(10px);
-  background: transparent;
+  background: var(--card-bg);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -312,7 +313,7 @@ const HeroText = styled.div`
 
 const RoleTitle = styled.h3`
   font-size: 1.2rem;
-  color: #6933ff;
+  color: var(--color-purple-primary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -323,7 +324,7 @@ const RoleTitle = styled.h3`
 
 const DesignRoleTitle = styled.h3`
   font-size: 1.2rem;
-  color: #ff6b6b;
+  color: var(--color-design-primary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 // ============= DESIGN PORTFOLIO CONTACT SECTION =============
 
@@ -393,8 +393,10 @@ const FloatingShape = styled.div<{ $delay: number; $x: number; $y: number; $size
   height: ${props => props.$size}px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
-  animation: ${float} ${props => 3 + props.$delay}s ease-in-out infinite;
-  animation-delay: ${props => props.$delay}s;
+  ${props => css`
+    animation: ${float} ${3 + props.$delay}s ease-in-out infinite;
+    animation-delay: ${props.$delay}s;
+  `}
 `;
 
 // ============= MAIN COMPONENT =============

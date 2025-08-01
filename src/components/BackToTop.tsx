@@ -4,25 +4,9 @@ import styled, { keyframes, css } from 'styled-components';
 // ============= BACK TO TOP BUTTON WITH PROGRESS =============
 
 // Animations
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const pulse = keyframes`
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
-`;
-
-const float = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
 `;
 
 // Styled Components
@@ -39,7 +23,7 @@ const BackToTopButton = styled.button<{ visible: boolean }>`
   cursor: pointer;
   z-index: 1000;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: var(--shadow-soft);
   
   ${props => css`
     opacity: ${props.visible ? 1 : 0};
@@ -49,7 +33,7 @@ const BackToTopButton = styled.button<{ visible: boolean }>`
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    box-shadow: var(--shadow-medium);
     animation: ${pulse} 1s ease-in-out;
   }
 

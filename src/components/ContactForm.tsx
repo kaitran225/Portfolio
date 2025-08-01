@@ -43,15 +43,15 @@ const shake = keyframes`
 
 // Styled Components
 const ContactFormContainer = styled.div`
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--card-border);
   border-radius: 20px;
   padding: 2rem;
   max-width: 600px;
   margin: 0 auto;
   animation: ${slideIn} 0.6s ease-out;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-medium);
 
   @media (max-width: 768px) {
     padding: 1.5rem;
