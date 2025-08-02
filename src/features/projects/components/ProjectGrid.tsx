@@ -97,10 +97,15 @@ const ProjectCard = styled.div<{ $isDevelopment?: boolean; $featured?: boolean }
   box-shadow: var(--shadow-soft);
   position: relative;
   
-  ${props => props.$featured && `
-    border: 2px solid var(--color-purple-primary);
-    box-shadow: 0 10px 30px rgba(105, 51, 255, 0.2);
-  `}
+${props => props.$featured && `
+  border: ${props.$isDevelopment
+    ? '2px solid var(--color-purple-primary)'
+    : '2px solid var(--color-design-primary)'};
+  box-shadow: ${props.$isDevelopment
+    ? 'var(--shadow-hover)'
+    : '0 20px 40px rgba(255, 107, 107, 0.3)'};
+`}
+
   
   &:hover {
     background: var(--card-bg);
@@ -134,11 +139,13 @@ const ProjectThumbnail = styled.div`
   }
 `;
 
-const FeaturedBadge = styled.div`
+const FeaturedBadge = styled.div<{ $isDevelopment?: boolean; }>`
   position: absolute;
   top: 15px;
   left: 15px;
-  background: linear-gradient(135deg, var(--color-purple-primary), var(--color-purple-secondary));
+  background: ${props => props.$isDevelopment 
+    ? 'var(--color-green-primary)' 
+    : 'var(--color-design-secondary)'};
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
