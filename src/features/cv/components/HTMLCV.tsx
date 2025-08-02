@@ -173,7 +173,7 @@ const HTMLCV: React.FC = () => {
             </ContactItem>
             <ContactItem>
               <i className="fab fa-globe"></i>
-              <a href="http://cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
+              <a href="http://www.cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
                 cybriadev.com/Portfolio
               </a>
             </ContactItem>
