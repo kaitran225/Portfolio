@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import Layout from '../components/Layout/Layout';
 
 // Lazy load heavy components for better code splitting
@@ -37,10 +37,24 @@ const RouteLoadingFallback: React.FC = () => (
 );
 
 const PortfolioRouter: React.FC = () => {
-  const path = window.location.pathname;
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+  
+  const path = currentPath.toLowerCase().replace(/\/$/, '') || '/';
   
   // Handle resume route
-  if (path === '/resume' || path === '/resume/') {
+  if (path === '/resume') {
     return (
       <Suspense fallback={<RouteLoadingFallback />}>
         <HTMLCV />
@@ -49,7 +63,7 @@ const PortfolioRouter: React.FC = () => {
   }
   
   // Handle design portfolio route
-  if (path === '/design' || path === '/design/') {
+  if (path === '/design') {
     return (
       <Layout>
         <Suspense fallback={<RouteLoadingFallback />}>
@@ -87,7 +101,7 @@ const PortfolioRouter: React.FC = () => {
     }
   }
   
-  // Default to development landing page
+  // Default to development landing page (for / and any unknown routes)
   return (
     <Layout>
       <Suspense fallback={<RouteLoadingFallback />}>

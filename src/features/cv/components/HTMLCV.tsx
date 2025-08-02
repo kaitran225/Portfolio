@@ -8,8 +8,13 @@ const HTMLCV: React.FC = () => {
   const { toggleTheme, isDark } = useTheme();
   
   const handleBack = () => {
-    window.history.pushState({}, '', '/');
-    window.location.reload();
+    // Check if there's history to go back to
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // If no history, navigate to home
+      window.location.href = '/';
+    }
   };
 
   const handleDownloadPDF = async () => {

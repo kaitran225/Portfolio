@@ -11,8 +11,12 @@ const Header: React.FC = () => {
   const personalInfo = portfolioDataService.getPersonalInfo();
 
   const navigateTo = (path: string) => {
-    window.history.pushState({}, '', path);
-    window.location.reload();
+    // Only navigate if the path is different
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+      // Trigger popstate event to update the router
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
