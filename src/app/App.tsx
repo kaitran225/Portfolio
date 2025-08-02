@@ -16,6 +16,9 @@ import {
 } from '../shared/services/analytics/googleAnalytics';
 import './App.css';
 
+// Fix isolatedModules warning
+export {};
+
 // Lazy load everything for instant loading
 const PortfolioRouter = lazy(() => import('./PortfolioRouter'));
 const LaTeXCV = lazy(() => import('../features/cv/components/LaTeXCV'));

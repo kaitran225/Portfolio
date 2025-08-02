@@ -190,12 +190,16 @@ export const useRenderPerformance = (componentName: string) => {
 
 /**
  * Hook for optimizing expensive computations
+ * This is a utility hook that intentionally accepts deps as a parameter
  */
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export function useOptimizedMemo<T>(
   factory: () => T,
   deps: React.DependencyList,
   debugName?: string
 ): T {
+  // The deps parameter is intentionally passed through - disable the warning
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useMemo(() => {
     const startTime = performance.now();
     const result = factory();
@@ -208,5 +212,8 @@ export function useOptimizedMemo<T>(
     return result;
   }, deps);
 }
+
+// Fix isolatedModules warning
+export {};
 
 export default BundleOptimizer;

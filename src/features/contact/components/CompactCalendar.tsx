@@ -15,7 +15,6 @@ interface TimeSlot {
 
 const CompactCalendar: React.FC<CompactCalendarProps> = ({ className }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [selectedTimeframe, setSelectedTimeframe] = useState<'today' | 'week' | 'custom'>('week');
   const [isBusinessHours, setIsBusinessHours] = useState(false);
 
   // Update current time every minute

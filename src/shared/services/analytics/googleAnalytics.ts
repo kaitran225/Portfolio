@@ -203,7 +203,8 @@ export const trackScrollDepth = () => {
   }
 };
 
-export default {
+// Export as named constant to fix ESLint warning
+const googleAnalytics = {
   initialize: initializeAnalytics,
   trackPageView,
   trackEvent,
@@ -213,3 +214,5 @@ export default {
   trackError,
   trackScrollDepth
 };
+
+export default googleAnalytics;
