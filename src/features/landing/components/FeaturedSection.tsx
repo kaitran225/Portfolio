@@ -18,13 +18,14 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ isDevelopment = true 
 
   return (
     <FeaturedContainer>
-      <FeaturedHeader>{sectionTitle}</FeaturedHeader>
+      <FeaturedHeader $isDevelopment={isDevelopment}>{sectionTitle}</FeaturedHeader>
       <FeaturedGrid>
         {featuredProjects.filter(project => 
           isDevelopment ? project.category === 'development' : project.category === 'design'
         ).map(project => (
           <FeaturedCard
             key={project.id}
+            $isDevelopment={isDevelopment}
             onClick={() => window.location.href = `/project/${project.id}`}
           >
             <FeaturedThumbnail>
@@ -56,11 +57,18 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ isDevelopment = true 
 const FeaturedContainer = styled.div`
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 2rem auto;
   display: flex;
+  backdrop-filter: blur(100px);
+  background: var(props => props.$isDevelopment ? '--background-secondary' : '--color-design-secondary');
+  opacity: 0.9;
+  border-radius: 16px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  margin-top: 2rem;
+  padding: 2rem 1.5rem;
   flex-direction: column;
   padding: 2rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
   animation: featuredSlideUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
   
   @keyframes featuredSlideUp {
@@ -79,43 +87,44 @@ const FeaturedContainer = styled.div`
   }
 `;
 
-const FeaturedHeader = styled.h3`
+const FeaturedHeader = styled.h3<{ $isDevelopment?: boolean }>`
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: ${props => props.$isDevelopment === false 
+    ? 'var(--color-design-primary)' 
+    : 'var(--color-purple-primary)'};
   margin-bottom: 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, #00ff88 0%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 `;
 
 const FeaturedGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
-  
+  margin: auto 2rem;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 `;
 
-const FeaturedCard = styled.div`
-  background: var(--card-bg-solid);
+const FeaturedCard = styled.div<{ $isDevelopment?: boolean }>`
   backdrop-filter: blur(10px);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid var(--card-border);
+  border: 1px solid ${props => props.$isDevelopment === false 
+    ? 'var(--color-design-primary)' 
+    : 'var(--color-purple-primary)'};
   box-shadow: var(--shadow-soft);
   
   &:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
-    border-color: var(--color-green-primary);
+    border-color: ${props => props.$isDevelopment === false 
+      ? 'var(--color-design-secondary)' 
+      : 'var(--color-green-primary)'};
   }
 `;
 
@@ -167,29 +176,29 @@ const TagList = styled.div`
 `;
 
 const Tag = styled.span<{ $isDevelopment?: boolean }>`
-  background: ${props => props.$isDevelopment 
-    ? 'rgba(105, 51, 255, 0.1)' 
-    : 'rgba(255, 20, 147, 0.1)'};
-  color: ${props => props.$isDevelopment 
-    ? 'var(--color-text-primary)' 
-    : '#ff69b4'};
+  background: ${props => props.$isDevelopment === false 
+    ? 'rgba(255, 107, 107, 0.1)' 
+    : 'rgba(105, 51, 255, 0.1)'};
+  color: ${props => props.$isDevelopment === false 
+    ? 'var(--color-design-primary)' 
+    : 'var(--color-text-primary)'};
   padding: 4px 10px;
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
-  border: 1px solid ${props => props.$isDevelopment 
-    ? 'rgba(105, 51, 255, 0.3)' 
-    : 'rgba(255, 20, 147, 0.3)'};
+  border: 1px solid ${props => props.$isDevelopment === false 
+    ? 'rgba(255, 107, 107, 0.3)' 
+    : 'rgba(105, 51, 255, 0.3)'};
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   
   &:hover {
-    background: ${props => props.$isDevelopment 
-      ? 'rgba(105, 51, 255, 0.2)' 
-      : 'rgba(255, 20, 147, 0.2)'};
-    border-color: ${props => props.$isDevelopment 
-      ? 'var(--color-purple-primary)' 
-      : '#ff1493'};
+    background: ${props => props.$isDevelopment === false 
+      ? 'rgba(255, 107, 107, 0.2)' 
+      : 'rgba(105, 51, 255, 0.2)'};
+    border-color: ${props => props.$isDevelopment === false 
+      ? 'var(--color-design-primary)' 
+      : 'var(--color-purple-primary)'};
     transform: translateY(-1px);
   }
 `;

@@ -146,15 +146,16 @@ const LandingPage: React.FC = () => {
 
         {/* Development Project Catalog */}
         <Section id="projects">
-          <SectionHeader>Development Portfolio</SectionHeader>
-
-          {/* Category Filter */}
-          <CategoryFilter
-            selectedCategory={selectedCategory}
-            onCategoryChange={(category: string) => setSelectedCategory(category as any)}
-            isDevelopment={true}
-            projects={projects}
-          />
+          <SectionHeaderWrapper>
+            <SectionHeader>Development Portfolio</SectionHeader>
+            {/* Category Filter */}
+            <CategoryFilter
+              selectedCategory={selectedCategory}
+              onCategoryChange={(category: string) => setSelectedCategory(category as any)}
+              isDevelopment={true}
+              projects={projects}
+            />
+          </SectionHeaderWrapper>
 
           {/* Project Grid */}
           <ProjectGrid
@@ -203,24 +204,35 @@ const LandingContainer = styled.div`
 
 const FeaturedSectionWrapper = styled.div`
   padding: 2rem 1.5rem;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
 `;
 
 const Section = styled.section`
   padding: 4rem 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
-
   @media (max-width: 768px) {
     padding: 2rem 1rem;
+  }
+`;
+
+const SectionHeaderWrapper = styled.div`
+  margin-bottom: 2rem;;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  background: var(--background-primary);
+  border-radius: 16px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
   }
 `;
 
 const SectionHeader = styled.h2`
   font-size: 2.5rem;
   text-align: center;
+  margin-top: 60px;
   margin-bottom: 60px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-purple-secondary) 100%);

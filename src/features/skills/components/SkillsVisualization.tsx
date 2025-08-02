@@ -249,7 +249,13 @@ const formatLastUsed = (dateString: string): string => {
 
 // Styled Components
 const SkillsContainer = styled.div`
-  max-width: 1200px;
+  backdrop-filter: blur(100px);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  background: var(--background-primary);
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
   background: var(--background-primary);

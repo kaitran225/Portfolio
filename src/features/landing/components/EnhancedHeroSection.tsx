@@ -170,7 +170,7 @@ const HeroContainer = styled.section`
 `;
 
 const HeroContent = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   padding: ${spacing.xl} ${spacing.md};
   position: relative;

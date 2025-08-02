@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
 
 // ============= PROFESSIONAL CONTACT FORM =============
 
@@ -20,9 +21,9 @@ interface ProfessionalContactFormProps {
   onClose?: () => void;
 }
 
-const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({ 
-  onSubmit, 
-  onClose 
+const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({
+  onSubmit,
+  onClose
 }) => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
@@ -41,6 +42,44 @@ const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({
   const [currentStep, setCurrentStep] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    // Store original body style
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    
+    // Lock scroll
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Cleanup function to restore scroll
+    return () => {
+      document.body.style.overflow = originalStyle;
+      document.documentElement.style.overflow = 'auto';
+    };
+  }, []);
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  // Auto focus first input when step 1 loads
+  useEffect(() => {
+    if (currentStep === 1) {
+      const firstInput = document.getElementById('name');
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 300);
+      }
+    }
+  }, [currentStep]);
+
   const validateField = (field: keyof ContactFormData, value: string): string | null => {
     switch (field) {
       case 'name':
@@ -57,7 +96,7 @@ const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({
 
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    
+
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
@@ -66,20 +105,20 @@ const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({
 
   const validateStep = (step: number): boolean => {
     const newErrors: Partial<ContactFormData> = {};
-    
+
     if (step === 1) {
       const nameError = validateField('name', formData.name);
       const emailError = validateField('email', formData.email);
-      
+
       if (nameError) newErrors.name = nameError;
       if (emailError) newErrors.email = emailError;
     }
-    
+
     if (step === 3) {
       const messageError = validateField('message', formData.message);
       if (messageError) newErrors.message = messageError;
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -96,11 +135,11 @@ const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateStep(currentStep)) return;
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Track form submission
       if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -138,18 +177,18 @@ ${formData.message}
 Sent via Portfolio Professional Contact Form
 ${new Date().toLocaleString()}
       `);
-      
+
       // Open email client
       window.open(`mailto:kaitran225@gmail.com?subject=${subject}&body=${body}`, '_blank');
-      
+
       // Call onSubmit callback if provided
       onSubmit?.(formData);
-      
+
       // Show success message or close form
       setTimeout(() => {
         onClose?.();
       }, 2000);
-      
+
     } catch (error) {
       console.error('Form submission error:', error);
     } finally {
@@ -161,7 +200,7 @@ ${new Date().toLocaleString()}
     <StepContent>
       <StepTitle>Contact Information</StepTitle>
       <StepDescription>Let's start with your basic information</StepDescription>
-      
+
       <FormGroup>
         <Label htmlFor="name">Full Name *</Label>
         <Input
@@ -205,7 +244,7 @@ ${new Date().toLocaleString()}
     <StepContent>
       <StepTitle>Project Details</StepTitle>
       <StepDescription>Tell me about your project requirements</StepDescription>
-      
+
       <FormGroup>
         <Label htmlFor="projectType">Project Type</Label>
         <Select
@@ -286,7 +325,7 @@ ${new Date().toLocaleString()}
     <StepContent>
       <StepTitle>Project Description</StepTitle>
       <StepDescription>Provide details about your project and requirements</StepDescription>
-      
+
       <FormGroup>
         <Label htmlFor="message">Project Description *</Label>
         <TextArea
@@ -344,11 +383,39 @@ ${new Date().toLocaleString()}
   );
 
   return (
-    <FormOverlay>
-      <FormContainer ref={containerRef}>
+    <ModalOverlay
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="form-title"
+      aria-describedby="form-description"
+    >
+      <FormContainer 
+        ref={containerRef}
+        as={motion.div}
+        initial={{ scale: 0.9, opacity: 0, y: 50 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 50 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <FormHeader>
-          <CloseButton onClick={onClose} type="button">×</CloseButton>
-          <FormTitle>Professional Contact Form</FormTitle>
+          <CloseButton 
+            onClick={onClose} 
+            type="button"
+            aria-label="Close contact form"
+          >
+            ×
+          </CloseButton>
+          <FormTitle id="form-title">Professional Contact Form</FormTitle>
+          <FormDescription id="form-description">
+            Get in touch to discuss your project needs
+          </FormDescription>
           <ProgressIndicator>
             <ProgressBar $progress={(currentStep / 3) * 100} />
             <ProgressText>Step {currentStep} of 3</ProgressText>
@@ -366,7 +433,7 @@ ${new Date().toLocaleString()}
                 ← Previous
               </SecondaryButton>
             )}
-            
+
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
               {currentStep < 3 ? (
                 <PrimaryButton type="button" onClick={handleNext}>
@@ -381,7 +448,7 @@ ${new Date().toLocaleString()}
           </FormActions>
         </form>
       </FormContainer>
-    </FormOverlay>
+    </ModalOverlay>
   );
 };
 
@@ -402,32 +469,75 @@ const slideUp = keyframes`
   }
 `;
 
-// Styled Components
-const FormOverlay = styled.div`
-  position: fixed;
+const ModalOverlay = styled.div`
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-  animation: ${fadeIn} 0.3s ease-out;
+  z-index: 9999;
+  padding: 2rem;
+  overflow-y: auto;
+  
+  /* Ensure it covers everything */
+  width: 100vw;
+  height: 100vh;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+  
+  /* Smooth transitions */
+  transition: all 0.3s ease;
 `;
 
 const FormContainer = styled.div`
-  background: var(--background-primary);
+  background: var(--bg-primary);
   border-radius: 16px;
   width: 100%;
   max-width: 600px;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  animation: ${slideUp} 0.4s ease-out;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
   border: 1px solid var(--border-color);
+  position: relative;
+  
+  /* Enhanced visual elevation */
+  transform: translateZ(0);
+  will-change: transform;
+  
+  /* Better scrollbar styling for form content */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple-primary);
+  }
+  
+  @media (max-width: 768px) {
+    max-height: 90vh;
+    margin: 0;
+    border-radius: 12px;
+  }
 `;
 
 const FormHeader = styled.div`
@@ -440,22 +550,30 @@ const CloseButton = styled.button`
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: none;
-  border: none;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   font-size: 1.5rem;
   color: var(--color-text-secondary);
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: all 0.3s ease;
+  z-index: 10;
 
   &:hover {
-    background: var(--background-hover);
-    color: var(--color-text-primary);
+    background: var(--color-purple-primary);
+    color: white;
+    border-color: var(--color-purple-primary);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-purple-primary);
+    outline-offset: 2px;
   }
 `;
 
@@ -463,7 +581,14 @@ const FormTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+`;
+
+const FormDescription = styled.p`
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
+  line-height: 1.4;
 `;
 
 const ProgressIndicator = styled.div`
@@ -473,7 +598,7 @@ const ProgressIndicator = styled.div`
 const ProgressBar = styled.div<{ $progress: number }>`
   width: 100%;
   height: 4px;
-  background: var(--background-secondary);
+  background: var(--bg-secondary);
   border-radius: 2px;
   overflow: hidden;
   
@@ -540,7 +665,7 @@ const Input = styled.input<{ $hasError?: boolean }>`
   padding: 0.75rem 1rem;
   border: 1px solid ${props => props.$hasError ? '#ef4444' : 'var(--border-color)'};
   border-radius: 8px;
-  background: var(--background-secondary);
+  background: var(--bg-secondary);
   color: var(--color-text-primary);
   font-size: 0.9rem;
   transition: all 0.3s ease;
@@ -552,7 +677,7 @@ const Input = styled.input<{ $hasError?: boolean }>`
   }
 
   &::placeholder {
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
   }
 `;
 
@@ -561,7 +686,7 @@ const Select = styled.select`
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: var(--background-secondary);
+  background: var(--bg-secondary);
   color: var(--color-text-primary);
   font-size: 0.9rem;
   cursor: pointer;
@@ -579,7 +704,7 @@ const TextArea = styled.textarea<{ $hasError?: boolean }>`
   padding: 0.75rem 1rem;
   border: 1px solid ${props => props.$hasError ? '#ef4444' : 'var(--border-color)'};
   border-radius: 8px;
-  background: var(--background-secondary);
+  background: var(--bg-secondary);
   color: var(--color-text-primary);
   font-size: 0.9rem;
   font-family: inherit;
@@ -594,7 +719,7 @@ const TextArea = styled.textarea<{ $hasError?: boolean }>`
   }
 
   &::placeholder {
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
   }
 `;
 
@@ -606,7 +731,7 @@ const ErrorMessage = styled.div`
 
 const CharacterCount = styled.div<{ $isNearLimit: boolean }>`
   font-size: 0.75rem;
-  color: ${props => props.$isNearLimit ? '#f59e0b' : 'var(--color-text-tertiary)'};
+  color: ${props => props.$isNearLimit ? '#f59e0b' : 'var(--color-text-muted)'};
   text-align: right;
   margin-top: 0.25rem;
 `;
@@ -674,7 +799,7 @@ const SecondaryButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background: var(--background-hover);
+    background: var(--bg-secondary);
     border-color: var(--color-purple-primary);
   }
 `;

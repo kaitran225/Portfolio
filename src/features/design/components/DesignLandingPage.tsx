@@ -171,10 +171,8 @@ const DesignLandingPage: React.FC = () => {
         <ProjectGrid projects={filteredProjects} isDevelopment={false} />
       </Section>
 
-      {/* Enhanced Contact Section */}
-      <ContactSection />
-
-      {/* Dev Portfolio Redirect */}
+        {/* Enhanced Contact Section with Design theme */}
+        <ContactSection isDevelopment={false} />      {/* Dev Portfolio Redirect */}
       <RedirectSection isDevelopment={false} />
 
       {/* Back to Top Button */}
@@ -209,7 +207,7 @@ const LandingContainer = styled.div`
 
 const Section = styled.section`
   padding: 4rem 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
 

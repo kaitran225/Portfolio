@@ -1,10 +1,10 @@
-import React, { useCallback, lazy, Suspense, useState } from 'react';
+import React, { useCallback, lazy, Suspense } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useContactForm } from '../../../contexts/ContactFormContext';
 
 // Lazy load heavy components for instant loading
 const CompactAvailability = lazy(() => import('./CompactAvailability'));
 const CompactCalendar = lazy(() => import('./CompactCalendar'));
-const ProfessionalContactForm = lazy(() => import('./ProfessionalContactForm'));
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -28,7 +28,6 @@ const float = keyframes`
 // Styled Components
 const ContactSectionWrapper = styled.section`
   padding: 3rem 2rem;
-  max-width: 1200px;
   margin: 0 auto;
   position: relative;
 
@@ -38,7 +37,14 @@ const ContactSectionWrapper = styled.section`
 `;
 
 const ContactContainer = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
+  padding: 2rem;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -50,13 +56,12 @@ const ContactHeader = styled.div`
   animation: ${fadeInUp} 0.8s ease-out;
 `;
 
-const ContactTitle = styled.h2`
+const ContactTitle = styled.h2<{ $isDevelopment?: boolean }>`
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: ${props => props.$isDevelopment === false 
+    ? 'var(--color-design-primary)' 
+    : 'var(--color-purple-primary)'};
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
@@ -112,10 +117,12 @@ const ContactSidebar = styled.div`
   }
 `;
 
-const ContactCard = styled.div`
+const ContactCard = styled.div<{ $isDevelopment?: boolean }>`
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid ${props => props.$isDevelopment
+    ? 'rgba(255, 255, 255, 0.1)'
+    : 'rgba(255, 107, 107, 0.2)'};
   border-radius: 12px;
   padding: 1.25rem;
   transition: all 0.3s ease;
@@ -126,8 +133,12 @@ const ContactCard = styled.div`
   animation-fill-mode: both;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-purple-primary);
+    background: ${props => props.$isDevelopment
+      ? 'rgba(255, 255, 255, 0.05)'
+      : 'rgba(255, 107, 107, 0.05)'};
+    border-color: ${props => props.$isDevelopment
+      ? 'var(--color-purple-primary)'
+      : 'var(--color-design-primary)'};
     transform: translateY(-3px);
   }
 
@@ -156,8 +167,10 @@ const ContactMethodDescription = styled.p`
   font-size: 0.95rem;
 `;
 
-const ContactAction = styled.span`
-  color: var(--color-purple-primary);
+const ContactAction = styled.span<{ $isDevelopment?: boolean }>`
+  color: ${props => props.$isDevelopment
+    ? 'var(--color-purple-primary)'
+    : 'var(--color-design-primary)'};
   font-weight: 600;
   text-decoration: none;
   display: inline-flex;
@@ -167,13 +180,19 @@ const ContactAction = styled.span`
   font-size: 0.9rem;
 
   &:hover {
-    color: var(--color-green-primary);
+    color: ${props => props.$isDevelopment
+      ? 'var(--color-green-primary)'
+      : 'var(--color-design-secondary)'};
   }
 `;
 
-const ResponseTimeChip = styled.div`
-  background: rgba(102, 126, 234, 0.15);
-  color: var(--color-purple-primary);
+const ResponseTimeChip = styled.div<{ $isDevelopment?: boolean }>`
+  background: ${props => props.$isDevelopment
+    ? 'rgba(102, 126, 234, 0.15)'
+    : 'rgba(255, 107, 107, 0.15)'};
+  color: ${props => props.$isDevelopment
+    ? 'var(--color-purple-primary)'
+    : 'var(--color-design-primary)'};
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -223,9 +242,13 @@ const contactMethods = [
   }
 ];
 
+interface ContactSectionProps {
+  isDevelopment?: boolean;
+}
+
 // Component
-const ContactSection: React.FC = () => {
-  const [showContactForm, setShowContactForm] = useState(false);
+const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true }) => {
+  const { openContactForm } = useContactForm();
 
   const handleContactMethod = useCallback((method: typeof contactMethods[0]) => {
     if (method.href.startsWith('mailto:') || method.href.startsWith('http')) {
@@ -242,13 +265,13 @@ const ContactSection: React.FC = () => {
     <ContactSectionWrapper id="contact">
       <ContactContainer>
         <ContactHeader>
-          <ContactTitle>Let's Connect</ContactTitle>
+          <ContactTitle $isDevelopment={isDevelopment}>Let's Connect</ContactTitle>
           <ContactSubtitle>
             Available for new opportunities • Ready to collaborate on innovative projects
           </ContactSubtitle>
           
           <CTAButtonContainer>
-            <ProfessionalFormButton onClick={() => setShowContactForm(true)}>
+            <ProfessionalFormButton $isDevelopment={isDevelopment} onClick={openContactForm}>
               🚀 Start a Project
               <ButtonSubtext>Professional consultation form</ButtonSubtext>
             </ProfessionalFormButton>
@@ -261,13 +284,14 @@ const ContactSection: React.FC = () => {
             {contactMethods.map((method, index) => (
               <ContactCard 
                 key={method.title}
+                $isDevelopment={isDevelopment}
                 onClick={() => handleContactMethod(method)}
               >
                 <ContactIcon>{method.icon}</ContactIcon>
                 <ContactMethodTitle>{method.title}</ContactMethodTitle>
                 <ContactMethodDescription>{method.description}</ContactMethodDescription>
-                <ContactAction>{method.action} →</ContactAction>
-                <ResponseTimeChip>Response: {method.responseTime}</ResponseTimeChip>
+                <ContactAction $isDevelopment={isDevelopment}>{method.action} →</ContactAction>
+                <ResponseTimeChip $isDevelopment={isDevelopment}>Response: {method.responseTime}</ResponseTimeChip>
               </ContactCard>
             ))}
           </ContactCardsColumn>
@@ -288,16 +312,6 @@ const ContactSection: React.FC = () => {
             </CalendarWrapper>
           </ContactSidebar>
         </ContactMethodsGrid>
-        
-        {/* Professional Contact Form Modal */}
-        {showContactForm && (
-          <Suspense fallback={null}>
-            <ProfessionalContactForm 
-              onSubmit={handleFormSubmit}
-              onClose={() => setShowContactForm(false)}
-            />
-          </Suspense>
-        )}
       </ContactContainer>
     </ContactSectionWrapper>
   );
@@ -310,8 +324,10 @@ const CTAButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const ProfessionalFormButton = styled.button`
-  background: linear-gradient(135deg, var(--color-purple-primary), var(--color-purple-secondary));
+const ProfessionalFormButton = styled.button<{ $isDevelopment?: boolean }>`
+  background: ${props => props.$isDevelopment === false 
+    ? 'var(--color-design-primary)' 
+    : 'var(--color-purple-primary)'};
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -321,13 +337,17 @@ const ProfessionalFormButton = styled.button`
   transition: all 0.3s ease;
   font-size: 1rem;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(105, 51, 255, 0.3);
+  box-shadow: ${props => props.$isDevelopment
+    ? '0 4px 15px rgba(105, 51, 255, 0.3)'
+    : '0 4px 15px rgba(255, 107, 107, 0.3)'};
   position: relative;
   overflow: hidden;
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(105, 51, 255, 0.4);
+    box-shadow: ${props => props.$isDevelopment
+      ? '0 8px 25px rgba(105, 51, 255, 0.4)'
+      : '0 8px 25px rgba(255, 107, 107, 0.4)'};
   }
 
   &:active {
@@ -341,7 +361,7 @@ const ProfessionalFormButton = styled.button`
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: rgba(255, 255, 255, 0.1);
     transition: left 0.5s;
   }
 

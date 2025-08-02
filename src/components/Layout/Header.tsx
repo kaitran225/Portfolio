@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../shared/services/data/portfolioDataService';
+import { useContactForm } from '../../contexts/ContactFormContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { openContactForm } = useContactForm();
   const personalInfo = portfolioDataService.getPersonalInfo();
 
   const navigateTo = (path: string) => {
@@ -61,7 +63,7 @@ const Header: React.FC = () => {
           <NavItem onClick={() => scrollToSection('skills')}>
             Skills
           </NavItem>
-          <NavItem onClick={() => scrollToSection('contact')}>
+          <NavItem onClick={openContactForm}>
             Contact
           </NavItem>
         </DesktopNav>
@@ -76,7 +78,7 @@ const Header: React.FC = () => {
               </CTAIcon>
               <CTAText>Download Resume</CTAText>
             </PrimaryCTA>
-            <GitHubStyleCTA onClick={() => window.open('mailto:kaitran225@gmail.com', '_blank')}>
+            <GitHubStyleCTA onClick={openContactForm}>
               <CTAIcon>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -117,7 +119,7 @@ const Header: React.FC = () => {
         <MobileNavItem onClick={() => scrollToSection('skills')}>
           Skills
         </MobileNavItem>
-        <MobileNavItem onClick={() => scrollToSection('contact')}>
+        <MobileNavItem onClick={() => { openContactForm(); setIsMenuOpen(false); }}>
           Contact
         </MobileNavItem>
         <MobileCTASection>
@@ -338,29 +340,26 @@ const PrimaryCTA = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #6933ff 0%, #00ff88 100%);
-  border: 1px solid transparent;
-  color: white;
-  padding: 0.7rem 1.4rem;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--color-text-primary);
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(105, 51, 255, 0.2);
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(105, 51, 255, 0.3);
+    background: var(--background-tertiary);
+    border-color: var(--border-color-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
   }
   
   &:active {
     transform: translateY(0);
-  }
-  
-  svg {
-    color: white;
   }
 `;
 
