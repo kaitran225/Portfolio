@@ -30,6 +30,7 @@ jobs:
       run: npm run build
       env:
         NODE_ENV: production
+        CI: false
         GENERATE_SOURCEMAP: false
         REACT_APP_GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
 
@@ -59,7 +60,7 @@ jobs:
       uses: actions/checkout@v4
         
     - name: Deploy to Vercel Production
-      uses: vercel/vercel-action@v35
+      uses: vercel/vercel-action@latest
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-org-id: ${{ secrets.ORG_ID }}
