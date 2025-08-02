@@ -32,7 +32,7 @@
     <text x="250" y="325" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="40" font-weight="bold">KT</text>
     
     <!-- Main text -->
-    <text x="400" y="250" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="bold" filter="url(#glow)">Kai Tran</text>
+    <text x="400" y="250" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="bold" filter="url(#glow)">Trần Nguyên Khánh</text>
     <text x="400" y="290" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif" font-size="28">Full-Stack Developer</text>
     <text x="400" y="330" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="20">React 19 • TypeScript • Node.js • AI Integration</text>
     <text x="400" y="370" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif" font-size="18">Available for OJT Fall 2025</text>

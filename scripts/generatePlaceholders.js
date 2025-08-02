@@ -33,7 +33,7 @@ const baseDir = path.join(__dirname, '..', 'public', 'assets');
 
 // Profile image
 createDir(path.join(baseDir, 'profile'));
-createPlaceholder(400, 400, 'Kai Tran\nProfile Photo', 'kai-tran-profile.jpg', path.join(baseDir, 'profile'));
+createPlaceholder(400, 400, 'Trần Nguyên Khánh\nProfile Photo', 'kai-tran-profile.jpg', path.join(baseDir, 'profile'));
 
 // Development project thumbnails
 createDir(path.join(baseDir, 'dev-thumbnails'));

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 const Terminal: React.FC = () => {
   const [input, setInput] = useState('');
   const [outputs, setOutputs] = useState([
-    { text: 'Welcome to Kai Tran\'s Portfolio Terminal', type: 'cmd-output-blue' },
+    { text: 'Welcome to Trần Nguyên Khánh\'s Portfolio Terminal', type: 'cmd-output-blue' },
     { text: 'Type "help" to see available commands', type: 'cmd-output-green' },
     { text: 'Available for freelance and full-time opportunities', type: 'cmd-output-green' },
     { text: '', type: 'cmd-output-green' }
@@ -46,7 +46,7 @@ const Terminal: React.FC = () => {
       const helpCommands = [
         'Available commands:',
         '• help - Show this help message',
-        '• about - About Kai Tran',
+        '• about - About Trần Nguyên Khánh',
         '• skills - Technical skills',
         '• projects - Featured projects',
         '• contact - Contact information',

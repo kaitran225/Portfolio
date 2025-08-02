@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../../shared/services/data/portfolioDataService';
-import EnhancedSkillsVisualization from '../../skills/components/EnhancedSkillsVisualization';
+import EnhancedSkillsVisualization from '../../skills/components/SkillsVisualization';
 import ContactSection from '../../contact/components/ContactSection';
 import BackToTop from '../../../components/common/BackToTop';
 import HeroSection from './HeroSection';

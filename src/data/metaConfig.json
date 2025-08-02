@@ -1,9 +1,9 @@
 {
   "default": {
-    "title": "Kai Tran - Full Stack Developer Portfolio",
+    "title": "Trần Nguyên Khánh - Full Stack Developer Portfolio",
     "description": "Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.",
     "keywords": [
-      "Kai Tran",
+      "Trần Nguyên Khánh",
       "Full Stack Developer",
       "React Developer",
       "TypeScript",
@@ -17,35 +17,35 @@
     "url": "https://cybriadev.com",
     "type": "website",
     "locale": "en_US",
-    "siteName": "Kai Tran Portfolio"
+    "siteName": "Trần Nguyên Khánh Portfolio"
   },
   "pages": {
     "/": {
-      "title": "Kai Tran - Full Stack Developer Portfolio",
+      "title": "Trần Nguyên Khánh - Full Stack Developer Portfolio",
       "description": "Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.",
       "url": "https://cybriadev.com/",
       "priority": "1.0"
     },
     "/projects": {
-      "title": "Projects - Kai Tran Portfolio",
+      "title": "Projects - Trần Nguyên Khánh Portfolio",
       "description": "Explore my latest projects including web applications, mobile apps, and cloud infrastructure solutions.",
       "url": "https://cybriadev.com/projects",
       "priority": "0.9"
     },
     "/about": {
-      "title": "About - Kai Tran",
+      "title": "About - Trần Nguyên Khánh",
       "description": "Learn about my background, skills, and passion for creating innovative software solutions.",
       "url": "https://cybriadev.com/about",
       "priority": "0.8"
     },
     "/contact": {
-      "title": "Contact - Kai Tran",
+      "title": "Contact - Trần Nguyên Khánh",
       "description": "Get in touch for collaboration opportunities, technical consultation, or project inquiries.",
       "url": "https://cybriadev.com/contact",
       "priority": "0.8"
     },
     "/resume": {
-      "title": "Resume - Kai Tran",
+      "title": "Resume - Trần Nguyên Khánh",
       "description": "Download my resume and view my professional experience and technical qualifications.",
       "url": "https://cybriadev.com/resume",
       "priority": "0.7"

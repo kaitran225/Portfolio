@@ -103,7 +103,7 @@ const FeaturedGrid = styled.div`
 `;
 
 const FeaturedCard = styled.div`
-  background: var(--card-bg);
+  background: var(--card-bg-solid);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   overflow: hidden;

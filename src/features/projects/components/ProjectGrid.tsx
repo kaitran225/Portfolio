@@ -25,11 +25,6 @@ const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelo
     window.location.href = `/project/${projectId}`;
   };
 
-  const handleExternalLink = (url: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
   return (
     <GridContainer>
       {projects.map((project, index) => (
@@ -52,41 +47,6 @@ const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelo
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={index < 3} // Prioritize first 3 images
             />
-            <ProjectOverlay>
-              <OverlayContent>
-                <ActionButtons>
-                  {project.liveUrl && (
-                    <ActionButton
-                      $primary
-                      onClick={(e) => handleExternalLink(project.liveUrl!, e)}
-                      title="View Live Demo"
-                    >
-                      <span>🚀</span>
-                      Live Demo
-                    </ActionButton>
-                  )}
-                  {project.githubUrl && (
-                    <ActionButton
-                      onClick={(e) => handleExternalLink(project.githubUrl!, e)}
-                      title="View Source Code"
-                    >
-                      <span>💻</span>
-                      Source Code
-                    </ActionButton>
-                  )}
-                  <ActionButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleViewProject(project.id);
-                    }}
-                    title="View Details"
-                  >
-                    <span>📖</span>
-                    Details
-                  </ActionButton>
-                </ActionButtons>
-              </OverlayContent>
-            </ProjectOverlay>
             {project.featured && <FeaturedBadge>⭐ Featured</FeaturedBadge>}
           </ProjectThumbnail>
           <ProjectInfo>
@@ -107,26 +67,6 @@ const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelo
                 </Tag>
               )}
             </TagList>
-            <ProjectFooter>
-              <QuickActions>
-                {project.liveUrl && (
-                  <QuickAction 
-                    onClick={(e) => handleExternalLink(project.liveUrl!, e)}
-                    title="Live Demo"
-                  >
-                    🌐
-                  </QuickAction>
-                )}
-                {project.githubUrl && (
-                  <QuickAction 
-                    onClick={(e) => handleExternalLink(project.githubUrl!, e)}
-                    title="GitHub"
-                  >
-                    📁
-                  </QuickAction>
-                )}
-              </QuickActions>
-            </ProjectFooter>
           </ProjectInfo>
         </ProjectCard>
       ))}
@@ -194,59 +134,6 @@ const ProjectThumbnail = styled.div`
   }
 `;
 
-const ProjectOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  
-  ${ProjectCard}:hover & {
-    opacity: 1;
-  }
-`;
-
-const OverlayContent = styled.div`
-  text-align: center;
-`;
-
-const ActionButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-`;
-
-const ActionButton = styled.button<{ $primary?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: ${props => props.$primary ? 'var(--color-purple-primary)' : 'rgba(255, 255, 255, 0.2)'};
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  
-  &:hover {
-    transform: translateY(-2px);
-    background: ${props => props.$primary ? 'var(--color-purple-secondary)' : 'rgba(255, 255, 255, 0.3)'};
-  }
-  
-  span {
-    font-size: 1.1rem;
-  }
-`;
-
 const FeaturedBadge = styled.div`
   position: absolute;
   top: 15px;
@@ -278,37 +165,6 @@ const TechCount = styled.span`
   font-size: 0.75rem;
   color: var(--color-text-tertiary);
   opacity: 0.7;
-`;
-
-const ProjectFooter = styled.div`
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
-`;
-
-const QuickActions = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const QuickAction = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 8px;
-  background: rgba(105, 51, 255, 0.1);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-  
-  &:hover {
-    background: rgba(105, 51, 255, 0.2);
-    transform: translateY(-2px);
-  }
 `;
 
 const Tag = styled.span<{ $isDevelopment?: boolean; $moreIndicator?: boolean }>`

@@ -1,5 +1,5 @@
 # 📊 Comprehensive Technical Portfolio Analysis
-## Kai Tran - Full-Stack Developer & Software Engineer
+## Trần Nguyên Khánh - Full-Stack Developer & Software Engineer
 
 > **Analysis Date**: July 31, 2025  
 > **Portfolio Review**: Complete Technical Assessment  
@@ -10,7 +10,7 @@
 
 ## 🎯 Executive Summary
 
-Kai Tran demonstrates exceptional technical versatility and professional development trajectory, showcasing expertise across **15+ programming languages and frameworks** through **17 public repositories** with **1000+ total commits**. The portfolio reveals a developer who has successfully transitioned from academic coursework to production-ready applications with enterprise-level architecture and modern development practices.
+Trần Nguyên Khánh demonstrates exceptional technical versatility and professional development trajectory, showcasing expertise across **15+ programming languages and frameworks** through **17 public repositories** with **1000+ total commits**. The portfolio reveals a developer who has successfully transitioned from academic coursework to production-ready applications with enterprise-level architecture and modern development practices.
 
 ### **Key Achievements**
 - ✅ **Production Deployments**: Live applications with real users
@@ -813,7 +813,7 @@ Experimental Level (4 projects):
 
 ## 🎯 Conclusion
 
-Kai Tran's technical portfolio demonstrates **exceptional readiness for OJT opportunities** in the software development industry. With a proven track record of:
+Trần Nguyên Khánh's technical portfolio demonstrates **exceptional readiness for OJT opportunities** in the software development industry. With a proven track record of:
 
 - **17 diverse repositories** showcasing full-stack development capabilities
 - **Production deployments** with real user impact

@@ -3,7 +3,6 @@ import { lazyWithPreload } from '../../shared/utils/codeOptimization';
 
 // Lazy load expensive components with preloading
 export const LazyProjectGrid = lazyWithPreload(() => import('../../features/projects/components/ProjectGrid'));
-export const LazySkillsVisualization = lazyWithPreload(() => import('../../features/skills/components/SkillsVisualization'));
 export const LazyHeroSection = lazyWithPreload(() => import('../../features/landing/components/HeroSection'));
 export const LazyEnhancedHeroSection = lazyWithPreload(() => import('../../features/landing/components/EnhancedHeroSection'));
 export const LazyContactSection = lazyWithPreload(() => import('../../features/contact/components/ContactSection'));
@@ -19,9 +18,6 @@ export const preloadCriticalComponents = () => {
   
   // Preload contact section (high conversion priority)
   LazyContactSection.preload();
-  
-  // Preload skills for quick portfolio overview
-  LazySkillsVisualization.preload();
 };
 
 // Preload project-related components when hovering over project links

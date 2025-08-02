@@ -4,7 +4,7 @@
     {
       "@type": "Person",
       "@id": "https://cybriadev.com/#person",
-      "name": "Kai Tran",
+      "name": "Trần Nguyên Khánh",
       "givenName": "Kai",
       "familyName": "Tran",
       "jobTitle": "Full Stack Developer",
@@ -44,8 +44,8 @@
     {
       "@type": "WebSite",
       "@id": "https://cybriadev.com/#website",
-      "name": "Kai Tran Portfolio",
-      "alternateName": "Professional Portfolio - Kai Tran",
+      "name": "Trần Nguyên Khánh Portfolio",
+      "alternateName": "Professional Portfolio - Trần Nguyên Khánh",
       "url": "https://cybriadev.com",
       "description": "Professional portfolio showcasing full-stack development projects and technical expertise",
       "inLanguage": "en-US",

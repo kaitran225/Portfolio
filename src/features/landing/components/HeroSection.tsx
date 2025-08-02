@@ -39,7 +39,7 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
                     <ProfileGlow />
                   </ProfilePicture>
                   <HeroText>
-                                        <Name>Kai Tran</Name>
+                                        <Name>Trần Nguyên Khánh</Name>
                     <RoleTitle>Full-Stack Developer</RoleTitle>
                     <KeySkills>React • TypeScript • Spring Boot • AI Integration</KeySkills>
                     <ExperienceInfo>

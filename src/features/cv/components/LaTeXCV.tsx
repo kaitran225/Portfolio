@@ -7,7 +7,7 @@ const LaTeXCV: React.FC = () => {
       <CVPage>
         {/* LaTeX-style header */}
         <CVHeader>
-                    <Name>Kai Tran</Name>
+                    <Name>Trần Nguyên Khánh</Name>
           <ContactInfo>
             <ContactItem>📧 kaifx225@gmail.com</ContactItem>
             <ContactItem>📞 (+84) 123-456-789</ContactItem>

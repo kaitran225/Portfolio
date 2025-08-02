@@ -70,7 +70,7 @@ class EmailService {
         budget: formData.budget || 'Not specified',
         timeline: formData.timeline || 'Not specified',
         phone: formData.phone || 'Not provided',
-        to_name: 'Kai Tran',
+        to_name: 'Trần Nguyên Khánh',
         to_email: 'contact@kaitran.dev',
         reply_to: formData.email,
         timestamp: new Date().toLocaleString()
@@ -110,7 +110,7 @@ class EmailService {
       const autoReplyParams = {
         to_name: formData.name,
         to_email: formData.email,
-        from_name: 'Kai Tran',
+        from_name: 'Trần Nguyên Khánh',
         from_email: 'contact@kaitran.dev',
         subject: 'Thank you for contacting me!',
         project_type: formData.projectType || 'General Inquiry',
@@ -262,7 +262,7 @@ In the meantime, feel free to:
 - Schedule a call if it's urgent
 
 Best regards,
-Kai Tran
+Trần Nguyên Khánh
 Full-Stack Developer
 contact@kaitran.dev
 

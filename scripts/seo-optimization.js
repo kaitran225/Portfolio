@@ -22,35 +22,35 @@ const PAGES = [
     path: '/',
     priority: '1.0',
     changefreq: 'weekly',
-    title: 'Kai Tran - Full Stack Developer Portfolio',
+    title: 'Trần Nguyên Khánh - Full Stack Developer Portfolio',
     description: 'Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.'
   },
   {
     path: '/projects',
     priority: '0.9',
     changefreq: 'weekly',
-    title: 'Projects - Kai Tran Portfolio',
+    title: 'Projects - Trần Nguyên Khánh Portfolio',
     description: 'Explore my latest projects including web applications, mobile apps, and cloud infrastructure solutions.'
   },
   {
     path: '/about',
     priority: '0.8',
     changefreq: 'monthly',
-    title: 'About - Kai Tran',
+    title: 'About - Trần Nguyên Khánh',
     description: 'Learn about my background, skills, and passion for creating innovative software solutions.'
   },
   {
     path: '/contact',
     priority: '0.8',
     changefreq: 'monthly',
-    title: 'Contact - Kai Tran',
+    title: 'Contact - Trần Nguyên Khánh',
     description: 'Get in touch for collaboration opportunities, technical consultation, or project inquiries.'
   },
   {
     path: '/resume',
     priority: '0.7',
     changefreq: 'monthly',
-    title: 'Resume - Kai Tran',
+    title: 'Resume - Trần Nguyên Khánh',
     description: 'Download my resume and view my professional experience and technical qualifications.'
   }
 ];
@@ -129,7 +129,7 @@ function generateHumansTxt() {
   console.log('👨‍💻 Generating humans.txt...');
   
   const humansTxt = `/* TEAM */
-Developer: Kai Tran
+Developer: Trần Nguyên Khánh
 Contact: kaitran225@gmail.com
 GitHub: https://github.com/kaitran225
 LinkedIn: https://linkedin.com/in/kaitran225
@@ -169,7 +169,7 @@ function generateStructuredData() {
       {
         "@type": "Person",
         "@id": `${SITE_CONFIG.baseUrl}/#person`,
-        "name": "Kai Tran",
+        "name": "Trần Nguyên Khánh",
         "givenName": "Kai",
         "familyName": "Tran",
         "jobTitle": "Full Stack Developer",
@@ -209,8 +209,8 @@ function generateStructuredData() {
       {
         "@type": "WebSite",
         "@id": `${SITE_CONFIG.baseUrl}/#website`,
-        "name": "Kai Tran Portfolio",
-        "alternateName": "Professional Portfolio - Kai Tran",
+        "name": "Trần Nguyên Khánh Portfolio",
+        "alternateName": "Professional Portfolio - Trần Nguyên Khánh",
         "url": SITE_CONFIG.baseUrl,
         "description": "Professional portfolio showcasing full-stack development projects and technical expertise",
         "inLanguage": "en-US",
@@ -263,10 +263,10 @@ function generateMetaTags() {
   
   const metaConfig = {
     default: {
-      title: 'Kai Tran - Full Stack Developer Portfolio',
+      title: 'Trần Nguyên Khánh - Full Stack Developer Portfolio',
       description: 'Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.',
       keywords: [
-        'Kai Tran',
+        'Trần Nguyên Khánh',
         'Full Stack Developer',
         'React Developer',
         'TypeScript',
@@ -280,7 +280,7 @@ function generateMetaTags() {
       url: SITE_CONFIG.baseUrl,
       type: 'website',
       locale: 'en_US',
-      siteName: 'Kai Tran Portfolio'
+      siteName: 'Trần Nguyên Khánh Portfolio'
     },
     pages: PAGES.reduce((acc, page) => {
       acc[page.path] = {

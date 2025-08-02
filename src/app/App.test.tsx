@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders portfolio', () => {
   render(<App />);
-  const portfolioElement = screen.getByText(/Kai Tran/i);
+  const portfolioElement = screen.getByText(/Trần Nguyên Khánh/i);
   expect(portfolioElement).toBeInTheDocument();
 });

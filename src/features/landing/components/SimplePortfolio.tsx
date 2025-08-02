@@ -12,7 +12,7 @@ const SimplePortfolio: React.FC = () => {
     <SimpleWrapper>
       <Header>
         <ProfileSection>
-          <Name>Kai Tran</Name>
+          <Name>Trần Nguyên Khánh</Name>
           <Title>{personalInfo.title}</Title>
           <Contact>
             <ContactItem href={personalInfo.contact.instagram}>Instagram</ContactItem>

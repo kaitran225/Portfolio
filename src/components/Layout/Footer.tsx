@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
         <SlimFooterGrid>
           {/* Contact Info */}
           <ContactInfo>
-            <ContactTitle>Kai Tran</ContactTitle>
+            <ContactTitle>Trần Nguyên Khánh</ContactTitle>
             <ContactSubtitle>Full-Stack Developer • Available for New Opportunities</ContactSubtitle>
           </ContactInfo>
 
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
 };
 
 const FooterContainer = styled.footer`
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--color-background-secondary);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: auto;

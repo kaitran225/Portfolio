@@ -1,4 +1,4 @@
-# Professional Portfolio - Kai Tran
+# Professional Portfolio - Trần Nguyên Khánh
 
 A modern, HR-optimized React portfolio built with **Material Design 3** standards and **WCAG 2.1 accessibility compliance**. Designed specifically for professional recruitment and career opportunities.
 
@@ -336,7 +336,7 @@ This portfolio serves as a comprehensive example of modern web development pract
 
 ## 📞 Contact
 
-**Kai Tran**  
+**Trần Nguyên Khánh**  
 Full Stack Developer | Software Engineer
 
 - 📧 Email: kaitran225@gmail.com

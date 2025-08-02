@@ -1,5 +1,5 @@
 /* TEAM */
-Developer: Kai Tran
+Developer: Trần Nguyên Khánh
 Contact: kaitran225@gmail.com
 GitHub: https://github.com/kaitran225
 LinkedIn: https://linkedin.com/in/kaitran225

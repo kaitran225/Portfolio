@@ -8,7 +8,7 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
-      <image:title>Kai Tran - Full Stack Developer Portfolio</image:title>
+      <image:title>Trần Nguyên Khánh - Full Stack Developer Portfolio</image:title>
       <image:caption>Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.</image:caption>
     </image:image>
   </url>
@@ -19,7 +19,7 @@
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
-      <image:title>Projects - Kai Tran Portfolio</image:title>
+      <image:title>Projects - Trần Nguyên Khánh Portfolio</image:title>
       <image:caption>Explore my latest projects including web applications, mobile apps, and cloud infrastructure solutions.</image:caption>
     </image:image>
   </url>
@@ -30,7 +30,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
-      <image:title>About - Kai Tran</image:title>
+      <image:title>About - Trần Nguyên Khánh</image:title>
       <image:caption>Learn about my background, skills, and passion for creating innovative software solutions.</image:caption>
     </image:image>
   </url>
@@ -41,7 +41,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
-      <image:title>Contact - Kai Tran</image:title>
+      <image:title>Contact - Trần Nguyên Khánh</image:title>
       <image:caption>Get in touch for collaboration opportunities, technical consultation, or project inquiries.</image:caption>
     </image:image>
   </url>
@@ -52,7 +52,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
-      <image:title>Resume - Kai Tran</image:title>
+      <image:title>Resume - Trần Nguyên Khánh</image:title>
       <image:caption>Download my resume and view my professional experience and technical qualifications.</image:caption>
     </image:image>
   </url>

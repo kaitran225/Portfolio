@@ -20,10 +20,10 @@ interface SEOProps {
 }
 
 const defaultMeta = {
-  title: 'Kai Tran - Full Stack Developer & Software Engineer',
+  title: 'Trần Nguyên Khánh - Full Stack Developer & Software Engineer',
   description: 'Experienced Full Stack Developer specializing in React, TypeScript, Node.js, and Java. Professional software engineer with 3+ years of project experience and enterprise-level development skills.',
   keywords: [
-    'Kai Tran',
+    'Trần Nguyên Khánh',
     'Full Stack Developer',
     'Software Engineer',
     'React Developer',
@@ -84,8 +84,8 @@ const defaultMeta = {
   ],
   image: 'https://cybriadev.com/assets/portfolio-preview.png',
   url: 'https://cybriadev.com',
-  author: 'Kai Tran',
-  siteName: 'Kai Tran Portfolio',
+  author: 'Trần Nguyên Khánh',
+  siteName: 'Trần Nguyên Khánh Portfolio',
   locale: 'en_US',
   type: 'profile' as const,
   twitterCard: 'summary_large_image' as const
@@ -123,7 +123,7 @@ const SEOOptimizer: React.FC<SEOProps> = ({
   const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Kai Tran",
+    "name": "Trần Nguyên Khánh",
     "jobTitle": "Full Stack Developer",
     "description": "Experienced Full Stack Developer specializing in React, TypeScript, Node.js, and Java",
     "url": seo.url,
@@ -188,7 +188,7 @@ const SEOOptimizer: React.FC<SEOProps> = ({
     "description": "Portfolio showcasing full stack development projects and technical skills",
     "author": {
       "@type": "Person",
-      "name": "Kai Tran"
+      "name": "Trần Nguyên Khánh"
     },
     "url": seo.url,
     "image": seo.image,
@@ -275,7 +275,7 @@ const SEOOptimizer: React.FC<SEOProps> = ({
       <meta name="distribution" content="Global" />
       <meta name="rating" content="General" />
       <meta name="referrer" content="origin-when-cross-origin" />
-      <meta name="rights" content="© 2025 Kai Tran. All rights reserved." />
+      <meta name="rights" content="© 2025 Trần Nguyên Khánh. All rights reserved." />
       
       {/* Dublin Core Metadata */}
       <meta name="DC.title" content={seo.title} />
@@ -285,7 +285,7 @@ const SEOOptimizer: React.FC<SEOProps> = ({
       <meta name="DC.type" content="Interactive Resource" />
       <meta name="DC.format" content="text/html" />
       <meta name="DC.identifier" content={seo.url} />
-      <meta name="DC.rights" content="© 2025 Kai Tran" />
+      <meta name="DC.rights" content="© 2025 Trần Nguyên Khánh" />
       
       {/* Structured Data - JSON-LD */}
       <script type="application/ld+json">
