@@ -13,9 +13,9 @@ const CompactAvailability: React.FC<CompactAvailabilityProps> = ({ className }) 
       <StatusHeader>
         <StatusIndicator>
           <StatusDot />
-          <StatusText>Available for OJT</StatusText>
+          <StatusText>Available Now</StatusText>
         </StatusIndicator>
-        <StartDate>Fall 2025</StartDate>
+        <StartDate>Ready to Start</StartDate>
       </StatusHeader>
 
       <QuickInfo>
@@ -30,9 +30,9 @@ const CompactAvailability: React.FC<CompactAvailabilityProps> = ({ className }) 
       </QuickInfo>
 
       <OpportunityTags>
-        <Tag>OJT</Tag>
-        <Tag>Internship</Tag>
+        <Tag>Freelance</Tag>
         <Tag>Full-time</Tag>
+        <Tag>Contract</Tag>
       </OpportunityTags>
     </AvailabilityContainer>
   );

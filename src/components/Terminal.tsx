@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../styles/Terminal.css';
+// import '../styles/Terminal.css'; // CSS file not found, using styled-components instead
 
 const Terminal: React.FC = () => {
   const [input, setInput] = useState('');
   const [outputs, setOutputs] = useState([
     { text: 'Welcome to Kai Tran\'s Portfolio Terminal', type: 'cmd-output-blue' },
     { text: 'Type "help" to see available commands', type: 'cmd-output-green' },
-    { text: 'Available for OJT internship opportunities Fall 2025', type: 'cmd-output-green' },
+    { text: 'Available for freelance and full-time opportunities', type: 'cmd-output-green' },
     { text: '', type: 'cmd-output-green' }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -92,7 +92,7 @@ const Terminal: React.FC = () => {
       setInput('');
       return;
     } else if (command === 'education') {
-      response = { text: 'Currently pursuing degree at FPT University - High-ranking institution preparing for OJT Fall 2025', type: 'cmd-output-green' };
+      response = { text: 'Computer Science degree at FPT University - High-ranking institution with strong technical curriculum', type: 'cmd-output-green' };
     } else if (command === 'clear') {
       setOutputs([
         { text: 'Terminal cleared. Type "help" for available commands.', type: 'cmd-output-green' },

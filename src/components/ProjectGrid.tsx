@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import LazyImage from './LazyImage';
+import { motion } from 'framer-motion';
+import OptimizedImage from './OptimizedImage';
 
 interface Project {
   id: string;
@@ -9,6 +10,9 @@ interface Project {
   thumbnail: string;
   tags: string[];
   category: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  featured?: boolean;
 }
 
 interface ProjectGridProps {
@@ -16,38 +20,119 @@ interface ProjectGridProps {
   isDevelopment?: boolean;
 }
 
-const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isDevelopment = true }) => {
+const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelopment = true }) => {
+  const handleViewProject = (projectId: string) => {
+    window.location.href = `/project/${projectId}`;
+  };
+
+  const handleExternalLink = (url: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <GridContainer>
-      {projects.map(project => (
+      {projects.map((project, index) => (
         <ProjectCard
           key={project.id}
+          as={motion.div}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1, duration: 0.6 }}
+          whileHover={{ y: -8, transition: { duration: 0.3 } }}
           $isDevelopment={isDevelopment}
-          onClick={() => window.location.href = `/project/${project.id}`}
+          $featured={project.featured}
+          onClick={() => handleViewProject(project.id)}
         >
           <ProjectThumbnail>
-            <LazyImage 
+            <OptimizedImage 
               src={project.thumbnail} 
               alt={project.title}
               className={isDevelopment ? "featured-project-image" : "design-project-thumbnail"}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={index < 3} // Prioritize first 3 images
             />
             <ProjectOverlay>
+              <OverlayContent>
+                <ActionButtons>
+                  {project.liveUrl && (
+                    <ActionButton
+                      $primary
+                      onClick={(e) => handleExternalLink(project.liveUrl!, e)}
+                      title="View Live Demo"
+                    >
+                      <span>🚀</span>
+                      Live Demo
+                    </ActionButton>
+                  )}
+                  {project.githubUrl && (
+                    <ActionButton
+                      onClick={(e) => handleExternalLink(project.githubUrl!, e)}
+                      title="View Source Code"
+                    >
+                      <span>💻</span>
+                      Source Code
+                    </ActionButton>
+                  )}
+                  <ActionButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleViewProject(project.id);
+                    }}
+                    title="View Details"
+                  >
+                    <span>📖</span>
+                    Details
+                  </ActionButton>
+                </ActionButtons>
+              </OverlayContent>
             </ProjectOverlay>
+            {project.featured && <FeaturedBadge>⭐ Featured</FeaturedBadge>}
           </ProjectThumbnail>
           <ProjectInfo>
-            <ProjectTitle>{project.title}</ProjectTitle>
+            <ProjectHeader>
+              <ProjectTitle>{project.title}</ProjectTitle>
+              <ProjectMeta>
+                <TechCount>{project.tags.length} technologies</TechCount>
+              </ProjectMeta>
+            </ProjectHeader>
             <ProjectDescription>{project.description}</ProjectDescription>
             <TagList>
-              {project.tags.map(tag => (
+              {project.tags.slice(0, 4).map(tag => (
                 <Tag key={tag} $isDevelopment={isDevelopment}>{tag}</Tag>
               ))}
+              {project.tags.length > 4 && (
+                <Tag $isDevelopment={isDevelopment} $moreIndicator>
+                  +{project.tags.length - 4} more
+                </Tag>
+              )}
             </TagList>
+            <ProjectFooter>
+              <QuickActions>
+                {project.liveUrl && (
+                  <QuickAction 
+                    onClick={(e) => handleExternalLink(project.liveUrl!, e)}
+                    title="Live Demo"
+                  >
+                    🌐
+                  </QuickAction>
+                )}
+                {project.githubUrl && (
+                  <QuickAction 
+                    onClick={(e) => handleExternalLink(project.githubUrl!, e)}
+                    title="GitHub"
+                  >
+                    📁
+                  </QuickAction>
+                )}
+              </QuickActions>
+            </ProjectFooter>
           </ProjectInfo>
         </ProjectCard>
       ))}
     </GridContainer>
   );
-};
+});
 
 // Styled Components
 const GridContainer = styled.div`
@@ -61,7 +146,7 @@ const GridContainer = styled.div`
   }
 `;
 
-const ProjectCard = styled.div<{ $isDevelopment?: boolean }>`
+const ProjectCard = styled.div<{ $isDevelopment?: boolean; $featured?: boolean }>`
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -70,6 +155,12 @@ const ProjectCard = styled.div<{ $isDevelopment?: boolean }>`
   transition: all 0.3s ease;
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-soft);
+  position: relative;
+  
+  ${props => props.$featured && `
+    border: 2px solid var(--color-purple-primary);
+    box-shadow: 0 10px 30px rgba(105, 51, 255, 0.2);
+  `}
   
   &:hover {
     background: var(--card-bg);
@@ -105,8 +196,152 @@ const ProjectThumbnail = styled.div`
 
 const ProjectOverlay = styled.div`
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  ${ProjectCard}:hover & {
+    opacity: 1;
+  }
+`;
+
+const OverlayContent = styled.div`
+  text-align: center;
+`;
+
+const ActionButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+`;
+
+const ActionButton = styled.button<{ $primary?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: ${props => props.$primary ? 'var(--color-purple-primary)' : 'rgba(255, 255, 255, 0.2)'};
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    transform: translateY(-2px);
+    background: ${props => props.$primary ? 'var(--color-purple-secondary)' : 'rgba(255, 255, 255, 0.3)'};
+  }
+  
+  span {
+    font-size: 1.1rem;
+  }
+`;
+
+const FeaturedBadge = styled.div`
+  position: absolute;
   top: 15px;
-  right: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, var(--color-purple-primary), var(--color-purple-secondary));
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 2;
+`;
+
+const ProjectHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+`;
+
+const ProjectMeta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+`;
+
+const TechCount = styled.span`
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  opacity: 0.7;
+`;
+
+const ProjectFooter = styled.div`
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+`;
+
+const QuickActions = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const QuickAction = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(105, 51, 255, 0.1);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  
+  &:hover {
+    background: rgba(105, 51, 255, 0.2);
+    transform: translateY(-2px);
+  }
+`;
+
+const Tag = styled.span<{ $isDevelopment?: boolean; $moreIndicator?: boolean }>`
+  background: ${props => props.$isDevelopment 
+    ? 'rgba(105, 51, 255, 0.1)' 
+    : 'rgba(255, 20, 147, 0.1)'};
+  color: ${props => props.$isDevelopment 
+    ? 'var(--color-text-primary)' 
+    : '#ff69b4'};
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid ${props => props.$isDevelopment 
+    ? 'rgba(105, 51, 255, 0.3)' 
+    : 'rgba(255, 20, 147, 0.3)'};
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  ${props => props.$moreIndicator && `
+    opacity: 0.7;
+    font-style: italic;
+  `}
+  
+  &:hover {
+    background: ${props => props.$isDevelopment 
+      ? 'rgba(105, 51, 255, 0.2)' 
+      : 'rgba(255, 107, 107, 0.2)'};
+    border-color: ${props => props.$isDevelopment 
+      ? 'var(--color-purple-primary)' 
+      : '#ff6b6b'};
+    transform: translateY(-1px);
+  }
 `;
 
 const ProjectInfo = styled.div`
@@ -133,32 +368,6 @@ const TagList = styled.div`
   gap: 8px;
 `;
 
-const Tag = styled.span<{ $isDevelopment?: boolean }>`
-  background: ${props => props.$isDevelopment 
-    ? 'rgba(105, 51, 255, 0.1)' 
-    : 'rgba(255, 20, 147, 0.1)'};
-  color: ${props => props.$isDevelopment 
-    ? 'var(--color-text-primary)' 
-    : '#ff69b4'};
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid ${props => props.$isDevelopment 
-    ? 'rgba(105, 51, 255, 0.3)' 
-    : 'rgba(255, 20, 147, 0.3)'};
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: ${props => props.$isDevelopment 
-      ? 'rgba(105, 51, 255, 0.2)' 
-      : 'rgba(255, 107, 107, 0.2)'};
-    border-color: ${props => props.$isDevelopment 
-      ? 'var(--color-purple-primary)' 
-      : '#ff6b6b'};
-    transform: translateY(-1px);
-  }
-`;
 
-export default ProjectGrid;
+
+export default React.memo(ProjectGrid);

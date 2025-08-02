@@ -11,7 +11,7 @@ interface EnhancedHeroSectionProps {
   isDesign?: boolean;
 }
 
-const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({
+const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = React.memo(({
   isDevelopment = false,
   isDesign = false
 }) => {
@@ -131,7 +131,7 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({
         <AvailabilityBanner style={getAnimationStyles('slideUp', getStaggeredDelay(8))}>
           <AvailabilityIndicator />
           <AvailabilityText>
-            Available for OJT opportunities starting Fall 2025
+            Available for new opportunities and exciting challenges
           </AvailabilityText>
         </AvailabilityBanner>
       </HeroContent>
@@ -146,7 +146,7 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({
       </BackgroundElements>
     </HeroContainer>
   );
-};
+});
 
 // Enhanced Styled Components
 const HeroContainer = styled.section`
@@ -462,4 +462,4 @@ const FloatingElement = styled.div<{ delay: number }>`
   }
 `;
 
-export default EnhancedHeroSection;
+export default React.memo(EnhancedHeroSection);

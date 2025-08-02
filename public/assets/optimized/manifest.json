@@ -1,0 +1,1219 @@
+{
+  "version": "2025-08-02T05:10:53.188Z",
+  "images": {
+    "Asset 13Chị Ngân-1200w.webp": {
+      "size": 189666,
+      "lastModified": "2025-08-02T05:07:21.517Z"
+    },
+    "Asset 13Chị Ngân-1600w.webp": {
+      "size": 291280,
+      "lastModified": "2025-08-02T05:07:22.076Z"
+    },
+    "Asset 13Chị Ngân-400w.webp": {
+      "size": 30830,
+      "lastModified": "2025-08-02T05:07:20.688Z"
+    },
+    "Asset 13Chị Ngân-800w.webp": {
+      "size": 99922,
+      "lastModified": "2025-08-02T05:07:21.057Z"
+    },
+    "Asset 13Chị Ngân.webp": {
+      "size": 347284,
+      "lastModified": "2025-08-02T05:07:22.651Z"
+    },
+    "Asset 1TTPL-1200w.webp": {
+      "size": 580698,
+      "lastModified": "2025-08-02T05:07:26.511Z"
+    },
+    "Asset 1TTPL-1600w.webp": {
+      "size": 1066636,
+      "lastModified": "2025-08-02T05:07:29.778Z"
+    },
+    "Asset 1TTPL-400w.webp": {
+      "size": 54808,
+      "lastModified": "2025-08-02T05:07:23.565Z"
+    },
+    "Asset 1TTPL-800w.webp": {
+      "size": 242508,
+      "lastModified": "2025-08-02T05:07:24.593Z"
+    },
+    "Asset 1TTPL.webp": {
+      "size": 1317408,
+      "lastModified": "2025-08-02T05:07:33.157Z"
+    },
+    "Asset 3TTPL-1200w.webp": {
+      "size": 419962,
+      "lastModified": "2025-08-02T05:07:35.457Z"
+    },
+    "Asset 3TTPL-1600w.webp": {
+      "size": 821912,
+      "lastModified": "2025-08-02T05:07:36.895Z"
+    },
+    "Asset 3TTPL-400w.webp": {
+      "size": 31598,
+      "lastModified": "2025-08-02T05:07:33.867Z"
+    },
+    "Asset 3TTPL-800w.webp": {
+      "size": 160036,
+      "lastModified": "2025-08-02T05:07:34.337Z"
+    },
+    "Asset 3TTPL.webp": {
+      "size": 1016826,
+      "lastModified": "2025-08-02T05:07:38.386Z"
+    },
+    "Asset 4TTPL-1200w.webp": {
+      "size": 393022,
+      "lastModified": "2025-08-02T05:07:41.154Z"
+    },
+    "Asset 4TTPL-1600w.webp": {
+      "size": 773992,
+      "lastModified": "2025-08-02T05:07:42.567Z"
+    },
+    "Asset 4TTPL-400w.webp": {
+      "size": 34532,
+      "lastModified": "2025-08-02T05:07:39.617Z"
+    },
+    "Asset 4TTPL-800w.webp": {
+      "size": 152378,
+      "lastModified": "2025-08-02T05:07:40.068Z"
+    },
+    "Asset 4TTPL.webp": {
+      "size": 969326,
+      "lastModified": "2025-08-02T05:07:44.013Z"
+    },
+    "Augmented/Asset 10RobotoSlab-400w.webp": {
+      "size": 4800,
+      "lastModified": "2025-08-02T05:07:45.493Z"
+    },
+    "Augmented/Asset 10RobotoSlab-800w.webp": {
+      "size": 9974,
+      "lastModified": "2025-08-02T05:07:47.063Z"
+    },
+    "Augmented/Asset 10RobotoSlab.webp": {
+      "size": 10940,
+      "lastModified": "2025-08-02T05:07:48.664Z"
+    },
+    "Augmented/Asset 11RobotoSlab-400w.webp": {
+      "size": 4812,
+      "lastModified": "2025-08-02T05:07:49.218Z"
+    },
+    "Augmented/Asset 11RobotoSlab-800w.webp": {
+      "size": 9976,
+      "lastModified": "2025-08-02T05:07:50.910Z"
+    },
+    "Augmented/Asset 11RobotoSlab.webp": {
+      "size": 11040,
+      "lastModified": "2025-08-02T05:07:52.607Z"
+    },
+    "Augmented/Asset 12RobotoSlab-400w.webp": {
+      "size": 4784,
+      "lastModified": "2025-08-02T05:07:53.129Z"
+    },
+    "Augmented/Asset 12RobotoSlab-800w.webp": {
+      "size": 10050,
+      "lastModified": "2025-08-02T05:07:53.827Z"
+    },
+    "Augmented/Asset 12RobotoSlab.webp": {
+      "size": 10948,
+      "lastModified": "2025-08-02T05:07:54.518Z"
+    },
+    "Augmented/Asset 13RobotoSlab-400w.webp": {
+      "size": 4866,
+      "lastModified": "2025-08-02T05:07:55.129Z"
+    },
+    "Augmented/Asset 13RobotoSlab-800w.webp": {
+      "size": 10142,
+      "lastModified": "2025-08-02T05:07:56.858Z"
+    },
+    "Augmented/Asset 13RobotoSlab.webp": {
+      "size": 11114,
+      "lastModified": "2025-08-02T05:07:58.595Z"
+    },
+    "Augmented/Asset 14RobotoSlab-400w.webp": {
+      "size": 4902,
+      "lastModified": "2025-08-02T05:07:59.188Z"
+    },
+    "Augmented/Asset 14RobotoSlab-800w.webp": {
+      "size": 10166,
+      "lastModified": "2025-08-02T05:07:59.944Z"
+    },
+    "Augmented/Asset 14RobotoSlab.webp": {
+      "size": 11120,
+      "lastModified": "2025-08-02T05:08:00.703Z"
+    },
+    "Augmented/Asset 15RobotoSlab-400w.webp": {
+      "size": 4804,
+      "lastModified": "2025-08-02T05:08:01.353Z"
+    },
+    "Augmented/Asset 15RobotoSlab-800w.webp": {
+      "size": 10008,
+      "lastModified": "2025-08-02T05:08:02.127Z"
+    },
+    "Augmented/Asset 15RobotoSlab.webp": {
+      "size": 11280,
+      "lastModified": "2025-08-02T05:08:02.908Z"
+    },
+    "Augmented/Asset 16RobotoSlab-400w.webp": {
+      "size": 34506,
+      "lastModified": "2025-08-02T05:08:04.498Z"
+    },
+    "Augmented/Asset 16RobotoSlab-800w.webp": {
+      "size": 97978,
+      "lastModified": "2025-08-02T05:08:07.897Z"
+    },
+    "Augmented/Asset 16RobotoSlab.webp": {
+      "size": 107660,
+      "lastModified": "2025-08-02T05:08:11.367Z"
+    },
+    "Augmented/Asset 17RobotoSlab-400w.webp": {
+      "size": 136,
+      "lastModified": "2025-08-02T05:08:11.407Z"
+    },
+    "Augmented/Asset 17RobotoSlab.webp": {
+      "size": 136,
+      "lastModified": "2025-08-02T05:08:11.415Z"
+    },
+    "Augmented/Asset 18RobotoSlab-400w.webp": {
+      "size": 9674,
+      "lastModified": "2025-08-02T05:08:11.907Z"
+    },
+    "Augmented/Asset 18RobotoSlab.webp": {
+      "size": 10638,
+      "lastModified": "2025-08-02T05:08:12.398Z"
+    },
+    "Augmented/Asset 19RobotoSlab.webp": {
+      "size": 5376,
+      "lastModified": "2025-08-02T05:08:12.846Z"
+    },
+    "Augmented/Asset 3RobotoSlab-400w.webp": {
+      "size": 31906,
+      "lastModified": "2025-08-02T05:08:14.983Z"
+    },
+    "Augmented/Asset 3RobotoSlab-800w.webp": {
+      "size": 78332,
+      "lastModified": "2025-08-02T05:08:18.020Z"
+    },
+    "Augmented/Asset 3RobotoSlab.webp": {
+      "size": 87000,
+      "lastModified": "2025-08-02T05:08:21.035Z"
+    },
+    "Augmented/Asset 4RobotoSlab-400w.webp": {
+      "size": 31764,
+      "lastModified": "2025-08-02T05:08:23.399Z"
+    },
+    "Augmented/Asset 4RobotoSlab-800w.webp": {
+      "size": 77502,
+      "lastModified": "2025-08-02T05:08:26.395Z"
+    },
+    "Augmented/Asset 4RobotoSlab.webp": {
+      "size": 86336,
+      "lastModified": "2025-08-02T05:08:29.361Z"
+    },
+    "Augmented/Asset 5RobotoSlab-400w.webp": {
+      "size": 31668,
+      "lastModified": "2025-08-02T05:08:31.534Z"
+    },
+    "Augmented/Asset 5RobotoSlab-800w.webp": {
+      "size": 77030,
+      "lastModified": "2025-08-02T05:08:34.593Z"
+    },
+    "Augmented/Asset 5RobotoSlab.webp": {
+      "size": 85702,
+      "lastModified": "2025-08-02T05:08:37.674Z"
+    },
+    "Augmented/Asset 6RobotoSlab-400w.webp": {
+      "size": 32106,
+      "lastModified": "2025-08-02T05:08:39.919Z"
+    },
+    "Augmented/Asset 6RobotoSlab.webp": {
+      "size": 35610,
+      "lastModified": "2025-08-02T05:08:42.123Z"
+    },
+    "Augmented/Asset 7RobotoSlab-400w.webp": {
+      "size": 32052,
+      "lastModified": "2025-08-02T05:08:44.362Z"
+    },
+    "Augmented/Asset 7RobotoSlab.webp": {
+      "size": 35500,
+      "lastModified": "2025-08-02T05:08:46.594Z"
+    },
+    "Augmented/Asset 8RobotoSlab.webp": {
+      "size": 1090,
+      "lastModified": "2025-08-02T05:08:46.786Z"
+    },
+    "Augmented/Asset 9RobotoSlab-400w.webp": {
+      "size": 4798,
+      "lastModified": "2025-08-02T05:08:47.273Z"
+    },
+    "Augmented/Asset 9RobotoSlab-800w.webp": {
+      "size": 9916,
+      "lastModified": "2025-08-02T05:08:48.860Z"
+    },
+    "Augmented/Asset 9RobotoSlab.webp": {
+      "size": 10976,
+      "lastModified": "2025-08-02T05:08:50.381Z"
+    },
+    "Calantha/placeholder1-400w.webp": {
+      "size": 1750,
+      "lastModified": "2025-08-02T05:08:50.698Z"
+    },
+    "Calantha/placeholder1.webp": {
+      "size": 1952,
+      "lastModified": "2025-08-02T05:08:50.713Z"
+    },
+    "Calantha/placeholder2-400w.webp": {
+      "size": 1846,
+      "lastModified": "2025-08-02T05:08:50.733Z"
+    },
+    "Calantha/placeholder2.webp": {
+      "size": 2052,
+      "lastModified": "2025-08-02T05:08:50.746Z"
+    },
+    "Cloud/placeholder1-400w.webp": {
+      "size": 1484,
+      "lastModified": "2025-08-02T05:08:50.764Z"
+    },
+    "Cloud/placeholder1.webp": {
+      "size": 1656,
+      "lastModified": "2025-08-02T05:08:50.776Z"
+    },
+    "Cloud/placeholder2-400w.webp": {
+      "size": 1548,
+      "lastModified": "2025-08-02T05:08:50.795Z"
+    },
+    "Cloud/placeholder2.webp": {
+      "size": 1734,
+      "lastModified": "2025-08-02T05:08:50.807Z"
+    },
+    "design-thumbnails/gateway-ui-400w.webp": {
+      "size": 6462,
+      "lastModified": "2025-08-02T05:08:50.830Z"
+    },
+    "design-thumbnails/gateway-ui.webp": {
+      "size": 8002,
+      "lastModified": "2025-08-02T05:08:50.845Z"
+    },
+    "design-thumbnails/personal-web-400w.webp": {
+      "size": 6042,
+      "lastModified": "2025-08-02T05:08:50.869Z"
+    },
+    "design-thumbnails/personal-web.webp": {
+      "size": 7446,
+      "lastModified": "2025-08-02T05:08:50.884Z"
+    },
+    "design-thumbnails/slab-packaging-400w.webp": {
+      "size": 6670,
+      "lastModified": "2025-08-02T05:08:50.907Z"
+    },
+    "design-thumbnails/slab-packaging.webp": {
+      "size": 8144,
+      "lastModified": "2025-08-02T05:08:50.925Z"
+    },
+    "design-thumbnails/zena-brand-400w.webp": {
+      "size": 6708,
+      "lastModified": "2025-08-02T05:08:50.950Z"
+    },
+    "design-thumbnails/zena-brand.webp": {
+      "size": 8308,
+      "lastModified": "2025-08-02T05:08:50.964Z"
+    },
+    "dev-thumbnails/api-400w.webp": {
+      "size": 6036,
+      "lastModified": "2025-08-02T05:08:50.987Z"
+    },
+    "dev-thumbnails/api.webp": {
+      "size": 7374,
+      "lastModified": "2025-08-02T05:08:51.002Z"
+    },
+    "dev-thumbnails/calantha-400w.webp": {
+      "size": 6414,
+      "lastModified": "2025-08-02T05:08:51.025Z"
+    },
+    "dev-thumbnails/calantha.webp": {
+      "size": 7824,
+      "lastModified": "2025-08-02T05:08:51.038Z"
+    },
+    "dev-thumbnails/cloud-400w.webp": {
+      "size": 6584,
+      "lastModified": "2025-08-02T05:08:51.063Z"
+    },
+    "dev-thumbnails/cloud.webp": {
+      "size": 8116,
+      "lastModified": "2025-08-02T05:08:51.079Z"
+    },
+    "dev-thumbnails/ecommerce-400w.webp": {
+      "size": 6626,
+      "lastModified": "2025-08-02T05:08:51.104Z"
+    },
+    "dev-thumbnails/ecommerce.webp": {
+      "size": 8116,
+      "lastModified": "2025-08-02T05:08:51.119Z"
+    },
+    "GateWay/placeholder1-400w.webp": {
+      "size": 1850,
+      "lastModified": "2025-08-02T05:08:51.144Z"
+    },
+    "GateWay/placeholder1.webp": {
+      "size": 2076,
+      "lastModified": "2025-08-02T05:08:51.156Z"
+    },
+    "GateWay/placeholder2-400w.webp": {
+      "size": 1916,
+      "lastModified": "2025-08-02T05:08:51.175Z"
+    },
+    "GateWay/placeholder2.webp": {
+      "size": 2142,
+      "lastModified": "2025-08-02T05:08:51.187Z"
+    },
+    "KoteZone/Artboard 18-1200w.webp": {
+      "size": 64224,
+      "lastModified": "2025-08-02T05:08:53.438Z"
+    },
+    "KoteZone/Artboard 18-1600w.webp": {
+      "size": 130526,
+      "lastModified": "2025-08-02T05:08:54.610Z"
+    },
+    "KoteZone/Artboard 18-400w.webp": {
+      "size": 7062,
+      "lastModified": "2025-08-02T05:08:51.752Z"
+    },
+    "KoteZone/Artboard 18-800w.webp": {
+      "size": 25812,
+      "lastModified": "2025-08-02T05:08:52.479Z"
+    },
+    "KoteZone/Artboard 18.webp": {
+      "size": 178212,
+      "lastModified": "2025-08-02T05:08:55.722Z"
+    },
+    "KoteZone/Artboard 18_1-1200w.webp": {
+      "size": 41084,
+      "lastModified": "2025-08-02T05:08:58.068Z"
+    },
+    "KoteZone/Artboard 18_1-1600w.webp": {
+      "size": 55280,
+      "lastModified": "2025-08-02T05:08:59.142Z"
+    },
+    "KoteZone/Artboard 18_1-400w.webp": {
+      "size": 11888,
+      "lastModified": "2025-08-02T05:08:56.617Z"
+    },
+    "KoteZone/Artboard 18_1-800w.webp": {
+      "size": 26644,
+      "lastModified": "2025-08-02T05:08:57.227Z"
+    },
+    "KoteZone/Artboard 18_1.webp": {
+      "size": 67346,
+      "lastModified": "2025-08-02T05:09:00.237Z"
+    },
+    "KoteZone/Artboard 19-1200w.webp": {
+      "size": 46634,
+      "lastModified": "2025-08-02T05:09:03.378Z"
+    },
+    "KoteZone/Artboard 19-1600w.webp": {
+      "size": 59696,
+      "lastModified": "2025-08-02T05:09:05.783Z"
+    },
+    "KoteZone/Artboard 19-400w.webp": {
+      "size": 14368,
+      "lastModified": "2025-08-02T05:09:01.046Z"
+    },
+    "KoteZone/Artboard 19-800w.webp": {
+      "size": 29502,
+      "lastModified": "2025-08-02T05:09:02.047Z"
+    },
+    "KoteZone/Artboard 19.webp": {
+      "size": 70552,
+      "lastModified": "2025-08-02T05:09:08.168Z"
+    },
+    "KoteZone/Artboard 21-1200w.webp": {
+      "size": 311448,
+      "lastModified": "2025-08-02T05:09:11.825Z"
+    },
+    "KoteZone/Artboard 21-1600w.webp": {
+      "size": 574668,
+      "lastModified": "2025-08-02T05:09:14.834Z"
+    },
+    "KoteZone/Artboard 21-400w.webp": {
+      "size": 25112,
+      "lastModified": "2025-08-02T05:09:09.020Z"
+    },
+    "KoteZone/Artboard 21-800w.webp": {
+      "size": 130538,
+      "lastModified": "2025-08-02T05:09:10.031Z"
+    },
+    "KoteZone/Artboard 21.webp": {
+      "size": 761314,
+      "lastModified": "2025-08-02T05:09:17.868Z"
+    },
+    "KoteZone/Artboard 22-1200w.webp": {
+      "size": 82096,
+      "lastModified": "2025-08-02T05:09:21.428Z"
+    },
+    "KoteZone/Artboard 22-1600w.webp": {
+      "size": 106062,
+      "lastModified": "2025-08-02T05:09:23.880Z"
+    },
+    "KoteZone/Artboard 22-400w.webp": {
+      "size": 26838,
+      "lastModified": "2025-08-02T05:09:19.080Z"
+    },
+    "KoteZone/Artboard 22-800w.webp": {
+      "size": 53388,
+      "lastModified": "2025-08-02T05:09:19.921Z"
+    },
+    "KoteZone/Artboard 22.webp": {
+      "size": 127006,
+      "lastModified": "2025-08-02T05:09:26.367Z"
+    },
+    "KoteZone/Artboard 5-1200w.webp": {
+      "size": 165218,
+      "lastModified": "2025-08-02T05:09:30.507Z"
+    },
+    "KoteZone/Artboard 5-1600w.webp": {
+      "size": 315654,
+      "lastModified": "2025-08-02T05:09:32.845Z"
+    },
+    "KoteZone/Artboard 5-400w.webp": {
+      "size": 13290,
+      "lastModified": "2025-08-02T05:09:27.711Z"
+    },
+    "KoteZone/Artboard 5-800w.webp": {
+      "size": 64668,
+      "lastModified": "2025-08-02T05:09:29.028Z"
+    },
+    "KoteZone/Artboard 5.webp": {
+      "size": 427998,
+      "lastModified": "2025-08-02T05:09:35.249Z"
+    },
+    "KoteZone/Asset 48-400w.webp": {
+      "size": 15898,
+      "lastModified": "2025-08-02T05:09:35.877Z"
+    },
+    "KoteZone/Asset 48-800w.webp": {
+      "size": 38086,
+      "lastModified": "2025-08-02T05:09:36.299Z"
+    },
+    "KoteZone/Asset 48.webp": {
+      "size": 47108,
+      "lastModified": "2025-08-02T05:09:36.721Z"
+    },
+    "KoteZone/Asset 50-400w.webp": {
+      "size": 12486,
+      "lastModified": "2025-08-02T05:09:37.127Z"
+    },
+    "KoteZone/Asset 50-800w.webp": {
+      "size": 32302,
+      "lastModified": "2025-08-02T05:09:37.693Z"
+    },
+    "KoteZone/Asset 50.webp": {
+      "size": 39180,
+      "lastModified": "2025-08-02T05:09:38.258Z"
+    },
+    "KoteZone/Asset 51-400w.webp": {
+      "size": 14898,
+      "lastModified": "2025-08-02T05:09:38.557Z"
+    },
+    "KoteZone/Asset 51-800w.webp": {
+      "size": 38466,
+      "lastModified": "2025-08-02T05:09:38.971Z"
+    },
+    "KoteZone/Asset 51.webp": {
+      "size": 46510,
+      "lastModified": "2025-08-02T05:09:39.391Z"
+    },
+    "KoteZone/Asset 52-400w.webp": {
+      "size": 17630,
+      "lastModified": "2025-08-02T05:09:39.820Z"
+    },
+    "KoteZone/Asset 52-800w.webp": {
+      "size": 41942,
+      "lastModified": "2025-08-02T05:09:40.515Z"
+    },
+    "KoteZone/Asset 52.webp": {
+      "size": 51456,
+      "lastModified": "2025-08-02T05:09:41.217Z"
+    },
+    "KoteZone/Asset 53-400w.webp": {
+      "size": 18460,
+      "lastModified": "2025-08-02T05:09:41.528Z"
+    },
+    "KoteZone/Asset 53-800w.webp": {
+      "size": 44208,
+      "lastModified": "2025-08-02T05:09:41.951Z"
+    },
+    "KoteZone/Asset 53.webp": {
+      "size": 52452,
+      "lastModified": "2025-08-02T05:09:42.370Z"
+    },
+    "KoteZone/Asset 54-400w.webp": {
+      "size": 13492,
+      "lastModified": "2025-08-02T05:09:42.770Z"
+    },
+    "KoteZone/Asset 54-800w.webp": {
+      "size": 31712,
+      "lastModified": "2025-08-02T05:09:43.341Z"
+    },
+    "KoteZone/Asset 54.webp": {
+      "size": 36888,
+      "lastModified": "2025-08-02T05:09:43.908Z"
+    },
+    "KoteZone/Asset 55-400w.webp": {
+      "size": 17012,
+      "lastModified": "2025-08-02T05:09:44.207Z"
+    },
+    "KoteZone/Asset 55-800w.webp": {
+      "size": 41278,
+      "lastModified": "2025-08-02T05:09:44.622Z"
+    },
+    "KoteZone/Asset 55.webp": {
+      "size": 49758,
+      "lastModified": "2025-08-02T05:09:45.039Z"
+    },
+    "KoteZone/Asset 56-400w.webp": {
+      "size": 15654,
+      "lastModified": "2025-08-02T05:09:45.368Z"
+    },
+    "KoteZone/Asset 56-800w.webp": {
+      "size": 37504,
+      "lastModified": "2025-08-02T05:09:45.782Z"
+    },
+    "KoteZone/Asset 56.webp": {
+      "size": 45192,
+      "lastModified": "2025-08-02T05:09:46.200Z"
+    },
+    "KoteZone/Asset 57-400w.webp": {
+      "size": 7708,
+      "lastModified": "2025-08-02T05:09:46.568Z"
+    },
+    "KoteZone/Asset 57-800w.webp": {
+      "size": 19650,
+      "lastModified": "2025-08-02T05:09:47.497Z"
+    },
+    "KoteZone/Asset 57.webp": {
+      "size": 23764,
+      "lastModified": "2025-08-02T05:09:48.478Z"
+    },
+    "KoteZone/Asset 58-400w.webp": {
+      "size": 13210,
+      "lastModified": "2025-08-02T05:09:48.887Z"
+    },
+    "KoteZone/Asset 58-800w.webp": {
+      "size": 31180,
+      "lastModified": "2025-08-02T05:09:49.467Z"
+    },
+    "KoteZone/Asset 58.webp": {
+      "size": 37998,
+      "lastModified": "2025-08-02T05:09:50.064Z"
+    },
+    "KoteZone/Asset 59-400w.webp": {
+      "size": 14326,
+      "lastModified": "2025-08-02T05:09:50.388Z"
+    },
+    "KoteZone/Asset 59-800w.webp": {
+      "size": 34898,
+      "lastModified": "2025-08-02T05:09:50.868Z"
+    },
+    "KoteZone/Asset 59.webp": {
+      "size": 42456,
+      "lastModified": "2025-08-02T05:09:51.349Z"
+    },
+    "KoteZone/Asset 60-400w.webp": {
+      "size": 15564,
+      "lastModified": "2025-08-02T05:09:51.662Z"
+    },
+    "KoteZone/Asset 60-800w.webp": {
+      "size": 34872,
+      "lastModified": "2025-08-02T05:09:52.137Z"
+    },
+    "KoteZone/Asset 60.webp": {
+      "size": 42374,
+      "lastModified": "2025-08-02T05:09:52.616Z"
+    },
+    "KoteZone/Asset 61-400w.webp": {
+      "size": 16440,
+      "lastModified": "2025-08-02T05:09:53.019Z"
+    },
+    "KoteZone/Asset 61-800w.webp": {
+      "size": 37860,
+      "lastModified": "2025-08-02T05:09:53.610Z"
+    },
+    "KoteZone/Asset 61.webp": {
+      "size": 44830,
+      "lastModified": "2025-08-02T05:09:54.226Z"
+    },
+    "KoteZone/Asset 62-400w.webp": {
+      "size": 14128,
+      "lastModified": "2025-08-02T05:09:54.520Z"
+    },
+    "KoteZone/Asset 62-800w.webp": {
+      "size": 31486,
+      "lastModified": "2025-08-02T05:09:54.936Z"
+    },
+    "KoteZone/Asset 62.webp": {
+      "size": 38276,
+      "lastModified": "2025-08-02T05:09:55.349Z"
+    },
+    "KoteZone/Asset 63-400w.webp": {
+      "size": 15974,
+      "lastModified": "2025-08-02T05:09:55.663Z"
+    },
+    "KoteZone/Asset 63-800w.webp": {
+      "size": 36340,
+      "lastModified": "2025-08-02T05:09:56.138Z"
+    },
+    "KoteZone/Asset 63.webp": {
+      "size": 43706,
+      "lastModified": "2025-08-02T05:09:56.613Z"
+    },
+    "KoteZone/Asset 64-400w.webp": {
+      "size": 14972,
+      "lastModified": "2025-08-02T05:09:57.007Z"
+    },
+    "KoteZone/Asset 64-800w.webp": {
+      "size": 33954,
+      "lastModified": "2025-08-02T05:09:57.598Z"
+    },
+    "KoteZone/Asset 64.webp": {
+      "size": 41210,
+      "lastModified": "2025-08-02T05:09:58.193Z"
+    },
+    "KoteZone/Asset 65-400w.webp": {
+      "size": 14994,
+      "lastModified": "2025-08-02T05:09:58.507Z"
+    },
+    "KoteZone/Asset 65-800w.webp": {
+      "size": 34526,
+      "lastModified": "2025-08-02T05:09:58.977Z"
+    },
+    "KoteZone/Asset 65.webp": {
+      "size": 42272,
+      "lastModified": "2025-08-02T05:09:59.453Z"
+    },
+    "KoteZone/Asset 66-400w.webp": {
+      "size": 11870,
+      "lastModified": "2025-08-02T05:09:59.767Z"
+    },
+    "KoteZone/Asset 66-800w.webp": {
+      "size": 27332,
+      "lastModified": "2025-08-02T05:10:00.378Z"
+    },
+    "KoteZone/Asset 66.webp": {
+      "size": 33664,
+      "lastModified": "2025-08-02T05:10:00.964Z"
+    },
+    "KoteZone/Asset 69-1200w.webp": {
+      "size": 17460,
+      "lastModified": "2025-08-02T05:10:04.442Z"
+    },
+    "KoteZone/Asset 69-1600w.webp": {
+      "size": 23528,
+      "lastModified": "2025-08-02T05:10:06.619Z"
+    },
+    "KoteZone/Asset 69-400w.webp": {
+      "size": 4368,
+      "lastModified": "2025-08-02T05:10:01.857Z"
+    },
+    "KoteZone/Asset 69-800w.webp": {
+      "size": 9944,
+      "lastModified": "2025-08-02T05:10:03.090Z"
+    },
+    "KoteZone/Asset 69.webp": {
+      "size": 26996,
+      "lastModified": "2025-08-02T05:10:08.817Z"
+    },
+    "KoteZone/Asset 70.webp": {
+      "size": 1810,
+      "lastModified": "2025-08-02T05:10:09.266Z"
+    },
+    "KoteZone/Asset 71-1200w.webp": {
+      "size": 24018,
+      "lastModified": "2025-08-02T05:10:12.676Z"
+    },
+    "KoteZone/Asset 71-1600w.webp": {
+      "size": 38158,
+      "lastModified": "2025-08-02T05:10:14.819Z"
+    },
+    "KoteZone/Asset 71-400w.webp": {
+      "size": 7638,
+      "lastModified": "2025-08-02T05:10:10.117Z"
+    },
+    "KoteZone/Asset 71-800w.webp": {
+      "size": 14176,
+      "lastModified": "2025-08-02T05:10:11.334Z"
+    },
+    "KoteZone/Asset 71.webp": {
+      "size": 43018,
+      "lastModified": "2025-08-02T05:10:17.017Z"
+    },
+    "KoteZone/Asset 74.webp": {
+      "size": 11104,
+      "lastModified": "2025-08-02T05:10:18.651Z"
+    },
+    "KoteZone/Asset 75.webp": {
+      "size": 10578,
+      "lastModified": "2025-08-02T05:10:20.233Z"
+    },
+    "KoteZone/Asset 76-1200w.webp": {
+      "size": 3470,
+      "lastModified": "2025-08-02T05:10:22.523Z"
+    },
+    "KoteZone/Asset 76-1600w.webp": {
+      "size": 5676,
+      "lastModified": "2025-08-02T05:10:23.887Z"
+    },
+    "KoteZone/Asset 76-400w.webp": {
+      "size": 582,
+      "lastModified": "2025-08-02T05:10:20.760Z"
+    },
+    "KoteZone/Asset 76-800w.webp": {
+      "size": 1702,
+      "lastModified": "2025-08-02T05:10:21.351Z"
+    },
+    "KoteZone/Asset 76.webp": {
+      "size": 5602,
+      "lastModified": "2025-08-02T05:10:25.310Z"
+    },
+    "KoteZone/Asset 77.webp": {
+      "size": 780,
+      "lastModified": "2025-08-02T05:10:25.659Z"
+    },
+    "KoteZone/Asset 78-400w.webp": {
+      "size": 10618,
+      "lastModified": "2025-08-02T05:10:26.594Z"
+    },
+    "KoteZone/Asset 78.webp": {
+      "size": 11784,
+      "lastModified": "2025-08-02T05:10:27.506Z"
+    },
+    "KoteZone/Asset 79.webp": {
+      "size": 806,
+      "lastModified": "2025-08-02T05:10:27.819Z"
+    },
+    "KoteZone/Asset 80.webp": {
+      "size": 1014,
+      "lastModified": "2025-08-02T05:10:28.087Z"
+    },
+    "KoteZone/Asset 81.webp": {
+      "size": 932,
+      "lastModified": "2025-08-02T05:10:28.331Z"
+    },
+    "KoteZone/Asset 82-1200w.webp": {
+      "size": 992,
+      "lastModified": "2025-08-02T05:10:28.570Z"
+    },
+    "KoteZone/Asset 82-1600w.webp": {
+      "size": 1342,
+      "lastModified": "2025-08-02T05:10:28.869Z"
+    },
+    "KoteZone/Asset 82-400w.webp": {
+      "size": 308,
+      "lastModified": "2025-08-02T05:10:28.359Z"
+    },
+    "KoteZone/Asset 82-800w.webp": {
+      "size": 586,
+      "lastModified": "2025-08-02T05:10:28.417Z"
+    },
+    "KoteZone/Asset 82.webp": {
+      "size": 1450,
+      "lastModified": "2025-08-02T05:10:29.162Z"
+    },
+    "KoteZone/Asset 83-400w.webp": {
+      "size": 5828,
+      "lastModified": "2025-08-02T05:10:29.542Z"
+    },
+    "KoteZone/Asset 83-800w.webp": {
+      "size": 11006,
+      "lastModified": "2025-08-02T05:10:30.458Z"
+    },
+    "KoteZone/Asset 83.webp": {
+      "size": 12164,
+      "lastModified": "2025-08-02T05:10:31.374Z"
+    },
+    "KoteZone/Asset 84-400w.webp": {
+      "size": 4990,
+      "lastModified": "2025-08-02T05:10:31.747Z"
+    },
+    "KoteZone/Asset 84-800w.webp": {
+      "size": 9038,
+      "lastModified": "2025-08-02T05:10:32.657Z"
+    },
+    "KoteZone/Asset 84.webp": {
+      "size": 10006,
+      "lastModified": "2025-08-02T05:10:33.576Z"
+    },
+    "KoteZone/Asset 85-1200w.webp": {
+      "size": 12264,
+      "lastModified": "2025-08-02T05:10:37.352Z"
+    },
+    "KoteZone/Asset 85-1600w.webp": {
+      "size": 18062,
+      "lastModified": "2025-08-02T05:10:39.825Z"
+    },
+    "KoteZone/Asset 85-400w.webp": {
+      "size": 3640,
+      "lastModified": "2025-08-02T05:10:34.557Z"
+    },
+    "KoteZone/Asset 85-800w.webp": {
+      "size": 6804,
+      "lastModified": "2025-08-02T05:10:35.968Z"
+    },
+    "KoteZone/Asset 85.webp": {
+      "size": 19532,
+      "lastModified": "2025-08-02T05:10:42.311Z"
+    },
+    "Personal/placeholder1-400w.webp": {
+      "size": 1712,
+      "lastModified": "2025-08-02T05:10:42.425Z"
+    },
+    "Personal/placeholder1.webp": {
+      "size": 1902,
+      "lastModified": "2025-08-02T05:10:42.437Z"
+    },
+    "Personal/placeholder2-400w.webp": {
+      "size": 1780,
+      "lastModified": "2025-08-02T05:10:42.460Z"
+    },
+    "Personal/placeholder2.webp": {
+      "size": 1986,
+      "lastModified": "2025-08-02T05:10:42.474Z"
+    },
+    "profile/avatar-1200w.webp": {
+      "size": 32714,
+      "lastModified": "2025-08-02T05:10:42.748Z"
+    },
+    "profile/avatar-1600w.webp": {
+      "size": 49794,
+      "lastModified": "2025-08-02T05:10:43.008Z"
+    },
+    "profile/avatar-400w.webp": {
+      "size": 6898,
+      "lastModified": "2025-08-02T05:10:42.510Z"
+    },
+    "profile/avatar-800w.webp": {
+      "size": 18770,
+      "lastModified": "2025-08-02T05:10:42.589Z"
+    },
+    "profile/avatar.webp": {
+      "size": 76218,
+      "lastModified": "2025-08-02T05:10:43.302Z"
+    },
+    "projects/calantha/architecture-400w.webp": {
+      "size": 3470,
+      "lastModified": "2025-08-02T05:10:43.398Z"
+    },
+    "projects/calantha/architecture-800w.webp": {
+      "size": 10742,
+      "lastModified": "2025-08-02T05:10:43.444Z"
+    },
+    "projects/calantha/architecture.webp": {
+      "size": 13000,
+      "lastModified": "2025-08-02T05:10:43.487Z"
+    },
+    "projects/calantha/screenshot-1-400w.webp": {
+      "size": 3312,
+      "lastModified": "2025-08-02T05:10:43.527Z"
+    },
+    "projects/calantha/screenshot-1-800w.webp": {
+      "size": 10002,
+      "lastModified": "2025-08-02T05:10:43.574Z"
+    },
+    "projects/calantha/screenshot-1.webp": {
+      "size": 12352,
+      "lastModified": "2025-08-02T05:10:43.620Z"
+    },
+    "projects/calantha/screenshot-2-400w.webp": {
+      "size": 3356,
+      "lastModified": "2025-08-02T05:10:43.647Z"
+    },
+    "projects/calantha/screenshot-2-800w.webp": {
+      "size": 10374,
+      "lastModified": "2025-08-02T05:10:43.701Z"
+    },
+    "projects/calantha/screenshot-2.webp": {
+      "size": 12468,
+      "lastModified": "2025-08-02T05:10:43.746Z"
+    },
+    "projects/calantha/screenshot-3-400w.webp": {
+      "size": 3122,
+      "lastModified": "2025-08-02T05:10:43.781Z"
+    },
+    "projects/calantha/screenshot-3-800w.webp": {
+      "size": 9584,
+      "lastModified": "2025-08-02T05:10:43.817Z"
+    },
+    "projects/calantha/screenshot-3.webp": {
+      "size": 11728,
+      "lastModified": "2025-08-02T05:10:43.870Z"
+    },
+    "projects/zena/billboard-mockup-400w.webp": {
+      "size": 3344,
+      "lastModified": "2025-08-02T05:10:43.905Z"
+    },
+    "projects/zena/billboard-mockup-800w.webp": {
+      "size": 10146,
+      "lastModified": "2025-08-02T05:10:43.958Z"
+    },
+    "projects/zena/billboard-mockup.webp": {
+      "size": 12520,
+      "lastModified": "2025-08-02T05:10:44.008Z"
+    },
+    "projects/zena/brand-applications-400w.webp": {
+      "size": 3340,
+      "lastModified": "2025-08-02T05:10:44.046Z"
+    },
+    "projects/zena/brand-applications-800w.webp": {
+      "size": 10460,
+      "lastModified": "2025-08-02T05:10:44.092Z"
+    },
+    "projects/zena/brand-applications.webp": {
+      "size": 12618,
+      "lastModified": "2025-08-02T05:10:44.138Z"
+    },
+    "projects/zena/brand-guidelines-400w.webp": {
+      "size": 3302,
+      "lastModified": "2025-08-02T05:10:44.172Z"
+    },
+    "projects/zena/brand-guidelines-800w.webp": {
+      "size": 10320,
+      "lastModified": "2025-08-02T05:10:44.218Z"
+    },
+    "projects/zena/brand-guidelines.webp": {
+      "size": 12384,
+      "lastModified": "2025-08-02T05:10:44.259Z"
+    },
+    "projects/zena/business-cards-400w.webp": {
+      "size": 3218,
+      "lastModified": "2025-08-02T05:10:44.294Z"
+    },
+    "projects/zena/business-cards-800w.webp": {
+      "size": 10002,
+      "lastModified": "2025-08-02T05:10:44.340Z"
+    },
+    "projects/zena/business-cards.webp": {
+      "size": 11986,
+      "lastModified": "2025-08-02T05:10:44.385Z"
+    },
+    "projects/zena/color-exploration-400w.webp": {
+      "size": 3114,
+      "lastModified": "2025-08-02T05:10:44.419Z"
+    },
+    "projects/zena/color-exploration-800w.webp": {
+      "size": 9520,
+      "lastModified": "2025-08-02T05:10:44.462Z"
+    },
+    "projects/zena/color-exploration.webp": {
+      "size": 11642,
+      "lastModified": "2025-08-02T05:10:44.507Z"
+    },
+    "projects/zena/concept-exploration-400w.webp": {
+      "size": 3332,
+      "lastModified": "2025-08-02T05:10:44.540Z"
+    },
+    "projects/zena/concept-exploration-800w.webp": {
+      "size": 10498,
+      "lastModified": "2025-08-02T05:10:44.585Z"
+    },
+    "projects/zena/concept-exploration.webp": {
+      "size": 12666,
+      "lastModified": "2025-08-02T05:10:44.630Z"
+    },
+    "projects/zena/email-templates-400w.webp": {
+      "size": 3336,
+      "lastModified": "2025-08-02T05:10:44.663Z"
+    },
+    "projects/zena/email-templates-800w.webp": {
+      "size": 10402,
+      "lastModified": "2025-08-02T05:10:44.707Z"
+    },
+    "projects/zena/email-templates.webp": {
+      "size": 12548,
+      "lastModified": "2025-08-02T05:10:44.753Z"
+    },
+    "projects/zena/final-logo-variations-400w.webp": {
+      "size": 3292,
+      "lastModified": "2025-08-02T05:10:44.788Z"
+    },
+    "projects/zena/final-logo-variations-800w.webp": {
+      "size": 10256,
+      "lastModified": "2025-08-02T05:10:44.834Z"
+    },
+    "projects/zena/final-logo-variations.webp": {
+      "size": 12330,
+      "lastModified": "2025-08-02T05:10:44.880Z"
+    },
+    "projects/zena/initial-sketches-400w.webp": {
+      "size": 3208,
+      "lastModified": "2025-08-02T05:10:44.913Z"
+    },
+    "projects/zena/initial-sketches-800w.webp": {
+      "size": 10096,
+      "lastModified": "2025-08-02T05:10:44.957Z"
+    },
+    "projects/zena/initial-sketches.webp": {
+      "size": 12168,
+      "lastModified": "2025-08-02T05:10:45.002Z"
+    },
+    "projects/zena/logo-iterations-400w.webp": {
+      "size": 3362,
+      "lastModified": "2025-08-02T05:10:45.034Z"
+    },
+    "projects/zena/logo-iterations-800w.webp": {
+      "size": 10514,
+      "lastModified": "2025-08-02T05:10:45.078Z"
+    },
+    "projects/zena/logo-iterations.webp": {
+      "size": 12626,
+      "lastModified": "2025-08-02T05:10:45.122Z"
+    },
+    "projects/zena/mobile-app-mockup-400w.webp": {
+      "size": 3172,
+      "lastModified": "2025-08-02T05:10:45.157Z"
+    },
+    "projects/zena/mobile-app-mockup-800w.webp": {
+      "size": 10008,
+      "lastModified": "2025-08-02T05:10:45.202Z"
+    },
+    "projects/zena/mobile-app-mockup.webp": {
+      "size": 12002,
+      "lastModified": "2025-08-02T05:10:45.246Z"
+    },
+    "projects/zena/packaging-design-400w.webp": {
+      "size": 3394,
+      "lastModified": "2025-08-02T05:10:45.279Z"
+    },
+    "projects/zena/packaging-design-800w.webp": {
+      "size": 10592,
+      "lastModified": "2025-08-02T05:10:45.317Z"
+    },
+    "projects/zena/packaging-design.webp": {
+      "size": 12752,
+      "lastModified": "2025-08-02T05:10:45.370Z"
+    },
+    "projects/zena/product-tags-400w.webp": {
+      "size": 3224,
+      "lastModified": "2025-08-02T05:10:45.402Z"
+    },
+    "projects/zena/product-tags-800w.webp": {
+      "size": 9968,
+      "lastModified": "2025-08-02T05:10:45.449Z"
+    },
+    "projects/zena/product-tags.webp": {
+      "size": 11932,
+      "lastModified": "2025-08-02T05:10:45.493Z"
+    },
+    "projects/zena/social-media-templates-400w.webp": {
+      "size": 3310,
+      "lastModified": "2025-08-02T05:10:45.528Z"
+    },
+    "projects/zena/social-media-templates-800w.webp": {
+      "size": 10298,
+      "lastModified": "2025-08-02T05:10:45.568Z"
+    },
+    "projects/zena/social-media-templates.webp": {
+      "size": 12438,
+      "lastModified": "2025-08-02T05:10:45.618Z"
+    },
+    "projects/zena/storefront-signage-400w.webp": {
+      "size": 3290,
+      "lastModified": "2025-08-02T05:10:45.650Z"
+    },
+    "projects/zena/storefront-signage-800w.webp": {
+      "size": 10298,
+      "lastModified": "2025-08-02T05:10:45.696Z"
+    },
+    "projects/zena/storefront-signage.webp": {
+      "size": 12400,
+      "lastModified": "2025-08-02T05:10:45.740Z"
+    },
+    "projects/zena/tote-bag-design-400w.webp": {
+      "size": 3172,
+      "lastModified": "2025-08-02T05:10:45.767Z"
+    },
+    "projects/zena/tote-bag-design-800w.webp": {
+      "size": 9986,
+      "lastModified": "2025-08-02T05:10:45.818Z"
+    },
+    "projects/zena/tote-bag-design.webp": {
+      "size": 11976,
+      "lastModified": "2025-08-02T05:10:45.864Z"
+    },
+    "projects/zena/typography-testing-400w.webp": {
+      "size": 3242,
+      "lastModified": "2025-08-02T05:10:45.897Z"
+    },
+    "projects/zena/typography-testing-800w.webp": {
+      "size": 10342,
+      "lastModified": "2025-08-02T05:10:45.938Z"
+    },
+    "projects/zena/typography-testing.webp": {
+      "size": 12426,
+      "lastModified": "2025-08-02T05:10:45.987Z"
+    },
+    "projects/zena/website-mockup-400w.webp": {
+      "size": 3324,
+      "lastModified": "2025-08-02T05:10:46.018Z"
+    },
+    "projects/zena/website-mockup-800w.webp": {
+      "size": 10362,
+      "lastModified": "2025-08-02T05:10:46.067Z"
+    },
+    "projects/zena/website-mockup.webp": {
+      "size": 12498,
+      "lastModified": "2025-08-02T05:10:46.115Z"
+    },
+    "Slab/placeholder1-400w.webp": {
+      "size": 1430,
+      "lastModified": "2025-08-02T05:10:46.146Z"
+    },
+    "Slab/placeholder1.webp": {
+      "size": 1594,
+      "lastModified": "2025-08-02T05:10:46.158Z"
+    },
+    "Slab/placeholder2-400w.webp": {
+      "size": 1514,
+      "lastModified": "2025-08-02T05:10:46.176Z"
+    },
+    "Slab/placeholder2.webp": {
+      "size": 1698,
+      "lastModified": "2025-08-02T05:10:46.187Z"
+    },
+    "WomenDay/Asset 1-1200w.webp": {
+      "size": 114872,
+      "lastModified": "2025-08-02T05:10:48.781Z"
+    },
+    "WomenDay/Asset 1-1600w.webp": {
+      "size": 167472,
+      "lastModified": "2025-08-02T05:10:50.651Z"
+    },
+    "WomenDay/Asset 1-400w.webp": {
+      "size": 32464,
+      "lastModified": "2025-08-02T05:10:46.669Z"
+    },
+    "WomenDay/Asset 1-800w.webp": {
+      "size": 71214,
+      "lastModified": "2025-08-02T05:10:47.428Z"
+    },
+    "WomenDay/Asset 1.webp": {
+      "size": 225576,
+      "lastModified": "2025-08-02T05:10:52.554Z"
+    },
+    "zena/placeholder1-400w.webp": {
+      "size": 1428,
+      "lastModified": "2025-08-02T05:10:53.136Z"
+    },
+    "zena/placeholder1.webp": {
+      "size": 1584,
+      "lastModified": "2025-08-02T05:10:53.149Z"
+    },
+    "zena/placeholder2-400w.webp": {
+      "size": 1500,
+      "lastModified": "2025-08-02T05:10:53.167Z"
+    },
+    "zena/placeholder2.webp": {
+      "size": 1670,
+      "lastModified": "2025-08-02T05:10:53.180Z"
+    }
+  },
+  "totalSize": 0,
+  "optimizedSize": 17746184
+}

@@ -30,6 +30,7 @@
     "prismjs": "^1.30.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-ga4": "^2.1.0",
     "react-grid-layout": "^1.5.1",
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.61.1",
@@ -75,5 +76,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "sharp": "^0.34.3"
   }
 }

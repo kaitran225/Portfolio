@@ -1,51 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://kaitran.dev/</loc>
-    <lastmod>2025-08-01</lastmod>
+    <loc>https://cybriadev.com/</loc>
+    <lastmod>2025-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
+      <image:title>Kai Tran - Full Stack Developer Portfolio</image:title>
+      <image:caption>Professional portfolio showcasing full-stack development expertise in React, TypeScript, Node.js, and cloud technologies.</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://kaitran.dev/#home</loc>
-    <lastmod>2025-08-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://kaitran.dev/#about</loc>
-    <lastmod>2025-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kaitran.dev/#skills</loc>
-    <lastmod>2025-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kaitran.dev/#projects</loc>
-    <lastmod>2025-08-01</lastmod>
+    <loc>https://cybriadev.com/projects</loc>
+    <lastmod>2025-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
+      <image:title>Projects - Kai Tran Portfolio</image:title>
+      <image:caption>Explore my latest projects including web applications, mobile apps, and cloud infrastructure solutions.</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://kaitran.dev/#contact</loc>
-    <lastmod>2025-08-01</lastmod>
+    <loc>https://cybriadev.com/about</loc>
+    <lastmod>2025-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
+      <image:title>About - Kai Tran</image:title>
+      <image:caption>Learn about my background, skills, and passion for creating innovative software solutions.</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://kaitran.dev/design</loc>
-    <lastmod>2025-08-01</lastmod>
+    <loc>https://cybriadev.com/contact</loc>
+    <lastmod>2025-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
+      <image:title>Contact - Kai Tran</image:title>
+      <image:caption>Get in touch for collaboration opportunities, technical consultation, or project inquiries.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cybriadev.com/resume</loc>
+    <lastmod>2025-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kaitran.dev/?view=simple</loc>
-    <lastmod>2025-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://cybriadev.com/assets/portfolio-preview.png</image:loc>
+      <image:title>Resume - Kai Tran</image:title>
+      <image:caption>Download my resume and view my professional experience and technical qualifications.</image:caption>
+    </image:image>
   </url>
 </urlset>

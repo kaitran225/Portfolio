@@ -427,7 +427,7 @@ const proficiencyLevels = [
 ];
 
 // Component
-const SkillsVisualization: React.FC = () => {
+const SkillsVisualization: React.FC = React.memo(() => {
   const [activeCategory, setActiveCategory] = useState<string>('frontend');
   const [animationDelay, setAnimationDelay] = useState(0);
 
@@ -537,6 +537,6 @@ const SkillsVisualization: React.FC = () => {
       </SkillsContainer>
     </SkillsSection>
   );
-};
+});
 
-export default SkillsVisualization;
+export default React.memo(SkillsVisualization);

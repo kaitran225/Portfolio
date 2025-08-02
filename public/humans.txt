@@ -1,0 +1,24 @@
+/* TEAM */
+Developer: Kai Tran
+Contact: kaitran225@gmail.com
+GitHub: https://github.com/kaitran225
+LinkedIn: https://linkedin.com/in/kaitran225
+Location: Philippines
+
+/* THANKS */
+React Team: For the amazing framework
+TypeScript Team: For type safety
+Material-UI Team: For component library
+Open Source Community: For endless inspiration
+
+/* SITE */
+Last update: 2025-08-02
+Language: English
+Doctype: HTML5
+IDE: Visual Studio Code
+Technologies: React, TypeScript, Node.js, Styled Components, Framer Motion
+Standards: HTML5, CSS3, ES2022
+Components: 45+ custom components
+Performance: Optimized for Core Web Vitals
+Accessibility: WCAG 2.1 AA compliant
+Security: CSP headers, HTTPS only

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useMemo } from 'react';
+import React, { Suspense, lazy, useMemo, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
@@ -7,6 +7,13 @@ import { LoadingManager } from './components/LoadingManager';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { AnalyticsProvider } from './services/PortfolioAnalytics';
 import { createMaterialTheme } from './theme/materialTheme';
+import { preloadCriticalComponents } from './components/LazyComponents';
+import { 
+  initializeAnalytics, 
+  trackWebVitals, 
+  trackPerformanceMetrics, 
+  trackScrollDepth 
+} from './services/googleAnalytics';
 import './App.css';
 
 // Lazy load everything for instant loading
@@ -34,6 +41,19 @@ const ComponentLoader: React.FC = () => (
 // App content wrapper with Material-UI theme
 const AppContent: React.FC = () => {
   const { theme: currentTheme } = useTheme();
+  
+  // Initialize analytics and performance tracking
+  useEffect(() => {
+    initializeAnalytics();
+    trackWebVitals();
+    trackPerformanceMetrics();
+    trackScrollDepth();
+  }, []);
+  
+  // Preload critical components on app start
+  useEffect(() => {
+    preloadCriticalComponents();
+  }, []);
   
   // Create Material-UI theme based on current theme with fallback
   const materialTheme = useMemo(() => {

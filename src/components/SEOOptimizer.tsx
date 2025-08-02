@@ -21,7 +21,7 @@ interface SEOProps {
 
 const defaultMeta = {
   title: 'Kai Tran - Full Stack Developer & Software Engineer',
-  description: 'Experienced Full Stack Developer specializing in React, TypeScript, Node.js, and Java. Currently seeking OJT opportunities in software development with 2+ years of project experience.',
+  description: 'Experienced Full Stack Developer specializing in React, TypeScript, Node.js, and Java. Professional software engineer with 3+ years of project experience and enterprise-level development skills.',
   keywords: [
     'Kai Tran',
     'Full Stack Developer',
@@ -34,10 +34,10 @@ const defaultMeta = {
     'Backend Developer',
     'Web Developer',
     'Software Development',
-    'OJT',
-    'Internship',
+    'Professional Developer',
+    'Freelance Developer',
     'Philippines',
-    'Computer Science Student',
+    'Computer Science Graduate',
     'JavaScript',
     'HTML',
     'CSS',
@@ -155,9 +155,9 @@ const SEOOptimizer: React.FC<SEOProps> = ({
     },
     "seeks": {
       "@type": "JobPosting",
-      "title": "Software Development Internship (OJT)",
-      "description": "Seeking opportunities in software development for On-the-Job Training",
-      "employmentType": "INTERN"
+      "title": "Software Development Opportunities",
+      "description": "Open to full-time, freelance, and contract opportunities in software development",
+      "employmentType": ["FULL_TIME", "CONTRACTOR", "FREELANCE"]
     }
   };
 

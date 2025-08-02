@@ -1,9 +1,10 @@
-import React, { useCallback, lazy, Suspense } from 'react';
+import React, { useCallback, lazy, Suspense, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // Lazy load heavy components for instant loading
 const CompactAvailability = lazy(() => import('./CompactAvailability'));
 const CompactCalendar = lazy(() => import('./CompactCalendar'));
+const ProfessionalContactForm = lazy(() => import('./ProfessionalContactForm'));
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -224,11 +225,18 @@ const contactMethods = [
 
 // Component
 const ContactSection: React.FC = () => {
+  const [showContactForm, setShowContactForm] = useState(false);
+
   const handleContactMethod = useCallback((method: typeof contactMethods[0]) => {
     if (method.href.startsWith('mailto:') || method.href.startsWith('http')) {
       window.open(method.href, '_blank', 'noopener,noreferrer');
     }
   }, []);
+
+  const handleFormSubmit = (formData: any) => {
+    console.log('Form submitted:', formData);
+    // Here you could integrate with analytics, CRM, etc.
+  };
 
   return (
     <ContactSectionWrapper id="contact">
@@ -236,8 +244,15 @@ const ContactSection: React.FC = () => {
         <ContactHeader>
           <ContactTitle>Let's Connect</ContactTitle>
           <ContactSubtitle>
-            Available for OJT Fall 2025 • Ready to collaborate on innovative projects
+            Available for new opportunities • Ready to collaborate on innovative projects
           </ContactSubtitle>
+          
+          <CTAButtonContainer>
+            <ProfessionalFormButton onClick={() => setShowContactForm(true)}>
+              🚀 Start a Project
+              <ButtonSubtext>Professional consultation form</ButtonSubtext>
+            </ProfessionalFormButton>
+          </CTAButtonContainer>
         </ContactHeader>
 
         <ContactMethodsGrid>
@@ -273,9 +288,73 @@ const ContactSection: React.FC = () => {
             </CalendarWrapper>
           </ContactSidebar>
         </ContactMethodsGrid>
+        
+        {/* Professional Contact Form Modal */}
+        {showContactForm && (
+          <Suspense fallback={null}>
+            <ProfessionalContactForm 
+              onSubmit={handleFormSubmit}
+              onClose={() => setShowContactForm(false)}
+            />
+          </Suspense>
+        )}
       </ContactContainer>
     </ContactSectionWrapper>
   );
 };
+
+// New styled components for enhanced contact system
+const CTAButtonContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const ProfessionalFormButton = styled.button`
+  background: linear-gradient(135deg, var(--color-purple-primary), var(--color-purple-secondary));
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(105, 51, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(105, 51, 255, 0.4);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+`;
+
+const ButtonSubtext = styled.div`
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+  font-weight: 400;
+`;
 
 export default ContactSection;

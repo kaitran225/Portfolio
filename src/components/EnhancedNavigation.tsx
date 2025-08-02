@@ -383,7 +383,7 @@ const searchData: SearchResult[] = [
   {
     id: 'contact-section',
     title: 'Contact Information',
-    description: 'Get in touch for OJT opportunities and collaborations',
+    description: 'Get in touch for professional opportunities and collaborations',
     type: 'section',
     href: '#contact',
     relevance: 85

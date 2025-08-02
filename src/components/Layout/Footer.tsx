@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           {/* Contact Info */}
           <ContactInfo>
             <ContactTitle>Kai Tran</ContactTitle>
-            <ContactSubtitle>Full-Stack Developer • Available for OJT Fall 2025</ContactSubtitle>
+            <ContactSubtitle>Full-Stack Developer • Available for New Opportunities</ContactSubtitle>
           </ContactInfo>
 
           {/* Quick Links */}

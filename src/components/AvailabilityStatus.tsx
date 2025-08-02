@@ -12,10 +12,10 @@ interface AvailabilityStatusProps {
 const AvailabilityStatus: React.FC<AvailabilityStatusProps> = ({ className }) => {
   const availabilityData = {
     status: 'available',
-    startDate: 'Fall 2025',
+    startDate: 'Available Now',
     location: 'Ho Chi Minh City, Vietnam',
     remote: true,
-    types: ['OJT', 'Internship', 'Full-time'],
+    types: ['Freelance', 'Full-time', 'Contract'],
     timezone: 'GMT+7 (ICT)',
     responseTime: '< 24 hours'
   };
@@ -91,7 +91,7 @@ const AvailabilityStatus: React.FC<AvailabilityStatusProps> = ({ className }) =>
         <ContactText>Ready to discuss your project or opportunity?</ContactText>
         <ContactActions>
           <ContactButton 
-            href="mailto:kaitran225@gmail.com?subject=OJT Opportunity"
+            href="mailto:kaitran225@gmail.com?subject=Professional Opportunity"
             $primary
           >
             Send Email

@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://cybriadev.com/#person",
+      "name": "Kai Tran",
+      "givenName": "Kai",
+      "familyName": "Tran",
+      "jobTitle": "Full Stack Developer",
+      "description": "Experienced Full Stack Developer specializing in React, TypeScript, Node.js, and Java with 3+ years of project experience",
+      "url": "https://cybriadev.com",
+      "image": "https://cybriadev.com/assets/profile/avatar.jpg",
+      "sameAs": [
+        "https://github.com/kaitran225",
+        "https://linkedin.com/in/kaitran225",
+        "https://twitter.com/kaitran225"
+      ],
+      "knowsAbout": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Full Stack Development",
+        "Software Engineering",
+        "Web Development",
+        "Cloud Computing",
+        "DevOps"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "nationality": "Filipino",
+      "email": "kaitran225@gmail.com",
+      "telephone": "Contact via website form",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Philippines"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cybriadev.com/#website",
+      "name": "Kai Tran Portfolio",
+      "alternateName": "Professional Portfolio - Kai Tran",
+      "url": "https://cybriadev.com",
+      "description": "Professional portfolio showcasing full-stack development projects and technical expertise",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://cybriadev.com/#person"
+      },
+      "author": {
+        "@id": "https://cybriadev.com/#person"
+      },
+      "copyrightHolder": {
+        "@id": "https://cybriadev.com/#person"
+      },
+      "copyrightYear": 2025,
+      "dateCreated": "2024-01-01",
+      "dateModified": "2025-08-02",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://cybriadev.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://cybriadev.com/#portfolio",
+      "name": "Professional Portfolio",
+      "description": "Collection of software development projects and technical achievements",
+      "author": {
+        "@id": "https://cybriadev.com/#person"
+      },
+      "url": "https://cybriadev.com",
+      "dateCreated": "2024-01-01",
+      "dateModified": "2025-08-02",
+      "genre": "Technology Portfolio",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://cybriadev.com/#website"
+      }
+    }
+  ]
+}

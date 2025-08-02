@@ -8,7 +8,7 @@ interface HeroSectionProps {
   isDesign?: boolean;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ 
+const HeroSection: React.FC<HeroSectionProps> = React.memo(({ 
   isDevelopment = false, 
   isDesign = false 
 }) => {
@@ -53,7 +53,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                       </ExperienceBadge>
                     </ExperienceInfo>
                     <Description>
-                      Enterprise-ready developer with production experience in React 19, Spring Boot microservices, and AI integration. Proven track record with live applications serving real users.
+                      Professional full-stack developer specializing in modern web technologies and enterprise solutions. Expert in React 19, TypeScript, Spring Boot microservices, and AI integration with proven production deployments.
                     </Description>
                   </HeroText>
                 </ProfileSection>
@@ -150,7 +150,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   }
 
   return null;
-};
+});
 
 // Shared styled components
 const HeroContainer = styled.div`
@@ -414,16 +414,6 @@ const DesignExperienceBadge = styled.div`
     background: rgba(255, 107, 107, 0.2);
     border-color: rgba(255, 107, 107, 0.4);
     transform: translateY(-2px);
-  }
-`;
-
-const AvailabilityBadge = styled(ExperienceBadge)`
-  background: rgba(0, 255, 136, 0.1);
-  border-color: rgba(0, 255, 136, 0.2);
-  
-  &:hover {
-    background: rgba(0, 255, 136, 0.2);
-    border-color: rgba(0, 255, 136, 0.4);
   }
 `;
 
@@ -713,4 +703,4 @@ const DesignElement = styled.div<{ delay: number }>`
   &:nth-child(5) { top: 45%; left: 90%; }
 `;
 
-export default HeroSection;
+export default React.memo(HeroSection);

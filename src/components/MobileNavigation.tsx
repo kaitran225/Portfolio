@@ -240,8 +240,8 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
               {/* Footer */}
               <MenuFooter>
-                <FooterText>Available for OJT opportunities</FooterText>
-                <FooterSubtext>Ready to contribute and learn</FooterSubtext>
+                <FooterText>Available for new opportunities</FooterText>
+                <FooterSubtext>Ready to collaborate and create</FooterSubtext>
               </MenuFooter>
             </MobileMenu>
           </>
