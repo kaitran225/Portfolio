@@ -54,6 +54,12 @@
 - **Install Command**: `npm install`
 - **Node.js Version**: 18.x (recommended)
 
+### Vercel Configuration Features
+- ✅ **Modern Config Format**: Using `headers`, `rewrites`, `redirects` (not legacy `routes`)
+- ✅ **SPA Routing**: Automatic React Router support with catch-all rewrite
+- ✅ **Clean URLs**: Enabled for better SEO
+- ✅ **Trailing Slash**: Disabled for consistency
+
 ### Environment Variables (Optional)
 Add these in Vercel dashboard → Project → Settings → Environment Variables:
 

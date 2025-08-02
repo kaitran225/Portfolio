@@ -26,51 +26,10 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
     },
     {
-      "src": "/assets/(.*)",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot))",
-      "headers": {
-        "cache-control": "public, max-age=31536000"
-      }
-    },
-    {
-      "src": "/sitemap.xml",
-      "headers": {
-        "content-type": "application/xml",
-        "cache-control": "public, max-age=86400"
-      }
-    },
-    {
-      "src": "/robots.txt",
-      "headers": {
-        "content-type": "text/plain",
-        "cache-control": "public, max-age=86400"
-      }
-    },
-    {
-      "src": "/manifest.json",
-      "headers": {
-        "content-type": "application/json",
-        "cache-control": "public, max-age=86400"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!static|assets|sitemap\\.xml|robots\\.txt|manifest\\.json|favicon\\.ico|sw\\.js|.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot)).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -120,8 +79,58 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "env": {
     "NODE_ENV": "production",
     "GENERATE_SOURCEMAP": "false",
