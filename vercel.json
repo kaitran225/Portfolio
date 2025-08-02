@@ -28,7 +28,7 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/((?!static|assets|sitemap\\.xml|robots\\.txt|manifest\\.json|favicon\\.ico|sw\\.js|.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot)).*)",
+      "source": "/((?!static|assets|sitemap.xml|robots.txt|manifest.json|favicon.ico|sw.js).*)",
       "destination": "/index.html"
     }
   ],
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot))",
+      "source": "/**/*.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
