@@ -24,33 +24,6 @@ const LayoutContent: React.FC<LayoutProps> = ({ children }) => {
     <LayoutContainer>
       <Header />
       <MainContent>
-          <FloatingProgLangs>
-              <ProgLangElement delay={0} size="large">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
-              </ProgLangElement>
-              <ProgLangElement delay={1.5} size="medium">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
-              </ProgLangElement>
-              <ProgLangElement delay={3} size="small">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
-              </ProgLangElement>
-              <ProgLangElement delay={2} size="medium">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring" />
-              </ProgLangElement>
-              <ProgLangElement delay={4} size="large">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" />
-              </ProgLangElement>
-              <ProgLangElement delay={0.5} size="small">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
-              </ProgLangElement>
-              <ProgLangElement delay={3.5} size="medium">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
-              </ProgLangElement>
-              <ProgLangElement delay={1} size="small">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" />
-              </ProgLangElement>
-            </FloatingProgLangs>
-
         {children}
       </MainContent>
       <Footer />
@@ -155,7 +128,7 @@ const ProgLangElement = styled.div<{ delay: number; size: 'small' | 'medium' | '
   }
   
   &:nth-child(1) { top: 15%; left: 8%; }
-  &:nth-child(2) { top: 85%; left: 55%; }
+  &:nth-child(2) { top: 50%; left: 5%; }
   &:nth-child(3) { top: 15%; left: 50%; }
   &:nth-child(4) { top: 60%; left: 90%; }
   &:nth-child(5) { top: 75%; left: 10%; }

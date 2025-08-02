@@ -13,6 +13,120 @@
     },
     "avatar": "/assets/profile/avatar.JPG"
   },
+  "heroSection": {
+    "development": {
+      "roleTitle": "Full-Stack Developer",
+      "name": "Trần Nguyên Khánh",
+      "keySkills": "React • TypeScript • Spring Boot • AI Integration",
+      "experienceBadges": [
+        {
+          "icon": "💼",
+          "text": "3+ Years Experience"
+        },
+        {
+          "icon": "📍",
+          "text": "Ho Chi Minh City, Vietnam"
+        }
+      ],
+      "description": "Professional full-stack developer specializing in modern web technologies and enterprise solutions. Expert in React 19, TypeScript, Spring Boot microservices, and AI integration.",
+      "ctaButtons": [
+        {
+          "type": "primary",
+          "text": "Download Resume",
+          "href": "/resume.pdf",
+          "icon": "⬇",
+          "download": true
+        },
+        {
+          "type": "secondary",
+          "text": "View Projects",
+          "href": "#projects",
+          "icon": "🚀"
+        },
+        {
+          "type": "tertiary",
+          "text": "Let's Connect",
+          "href": "#contact",
+          "icon": "💬"
+        }
+      ]
+    },
+    "design": {
+      "roleTitle": "Creative Designer",
+      "title": "Crafting Beautiful Digital Experiences",
+      "experienceBadges": [
+        {
+          "icon": "🎨",
+          "text": "UI/UX Designer"
+        },
+        {
+          "icon": "📱",
+          "text": "Mobile & Web Design"
+        },
+        {
+          "icon": "✨",
+          "text": "Available for Projects"
+        }
+      ],
+      "description": "Passionate about creating intuitive and visually stunning digital experiences. Specializing in modern UI/UX design, branding, and user-centered design solutions.",
+      "ctaButtons": [
+        {
+          "type": "primary",
+          "text": "Explore Design Work",
+          "href": "#projects",
+          "icon": "→"
+        },
+        {
+          "type": "secondary",
+          "text": "Start a Project",
+          "href": "#contact",
+          "icon": "🚀"
+        }
+      ]
+    }
+  },
+  "contactSection": {
+    "title": "Let's Connect",
+    "subtitle": "Available for new opportunities • Ready to collaborate on innovative projects",
+    "contactMethods": [
+      {
+        "icon": "📧",
+        "title": "Email",
+        "description": "Best for detailed discussions",
+        "action": "kaitran225@gmail.com",
+        "responseTime": "< 6 hours",
+        "href": "mailto:kaitran225@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Kai,%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss..."
+      },
+      {
+        "icon": "💼",
+        "title": "LinkedIn",
+        "description": "Professional networking",
+        "action": "Connect with me",
+        "responseTime": "< 12 hours",
+        "href": "https://linkedin.com/in/kaitran225"
+      },
+      {
+        "icon": "💻",
+        "title": "GitHub",
+        "description": "View code & projects",
+        "action": "Follow @kaitran225",
+        "responseTime": "< 24 hours",
+        "href": "https://github.com/kaitran225"
+      },
+      {
+        "icon": "📅",
+        "title": "Schedule Call",
+        "description": "Quick 30-min consultation",
+        "action": "Book a time slot",
+        "responseTime": "Instant booking",
+        "href": "https://calendly.com/kaitran225/30min"
+      }
+    ],
+    "ctaButton": {
+      "text": "🚀 Start a Project",
+      "subtext": "Professional consultation form"
+    }
+  },
   "skills": {
     "technical": {
       "frontend": ["React", "TypeScript", "Next.js", "Three.js", "Styled Components"],
@@ -25,7 +139,189 @@
       "uiux": ["Figma", "Sketch", "Principle"],
       "motion": ["After Effects", "Premiere", "Lottie"],
       "threed": ["Blender", "Cinema 4D", "Reality Composer"]
-    }
+    },
+    "detailed": [
+      {
+        "name": "React",
+        "level": 5,
+        "experience": "2+ years",
+        "projects": 8,
+        "category": "frontend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "TypeScript",
+        "level": 5,
+        "experience": "1.5 years",
+        "projects": 6,
+        "category": "frontend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "JavaScript",
+        "level": 5,
+        "experience": "3+ years",
+        "projects": 12,
+        "category": "frontend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "HTML/CSS",
+        "level": 5,
+        "experience": "3+ years",
+        "projects": 15,
+        "category": "frontend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "Styled Components",
+        "level": 4,
+        "experience": "1 year",
+        "projects": 5,
+        "category": "frontend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "Three.js",
+        "level": 3,
+        "experience": "6 months",
+        "projects": 2,
+        "category": "frontend",
+        "lastUsed": "2024-12",
+        "certified": false
+      },
+      {
+        "name": "Node.js",
+        "level": 4,
+        "experience": "2 years",
+        "projects": 7,
+        "category": "backend",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "Java",
+        "level": 4,
+        "experience": "2 years",
+        "projects": 6,
+        "category": "backend",
+        "lastUsed": "2024-12",
+        "certified": false
+      },
+      {
+        "name": "Spring Boot",
+        "level": 4,
+        "experience": "1.5 years",
+        "projects": 4,
+        "category": "backend",
+        "lastUsed": "2024-12",
+        "certified": false
+      },
+      {
+        "name": "Python",
+        "level": 4,
+        "experience": "1.5 years",
+        "projects": 5,
+        "category": "backend",
+        "lastUsed": "2024-12",
+        "certified": false
+      },
+      {
+        "name": "FastAPI",
+        "level": 3,
+        "experience": "6 months",
+        "projects": 2,
+        "category": "backend",
+        "lastUsed": "2024-11",
+        "certified": false
+      },
+      {
+        "name": "Express.js",
+        "level": 4,
+        "experience": "1.5 years",
+        "projects": 5,
+        "category": "backend",
+        "lastUsed": "2024-12",
+        "certified": false
+      },
+      {
+        "name": "MySQL",
+        "level": 4,
+        "experience": "2 years",
+        "projects": 8,
+        "category": "database",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "PostgreSQL",
+        "level": 3,
+        "experience": "1 year",
+        "projects": 3,
+        "category": "database",
+        "lastUsed": "2024-10",
+        "certified": false
+      },
+      {
+        "name": "MongoDB",
+        "level": 3,
+        "experience": "8 months",
+        "projects": 2,
+        "category": "database",
+        "lastUsed": "2024-09",
+        "certified": false
+      },
+      {
+        "name": "Docker",
+        "level": 4,
+        "experience": "1 year",
+        "projects": 6,
+        "category": "tools",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "Git",
+        "level": 5,
+        "experience": "3+ years",
+        "projects": 20,
+        "category": "tools",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "VS Code",
+        "level": 5,
+        "experience": "3+ years",
+        "projects": 20,
+        "category": "tools",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "Postman",
+        "level": 4,
+        "experience": "2 years",
+        "projects": 10,
+        "category": "tools",
+        "lastUsed": "2025-01",
+        "certified": false
+      },
+      {
+        "name": "WebRTC",
+        "level": 3,
+        "experience": "6 months",
+        "projects": 2,
+        "category": "tools",
+        "lastUsed": "2024-12",
+        "certified": false
+      }
+    ]
   },
   "projects": {
     "development": [
@@ -390,5 +686,37 @@
         "code": "import express from 'express';\nimport rateLimit from 'express-rate-limit';\nimport helmet from 'helmet';\nimport mongoSanitize from 'express-mongo-sanitize';\nimport xss from 'xss-clean';\nimport hpp from 'hpp';\nimport cors from 'cors';\nimport compression from 'compression';\n\nimport { protect, restrictTo, apiKeyAuth } from '../middleware/auth';\nimport { errorHandler } from '../middleware/errorHandler';\nimport { requestLogger } from '../middleware/logger';\n\n// Import route handlers\nimport authRoutes from './auth';\nimport userRoutes from './users';\nimport postRoutes from './posts';\nimport uploadRoutes from './upload';\nimport analyticsRoutes from './analytics';\n\nconst router = express.Router();\n\n// Security middleware\nrouter.use(helmet());\n\n// CORS configuration\nrouter.use(cors({\n  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],\n  credentials: true,\n  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],\n  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key'],\n}));\n\n// Rate limiting\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 100, // limit each IP to 100 requests per windowMs\n  message: {\n    error: 'Too many requests from this IP, please try again later.',\n  },\n  standardHeaders: true,\n  legacyHeaders: false,\n});\n\nrouter.use('/api/v1/', limiter);\n\n// Body parsing and sanitization\nrouter.use(express.json({ limit: '10mb' }));\nrouter.use(express.urlencoded({ extended: true, limit: '10mb' }));\nrouter.use(mongoSanitize());\nrouter.use(xss());\nrouter.use(hpp({\n  whitelist: ['sort', 'fields', 'page', 'limit'],\n}));\n\n// Compression\nrouter.use(compression());\n\n// Request logging\nrouter.use(requestLogger);\n\n// API versioning\nconst v1Router = express.Router();\n\n// Health check endpoint\nv1Router.get('/health', (req, res) => {\n  res.status(200).json({\n    status: 'success',\n    message: 'API is running',\n    timestamp: new Date().toISOString(),\n    version: process.env.API_VERSION || '1.0.0',\n  });\n});\n\n// API documentation endpoint\nv1Router.get('/docs', (req, res) => {\n  res.status(200).json({\n    status: 'success',\n    message: 'API Documentation',\n    version: '1.0.0',\n    endpoints: {\n      auth: {\n        'POST /auth/signup': 'Register a new user',\n        'POST /auth/login': 'Login user',\n        'POST /auth/logout': 'Logout user',\n        'POST /auth/forgot-password': 'Send password reset email',\n        'PATCH /auth/reset-password/:token': 'Reset password with token',\n        'PATCH /auth/update-password': 'Update current user password',\n      },\n      users: {\n        'GET /users': 'Get all users (admin only)',\n        'GET /users/me': 'Get current user profile',\n        'PATCH /users/me': 'Update current user profile',\n        'DELETE /users/me': 'Deactivate current user account',\n        'GET /users/:id': 'Get user by ID',\n      },\n      posts: {\n        'GET /posts': 'Get all posts',\n        'POST /posts': 'Create new post',\n        'GET /posts/:id': 'Get post by ID',\n        'PATCH /posts/:id': 'Update post',\n        'DELETE /posts/:id': 'Delete post',\n      },\n      upload: {\n        'POST /upload/image': 'Upload image file',\n        'POST /upload/video': 'Upload video file',\n        'DELETE /upload/:fileId': 'Delete uploaded file',\n      },\n      analytics: {\n        'GET /analytics/dashboard': 'Get dashboard analytics',\n        'GET /analytics/users': 'Get user analytics',\n        'GET /analytics/posts': 'Get post analytics',\n      },\n    },\n  });\n});\n\n// Authentication routes (public)\nv1Router.use('/auth', authRoutes);\n\n// Protected routes\nv1Router.use('/users', protect, userRoutes);\nv1Router.use('/posts', protect, postRoutes);\nv1Router.use('/upload', protect, uploadRoutes);\n\n// Admin only routes\nv1Router.use('/analytics', protect, restrictTo('admin', 'moderator'), analyticsRoutes);\n\n// API key protected routes (for external integrations)\nconst externalRouter = express.Router();\nexternalRouter.use(apiKeyAuth);\nexternalRouter.get('/public-posts', (req, res) => {\n  res.status(200).json({\n    status: 'success',\n    message: 'Public posts endpoint for external integrations',\n  });\n});\n\nv1Router.use('/external', externalRouter);\n\n// Mount v1 router\nrouter.use('/api/v1', v1Router);\n\n// Catch all unhandled routes\nrouter.all('*', (req, res) => {\n  res.status(404).json({\n    status: 'fail',\n    message: `Route ${req.originalUrl} not found`,\n  });\n});\n\n// Global error handler\nrouter.use(errorHandler);\n\nexport default router;"
       }
     ]
+  },
+  "calendar": {
+    "availableSlots": [
+      { "time": "Tomorrow 10:00 AM", "available": true, "type": "consultation" },
+      { "time": "Tomorrow 2:00 PM", "available": true, "type": "call" },
+      { "time": "Friday 11:00 AM", "available": true, "type": "meeting" },
+      { "time": "Friday 3:00 PM", "available": false, "type": "call" }
+    ],
+    "scheduleOptions": [
+      {
+        "title": "Quick Chat",
+        "duration": "15 min",
+        "description": "Brief introduction and opportunity discussion",
+        "type": "quick-chat",
+        "popular": false
+      },
+      {
+        "title": "Interview Session",
+        "duration": "30 min",
+        "description": "Technical interview or project discussion",
+        "type": "interview",
+        "popular": true
+      },
+      {
+        "title": "Project Consultation",
+        "duration": "45 min",
+        "description": "Detailed project requirements and planning",
+        "type": "consultation",
+        "popular": false
+      }
+    ],
+    "calendlyUrl": "https://calendly.com/kaitran225/30min"
   }
 }

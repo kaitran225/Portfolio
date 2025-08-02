@@ -27,6 +27,16 @@ class PortfolioDataService {
     return this.data.personalInfo;
   }
 
+  // Hero Section Data
+  getHeroSectionData() {
+    return this.data.heroSection;
+  }
+
+  // Contact Section Data
+  getContactSectionData() {
+    return this.data.contactSection;
+  }
+
   // Skills
   getSkills(): Skills {
     return this.data.skills;
@@ -38,6 +48,26 @@ class PortfolioDataService {
 
   getDesignSkills() {
     return this.data.skills.design;
+  }
+
+  getDetailedSkills() {
+    return this.data.skills.detailed;
+  }
+
+  getCalendarData() {
+    return this.data.calendar;
+  }
+
+  getAvailableSlots() {
+    return this.data.calendar.availableSlots;
+  }
+
+  getScheduleOptions() {
+    return this.data.calendar.scheduleOptions;
+  }
+
+  getCalendlyUrl() {
+    return this.data.calendar.calendlyUrl;
   }
 
   // Projects

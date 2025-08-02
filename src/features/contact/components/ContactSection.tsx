@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useContactForm } from '../../../contexts/ContactFormContext';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -175,42 +176,6 @@ const ResponseTimeChip = styled.div<{ $isDevelopment?: boolean }>`
   display: inline-block;
 `;
 
-// Contact Methods Data
-const contactMethods = [
-  {
-    icon: '📧',
-    title: 'Email',
-    description: 'Best for detailed discussions',
-    action: 'kaitran225@gmail.com',
-    responseTime: '< 6 hours',
-    href: 'mailto:kaitran225@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Kai,%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss...'
-  },
-  {
-    icon: '💼',
-    title: 'LinkedIn',
-    description: 'Professional networking',
-    action: 'Connect with me',
-    responseTime: '< 12 hours',
-    href: 'https://linkedin.com/in/kaitran225'
-  },
-  {
-    icon: '💻',
-    title: 'GitHub',
-    description: 'View code & projects',
-    action: 'Follow @kaitran225',
-    responseTime: '< 24 hours',
-    href: 'https://github.com/kaitran225'
-  },
-  {
-    icon: '📅',
-    title: 'Schedule Call',
-    description: 'Quick 30-min consultation',
-    action: 'Book a time slot',
-    responseTime: 'Instant booking',
-    href: 'https://calendly.com/kaitran225/30min'
-  }
-];
-
 interface ContactSectionProps {
   isDevelopment?: boolean;
 }
@@ -218,8 +183,9 @@ interface ContactSectionProps {
 // Component
 const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true }) => {
   const { openContactForm } = useContactForm();
+  const contactData = portfolioDataService.getContactSectionData();
 
-  const handleContactMethod = useCallback((method: typeof contactMethods[0]) => {
+  const handleContactMethod = useCallback((method: typeof contactData.contactMethods[0]) => {
     if (method.href.startsWith('mailto:') || method.href.startsWith('http')) {
       window.open(method.href, '_blank', 'noopener,noreferrer');
     }
@@ -233,21 +199,19 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true })
     <ContactSectionWrapper id="contact">
       <ContactContainer>
         <ContactHeader>
-          <ContactTitle $isDevelopment={isDevelopment}>Let's Connect</ContactTitle>
+          <ContactTitle $isDevelopment={isDevelopment}>{contactData.title}</ContactTitle>
           <ContactSubtitle>
-            Available for new opportunities • Ready to collaborate on innovative projects
+            {contactData.subtitle}
           </ContactSubtitle>
         </ContactHeader>
 
         <ContactMethodsGrid>
-          {contactMethods.map((method, index) => (
+          {contactData.contactMethods.map((method, index) => (
             <ContactCard
               key={method.title}
               $isDevelopment={isDevelopment}
-              onClick={() => handleContactMethod(method)}
-            >
+              onClick={() => handleContactMethod(method)}>
               <ContactIcon>{method.icon}</ContactIcon>
-
               <ContactMethodTitle>{method.title}</ContactMethodTitle>
               <ContactMethodDescription>{method.description}</ContactMethodDescription>
               <ContactAction $isDevelopment={isDevelopment}>{method.action} →</ContactAction>
@@ -256,8 +220,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true })
           ))}
           <CTAButtonContainer>
             <ProfessionalFormButton $isDevelopment={isDevelopment} onClick={openContactForm}>
-              🚀 Start a Project
-              <ButtonSubtext>Professional consultation form</ButtonSubtext>
+              {contactData.ctaButton.text}
+              <ButtonSubtext>{contactData.ctaButton.subtext}</ButtonSubtext>
             </ProfessionalFormButton>
           </CTAButtonContainer>
         </ContactMethodsGrid>

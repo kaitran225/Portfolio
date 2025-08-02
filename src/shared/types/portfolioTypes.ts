@@ -27,6 +27,15 @@ export interface Skills {
     motion: string[];
     threed: string[];
   };
+  detailed: Array<{
+    name: string;
+    level: number;
+    experience: string;
+    projects: number;
+    category: 'frontend' | 'backend' | 'database' | 'tools' | 'languages';
+    lastUsed?: string;
+    certified?: boolean;
+  }>;
 }
 
 export interface CodeFile {
@@ -85,8 +94,82 @@ export interface SimplePortfolioData {
   projectCategories: SimpleProjectCategory[];
 }
 
+export interface HeroSectionData {
+  development: {
+    roleTitle: string;
+    name: string;
+    keySkills: string;
+    experienceBadges: Array<{
+      icon: string;
+      text: string;
+    }>;
+    description: string;
+    ctaButtons: Array<{
+      type: string;
+      text: string;
+      href: string;
+      icon: string;
+      download?: boolean;
+    }>;
+  };
+  design: {
+    roleTitle: string;
+    title: string;
+    experienceBadges: Array<{
+      icon: string;
+      text: string;
+    }>;
+    description: string;
+    ctaButtons: Array<{
+      type: string;
+      text: string;
+      href: string;
+      icon: string;
+    }>;
+  };
+}
+
+export interface ContactSectionData {
+  title: string;
+  subtitle: string;
+  contactMethods: Array<{
+    icon: string;
+    title: string;
+    description: string;
+    action: string;
+    responseTime: string;
+    href: string;
+  }>;
+  ctaButton: {
+    text: string;
+    subtext: string;
+  };
+}
+
+export interface TimeSlot {
+  time: string;
+  available: boolean;
+  type: 'call' | 'meeting' | 'consultation';
+}
+
+export interface ScheduleOption {
+  title: string;
+  duration: string;
+  description: string;
+  type: string;
+  popular: boolean;
+}
+
+export interface CalendarData {
+  availableSlots: TimeSlot[];
+  scheduleOptions: ScheduleOption[];
+  calendlyUrl: string;
+}
+
 export interface PortfolioData {
   personalInfo: PersonalInfo;
+  heroSection: HeroSectionData;
+  contactSection: ContactSectionData;
   skills: Skills;
   projects: {
     development: Project[];
@@ -96,4 +179,5 @@ export interface PortfolioData {
   codePreview: {
     [projectId: string]: CodeFile[];
   };
+  calendar: CalendarData;
 }

@@ -13,6 +13,7 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
   isDesign = false
 }) => {
   const personalInfo = portfolioDataService.getPersonalInfo();
+  const heroData = portfolioDataService.getHeroSectionData();
 
   if (isDevelopment) {
     return (
@@ -30,39 +31,36 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
                     />
                   </ProfilePicture>
                   <HeroText>
-                    <RoleTitle>Full-Stack Developer</RoleTitle>
-                    <Name>Trần Nguyên Khánh</Name>
-                    <KeySkills>React • TypeScript • Spring Boot • AI Integration</KeySkills>
+                    <RoleTitle>{heroData.development.roleTitle}</RoleTitle>
+                    <Name>{heroData.development.name}</Name>
+                    <KeySkills>{heroData.development.keySkills}</KeySkills>
                     <ExperienceInfo>
-                      <ExperienceBadge>
-                        <ExperienceIcon>💼</ExperienceIcon>
-                        <ExperienceText>3+ Years Experience</ExperienceText>
-                      </ExperienceBadge>
-                      <ExperienceBadge>
-                        <ExperienceIcon>📍</ExperienceIcon>
-                        <ExperienceText>Ho Chi Minh City, Vietnam</ExperienceText>
-                      </ExperienceBadge>
+                      {heroData.development.experienceBadges.map((badge, index) => (
+                        <ExperienceBadge key={index}>
+                          <ExperienceIcon>{badge.icon}</ExperienceIcon>
+                          <ExperienceText>{badge.text}</ExperienceText>
+                        </ExperienceBadge>
+                      ))}
                     </ExperienceInfo>
                     <Description>
-                      Professional full-stack developer specializing in modern web technologies and enterprise solutions. Expert in React 19, TypeScript, Spring Boot microservices, and AI integration.
+                      {heroData.development.description}
                     </Description>
                   </HeroText>
                 </ProfileSection>
 
                 <ActionButtonsWrapper>
                   <CTASection>
-                    <CTAButton href="/resume.pdf" className="primary" download>
-                      <span>Download Resume</span>
-                      <ArrowIcon>⬇</ArrowIcon>
-                    </CTAButton>
-                    <CTAButton href="#projects" className="secondary">
-                      <span>View Projects</span>
-                      <ConnectIcon>🚀</ConnectIcon>
-                    </CTAButton>
-                    <CTAButton href="#contact" className="tertiary">
-                      <span>Let's Connect</span>
-                      <ConnectIcon>💬</ConnectIcon>
-                    </CTAButton>
+                    {heroData.development.ctaButtons.map((button, index) => (
+                      <CTAButton
+                        key={index}
+                        href={button.href}
+                        className={button.type}
+                        {...(button.download && { download: true })}
+                      >
+                        <span>{button.text}</span>
+                        <ArrowIcon>{button.icon}</ArrowIcon>
+                      </CTAButton>
+                    ))}
                   </CTASection>
                 </ActionButtonsWrapper>
               </SlimIntegratedSection>
@@ -90,38 +88,39 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
                     <DesignProfileGlow />
                   </ProfilePicture>
                   <HeroText>
-                    <DesignRoleTitle>Creative Designer</DesignRoleTitle>
-                    <DesignTitle>Crafting Beautiful Digital Experiences</DesignTitle>
+                    <DesignRoleTitle>{heroData.design.roleTitle}</DesignRoleTitle>
+                    <DesignTitle>{heroData.design.title}</DesignTitle>
                     <ExperienceInfo>
-                      <DesignExperienceBadge>
-                        <ExperienceIcon>🎨</ExperienceIcon>
-                        <ExperienceText>UI/UX Designer</ExperienceText>
-                      </DesignExperienceBadge>
-                      <DesignExperienceBadge>
-                        <ExperienceIcon>📱</ExperienceIcon>
-                        <ExperienceText>Mobile & Web Design</ExperienceText>
-                      </DesignExperienceBadge>
-                      <DesignAvailabilityBadge>
-                        <ExperienceIcon>✨</ExperienceIcon>
-                        <ExperienceText>Available for Projects</ExperienceText>
-                      </DesignAvailabilityBadge>
+                      {heroData.design.experienceBadges.map((badge, index) => {
+                        const BadgeComponent = badge.text === "Available for Projects" 
+                          ? DesignAvailabilityBadge 
+                          : DesignExperienceBadge;
+                        return (
+                          <BadgeComponent key={index}>
+                            <ExperienceIcon>{badge.icon}</ExperienceIcon>
+                            <ExperienceText>{badge.text}</ExperienceText>
+                          </BadgeComponent>
+                        );
+                      })}
                     </ExperienceInfo>
                     <DesignDescription>
-                      Passionate about creating intuitive and visually stunning digital experiences. Specializing in modern UI/UX design, branding, and user-centered design solutions.
+                      {heroData.design.description}
                     </DesignDescription>
                   </HeroText>
                 </ProfileSection>
 
                 <ActionButtonsWrapper>
                   <CTASection>
-                    <DesignCTAButton href="#projects" className="primary">
-                      <span>Explore Design Work</span>
-                      <ArrowIcon>→</ArrowIcon>
-                    </DesignCTAButton>
-                    <DesignCTAButton href="#contact" className="secondary">
-                      <span>Start a Project</span>
-                      <ConnectIcon>🚀</ConnectIcon>
-                    </DesignCTAButton>
+                    {heroData.design.ctaButtons.map((button, index) => (
+                      <DesignCTAButton
+                        key={index}
+                        href={button.href}
+                        className={button.type}
+                      >
+                        <span>{button.text}</span>
+                        <ArrowIcon>{button.icon}</ArrowIcon>
+                      </DesignCTAButton>
+                    ))}
                   </CTASection>
                 </ActionButtonsWrapper>
               </SlimIntegratedSection>

@@ -134,8 +134,7 @@ const FeaturedThumbnail = styled.div`
   overflow: hidden;
   
   img {
-    width: 100%;
-    height: 100%;
+    height: 160px;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
@@ -147,7 +146,6 @@ const FeaturedThumbnail = styled.div`
 
 const FeaturedOverlay = styled.div`
   position: absolute;
-  top: 10px;
   right: 10px;
 `;
 

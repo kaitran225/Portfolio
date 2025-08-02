@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
+import { TimeSlot } from '../../../shared/types/portfolioTypes';
 
 // ============= ENHANCED COMPACT CALENDAR COMPONENT =============
 
 interface CompactCalendarProps {
   className?: string;
-}
-
-interface TimeSlot {
-  time: string;
-  available: boolean;
-  type: 'call' | 'meeting' | 'consultation';
 }
 
 const CompactCalendar: React.FC<CompactCalendarProps> = ({ className }) => {
@@ -32,12 +28,7 @@ const CompactCalendar: React.FC<CompactCalendarProps> = ({ className }) => {
   }, []);
 
   // Sample available time slots (in a real app, this would come from an API)
-  const availableSlots: TimeSlot[] = [
-    { time: 'Tomorrow 10:00 AM', available: true, type: 'consultation' },
-    { time: 'Tomorrow 2:00 PM', available: true, type: 'call' },
-    { time: 'Friday 11:00 AM', available: true, type: 'meeting' },
-    { time: 'Friday 3:00 PM', available: false, type: 'call' },
-  ];
+  const availableSlots = portfolioDataService.getAvailableSlots();
 
   const handleScheduleClick = () => {
     // Track calendar interaction

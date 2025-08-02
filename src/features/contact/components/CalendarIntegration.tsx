@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
 
 // ============= CALENDAR INTEGRATION COMPONENT =============
 
@@ -9,41 +10,21 @@ interface CalendarIntegrationProps {
 }
 
 const CalendarIntegration: React.FC<CalendarIntegrationProps> = ({ className }) => {
+  const calendarData = portfolioDataService.getCalendarData();
+
   const handleCalendlyClick = () => {
     // Load Calendly inline widget
     if (typeof window !== 'undefined' && (window as any).Calendly) {
       (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/kaitran225/30min'
+        url: calendarData.calendlyUrl
       });
     } else {
       // Fallback to direct link
-      window.open('https://calendly.com/kaitran225/30min', '_blank');
+      window.open(calendarData.calendlyUrl, '_blank');
     }
   };
 
-  const scheduleOptions = [
-    {
-      title: 'Quick Chat',
-      duration: '15 min',
-      description: 'Brief introduction and opportunity discussion',
-      type: 'quick-chat',
-      popular: false
-    },
-    {
-      title: 'Interview Session',
-      duration: '30 min',
-      description: 'Technical interview or project discussion',
-      type: 'interview',
-      popular: true
-    },
-    {
-      title: 'Project Consultation',
-      duration: '45 min',
-      description: 'Detailed project requirements and planning',
-      type: 'consultation',
-      popular: false
-    }
-  ];
+  const scheduleOptions = calendarData.scheduleOptions;
 
   return (
     <CalendarContainer className={className}>

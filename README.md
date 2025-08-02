@@ -30,6 +30,34 @@ A modern, HR-optimized React portfolio built with **Material Design 3** standard
 - **Analytics Integration** - Privacy-focused analytics with detailed user interaction tracking
 - **Error Boundary** - Robust error handling with automatic reporting and recovery options
 
+## 🚀 **Vercel Deployment**
+
+### **Quick Deploy**
+```bash
+# Deploy to preview
+npm run deploy
+
+# Deploy to production
+npm run deploy:prod
+```
+
+### **One-Click Deploy**
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kaitran225/Portfolio)
+
+### **Manual Deploy**
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+**For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)**
+
 ### 📱 Mobile Experience
 - **Mobile Navigation** - Slide-out menu with social links and quick actions
 - **Bottom Navigation** - Quick access navigation bar for mobile devices

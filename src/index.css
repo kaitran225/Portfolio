@@ -5,8 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #121212;
-  color: #f8f8f8;
+  background-color: #FFFFFF;
+  color: #212529;
 }
 
 code {
@@ -24,20 +24,20 @@ html, body, #root, .App {
   overflow: hidden;
 }
 
-/* Scrollbar styling */
+/* Scrollbar styling for light mode default */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e1e1e;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #c1c1c1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: #a8a8a8;
 }

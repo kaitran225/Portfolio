@@ -2,60 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiCode, FiDatabase, FiLayers, FiTool, FiTrendingUp, FiStar } from '../../../components/ui/IconWrapper';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
+import { Skills } from '../../../shared/types/portfolioTypes';
 
 // ============= ENHANCED SKILLS VISUALIZATION =============
-
-interface Skill {
-  name: string;
-  level: number; // 1-5
-  experience: string; // "2+ years", "6 months", etc.
-  projects: number;
-  category: 'frontend' | 'backend' | 'database' | 'tools' | 'languages';
-  icon?: string;
-  lastUsed?: string;
-  certified?: boolean;
-}
 
 interface SkillsVisualizationProps {
   className?: string;
 }
 
-const skillsData: Skill[] = [
-  // Frontend
-  { name: 'React', level: 5, experience: '2+ years', projects: 8, category: 'frontend', lastUsed: '2025-01', certified: false },
-  { name: 'TypeScript', level: 5, experience: '1.5 years', projects: 6, category: 'frontend', lastUsed: '2025-01', certified: false },
-  { name: 'JavaScript', level: 5, experience: '3+ years', projects: 12, category: 'frontend', lastUsed: '2025-01', certified: false },
-  { name: 'HTML/CSS', level: 5, experience: '3+ years', projects: 15, category: 'frontend', lastUsed: '2025-01', certified: false },
-  { name: 'Styled Components', level: 4, experience: '1 year', projects: 5, category: 'frontend', lastUsed: '2025-01', certified: false },
-  { name: 'Three.js', level: 3, experience: '6 months', projects: 2, category: 'frontend', lastUsed: '2024-12', certified: false },
-
-  // Backend
-  { name: 'Node.js', level: 4, experience: '2 years', projects: 7, category: 'backend', lastUsed: '2025-01', certified: false },
-  { name: 'Java', level: 4, experience: '2 years', projects: 6, category: 'backend', lastUsed: '2024-12', certified: false },
-  { name: 'Spring Boot', level: 4, experience: '1.5 years', projects: 4, category: 'backend', lastUsed: '2024-12', certified: false },
-  { name: 'Python', level: 4, experience: '1.5 years', projects: 5, category: 'backend', lastUsed: '2024-12', certified: false },
-  { name: 'FastAPI', level: 3, experience: '6 months', projects: 2, category: 'backend', lastUsed: '2024-11', certified: false },
-  { name: 'Express.js', level: 4, experience: '1.5 years', projects: 5, category: 'backend', lastUsed: '2024-12', certified: false },
-
-  // Database
-  { name: 'MySQL', level: 4, experience: '2 years', projects: 8, category: 'database', lastUsed: '2025-01', certified: false },
-  { name: 'PostgreSQL', level: 3, experience: '1 year', projects: 3, category: 'database', lastUsed: '2024-10', certified: false },
-  { name: 'MongoDB', level: 3, experience: '8 months', projects: 2, category: 'database', lastUsed: '2024-09', certified: false },
-
-  // Tools
-  { name: 'Docker', level: 4, experience: '1 year', projects: 6, category: 'tools', lastUsed: '2025-01', certified: false },
-  { name: 'Git', level: 5, experience: '3+ years', projects: 20, category: 'tools', lastUsed: '2025-01', certified: false },
-  { name: 'VS Code', level: 5, experience: '3+ years', projects: 20, category: 'tools', lastUsed: '2025-01', certified: false },
-  { name: 'Postman', level: 4, experience: '2 years', projects: 10, category: 'tools', lastUsed: '2025-01', certified: false },
-  { name: 'WebRTC', level: 3, experience: '6 months', projects: 2, category: 'tools', lastUsed: '2024-12', certified: false },
-];
+const skillsData = portfolioDataService.getDetailedSkills();
 
 const categoryConfig = {
-  frontend: { icon: FiCode, color: '#61DAFB', label: 'Frontend Development' },
-  backend: { icon: FiDatabase, color: '#68D391', label: 'Backend Development' },
-  database: { icon: FiLayers, color: '#F6AD55', label: 'Database Management' },
-  tools: { icon: FiTool, color: '#FC8181', label: 'Development Tools' },
-  languages: { icon: FiCode, color: '#9F7AEA', label: 'Programming Languages' }
+  Programming: { icon: FiCode, color: '#9F7AEA', label: 'Programming Languages' },
+  Frontend: { icon: FiLayers, color: '#61DAFB', label: 'Frontend Development' },
+  Backend: { icon: FiDatabase, color: '#68D391', label: 'Backend Development' },
+  Database: { icon: FiDatabase, color: '#F6AD55', label: 'Database Management' },
+  Tools: { icon: FiTool, color: '#FC8181', label: 'Development Tools' },
+  Cloud: { icon: FiTool, color: '#FC8181', label: 'Cloud Services' },
+  API: { icon: FiTrendingUp, color: '#9F7AEA', label: 'API Technologies' }
 };
 
 const EnhancedSkillsVisualization: React.FC<SkillsVisualizationProps> = ({ className }) => {

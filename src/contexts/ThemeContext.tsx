@@ -24,20 +24,16 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  // Check for saved theme preference or default to light for professional appearance
+  // Always default to light mode for professional appearance
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('portfolio-theme') as Theme;
       if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
         return savedTheme;
       }
-      // For professional/HR optimization, default to light theme
-      // Check system preference as secondary option
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
     }
-    return 'light'; // Default to light theme for professional appearance
+    // Always default to light theme, ignoring system preference
+    return 'light';
   });
 
   // Update CSS custom properties when theme changes
@@ -119,8 +115,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     
   }, [theme]);
 
-  // Listen for system theme changes
+  // Listen for system theme changes (disabled to keep light as default)
   useEffect(() => {
+    // Commenting out automatic theme switching based on system preference
+    // to ensure light mode remains the default
+    /*
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       // Only auto-switch if no manual preference is saved
@@ -133,6 +132,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
+    */
   }, []);
 
   const toggleTheme = () => {
