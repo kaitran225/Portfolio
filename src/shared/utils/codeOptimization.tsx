@@ -60,18 +60,18 @@ export function withPerformance<P extends object>(
 // ============= LAZY COMPONENT DEFINITIONS =============
 
 // Main portfolio components (critical path)
-export const LazyHeroSection = lazyWithPreload(() => import('@/features/landing/components/EnhancedHeroSection'));
-export const LazyProjectGrid = lazyWithPreload(() => import('@/features/projects/components/ProjectGrid'));
-export const LazyContactSection = lazyWithPreload(() => import('@/features/contact/components/ContactSection'));
+export const LazyHeroSection = lazyWithPreload(() => import('../../features/landing/components/EnhancedHeroSection'));
+export const LazyProjectGrid = lazyWithPreload(() => import('../../features/projects/components/ProjectGrid'));
+export const LazyContactSection = lazyWithPreload(() => import('../../features/contact/components/ContactSection'));
 
 // Heavy components (load on demand)
-export const LazyTerminal = React.lazy(() => import('@/components/ui/Terminal'));
+export const LazyTerminal = React.lazy(() => import('../../components/ui/Terminal'));
 
 // Form components
-export const LazyProfessionalContactForm = React.lazy(() => import('@/features/contact/components/ProfessionalContactForm'));
+export const LazyProfessionalContactForm = React.lazy(() => import('../../features/contact/components/ProfessionalContactForm'));
 
 // Development tools
-export const LazyPerformanceMonitor = React.lazy(() => import('@/components/common/PerformanceMonitor'));
+export const LazyPerformanceMonitor = React.lazy(() => import('../../components/common/PerformanceMonitor'));
 
 // ============= PRELOADING STRATEGIES =============
 

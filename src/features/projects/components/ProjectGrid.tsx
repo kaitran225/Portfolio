@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import OptimizedImage from './OptimizedImage';
+import OptimizedImage from '../../../components/media/OptimizedImage';
 
 interface Project {
   id: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import LazyImage from './LazyImage';
-import portfolioDataService from '@/shared/services/data/portfolioDataService';
+import LazyImage from '../../../components/media/LazyImage';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
 
 interface HeroSectionProps {
   isDevelopment?: boolean;

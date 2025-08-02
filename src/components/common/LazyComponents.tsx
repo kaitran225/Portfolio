@@ -1,15 +1,15 @@
 // Implement lazy loading for expensive components
-import { lazyWithPreload } from '@/shared/utils/codeOptimization';
+import { lazyWithPreload } from '../../shared/utils/codeOptimization';
 
 // Lazy load expensive components with preloading
-export const LazyProjectGrid = lazyWithPreload(() => import('./ProjectGrid'));
-export const LazySkillsVisualization = lazyWithPreload(() => import('./SkillsVisualization'));
-export const LazyHeroSection = lazyWithPreload(() => import('./HeroSection'));
-export const LazyEnhancedHeroSection = lazyWithPreload(() => import('./EnhancedHeroSection'));
-export const LazyContactSection = lazyWithPreload(() => import('./ContactSection'));
+export const LazyProjectGrid = lazyWithPreload(() => import('../../features/projects/components/ProjectGrid'));
+export const LazySkillsVisualization = lazyWithPreload(() => import('../../features/skills/components/SkillsVisualization'));
+export const LazyHeroSection = lazyWithPreload(() => import('../../features/landing/components/HeroSection'));
+export const LazyEnhancedHeroSection = lazyWithPreload(() => import('../../features/landing/components/EnhancedHeroSection'));
+export const LazyContactSection = lazyWithPreload(() => import('../../features/contact/components/ContactSection'));
 export const LazyPerformanceAnalysis = lazyWithPreload(() => import('./PerformanceAnalysis'));
-export const LazyDevProjectPage = lazyWithPreload(() => import('./DevProjectPage'));
-export const LazyDesignProjectPage = lazyWithPreload(() => import('./DesignProjectPage'));
+export const LazyDevProjectPage = lazyWithPreload(() => import('../../features/projects/components/DevProjectPage'));
+export const LazyDesignProjectPage = lazyWithPreload(() => import('../../features/projects/components/DesignProjectPage'));
 
 // Preload critical components on app start
 export const preloadCriticalComponents = () => {

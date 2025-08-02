@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import portfolioDataService from '@/shared/services/data/portfolioDataService';
-import EnhancedSkillsVisualization from './EnhancedSkillsVisualization';
-import ContactSection from './ContactSection';
-import BackToTop from './BackToTop';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
+import EnhancedSkillsVisualization from '../../skills/components/EnhancedSkillsVisualization';
+import ContactSection from '../../contact/components/ContactSection';
+import BackToTop from '../../../components/common/BackToTop';
 import HeroSection from './HeroSection';
 import FeaturedSection from './FeaturedSection';
-import CategoryFilter from './CategoryFilter';
-import ProjectGrid from './ProjectGrid';
-import { useTheme } from '@/contexts/ThemeContext';
+import CategoryFilter from '../../projects/components/CategoryFilter';
+import ProjectGrid from '../../projects/components/ProjectGrid';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 // Vanta.js topology effect
 declare global {

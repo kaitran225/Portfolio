@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
-import Layout from './Layout/Layout';
+import Layout from '../components/Layout/Layout';
 
 // Lazy load heavy components for better code splitting
-const LandingPage = React.lazy(() => import('./LandingPage'));
-const DesignLandingPage = React.lazy(() => import('./DesignLandingPage'));
-const DevProjectPage = React.lazy(() => import('./DevProjectPage'));
-const DesignProjectPage = React.lazy(() => import('./DesignProjectPage'));
+const LandingPage = React.lazy(() => import('../features/landing/components/LandingPage'));
+const DesignLandingPage = React.lazy(() => import('../features/design/components/DesignLandingPage'));
+const DevProjectPage = React.lazy(() => import('../features/projects/components/DevProjectPage'));
+const DesignProjectPage = React.lazy(() => import('../features/projects/components/DesignProjectPage'));
 
 // Loading fallback for route components
 const RouteLoadingFallback: React.FC = () => (

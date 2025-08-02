@@ -1,6 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import styled from 'styled-components';
-import { FiAlertTriangle, FiRefreshCw, FiHome, FiMail } from './IconWrapper';
+import { FiAlertTriangle, FiRefreshCw, FiHome, FiMail } from '../ui/IconWrapper';
 
 // ============= ERROR BOUNDARY COMPONENT =============
 

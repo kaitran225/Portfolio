@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiPlay, FiCode, FiEye, FiStar } from './IconWrapper';
+import { FiExternalLink, FiGithub, FiPlay, FiCode, FiEye, FiStar } from '../../../components/ui/IconWrapper';
 
 // ============= ENHANCED PROJECT SHOWCASE =============
 

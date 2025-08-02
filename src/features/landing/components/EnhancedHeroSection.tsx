@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { EnhancedButton, EnhancedCard } from './EnhancedInteractions';
-import { responsiveTypography, media, spacing } from '../styles/responsive';
-import useOptimizedAnimations from '@/shared/hooks/useOptimizedAnimations';
+import { EnhancedButton, EnhancedCard } from '../../../components/ui/EnhancedInteractions';
+import { responsiveTypography, media, spacing } from '../../../styles/responsive';
+import useOptimizedAnimations from '../../../shared/hooks/useOptimizedAnimations';
 
 // ============= ENHANCED HERO SECTION =============
 

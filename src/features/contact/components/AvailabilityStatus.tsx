@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FiCalendar, FiClock, FiMapPin, FiCheck } from './IconWrapper';
+import { FiCalendar, FiClock, FiMapPin, FiCheck } from '../../../components/ui/IconWrapper';
 import { motion } from 'framer-motion';
 
 // ============= AVAILABILITY STATUS COMPONENT =============

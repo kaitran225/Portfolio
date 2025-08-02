@@ -1,5 +1,5 @@
-import { PortfolioData, Project, PersonalInfo, Skills, SimpleProjectCategory } from '@/shared/types/portfolioTypes';
-import portfolioDataJson from '../data/portfolioData.json';
+import { PortfolioData, Project, PersonalInfo, Skills, SimpleProjectCategory } from '../../types/portfolioTypes';
+import portfolioDataJson from '../../../data/portfolioData.json';
 
 // Enhanced project interface for new features
 export interface EnhancedProject extends Project {

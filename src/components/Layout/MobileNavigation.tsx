@@ -15,7 +15,7 @@ import {
   FiTwitter,
   FiSun,
   FiMoon
-} from './IconWrapper';
+} from '../ui/IconWrapper';
 
 // ============= MOBILE-OPTIMIZED NAVIGATION =============
 

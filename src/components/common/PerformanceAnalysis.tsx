@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FiActivity, FiClock, FiZap, FiMonitor, FiTrendingUp, FiAlertCircle } from './IconWrapper';
+import { FiActivity, FiClock, FiZap, FiMonitor, FiTrendingUp, FiAlertCircle } from '../ui/IconWrapper';
 
 const getStatusColor = (status: string): string => {
   switch (status) {
@@ -79,6 +79,7 @@ const PerformanceAnalysis: React.FC<PerformanceAnalysisProps> = ({
     return `${(ms / 1000).toFixed(2)}s`;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getStatusColor = (status: string): string => {
     switch (status) {
       case 'excellent': return '#2ed573';

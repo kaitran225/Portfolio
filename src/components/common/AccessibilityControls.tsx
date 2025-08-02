@@ -11,7 +11,7 @@ import {
   FiVolume2,
   FiSettings,
   FiX
-} from './IconWrapper';
+} from '../ui/IconWrapper';
 
 // ============= ACCESSIBILITY ENHANCEMENT COMPONENT =============
 

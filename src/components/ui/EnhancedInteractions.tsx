@@ -13,6 +13,7 @@ interface MicroInteractionProps {
 }
 
 // Keyframe animations
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const liftAnimation = keyframes`
   0% { transform: translateY(0) scale(1); }
   100% { transform: translateY(-8px) scale(1.02); }
@@ -29,6 +30,7 @@ const bounceIn = keyframes`
   100% { transform: scale(1); }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const gentleRotate = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(5deg); }

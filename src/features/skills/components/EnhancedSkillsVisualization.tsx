@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FiCode, FiDatabase, FiLayers, FiTool, FiTrendingUp, FiStar } from './IconWrapper';
+import { FiCode, FiDatabase, FiLayers, FiTool, FiTrendingUp, FiStar } from '../../../components/ui/IconWrapper';
 
 // ============= ENHANCED SKILLS VISUALIZATION =============
 

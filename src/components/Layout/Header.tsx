@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import portfolioDataService from '../../services/portfolioDataService';
+import portfolioDataService from '../../shared/services/data/portfolioDataService';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
