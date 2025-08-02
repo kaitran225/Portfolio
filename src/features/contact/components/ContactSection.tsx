@@ -1,10 +1,6 @@
-import React, { useCallback, lazy, Suspense } from 'react';
+import React, { useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useContactForm } from '../../../contexts/ContactFormContext';
-
-// Lazy load heavy components for instant loading
-const CompactAvailability = lazy(() => import('./CompactAvailability'));
-const CompactCalendar = lazy(() => import('./CompactCalendar'));
 
 // ============= ENHANCED CONTACT SECTION =============
 
@@ -27,24 +23,23 @@ const float = keyframes`
 
 // Styled Components
 const ContactSectionWrapper = styled.section`
-  padding: 3rem 2rem;
+  padding: 1.5rem 2rem;
   margin: 0 auto;
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
   }
 `;
 
 const ContactContainer = styled.div`
   max-width: 1400px;
-  padding: 2rem;
+  padding: 1.5rem;
   background: var(--background-secondary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
-  max-width: 1400px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -52,68 +47,47 @@ const ContactContainer = styled.div`
 
 const ContactHeader = styled.div`
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   animation: ${fadeInUp} 0.8s ease-out;
 `;
 
 const ContactTitle = styled.h2<{ $isDevelopment?: boolean }>`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: ${props => props.$isDevelopment === false 
-    ? 'var(--color-design-primary)' 
+  color: ${props => props.$isDevelopment === false
+    ? 'var(--color-design-primary)'
     : 'var(--color-purple-primary)'};
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `;
 
 const ContactSubtitle = styled.p`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--color-text-secondary);
   max-width: 600px;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 1rem;
   line-height: 1.6;
 
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
 const ContactMethodsGrid = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 3rem;
-  margin-bottom: 2rem;
-  max-width: 1000px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   
   @media (max-width: 968px) {
     grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-`;
-
-const ContactCardsColumn = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ContactSidebar = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  
-  @media (max-width: 968px) {
-    grid-column: 1;
-    order: -1;
+    gap: 1.5rem;
   }
 `;
 
@@ -124,7 +98,7 @@ const ContactCard = styled.div<{ $isDevelopment?: boolean }>`
     ? 'rgba(255, 255, 255, 0.1)'
     : 'rgba(255, 107, 107, 0.2)'};
   border-radius: 12px;
-  padding: 1.25rem;
+  padding: 1rem;
   transition: all 0.3s ease;
   cursor: pointer;
   text-align: center;
@@ -134,11 +108,11 @@ const ContactCard = styled.div<{ $isDevelopment?: boolean }>`
 
   &:hover {
     background: ${props => props.$isDevelopment
-      ? 'rgba(255, 255, 255, 0.05)'
-      : 'rgba(255, 107, 107, 0.05)'};
+    ? 'rgba(255, 255, 255, 0.05)'
+    : 'rgba(255, 107, 107, 0.05)'};
     border-color: ${props => props.$isDevelopment
-      ? 'var(--color-purple-primary)'
-      : 'var(--color-design-primary)'};
+    ? 'var(--color-purple-primary)'
+    : 'var(--color-design-primary)'};
     transform: translateY(-3px);
   }
 
@@ -148,8 +122,8 @@ const ContactCard = styled.div<{ $isDevelopment?: boolean }>`
 `;
 
 const ContactIcon = styled.div`
-  font-size: 2rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
   animation: ${float} 3s ease-in-out infinite;
 `;
 
@@ -162,9 +136,9 @@ const ContactMethodTitle = styled.h3`
 
 const ContactMethodDescription = styled.p`
   color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   line-height: 1.5;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 `;
 
 const ContactAction = styled.span<{ $isDevelopment?: boolean }>`
@@ -181,8 +155,8 @@ const ContactAction = styled.span<{ $isDevelopment?: boolean }>`
 
   &:hover {
     color: ${props => props.$isDevelopment
-      ? 'var(--color-green-primary)'
-      : 'var(--color-design-secondary)'};
+    ? 'var(--color-green-primary)'
+    : 'var(--color-design-secondary)'};
   }
 `;
 
@@ -193,25 +167,12 @@ const ResponseTimeChip = styled.div<{ $isDevelopment?: boolean }>`
   color: ${props => props.$isDevelopment
     ? 'var(--color-purple-primary)'
     : 'var(--color-design-primary)'};
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   display: inline-block;
-`;
-
-// Integration Wrappers
-const AvailabilityStatusWrapper = styled.div`
-  margin-bottom: 1rem;
-  border-radius: 12px;
-  overflow: hidden;
-`;
-
-const CalendarWrapper = styled.div`
-  margin-top: 1rem;
-  border-radius: 12px;
-  overflow: hidden;
 `;
 
 // Contact Methods Data
@@ -229,7 +190,7 @@ const contactMethods = [
     title: 'LinkedIn',
     description: 'Professional networking',
     action: 'Connect with me',
-    responseTime: '< 12 hours', 
+    responseTime: '< 12 hours',
     href: 'https://linkedin.com/in/kaitran225'
   },
   {
@@ -239,6 +200,14 @@ const contactMethods = [
     action: 'Follow @kaitran225',
     responseTime: '< 24 hours',
     href: 'https://github.com/kaitran225'
+  },
+  {
+    icon: '📅',
+    title: 'Schedule Call',
+    description: 'Quick 30-min consultation',
+    action: 'Book a time slot',
+    responseTime: 'Instant booking',
+    href: 'https://calendly.com/kaitran225/30min'
   }
 ];
 
@@ -258,7 +227,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true })
 
   const handleFormSubmit = (formData: any) => {
     console.log('Form submitted:', formData);
-    // Here you could integrate with analytics, CRM, etc.
   };
 
   return (
@@ -269,48 +237,29 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true })
           <ContactSubtitle>
             Available for new opportunities • Ready to collaborate on innovative projects
           </ContactSubtitle>
-          
+        </ContactHeader>
+
+        <ContactMethodsGrid>
+          {contactMethods.map((method, index) => (
+            <ContactCard
+              key={method.title}
+              $isDevelopment={isDevelopment}
+              onClick={() => handleContactMethod(method)}
+            >
+              <ContactIcon>{method.icon}</ContactIcon>
+
+              <ContactMethodTitle>{method.title}</ContactMethodTitle>
+              <ContactMethodDescription>{method.description}</ContactMethodDescription>
+              <ContactAction $isDevelopment={isDevelopment}>{method.action} →</ContactAction>
+              <ResponseTimeChip $isDevelopment={isDevelopment}>Response: {method.responseTime}</ResponseTimeChip>
+            </ContactCard>
+          ))}
           <CTAButtonContainer>
             <ProfessionalFormButton $isDevelopment={isDevelopment} onClick={openContactForm}>
               🚀 Start a Project
               <ButtonSubtext>Professional consultation form</ButtonSubtext>
             </ProfessionalFormButton>
           </CTAButtonContainer>
-        </ContactHeader>
-
-        <ContactMethodsGrid>
-          <ContactCardsColumn>
-            {/* Contact Methods */}
-            {contactMethods.map((method, index) => (
-              <ContactCard 
-                key={method.title}
-                $isDevelopment={isDevelopment}
-                onClick={() => handleContactMethod(method)}
-              >
-                <ContactIcon>{method.icon}</ContactIcon>
-                <ContactMethodTitle>{method.title}</ContactMethodTitle>
-                <ContactMethodDescription>{method.description}</ContactMethodDescription>
-                <ContactAction $isDevelopment={isDevelopment}>{method.action} →</ContactAction>
-                <ResponseTimeChip $isDevelopment={isDevelopment}>Response: {method.responseTime}</ResponseTimeChip>
-              </ContactCard>
-            ))}
-          </ContactCardsColumn>
-
-          <ContactSidebar>
-            {/* Compact Availability Status */}
-            <AvailabilityStatusWrapper>
-              <Suspense fallback={<div style={{height: '120px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading...</div>}>
-                <CompactAvailability />
-              </Suspense>
-            </AvailabilityStatusWrapper>
-
-            {/* Compact Calendar Integration */}
-            <CalendarWrapper>
-              <Suspense fallback={<div style={{height: '100px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)'}}>Loading...</div>}>
-                <CompactCalendar />
-              </Suspense>
-            </CalendarWrapper>
-          </ContactSidebar>
         </ContactMethodsGrid>
       </ContactContainer>
     </ContactSectionWrapper>
@@ -319,14 +268,13 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDevelopment = true })
 
 // New styled components for enhanced contact system
 const CTAButtonContainer = styled.div`
-  margin-top: 2rem;
   display: flex;
   justify-content: center;
 `;
 
 const ProfessionalFormButton = styled.button<{ $isDevelopment?: boolean }>`
-  background: ${props => props.$isDevelopment === false 
-    ? 'var(--color-design-primary)' 
+  background: ${props => props.$isDevelopment === false
+    ? 'var(--color-design-primary)'
     : 'var(--color-purple-primary)'};
   color: white;
   border: none;
@@ -346,8 +294,8 @@ const ProfessionalFormButton = styled.button<{ $isDevelopment?: boolean }>`
   &:hover {
     transform: translateY(-3px);
     box-shadow: ${props => props.$isDevelopment
-      ? '0 8px 25px rgba(105, 51, 255, 0.4)'
-      : '0 8px 25px rgba(255, 107, 107, 0.4)'};
+    ? '0 8px 25px rgba(105, 51, 255, 0.4)'
+    : '0 8px 25px rgba(255, 107, 107, 0.4)'};
   }
 
   &:active {
