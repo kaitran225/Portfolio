@@ -22,7 +22,13 @@ interface ProjectGridProps {
 
 const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelopment = true }) => {
   const handleViewProject = (projectId: string) => {
-    window.location.href = `/project/${projectId}`;
+    // Use SPA navigation instead of full page reload
+    const path = `/project/${projectId}`;
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+      // Trigger popstate event to update the router
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
   };
 
   return (

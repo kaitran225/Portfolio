@@ -23,7 +23,19 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/((?!static|assets|sitemap.xml|robots.txt|manifest.json|favicon.ico|sw.js).*)",
+      "source": "/project/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/design",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/resume",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!_next|static|assets|sitemap.xml|robots.txt|manifest.json|favicon.ico|sw.js|api).*)",
       "destination": "/index.html"
     }
   ],

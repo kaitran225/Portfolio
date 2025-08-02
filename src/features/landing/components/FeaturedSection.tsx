@@ -26,7 +26,15 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ isDevelopment = true 
           <FeaturedCard
             key={project.id}
             $isDevelopment={isDevelopment}
-            onClick={() => window.location.href = `/project/${project.id}`}
+            onClick={() => {
+              // Use SPA navigation instead of full page reload
+              const path = `/project/${project.id}`;
+              if (window.location.pathname !== path) {
+                window.history.pushState({}, '', path);
+                // Trigger popstate event to update the router
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }
+            }}
           >
             <FeaturedThumbnail>
               <LazyImage 

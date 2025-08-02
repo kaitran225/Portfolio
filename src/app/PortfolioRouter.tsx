@@ -115,16 +115,17 @@ const PortfolioRouter: React.FC = () => {
 const getProjectType = (projectId: string): 'development' | 'design' => {
   const developmentProjects = [
     'calantha-platform',
-    'ecommerce-dashboard', 
+    'ecommerce-platform', 
     'cloud-infrastructure',
-    'mobile-app-api'
+    'mobile-api'
   ];
   
   const designProjects = [
     'brand-identity-zena',
     'mobile-ui-design',
     'packaging-design',
-    'web-design-portfolio'
+    'web-design-portfolio',
+    'calantha-branding'
   ];
   
   if (developmentProjects.includes(projectId)) {
