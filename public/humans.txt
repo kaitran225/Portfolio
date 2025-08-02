@@ -3,7 +3,7 @@ Developer: Kai Tran
 Contact: kaitran225@gmail.com
 GitHub: https://github.com/kaitran225
 LinkedIn: https://linkedin.com/in/kaitran225
-Location: Philippines
+Location: VietNam
 
 /* THANKS */
 React Team: For the amazing framework

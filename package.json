@@ -37,7 +37,6 @@
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-resizable": "^3.0.5",
-    "react-router-dom": "^7.7.1",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.6.1",
     "rehype-raw": "^7.0.0",
@@ -49,14 +48,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run copy-assets && npm run generate-placeholders && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test:ci": "react-scripts test --coverage --watchAll=false --ci",
     "copy-assets": "node ./scripts/copyAssets.js",
     "generate-placeholders": "node ./scripts/generatePlaceholders.js",
-    "setup": "npm run copy-assets && npm run generate-placeholders && npm start",
-    "build-portfolio": "npm run copy-assets && npm run generate-placeholders && npm run build",
-    "deploy-prep": "npm run build-portfolio && node -e \"console.log('\\n🎯 Portfolio built successfully!\\n\\nTwo versions available:\\n• Full Interactive: Build folder or host /\\n• Simple Clean: Add ?view=simple to URL\\n\\n📤 Ready for deployment!')\"",
     "preview": "npx serve build -s"
   },
   "eslintConfig": {
@@ -78,7 +74,15 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "jest-canvas-mock": "^2.5.2",
+    "jest-environment-jsdom": "^29.7.0",
+    "msw": "^2.6.3",
+    "react-router-dom": "^7.7.1",
     "sharp": "^0.34.3"
   }
 }
