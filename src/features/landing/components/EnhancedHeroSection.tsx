@@ -29,6 +29,22 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = React.memo(({
         value: 1
       });
     }
+
+    // Handle navigation actions
+    if (action === 'download_resume') {
+      window.history.pushState({}, '', '/resume');
+      window.location.reload();
+    } else if (action === 'view_projects') {
+      const projectsElement = document.getElementById('projects');
+      if (projectsElement) {
+        projectsElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (action === 'contact') {
+      const contactElement = document.getElementById('contact');
+      if (contactElement) {
+        contactElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (

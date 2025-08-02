@@ -14,13 +14,13 @@ interface SkillsVisualizationProps {
 const skillsData = portfolioDataService.getDetailedSkills();
 
 const categoryConfig = {
-  Programming: { icon: FiCode, color: '#9F7AEA', label: 'Programming Languages' },
-  Frontend: { icon: FiLayers, color: '#61DAFB', label: 'Frontend Development' },
-  Backend: { icon: FiDatabase, color: '#68D391', label: 'Backend Development' },
-  Database: { icon: FiDatabase, color: '#F6AD55', label: 'Database Management' },
-  Tools: { icon: FiTool, color: '#FC8181', label: 'Development Tools' },
-  Cloud: { icon: FiTool, color: '#FC8181', label: 'Cloud Services' },
-  API: { icon: FiTrendingUp, color: '#9F7AEA', label: 'API Technologies' }
+  programming: { icon: FiCode, color: '#9F7AEA', label: 'Programming Languages' },
+  frontend: { icon: FiLayers, color: '#61DAFB', label: 'Frontend Development' },
+  backend: { icon: FiDatabase, color: '#68D391', label: 'Backend Development' },
+  database: { icon: FiDatabase, color: '#F6AD55', label: 'Database Management' },
+  tools: { icon: FiTool, color: '#FC8181', label: 'Development Tools' },
+  cloud: { icon: FiTool, color: '#FC8181', label: 'Cloud Services' },
+  api: { icon: FiTrendingUp, color: '#9F7AEA', label: 'API Technologies' }
 };
 
 const EnhancedSkillsVisualization: React.FC<SkillsVisualizationProps> = ({ className }) => {

@@ -10,6 +10,11 @@ const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    window.location.reload();
+  };
+
   return (
     <FooterContainer id="contact">
       <FooterContent>
@@ -31,9 +36,9 @@ const Footer: React.FC = () => {
             <QuickLink href="https://github.com/kaitran225" target="_blank">
               💻 GitHub
             </QuickLink>
-            <QuickLink href="?view=simple">
+            <QuickLinkButton onClick={() => navigateTo('/resume')}>
               📄 Resume
-            </QuickLink>
+            </QuickLinkButton>
           </QuickLinks>
 
           {/* Copyright */}
@@ -164,6 +169,22 @@ const QuickLink = styled.a`
   transition: all 0.3s ease;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
+  
+  &:hover {
+    color: var(--color-purple-primary);
+    background: rgba(102, 126, 234, 0.1);
+  }
+`;
+
+const QuickLinkButton = styled.button`
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
   
   &:hover {
     color: var(--color-purple-primary);

@@ -6,6 +6,7 @@ const LandingPage = React.lazy(() => import('../features/landing/components/Land
 const DesignLandingPage = React.lazy(() => import('../features/design/components/DesignLandingPage'));
 const DevProjectPage = React.lazy(() => import('../features/projects/components/DevProjectPage'));
 const DesignProjectPage = React.lazy(() => import('../features/projects/components/DesignProjectPage'));
+const HTMLCV = React.lazy(() => import('../features/cv/components/HTMLCV'));
 
 // Loading fallback for route components
 const RouteLoadingFallback: React.FC = () => (
@@ -37,6 +38,15 @@ const RouteLoadingFallback: React.FC = () => (
 
 const PortfolioRouter: React.FC = () => {
   const path = window.location.pathname;
+  
+  // Handle resume route
+  if (path === '/resume' || path === '/resume/') {
+    return (
+      <Suspense fallback={<RouteLoadingFallback />}>
+        <HTMLCV />
+      </Suspense>
+    );
+  }
   
   // Handle design portfolio route
   if (path === '/design' || path === '/design/') {

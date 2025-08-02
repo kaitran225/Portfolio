@@ -21,8 +21,7 @@ export {};
 
 // Lazy load everything for instant loading
 const PortfolioRouter = lazy(() => import('./PortfolioRouter'));
-const LaTeXCV = lazy(() => import('../features/cv/components/LaTeXCV'));
-const ThemeToggle = lazy(() => import('../components/common/ThemeToggle'));
+const HTMLCV = lazy(() => import('../features/cv/components/HTMLCV'));
 const PWAManager = lazy(() => import('../components/common/PWAManager'));
 
 // Development-only components
@@ -95,10 +94,7 @@ const AppContent: React.FC = () => {
         <CssBaseline />
         <LoadingManager>
           <Suspense fallback={<ComponentLoader />}>
-            <LaTeXCV />
-          </Suspense>
-          <Suspense fallback={null}>
-            <ThemeToggle />
+            <HTMLCV />
           </Suspense>
           <Suspense fallback={null}>
             <PWAManager showInstallPrompt={true} enableOfflineMode={true} />
@@ -117,11 +113,6 @@ const AppContent: React.FC = () => {
             {/* Main Portfolio Content - Load First */}
             <Suspense fallback={<ComponentLoader />}>
               <PortfolioRouter />
-            </Suspense>
-
-            {/* Secondary Components - Load After */}
-            <Suspense fallback={null}>
-              <ThemeToggle />
             </Suspense>
 
             {/* PWA Manager for HR Optimization */}

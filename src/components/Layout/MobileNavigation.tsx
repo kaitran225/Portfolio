@@ -92,11 +92,9 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
   };
 
   const handleResumeDownload = () => {
-    // Trigger resume download
-    const link = document.createElement('a');
-    link.href = '/assets/Kharl-Samson-Resume.pdf';
-    link.download = 'Kharl-Samson-Resume.pdf';
-    link.click();
+    // Navigate to resume page
+    window.history.pushState({}, '', '/resume');
+    window.location.reload();
     setIsMenuOpen(false);
   };
 

@@ -33,9 +33,9 @@
         {
           "type": "primary",
           "text": "Download Resume",
-          "href": "/resume.pdf",
+          "href": "/resume",
           "icon": "⬇",
-          "download": true
+          "download": false
         },
         {
           "type": "secondary",

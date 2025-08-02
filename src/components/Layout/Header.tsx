@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../shared/services/data/portfolioDataService';
 import { useContactForm } from '../../contexts/ContactFormContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openContactForm } = useContactForm();
+  const { toggleTheme, isDark } = useTheme();
   const personalInfo = portfolioDataService.getPersonalInfo();
 
   const navigateTo = (path: string) => {
@@ -70,13 +72,34 @@ const Header: React.FC = () => {
 
         <HeaderActions>
           <HeaderCTAGroup>
-            <PrimaryCTA onClick={() => window.open('/resume.pdf', '_blank')}>
+            <ThemeToggleButton onClick={toggleTheme} title={`Switch to ${isDark ? 'light' : 'dark'} mode`}>
+              <CTAIcon>
+                {isDark ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                )}
+              </CTAIcon>
+            </ThemeToggleButton>
+            <PrimaryCTA onClick={() => navigateTo('/resume')}>
               <CTAIcon>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                 </svg>
               </CTAIcon>
-              <CTAText>Download Resume</CTAText>
+              <CTAText>Resume</CTAText>
             </PrimaryCTA>
             <GitHubStyleCTA onClick={openContactForm}>
               <CTAIcon>
@@ -123,8 +146,11 @@ const Header: React.FC = () => {
           Contact
         </MobileNavItem>
         <MobileCTASection>
-          <PrimaryMobileCTA onClick={() => { window.open('/resume.pdf', '_blank'); setIsMenuOpen(false); }}>
-            � Download Resume
+          <MobileThemeToggle onClick={() => { toggleTheme(); setIsMenuOpen(false); }}>
+            {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </MobileThemeToggle>
+          <PrimaryMobileCTA onClick={() => { navigateTo('/resume'); setIsMenuOpen(false); }}>
+            📄 Resume
           </PrimaryMobileCTA>
           <MobileCTA onClick={() => { window.open('mailto:kaitran225@gmail.com', '_blank'); setIsMenuOpen(false); }}>
             � Email
@@ -133,6 +159,7 @@ const Header: React.FC = () => {
             💻 GitHub
           </MobileCTA>
         </MobileCTASection>
+        
       </MobileMenu>
     </HeaderContainer>
   );
@@ -456,6 +483,61 @@ const MobileCTA = styled.button`
     background: var(--background-tertiary);
     border-color: var(--border-color-hover);
     box-shadow: var(--shadow-soft);
+  }
+`;
+
+const MobileThemeToggle = styled.button`
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--color-text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    background: var(--background-tertiary);
+    border-color: var(--border-color-hover);
+    box-shadow: var(--shadow-soft);
+  }
+`;
+
+const ThemeToggleButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--color-text-primary);
+  padding: 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    background: var(--background-tertiary);
+    border-color: var(--border-color-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+
+  svg {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover svg {
+    transform: rotate(180deg);
   }
 `;
 
