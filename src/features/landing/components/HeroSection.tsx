@@ -8,9 +8,9 @@ interface HeroSectionProps {
   isDesign?: boolean;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = React.memo(({ 
-  isDevelopment = false, 
-  isDesign = false 
+const HeroSection: React.FC<HeroSectionProps> = React.memo(({
+  isDevelopment = false,
+  isDesign = false
 }) => {
   const personalInfo = portfolioDataService.getPersonalInfo();
 
@@ -23,8 +23,8 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
               <SlimIntegratedSection>
                 <ProfileSection>
                   <ProfilePicture>
-                    <LazyImage 
-                      src={personalInfo.avatar} 
+                    <LazyImage
+                      src={personalInfo.avatar}
                       alt={personalInfo.name}
                       className="profile-image"
                     />
@@ -82,8 +82,8 @@ const HeroSection: React.FC<HeroSectionProps> = React.memo(({
               <SlimIntegratedSection>
                 <ProfileSection>
                   <ProfilePicture>
-                    <LazyImage 
-                      src={personalInfo.avatar} 
+                    <LazyImage
+                      src={personalInfo.avatar}
                       alt={personalInfo.name}
                       className="profile-image"
                     />
@@ -237,16 +237,17 @@ const ProfileSection = styled.div`
 
 const ProfilePicture = styled.div`
   position: relative;
-  width: 20vh;
-  height: 20vh;
+  min-width: 280px;
+  min-height: 280px;
   flex-shrink: 0;
   
   .profile-image {
     width: 100%;
     height: 100%;
-    border-radius: 16%;
+    min-width: 280px;
+    min-height: 280px;
     object-fit: cover;
-    border: 1px solid var(--color-background-secondary);
+    border: 1px solid var(--color-background-primary);
     transition: all 0.3s ease;
     
     &:hover {
@@ -258,6 +259,11 @@ const ProfilePicture = styled.div`
   @media (max-width: 768px) {
     width: 100px;
     height: 100px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 80px;
+    height: 80px;
   }
 `;
 

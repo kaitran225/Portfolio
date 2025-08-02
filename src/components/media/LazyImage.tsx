@@ -135,6 +135,8 @@ const ErrorOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  min-width: 280px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
