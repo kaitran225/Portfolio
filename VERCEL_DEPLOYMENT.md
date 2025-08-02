@@ -1,6 +1,20 @@
 # Vercel Deployment Guide
 
-## 🚀 Quick Deploy to Vercel
+## 🚀 **Vercel Deployment**
+
+### **Quick Deploy Options**
+
+#### **Option 1: GitHub Actions (Recommended)**
+- ✅ **Automatic on push to main**
+- ✅ **Preview deployments on PRs**
+- ✅ **Integrated testing pipeline**
+
+**Setup Required:**
+1. Configure GitHub secrets (see [`.github/SECRETS_SETUP.md`](./.github/SECRETS_SETUP.md))
+2. Push to main branch or create a PR
+3. GitHub Actions will automatically deploy
+
+#### **Option 2: Manual Deploy Scripts** to Vercel
 
 ### Option 1: Deploy with Vercel CLI
 
