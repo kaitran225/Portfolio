@@ -85,8 +85,10 @@ describe('portfolioDataService', () => {
       
       expect(skills).toHaveProperty('technical');
       expect(skills).toHaveProperty('design');
-      expect(Array.isArray(skills.technical)).toBe(true);
-      expect(Array.isArray(skills.design)).toBe(true);
+      expect(skills).toHaveProperty('detailed');
+      expect(typeof skills.technical).toBe('object');
+      expect(typeof skills.design).toBe('object');
+      expect(Array.isArray(skills.detailed)).toBe(true);
     });
 
     it('technical skills have required properties', () => {

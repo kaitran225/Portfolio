@@ -4,9 +4,13 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapping: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^react-router-dom$': '<rootDir>/src/__mocks__/react-router-dom.js',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/src/__mocks__/fileMock.js'
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(react-router|react-router-dom)/)'
+  ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/index.tsx',
