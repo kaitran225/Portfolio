@@ -28,7 +28,7 @@ import {
   CloudOff as CloudOffIcon,
   CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
-import { usePWA } from '../services/pwaService';
+import { usePWA } from '@/shared/services/pwaService';
 
 interface PWABannerProps {
   position?: 'top' | 'bottom';

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LazyImage from './LazyImage';
-import portfolioDataService from '../services/portfolioDataService';
+import portfolioDataService from '@/shared/services/data/portfolioDataService';
 
 interface FeaturedSectionProps {
   isDevelopment?: boolean;

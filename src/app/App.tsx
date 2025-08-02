@@ -3,27 +3,27 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { LoadingManager } from './components/LoadingManager';
-import { ThemeProvider, useTheme } from './contexts/ThemeContext';
-import { AnalyticsProvider } from './services/PortfolioAnalytics';
-import { createMaterialTheme } from './theme/materialTheme';
-import { preloadCriticalComponents } from './components/LazyComponents';
+import { LoadingManager } from '../components/common/LoadingManager';
+import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
+import { AnalyticsProvider } from '../shared/services/analytics/PortfolioAnalytics';
+import { createMaterialTheme } from '../theme/materialTheme';
+import { preloadCriticalComponents } from '../components/common/LazyComponents';
 import { 
   initializeAnalytics, 
   trackWebVitals, 
   trackPerformanceMetrics, 
   trackScrollDepth 
-} from './services/googleAnalytics';
+} from '../shared/services/analytics/googleAnalytics';
 import './App.css';
 
 // Lazy load everything for instant loading
-const PortfolioRouter = lazy(() => import('./components/PortfolioRouter'));
-const LaTeXCV = lazy(() => import('./components/LaTeXCV'));
-const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
-const PWAManager = lazy(() => import('./components/PWAManager'));
+const PortfolioRouter = lazy(() => import('./PortfolioRouter'));
+const LaTeXCV = lazy(() => import('../features/cv/components/LaTeXCV'));
+const ThemeToggle = lazy(() => import('../components/common/ThemeToggle'));
+const PWAManager = lazy(() => import('../components/common/PWAManager'));
 
 // Development-only components
-const PerformanceMonitor = lazy(() => import('./components/PerformanceMonitor'));
+const PerformanceMonitor = lazy(() => import('../components/common/PerformanceMonitor'));
 
 // Loading fallback component
 const ComponentLoader: React.FC = () => (

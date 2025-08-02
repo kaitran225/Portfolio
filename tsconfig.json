@@ -21,7 +21,17 @@
     "jsx": "preserve",
     "incremental": false,
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "baseUrl": "src",
+    "paths": {
+      "@/app/*": ["app/*"],
+      "@/components/*": ["components/*"],
+      "@/features/*": ["features/*"],
+      "@/shared/*": ["shared/*"],
+      "@/styles/*": ["styles/*"],
+      "@/contexts/*": ["contexts/*"],
+      "@/data/*": ["data/*"]
+    }
   },
   "include": [
     "src"

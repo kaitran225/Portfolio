@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import IDECodePreview from './IDECodePreview';
-import portfolioDataService from '../services/portfolioDataService';
+import portfolioDataService from '@/shared/services/data/portfolioDataService';
 import MarkdownRenderer from './MarkdownRenderer';
 
 // Vanta.js topology effect

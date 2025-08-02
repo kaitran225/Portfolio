@@ -1,4 +1,4 @@
-import { PortfolioData, Project, PersonalInfo, Skills, SimpleProjectCategory } from '../types/portfolioTypes';
+import { PortfolioData, Project, PersonalInfo, Skills, SimpleProjectCategory } from '@/shared/types/portfolioTypes';
 import portfolioDataJson from '../data/portfolioData.json';
 
 // Enhanced project interface for new features

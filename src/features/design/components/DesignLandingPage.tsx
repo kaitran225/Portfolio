@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import portfolioDataService from '../services/portfolioDataService';
-import EnhancedSkillsVisualization from './EnhancedSkillsVisualization';
-import ContactSection from './ContactSection';
+import portfolioDataService from '@/shared/services/data/portfolioDataService';
+import ContactSection from './ContactSection'; // Using the dev contact section
 import BackToTop from './BackToTop';
 import HeroSection from './HeroSection';
-import FeaturedSection from './FeaturedSection';
 import CategoryFilter from './CategoryFilter';
 import ProjectGrid from './ProjectGrid';
-import { useTheme } from '../contexts/ThemeContext';
+import RedirectSection from './RedirectSection';
+import { useTheme } from '@/contexts/ThemeContext';
 
 // Vanta.js topology effect
 declare global {
@@ -18,18 +17,37 @@ declare global {
   }
 }
 
-const LandingPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'development' | 'design' | 'backend'>('all');
+const DesignLandingPage: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'branding' | 'ui-ux' | 'print'>('all');
   const { isDark } = useTheme();
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
   // Get data from service
-  const projects = portfolioDataService.getAllProjects();
+  const projects = portfolioDataService.getDesignProjects();
+
+  const filteredProjects = selectedCategory === 'all'
+    ? projects
+    : projects.filter(project => {
+        if (selectedCategory === 'branding') return project.tags.some(tag => tag.includes('Brand') || tag.includes('Logo'));
+        if (selectedCategory === 'ui-ux') return project.tags.some(tag => tag.includes('UI') || tag.includes('UX') || tag.includes('Mobile'));
+        if (selectedCategory === 'print') return project.tags.some(tag => tag.includes('Print') || tag.includes('Package'));
+        return true;
+      });
 
   useEffect(() => {
     const loadVanta = async () => {
       try {
+        console.log('Starting optimized Vanta.js loading for Design...');
+
+        // Create fallback background immediately with design colors
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+            radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)
+          `;
+        }
 
         // Load scripts asynchronously and non-blocking
         const loadScript = (src: string, name: string): Promise<void> => {
@@ -43,12 +61,14 @@ const LandingPage: React.FC = () => {
               resolve();
             };
             script.onerror = () => {
+              console.warn(`Failed to load ${name}, using fallback`);
               resolve(); // Don't reject, just continue with fallback
             };
             document.head.appendChild(script);
-
+            
             // Timeout to prevent blocking
             setTimeout(() => {
+              console.warn(`${name} load timeout, using fallback`);
               resolve();
             }, 5000);
           });
@@ -69,8 +89,8 @@ const LandingPage: React.FC = () => {
 
         // Initialize Vanta effect only if everything loaded successfully
         if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
-          console.log('Initializing optimized Vanta TOPOLOGY effect...');
-
+          console.log('Initializing optimized Vanta TOPOLOGY effect for Design...');
+          
           vantaEffect.current = window.VANTA.TOPOLOGY({
             el: vantaRef.current,
             mouseControls: true,
@@ -78,14 +98,13 @@ const LandingPage: React.FC = () => {
             gyroControls: false,
             minHeight: 200.00,
             minWidth: 200.00,
-            scale: 1.5, // Reduced scale
-            scaleMobile: 0.6, // More reduced for mobile
-            color: 0x6933ff,
+            scale: 1.00,
+            scaleMobile: 0.8, // Reduce complexity on mobile
+            color: 0xff6b6b, // Design-specific coral color
             backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
-            points: window.innerWidth < 768 ? 6 : 12, // Significantly fewer points
-            maxDistance: window.innerWidth < 768 ? 20 : 32, // Shorter connections
-            spacing: window.innerWidth < 768 ? 16 : 64, // More spacing between points
-            backgroundAlpha: 0.8 // Add transparency to reduce visual density
+            points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
+            maxDistance: window.innerWidth < 768 ? 15 : 20,
+            spacing: window.innerWidth < 768 ? 12 : 15
           });
           setTimeout(() => {
             if (vantaEffect.current?.scene) {
@@ -96,9 +115,8 @@ const LandingPage: React.FC = () => {
               });
             }
           }, 100);
-
-          console.log('Vanta effect initialized successfully');
-
+          console.log('Vanta effect initialized successfully for Design');
+          
           // Clear fallback background once Vanta is loaded
           if (vantaRef.current) {
             vantaRef.current.style.background = '';
@@ -133,46 +151,35 @@ const LandingPage: React.FC = () => {
   }, [isDark]);
 
   return (
-    <>
-      {/* Main Portfolio Container */}
-      <LandingContainer ref={vantaRef}>
-        {/* Hero Section with Featured Projects */}
-        <HeroSection isDevelopment={true} />
+    <LandingContainer ref={vantaRef}>
+      {/* Hero Section */}
+      <HeroSection isDesign={true} />
 
-        {/* Featured Development Projects Section */}
-        <FeaturedSectionWrapper>
-          <FeaturedSection isDevelopment={true} />
-        </FeaturedSectionWrapper>
+      {/* Design Portfolio Section */}
+      <Section id="projects">
+        <SectionHeader>Design Portfolio</SectionHeader>
 
-        {/* Development Project Catalog */}
-        <Section id="projects">
-          <SectionHeader>Development Portfolio</SectionHeader>
+        {/* Category Filter */}
+        <CategoryFilter 
+          selectedCategory={selectedCategory}
+          onCategoryChange={(category: string) => setSelectedCategory(category as any)}
+          isDevelopment={false}
+          projects={projects}
+        />
 
-          {/* Category Filter */}
-          <CategoryFilter
-            selectedCategory={selectedCategory}
-            onCategoryChange={(category: string) => setSelectedCategory(category as any)}
-            isDevelopment={true}
-            projects={projects}
-          />
+        {/* Project Grid */}
+        <ProjectGrid projects={filteredProjects} isDevelopment={false} />
+      </Section>
 
-          {/* Project Grid */}
-          <ProjectGrid
-            projects={projects.filter(project => project.category === 'development')}
-            isDevelopment={true}
-          />
-        </Section>
+      {/* Enhanced Contact Section */}
+      <ContactSection />
 
-        {/* Enhanced Skills Section */}
-        <EnhancedSkillsVisualization />
-
-        {/* Enhanced Contact Section (includes availability status) */}
-        <ContactSection />
-      </LandingContainer>
+      {/* Dev Portfolio Redirect */}
+      <RedirectSection isDevelopment={false} />
 
       {/* Back to Top Button */}
       <BackToTop />
-    </>
+    </LandingContainer>
   );
 };
 
@@ -185,7 +192,6 @@ const LandingContainer = styled.div`
   overflow-x: hidden;
   position: relative;
   
-  /* Smooth page load animation */
   opacity: 0;
   animation: pageLoadIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
   
@@ -199,12 +205,6 @@ const LandingContainer = styled.div`
       transform: translateY(0);
     }
   }
-`;
-
-const FeaturedSectionWrapper = styled.div`
-  padding: 2rem 1.5rem;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
 `;
 
 const Section = styled.section`
@@ -223,7 +223,7 @@ const SectionHeader = styled.h2`
   text-align: center;
   margin-bottom: 60px;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--color-purple-primary) 0%, var(--color-purple-secondary) 100%);
+  background: linear-gradient(135deg, var(--color-design-primary) 0%, var(--color-design-primary) 50%, var(--color-design-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -233,4 +233,4 @@ const SectionHeader = styled.h2`
   }
 `;
 
-export default LandingPage;
+export default DesignLandingPage;

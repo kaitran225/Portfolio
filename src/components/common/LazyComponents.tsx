@@ -1,5 +1,5 @@
 // Implement lazy loading for expensive components
-import { lazyWithPreload } from '../utils/codeOptimization';
+import { lazyWithPreload } from '@/shared/utils/codeOptimization';
 
 // Lazy load expensive components with preloading
 export const LazyProjectGrid = lazyWithPreload(() => import('./ProjectGrid'));

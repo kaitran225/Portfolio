@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const ThemeToggle: React.FC = () => {
   const { toggleTheme, isDark } = useTheme();

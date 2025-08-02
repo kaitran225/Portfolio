@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import portfolioDataService from '../services/portfolioDataService';
+import portfolioDataService from '@/shared/services/data/portfolioDataService';
 
 const SimplePortfolio: React.FC = () => {
   // Get data from service

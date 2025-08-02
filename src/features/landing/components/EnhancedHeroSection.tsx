@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { EnhancedButton, EnhancedCard } from './EnhancedInteractions';
 import { responsiveTypography, media, spacing } from '../styles/responsive';
-import useOptimizedAnimations from '../hooks/useOptimizedAnimations';
+import useOptimizedAnimations from '@/shared/hooks/useOptimizedAnimations';
 
 // ============= ENHANCED HERO SECTION =============
 
