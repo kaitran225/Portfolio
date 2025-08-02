@@ -5,6 +5,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "installCommand": "npm install",
+  "devCommand": "npm start",
   "functions": {
     "app/api/**/*.js": {
       "runtime": "nodejs18.x"
@@ -81,7 +82,7 @@
       ]
     },
     {
-      "source": "/**/*.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot)",
+      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot))$",
       "headers": [
         {
           "key": "Cache-Control",

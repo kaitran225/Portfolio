@@ -56,7 +56,8 @@
 
 ### Vercel Configuration Features
 - ✅ **Modern Config Format**: Using `headers`, `rewrites`, `redirects` (not legacy `routes`)
-- ✅ **SPA Routing**: Automatic React Router support with catch-all rewrite
+- ✅ **Valid Regex Patterns**: Fixed source patterns for proper file matching
+- ✅ **SPA Routing**: Simplified catch-all rewrite for React Router
 - ✅ **Clean URLs**: Enabled for better SEO
 - ✅ **Trailing Slash**: Disabled for consistency
 
