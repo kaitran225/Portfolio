@@ -21,7 +21,7 @@
       "experienceBadges": [
         {
           "icon": "💼",
-          "text": "3+ Years Experience"
+          "text": "Coding since 2020"
         },
         {
           "icon": "📍",
@@ -129,61 +129,110 @@
   },
   "skills": {
     "technical": {
-      "frontend": ["React", "TypeScript", "Next.js", "Three.js", "Styled Components"],
-      "backend": ["Node.js", "Python", "MongoDB", "PostgreSQL", "GraphQL"],
-      "devops": ["AWS", "Docker", "Kubernetes", "Terraform", "CI/CD"],
-      "tools": ["Git", "Figma", "Webpack", "Jest", "ESLint"]
+      "frontend": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Three.js",
+        "Styled Components"
+      ],
+      "backend": [
+        "Node.js",
+        "Python",
+        "MongoDB",
+        "PostgreSQL",
+        "GraphQL"
+      ],
+      "devops": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "CI/CD"
+      ],
+      "tools": [
+        "Git",
+        "Figma",
+        "Webpack",
+        "Jest",
+        "ESLint"
+      ]
     },
     "design": {
-      "visual": ["Photoshop", "Illustrator", "InDesign"],
-      "uiux": ["Figma", "Sketch", "Principle"],
-      "motion": ["After Effects", "Premiere", "Lottie"],
-      "threed": ["Blender", "Cinema 4D", "Reality Composer"]
+      "visual": [
+        "Photoshop",
+        "Illustrator",
+        "InDesign"
+      ],
+      "uiux": [
+        "Figma",
+        "Sketch",
+        "Principle"
+      ],
+      "motion": [
+        "After Effects",
+        "Premiere",
+        "Lottie"
+      ],
+      "threed": [
+        "Blender",
+        "Cinema 4D",
+        "Reality Composer"
+      ]
     },
     "detailed": [
       {
         "name": "React",
-        "level": 5,
+        "level": 3,
         "experience": "2+ years",
         "projects": 8,
         "category": "frontend",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "TypeScript",
-        "level": 5,
+        "level": 3,
         "experience": "1.5 years",
         "projects": 6,
         "category": "frontend",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "JavaScript",
-        "level": 5,
+        "level": 3,
         "experience": "3+ years",
         "projects": 12,
         "category": "frontend",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "HTML/CSS",
-        "level": 5,
+        "level": 3,
         "experience": "3+ years",
         "projects": 15,
         "category": "frontend",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
+        "certified": false
+      },
+            {
+        "name": "Aiven Cloud",
+        "level": 2,
+        "experience": "1+ years",
+        "projects": 2,
+        "category": "cloud",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "Java",
-        "level": 4,
+        "level": 5,
         "experience": "2 years",
         "projects": 6,
         "category": "backend",
-        "lastUsed": "2024-12",
+        "lastUsed": "2025-04",
         "certified": false
       },
       {
@@ -192,16 +241,16 @@
         "experience": "1.5 years",
         "projects": 4,
         "category": "backend",
-        "lastUsed": "2024-12",
+        "lastUsed": "2025-04",
         "certified": false
       },
       {
         "name": "Python",
-        "level": 4,
+        "level": 3,
         "experience": "1.5 years",
         "projects": 5,
         "category": "backend",
-        "lastUsed": "2024-12",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
@@ -210,43 +259,43 @@
         "experience": "2 years",
         "projects": 4,
         "category": "backend",
-        "lastUsed": "2023-12",
+        "lastUsed": "2025-05",
         "certified": false
       },
       {
         "name": "MySQL",
-        "level": 4,
+        "level": 3,
         "experience": "2 years",
         "projects": 8,
         "category": "database",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-05",
         "certified": false
       },
       {
         "name": "Docker",
-        "level": 4,
+        "level": 3,
         "experience": "1 year",
         "projects": 6,
         "category": "tools",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "Git",
-        "level": 5,
+        "level": 4,
         "experience": "3+ years",
         "projects": 20,
         "category": "tools",
-        "lastUsed": "2025-01",
+        "lastUsed": "2025-08",
         "certified": false
       },
       {
         "name": "Unity",
-        "level": 3,
+        "level": 2,
         "experience": "1 year",
         "projects": 2,
         "category": "tools",
-        "lastUsed": "2023-12",
+        "lastUsed": "2024-12",
         "certified": false
       }
     ]
@@ -260,8 +309,23 @@
         "description": "Modern React portfolio with TypeScript, 3D graphics, and professional dual-mode interface.",
         "longDescription": "A sophisticated personal portfolio website built with React 19 and TypeScript, featuring a dual-mode interface for both HR professionals and technical audiences. The site includes advanced 3D graphics with Three.js and Vanta.js, WebRTC integration for real-time features, and comprehensive project showcases.",
         "thumbnail": "/assets/dev-thumbnails/portfolio.jpg",
-        "tags": ["React", "TypeScript", "Three.js", "Styled Components", "Vanta.js"],
-        "technologies": ["React 19", "TypeScript", "Three.js", "Vanta.js", "Styled Components", "WebRTC", "CRACO", "Vercel"],
+        "tags": [
+          "React",
+          "TypeScript",
+          "Three.js",
+          "Styled Components",
+          "Vanta.js"
+        ],
+        "technologies": [
+          "React 19",
+          "TypeScript",
+          "Three.js",
+          "Vanta.js",
+          "Styled Components",
+          "WebRTC",
+          "CRACO",
+          "Vercel"
+        ],
         "githubUrl": "https://github.com/kaitran225/Portfolio",
         "liveUrl": "https://kaitran.dev",
         "images": [
@@ -297,8 +361,24 @@
         "description": "Enterprise Spring Boot backend with JWT authentication, serving real users in production.",
         "longDescription": "A comprehensive backend system for mental health care management, featuring secure authentication, role-based access control, and RESTful API design. Built with Spring Boot and Java, the system currently serves real users in production with 99.9% uptime.",
         "thumbnail": "/assets/Development/BackEnd/Screenshot 2025-03-16 151757.png",
-        "tags": ["Spring Boot", "Java", "MySQL", "JWT", "Docker"],
-        "technologies": ["Spring Boot", "Java", "MySQL", "JWT", "OpenAPI", "Docker", "Render.com", "Aiven", "Gmail SMTP"],
+        "tags": [
+          "Spring Boot",
+          "Java",
+          "MySQL",
+          "JWT",
+          "Docker"
+        ],
+        "technologies": [
+          "Spring Boot",
+          "Java",
+          "MySQL",
+          "JWT",
+          "OpenAPI",
+          "Docker",
+          "Render.com",
+          "Aiven",
+          "Gmail SMTP"
+        ],
         "githubUrl": "https://github.com/kaitran225/BackEnd",
         "liveUrl": "https://api.cybriadev.com/swagger-ui/index.html",
         "images": [
@@ -343,8 +423,23 @@
         "description": "Advanced AI assistant with Ollama integration, 3D avatar system, and multiple operational personas.",
         "longDescription": "An innovative AI assistant featuring local Ollama model integration with Nous-Hermes2:7b, 3D character visualization using React Three Fiber, and advanced conversation management. The system includes multiple operational personas and real-time emotional expression rendering.",
         "thumbnail": "/assets/Development/AI/43430418490571152361.mp4",
-        "tags": ["AI", "Python", "React Three Fiber", "Ollama", "WebSocket"],
-        "technologies": ["FastAPI", "Python", "Ollama", "React Three Fiber", "WebSocket", "Docker", "Three.js", "TTS"],
+        "tags": [
+          "AI",
+          "Python",
+          "React Three Fiber",
+          "Ollama",
+          "WebSocket"
+        ],
+        "technologies": [
+          "FastAPI",
+          "Python",
+          "Ollama",
+          "React Three Fiber",
+          "WebSocket",
+          "Docker",
+          "Three.js",
+          "TTS"
+        ],
         "githubUrl": "https://github.com/kaitran225/project_cybria",
         "demoUrl": "/assets/Development/AI/43430418490571152361.mp4",
         "images": [
@@ -380,8 +475,21 @@
         "description": "Production-ready microservice optimized for 2MB RAM usage with JWT security and role-based access.",
         "longDescription": "A highly optimized notification microservice built with Node.js and designed for minimal resource consumption while maintaining production-grade features. The service operates with only 2MB of RAM usage while supporting JWT authentication, role-based access control, and efficient database operations.",
         "thumbnail": "/assets/Development/NotiService/microservice-architecture.jpg",
-        "tags": ["Node.js", "JavaScript", "JWT", "MySQL", "Docker"],
-        "technologies": ["Node.js", "Express", "MySQL", "JWT", "Docker", "Docker Compose"],
+        "tags": [
+          "Node.js",
+          "JavaScript",
+          "JWT",
+          "MySQL",
+          "Docker"
+        ],
+        "technologies": [
+          "Node.js",
+          "Express",
+          "MySQL",
+          "JWT",
+          "Docker",
+          "Docker Compose"
+        ],
         "githubUrl": "https://github.com/kaitran225/NotiService",
         "images": [
           "/assets/Development/NotiService/api-docs.jpg",
@@ -416,8 +524,22 @@
         "description": "Python-based automation system using computer vision for game automation with PyQt6 interface.",
         "longDescription": "An advanced computer vision automation system built with Python, featuring real-time screen capture, image processing, and automated control mechanisms. The system includes a modern PyQt6 interface and sophisticated pattern recognition algorithms.",
         "thumbnail": "/assets/Development/AutoFish/13316622383915059719.mp4",
-        "tags": ["Python", "Computer Vision", "PyQt6", "Automation", "Image Processing"],
-        "technologies": ["Python", "OpenCV", "PyQt6", "NumPy", "PIL", "Threading", "Screen Capture"],
+        "tags": [
+          "Python",
+          "Computer Vision",
+          "PyQt6",
+          "Automation",
+          "Image Processing"
+        ],
+        "technologies": [
+          "Python",
+          "OpenCV",
+          "PyQt6",
+          "NumPy",
+          "PIL",
+          "Threading",
+          "Screen Capture"
+        ],
         "githubUrl": "https://github.com/kaitran225/AutoFishing",
         "demoUrl": "/assets/Development/AutoFish/13316622383915059719.mp4",
         "images": [
@@ -454,8 +576,21 @@
         "description": "Cross-platform camera testing application built with Java and Flutter for comprehensive device testing.",
         "longDescription": "A comprehensive camera testing and validation system developed for multiple platforms, featuring Java backend services and Flutter mobile interface. The system provides detailed camera diagnostics and performance analysis.",
         "thumbnail": "/assets/Development/CheckCam/475204197909730576718.mp4",
-        "tags": ["Java", "Flutter", "Cross-Platform", "Camera API", "Device Testing"],
-        "technologies": ["Java", "Flutter", "Dart", "Android Studio", "Camera2 API", "REST API"],
+        "tags": [
+          "Java",
+          "Flutter",
+          "Cross-Platform",
+          "Camera API",
+          "Device Testing"
+        ],
+        "technologies": [
+          "Java",
+          "Flutter",
+          "Dart",
+          "Android Studio",
+          "Camera2 API",
+          "REST API"
+        ],
         "githubUrl": "https://github.com/kaitran225/CameraCheck",
         "demoUrl": "/assets/Development/CheckCam/475204197909730576718.mp4",
         "images": [
@@ -491,8 +626,21 @@
         "description": "Advanced Unity-based procedural terrain generation system with biome distribution and custom editor tools.",
         "longDescription": "A sophisticated procedural terrain generation system built in Unity using C# and advanced mathematical algorithms. This project demonstrates expertise in game development, procedural content generation, and Unity Editor extensibility.",
         "thumbnail": "/assets/Development/CSharpMapGenerator/Untitled .png",
-        "tags": ["C#", "Unity", "Procedural Generation", "Game Development", "Algorithm Design"],
-        "technologies": ["C#", "Unity Engine", "Custom Editor Tools", "Perlin Noise", "Data Serialization", "Performance Optimization"],
+        "tags": [
+          "C#",
+          "Unity",
+          "Procedural Generation",
+          "Game Development",
+          "Algorithm Design"
+        ],
+        "technologies": [
+          "C#",
+          "Unity Engine",
+          "Custom Editor Tools",
+          "Perlin Noise",
+          "Data Serialization",
+          "Performance Optimization"
+        ],
         "githubUrl": "https://github.com/kaitran225/CSharpMapGenerator",
         "demoUrl": "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4",
         "images": [
@@ -533,8 +681,20 @@
         "description": "Collection of experimental game prototypes and mechanics built in Unity for learning and experimentation.",
         "longDescription": "A comprehensive collection of game prototypes and experimental mechanics developed in Unity, showcasing various game development concepts, mechanics, and technical implementations.",
         "thumbnail": "/assets/Development/GamePrototype/placeholder.jpg",
-        "tags": ["Unity", "C#", "Game Development", "Prototyping", "Mechanics"],
-        "technologies": ["Unity Engine", "C#", "Physics Systems", "Animation", "UI Systems"],
+        "tags": [
+          "Unity",
+          "C#",
+          "Game Development",
+          "Prototyping",
+          "Mechanics"
+        ],
+        "technologies": [
+          "Unity Engine",
+          "C#",
+          "Physics Systems",
+          "Animation",
+          "UI Systems"
+        ],
         "githubUrl": "https://github.com/kaitran225/GamePrototypes",
         "images": [],
         "features": [
@@ -562,8 +722,19 @@
         "description": "Custom tools and utilities for 3D environment design and level creation workflows.",
         "longDescription": "A suite of custom tools and utilities designed to streamline 3D environment creation and level design workflows, featuring automation scripts and designer-friendly interfaces.",
         "thumbnail": "/assets/Development/EnviornmentDesign/placeholder.jpg",
-        "tags": ["3D Design", "Tools", "Workflow", "Automation", "Level Design"],
-        "technologies": ["Python", "3D Graphics", "Automation Scripts", "Workflow Tools"],
+        "tags": [
+          "3D Design",
+          "Tools",
+          "Workflow",
+          "Automation",
+          "Level Design"
+        ],
+        "technologies": [
+          "Python",
+          "3D Graphics",
+          "Automation Scripts",
+          "Workflow Tools"
+        ],
         "githubUrl": "https://github.com/kaitran225/EnvironmentDesignTools",
         "images": [],
         "features": [
@@ -591,8 +762,20 @@
         "description": "Cross-platform Flutter mobile application for comprehensive travel planning and management.",
         "longDescription": "A comprehensive travel planning mobile application built with Flutter and Dart, featuring cross-platform compatibility, RESTful API integration, and modern mobile UI design. The app provides travel planning tools, destination management, and itinerary organization.",
         "thumbnail": "/assets/Development/TravelPlanner/placeholder.jpg",
-        "tags": ["Flutter", "Dart", "Mobile Development", "Cross-Platform", "Travel"],
-        "technologies": ["Flutter", "Dart", "REST API", "Material Design", "Cross-Platform"],
+        "tags": [
+          "Flutter",
+          "Dart",
+          "Mobile Development",
+          "Cross-Platform",
+          "Travel"
+        ],
+        "technologies": [
+          "Flutter",
+          "Dart",
+          "REST API",
+          "Material Design",
+          "Cross-Platform"
+        ],
         "githubUrl": "https://github.com/kaitran225/travelPlanner",
         "images": [
           "/assets/Development/TravelPlanner/app-screenshot-1.jpg",
@@ -626,8 +809,21 @@
         "description": "Professional C# WPF desktop application with real-time chat filtering and comprehensive server integration.",
         "longDescription": "A sophisticated chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design. This project demonstrates enterprise-level desktop application development with 146 commits of comprehensive development.",
         "thumbnail": "/assets/Development/Desktop v1/chatbox-app.jpg",
-        "tags": ["C#", "WPF", "Desktop Development", "Real-time Chat", "Content Filtering"],
-        "technologies": ["C#", "WPF", "ASP.NET Core", "Entity Framework", "SignalR", "SQL Server"],
+        "tags": [
+          "C#",
+          "WPF",
+          "Desktop Development",
+          "Real-time Chat",
+          "Content Filtering"
+        ],
+        "technologies": [
+          "C#",
+          "WPF",
+          "ASP.NET Core",
+          "Entity Framework",
+          "SignalR",
+          "SQL Server"
+        ],
         "githubUrl": "https://github.com/kaitran225/AntiSwearingChatBox",
         "images": [
           "/assets/Development/Desktop v1/main-chat-interface.jpg",
@@ -666,8 +862,20 @@
         "description": "Comprehensive C# desktop development coursework demonstrating academic excellence and practical application skills.",
         "longDescription": "A complete series of C# desktop development projects from FPT University coursework, including 32 structured exercises, perfume management system, and automated development tools. This collection demonstrates strong academic foundation and progression in desktop application development.",
         "thumbnail": "/assets/Development/PRN212/coursework-overview.jpg",
-        "tags": ["C#", "Academic Projects", "Desktop Development", "SQL Integration", "WPF"],
-        "technologies": ["C#", "WPF", "SQL Server", "Entity Framework", "MVVM Pattern"],
+        "tags": [
+          "C#",
+          "Academic Projects",
+          "Desktop Development",
+          "SQL Integration",
+          "WPF"
+        ],
+        "technologies": [
+          "C#",
+          "WPF",
+          "SQL Server",
+          "Entity Framework",
+          "MVVM Pattern"
+        ],
         "githubUrl": "https://github.com/kaitran225/PRN212",
         "images": [
           "/assets/Development/PRN212/exercise-examples.jpg",
@@ -711,8 +919,17 @@
         "description": "Complete brand identity system and packaging design for Zenna brand.",
         "longDescription": "Comprehensive brand identity development including logo design, visual identity guidelines, packaging design, and marketing materials. The project showcases modern branding techniques and sophisticated package design execution.",
         "thumbnail": "/assets/GraphicDesgin/Zenna/12215.jpg",
-        "tags": ["Brand Identity", "Package Design", "Logo Design", "Marketing Materials"],
-        "tools": ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign"],
+        "tags": [
+          "Brand Identity",
+          "Package Design",
+          "Logo Design",
+          "Marketing Materials"
+        ],
+        "tools": [
+          "Adobe Illustrator",
+          "Adobe Photoshop",
+          "Adobe InDesign"
+        ],
         "images": {
           "final": [
             "/assets/GraphicDesgin/Zenna/12215.jpg",
@@ -763,8 +980,17 @@
         "description": "Modern UI design system for Heaven Gateway application interface.",
         "longDescription": "Complete user interface design for Heaven Gateway application, featuring modern design principles, intuitive navigation, and comprehensive UI component library.",
         "thumbnail": "/assets/GraphicDesgin/HeavenGateway/Asset 1GateWay.png",
-        "tags": ["UI Design", "Interface Design", "Design System", "Mobile UI"],
-        "tools": ["Figma", "Adobe XD", "Sketch"],
+        "tags": [
+          "UI Design",
+          "Interface Design",
+          "Design System",
+          "Mobile UI"
+        ],
+        "tools": [
+          "Figma",
+          "Adobe XD",
+          "Sketch"
+        ],
         "images": {
           "final": [
             "/assets/GraphicDesgin/HeavenGateway/Asset 1GateWay.png",
@@ -796,8 +1022,16 @@
         "description": "Personal brand identity development and visual design system.",
         "longDescription": "Development of personal brand identity including logo design, visual guidelines, and professional presentation materials for personal branding and professional presence.",
         "thumbnail": "/assets/GraphicDesgin/KaiTran/Asset 1TTPL.png",
-        "tags": ["Personal Branding", "Logo Design", "Visual Identity", "Professional Materials"],
-        "tools": ["Adobe Illustrator", "Adobe Photoshop"],
+        "tags": [
+          "Personal Branding",
+          "Logo Design",
+          "Visual Identity",
+          "Professional Materials"
+        ],
+        "tools": [
+          "Adobe Illustrator",
+          "Adobe Photoshop"
+        ],
         "images": {
           "final": [
             "/assets/GraphicDesgin/KaiTran/Asset 1TTPL.png",
@@ -826,8 +1060,16 @@
         "description": "Brand identity and marketing material design for KoteZone.",
         "longDescription": "Complete brand development for KoteZone including logo design, brand identity guidelines, and comprehensive marketing materials for digital and print applications.",
         "thumbnail": "/assets/GraphicDesgin/KoteZone/placeholder.jpg",
-        "tags": ["Brand Design", "Marketing Materials", "Logo Design", "Digital Design"],
-        "tools": ["Adobe Creative Suite", "Figma"],
+        "tags": [
+          "Brand Design",
+          "Marketing Materials",
+          "Logo Design",
+          "Digital Design"
+        ],
+        "tools": [
+          "Adobe Creative Suite",
+          "Figma"
+        ],
         "images": {
           "final": []
         },
@@ -851,8 +1093,17 @@
         "description": "Visual identity and interface design for cloud services platform.",
         "longDescription": "Comprehensive visual identity development for cloud services platform, including interface design, iconography, and user experience optimization.",
         "thumbnail": "/assets/GraphicDesgin/Cloud/placeholder.jpg",
-        "tags": ["Visual Identity", "Cloud Design", "Interface Design", "Iconography"],
-        "tools": ["Adobe Creative Suite", "Sketch", "Figma"],
+        "tags": [
+          "Visual Identity",
+          "Cloud Design",
+          "Interface Design",
+          "Iconography"
+        ],
+        "tools": [
+          "Adobe Creative Suite",
+          "Sketch",
+          "Figma"
+        ],
         "images": {
           "final": []
         },
@@ -876,8 +1127,17 @@
         "description": "Food brand identity and packaging design for donut products.",
         "longDescription": "Complete food brand development including packaging design, visual identity, and marketing materials specifically designed for donut products and bakery brand positioning.",
         "thumbnail": "/assets/GraphicDesgin/Donut/placeholder.jpg",
-        "tags": ["Food Branding", "Package Design", "Product Design", "Brand Identity"],
-        "tools": ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign"],
+        "tags": [
+          "Food Branding",
+          "Package Design",
+          "Product Design",
+          "Brand Identity"
+        ],
+        "tools": [
+          "Adobe Illustrator",
+          "Adobe Photoshop",
+          "Adobe InDesign"
+        ],
         "images": {
           "final": []
         },
@@ -901,8 +1161,16 @@
         "description": "Complete restaurant brand identity and marketing material design.",
         "longDescription": "Comprehensive restaurant branding project including logo design, menu design, restaurant interior graphics, and complete marketing material system for Noddle restaurant brand.",
         "thumbnail": "/assets/GraphicDesgin/Noddle/placeholder.jpg",
-        "tags": ["Restaurant Branding", "Menu Design", "Food Service Design", "Marketing Materials"],
-        "tools": ["Adobe Creative Suite", "Typography Design"],
+        "tags": [
+          "Restaurant Branding",
+          "Menu Design",
+          "Food Service Design",
+          "Marketing Materials"
+        ],
+        "tools": [
+          "Adobe Creative Suite",
+          "Typography Design"
+        ],
         "images": {
           "final": []
         },
@@ -926,8 +1194,16 @@
         "description": "Visual campaign design for International Women's Day celebration.",
         "longDescription": "Creative campaign design for International Women's Day including social media graphics, promotional materials, and event branding with empowering visual messaging.",
         "thumbnail": "/assets/GraphicDesgin/WomenDay/placeholder.jpg",
-        "tags": ["Campaign Design", "Social Media Design", "Event Branding", "Promotional Design"],
-        "tools": ["Adobe Creative Suite", "Social Media Templates"],
+        "tags": [
+          "Campaign Design",
+          "Social Media Design",
+          "Event Branding",
+          "Promotional Design"
+        ],
+        "tools": [
+          "Adobe Creative Suite",
+          "Social Media Templates"
+        ],
         "images": {
           "final": []
         },
@@ -951,8 +1227,17 @@
         "description": "Typography exploration and design system using RobotoSlab font family.",
         "longDescription": "Comprehensive typography project exploring the RobotoSlab font family, including type specimen design, layout applications, and typographic hierarchy demonstrations.",
         "thumbnail": "/assets/GraphicDesgin/RobotoSlab/placeholder.jpg",
-        "tags": ["Typography", "Font Design", "Layout Design", "Type Specimen"],
-        "tools": ["Adobe InDesign", "Adobe Illustrator", "Typography Tools"],
+        "tags": [
+          "Typography",
+          "Font Design",
+          "Layout Design",
+          "Type Specimen"
+        ],
+        "tools": [
+          "Adobe InDesign",
+          "Adobe Illustrator",
+          "Typography Tools"
+        ],
         "images": {
           "final": []
         },
@@ -974,55 +1259,99 @@
         "name": "Web Development",
         "title": "Full-Stack Web Applications",
         "description": "Modern web applications built with React, TypeScript, and cloud technologies.",
-        "tech": ["React 19", "TypeScript", "Spring Boot", "Docker"]
+        "tech": [
+          "React 19",
+          "TypeScript",
+          "Spring Boot",
+          "Docker"
+        ]
       },
       {
         "name": "AI & Machine Learning",
         "title": "AI-Powered Applications",
         "description": "Advanced AI integration with local models, computer vision, and automation systems.",
-        "tech": ["Python", "Ollama", "Computer Vision", "FastAPI"]
+        "tech": [
+          "Python",
+          "Ollama",
+          "Computer Vision",
+          "FastAPI"
+        ]
       },
       {
         "name": "Mobile Development",
         "title": "Cross-Platform Mobile Apps",
         "description": "Flutter and native mobile applications with modern UI/UX design.",
-        "tech": ["Flutter", "Dart", "Java", "Cross-Platform"]
+        "tech": [
+          "Flutter",
+          "Dart",
+          "Java",
+          "Cross-Platform"
+        ]
       },
       {
         "name": "Desktop Applications",
         "title": "Professional Desktop Software",
         "description": "C# WPF applications, Unity tools, and desktop automation systems.",
-        "tech": ["C#", "WPF", "Unity", "PyQt6"]
+        "tech": [
+          "C#",
+          "WPF",
+          "Unity",
+          "PyQt6"
+        ]
       },
       {
         "name": "Microservices",
         "title": "Production Microservices",
         "description": "Ultra-optimized services with JWT security and cloud deployment.",
-        "tech": ["Node.js", "Docker", "JWT", "MySQL"]
+        "tech": [
+          "Node.js",
+          "Docker",
+          "JWT",
+          "MySQL"
+        ]
       },
       {
         "name": "Game Development",
         "title": "Unity & C# Game Projects",
         "description": "Procedural generation systems, game prototypes, and Unity tool development.",
-        "tech": ["C#", "Unity", "Procedural Generation", "Custom Tools"]
+        "tech": [
+          "C#",
+          "Unity",
+          "Procedural Generation",
+          "Custom Tools"
+        ]
       },
       {
         "name": "Backend Systems",
         "title": "Enterprise Backend Solutions",
         "description": "Production-grade APIs, microservices, and database systems serving real users.",
-        "tech": ["Spring Boot", "Node.js", "MySQL", "JWT"]
+        "tech": [
+          "Spring Boot",
+          "Node.js",
+          "MySQL",
+          "JWT"
+        ]
       },
       {
         "name": "Brand Design",
         "title": "Visual Identity & Branding",
         "description": "Complete brand identity systems, packaging design, and marketing materials.",
-        "tech": ["Adobe Creative Suite", "Brand Strategy", "Package Design"]
+        "tech": [
+          "Adobe Creative Suite",
+          "Brand Strategy",
+          "Package Design"
+        ]
       },
       {
         "name": "UI/UX Design",
         "title": "Interface & Experience Design",
         "description": "Modern UI designs, design systems, and user experience optimization.",
-        "tech": ["Figma", "Design Systems", "Prototyping", "User Research"]
+        "tech": [
+          "Figma",
+          "Design Systems",
+          "Prototyping",
+          "User Research"
+        ]
       }
     ]
   },
@@ -1077,10 +1406,26 @@
   },
   "calendar": {
     "availableSlots": [
-      { "time": "Tomorrow 10:00 AM", "available": true, "type": "consultation" },
-      { "time": "Tomorrow 2:00 PM", "available": true, "type": "call" },
-      { "time": "Friday 11:00 AM", "available": true, "type": "meeting" },
-      { "time": "Friday 3:00 PM", "available": false, "type": "call" }
+      {
+        "time": "Tomorrow 10:00 AM",
+        "available": true,
+        "type": "consultation"
+      },
+      {
+        "time": "Tomorrow 2:00 PM",
+        "available": true,
+        "type": "call"
+      },
+      {
+        "time": "Friday 11:00 AM",
+        "available": true,
+        "type": "meeting"
+      },
+      {
+        "time": "Friday 3:00 PM",
+        "available": false,
+        "type": "call"
+      }
     ],
     "scheduleOptions": [
       {
