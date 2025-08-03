@@ -231,7 +231,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                 scale: 1.00,
                 opacity: 0.1, // Reduced opacity for better readability
                 scaleMobile: 0.8, // Reduce complexity on mobile
-                color: 0xff6b6b, // Design-specific coral color
+                color: 0x6633ff, // Design-specific purple color
                 backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
                 points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
                 maxDistance: window.innerWidth < 768 ? 15 : 20,
@@ -1306,7 +1306,7 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
 const ContentContainer = styled.div<ContentContainerProps>`
   max-width: 1400px;
   margin: 20px auto;
-  padding: 60px 20px;
+  padding: 60px 80px;
   backdrop-filter: blur(10px);
   border-radius: 12px;
   border: 0.5px solid var(--color-purple-secondary);
@@ -1455,7 +1455,7 @@ const LongDescription = styled.p`
 `;
 
 const ImageGallery = styled.div`
-  margin-bottom: 60px;
+  margin : 60px auto;
   animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
   @keyframes fadeInScale {
@@ -1473,23 +1473,23 @@ const ImageGallery = styled.div`
 const MainImage = styled.div`
   margin-bottom: 20px;
   border-radius: 8px;
+  margin: 0 auto;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
-  width: 100%;
+  min-width: 300px;
+  max-width: 70%;
   min-height: 300px;
-  max-height: 80vh;
+  max-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.1);
   
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
@@ -1510,8 +1510,6 @@ const MainImage = styled.div`
   }
   
   img {
-    width: 100%;
-    height: auto;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -1540,8 +1538,8 @@ const MainImage = styled.div`
 const ImageThumbnails = styled.div`
   display: flex;
   gap: 15px;
-  overflow-x: auto;
-  padding: 10px 0;
+  overflow-x: scroll;
+  padding: 20px 0;
   
   /* Custom scrollbar */
   &::-webkit-scrollbar {
@@ -1560,13 +1558,13 @@ const ImageThumbnails = styled.div`
   }
   
   &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, var(--color-green-primary), var(--color-purple-primary));
-  }
+    background: linear-gradient(90deg, var(--color-purple-secondary), var(--color-green-secondary));}
 `;
 
 const Thumbnail = styled.div<{ $active: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
+  margin: 0 auto;
   border-radius: 6px;
   overflow: hidden;
   border: 3px solid ${props => props.$active ? 'var(--color-green-primary)' : 'transparent'};
@@ -1595,7 +1593,6 @@ const Thumbnail = styled.div<{ $active: boolean }>`
   &:hover {
     border-color: ${props => props.$active ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
   
   &:hover::before {

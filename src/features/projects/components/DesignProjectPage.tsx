@@ -1470,41 +1470,136 @@ const CategoryTab = styled.button<{ $active: boolean }>`
 
 const MainImage = styled.div`
   margin-bottom: 20px;
-  border-radius: 15px;
+  border-radius: 8px;
+  margin: 0 auto;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  min-width: 300px;
+  max-width: 70%;
+  min-height: 300px;
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
   
   img {
-    width: 100%;
-    height: 500px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    background: rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  &:hover img, &:hover video {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    min-height: 200px;
+    max-height: 60vh;
   }
 `;
 
 const ImageThumbnails = styled.div`
   display: flex;
   gap: 15px;
-  overflow-x: auto;
-  padding: 10px 0;
+  overflow-x: scroll;
+  padding: 20px 0;
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--color-purple-primary), var(--color-green-primary));
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, var(--color-purple-secondary), var(--color-green-secondary));}
 `;
 
 const Thumbnail = styled.div<{ $active: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
-  border-radius: 8px;
+  margin: 0 auto;
+  border-radius: 6px;
   overflow: hidden;
-  border: 3px solid ${props => props.$active ? 'var(--color-accent)' : 'transparent'};
-  transition: all 0.3s ease;
+  border: 3px solid ${props => props.$active ? 'var(--color-green-primary)' : 'transparent'};
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
   
-  img {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-purple-primary)30, var(--color-green-primary)30);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  img, video {
     width: 80px;
     height: 60px;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
   &:hover {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: ${props => props.$active ? 'var(--color-green-primary)' : 'var(--color-purple-primary)'};
+    transform: translateY(-2px) scale(1.05);
+  }
+  
+  &:hover::before {
+    opacity: 0.2;
+  }
+  
+  &:hover img, &:hover video {
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(1);
+    transition: all 0.1s ease;
   }
 `;
 
