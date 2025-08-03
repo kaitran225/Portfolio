@@ -703,9 +703,10 @@ const EducationItem = styled.div`
   margin-bottom: 25px;
   padding: 15px;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 8px 8px;
+  border-left: 20px solid #2563eb;
   border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -971,7 +972,8 @@ const FrameworksList = styled.ul`
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
+  gap: 10px;
+  
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -980,10 +982,10 @@ const FrameworksList = styled.ul`
   li {
     padding: 4px 8px;
     background: #f8fafc;
+  border: 1px solid #e2e8f0;
     border-radius: 4px;
     font-size: 10px;
     color: #475569;
-    border-left: 2px solid #2563eb;
     transition: all 0.2s ease;
     line-height: 1.3;
 
