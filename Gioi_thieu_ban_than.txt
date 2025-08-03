@@ -1,0 +1,52 @@
+GIỚI THIỆU NGẮN VỀ BẢN THÂN
+
+Trần Nguyên Khánh - Sinh viên Khoa học Máy tính, Full-Stack Developer
+
+• Vị trí mong muốn: 
+  - Thực tập sinh phát triển phần mềm (OJT Fall 2025)
+  - Tập trung vào vị trí Backend Developer
+
+• Năng lực chuyên môn:
+  - Thành thạo 15+ ngôn ngữ lập trình và framework (TypeScript/JavaScript, Java Spring Boot, C#, Python, Dart/Flutter)
+  - Kinh nghiệm phát triển ứng dụng full-stack từ frontend (React, TypeScript) đến backend (Spring Boot, Node.js)
+  - Chuyên môn về kiến trúc microservices và triển khai ứng dụng trên cloud
+
+• Kỹ năng công nghệ:
+  - Frontend: React 19, TypeScript, Styled Components, Three.js, responsive design
+  - Backend: Java Spring Boot, Node.js, Python FastAPI, RESTful APIs, JWT authentication
+  - Database: MySQL, thiết kế CSDL, tối ưu hóa query
+  - DevOps: Docker, CI/CD, cloud deployment (Render.com, Aiven)
+  - Mobile: Flutter/Dart cho ứng dụng đa nền tảng
+
+• Sở trường và năng khiếu:
+  - Tích hợp AI và Machine Learning (Ollama model, computer vision với OpenCV)
+  - Tối ưu hóa hiệu suất ứng dụng (microservice 2MB RAM) (NotiService)
+  - Thiết kế giao diện người dùng hiện đại và responsive
+
+• Kinh nghiệm làm việc thực tế:
+  - 17 repository công khai với 1000+ commits, chứng minh khả năng phát triển liên tục
+  - 3 ứng dụng production đang hoạt động với người dùng thực:
+    * Website Portfolio cá nhân với kiến trúc TypeScript chuyên nghiệp (www.cybriadev.com)
+    * Backend API cho ứng dụng chăm sóc sức khỏe tâm thần (667 commits, 3 contributors) (Back-End for MentalHealthCareSystem)
+    * Microservice thông báo tối ưu hóa cho môi trường production
+  - Kinh nghiệm làm việc nhóm với nhiều contributor trên các dự án thực tế
+
+• Thành tích nổi bật:
+  - Phát triển trợ lý AI Cybria và xử lý ngôn ngữ tự nhiên (Ollama)
+  - Tạo ứng dụng desktop WPF với 146 commits (AntiSwearingChatBox)
+  - Ứng dụng automation hỗ trợ xử lý với computer vision với PyQt6
+
+• Khả năng học hỏi và thích ứng:
+  - Nhanh chóng làm quen với công nghệ mới (AI integration, WebRTC, 3D graphics)
+  - Kinh nghiệm self-learning và áp dụng best practices trong development
+  - Thành thạo Git workflow và collaboration practices chuyên nghiệp
+  - Có khả năng documentation và trình bày kỹ thuật rõ ràng
+
+• Mục tiêu phát triển:
+  - Tham gia vào các dự án enterprise-level để nâng cao kỹ năng architecture
+  - Học hỏi thêm về cloud platforms (AWS, Azure) và advanced testing strategies
+  - Phát triển expertise trong lĩnh vực AI/ML integration cho business applications
+
+---
+Liên hệ: GitHub @kaitran225
+Ngày cập nhật: 3 tháng 8, 2025
