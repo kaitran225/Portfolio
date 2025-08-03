@@ -30,7 +30,7 @@ const HTMLCV: React.FC = () => {
 
   const handleDownloadPDF = async () => {
     let styleElement: HTMLStyleElement | null = null;
-    
+
     try {
       // Show loading state
       const button = document.querySelector('[data-download-button]') as HTMLButtonElement;
@@ -60,26 +60,11 @@ const HTMLCV: React.FC = () => {
       `;
       document.head.appendChild(styleElement);
 
-      // Wait a moment for styles to apply
+      // Wait a moment for styles to apply and images to settle
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Wait a bit more after forcing sizes
       await new Promise(resolve => setTimeout(resolve, 200));
-
-      // Ensure all images are loaded before capturing
-      const images = cvElement.querySelectorAll('img');
-      const imagePromises = Array.from(images).map(img => {
-        return new Promise((resolve) => {
-          if (img.complete) {
-            resolve(img);
-          } else {
-            img.onload = () => resolve(img);
-            img.onerror = () => resolve(img); // Resolve even on error to not block
-            // Set a timeout to prevent hanging
-            setTimeout(() => resolve(img), 3000);
-          }
-        });
-      });
-
-      // Wait for all images to load (or timeout)
-      await Promise.all(imagePromises);
 
       // Create high-quality canvas
       const canvas = await html2canvas(cvElement, {
@@ -90,23 +75,8 @@ const HTMLCV: React.FC = () => {
         width: cvElement.scrollWidth,
         height: cvElement.scrollHeight,
         logging: false, // Disable logging to avoid console spam
-        foreignObjectRendering: true, // Better rendering for external content
-        imageTimeout: 5000, // Wait up to 5 seconds for images
-        onclone: (clonedDoc) => {
-          // Ensure all images are visible and loaded in the cloned document
-          const clonedImages = clonedDoc.querySelectorAll('img');
-          clonedImages.forEach(img => {
-            img.style.display = 'block';
-            img.style.visibility = 'visible';
-            img.style.opacity = '1';
-            // Force reload if not loaded
-            if (!img.complete) {
-              const src = img.src;
-              img.src = '';
-              img.src = src;
-            }
-          });
-        }
+        imageTimeout: 15000, // Wait up to 15 seconds for images
+        removeContainer: true,
       });
 
       // Calculate PDF dimensions (A4 in mm)
@@ -138,11 +108,11 @@ const HTMLCV: React.FC = () => {
 
       // Add image to single page, scaled to fit
       pdf.addImage(
-        canvas.toDataURL('image/png'), 
-        'PNG', 
-        xOffset, 
-        yOffset, 
-        imgWidth, 
+        canvas.toDataURL('image/png'),
+        'PNG',
+        xOffset,
+        yOffset,
+        imgWidth,
         imgHeight
       );
 
@@ -223,198 +193,215 @@ const HTMLCV: React.FC = () => {
           <Header>
             <NameSection>
               <Name>TRẦN NGUYÊN KHÁNH</Name>
-            <JobTitle>SOFTWARE ENGINEER</JobTitle>
-          </NameSection>
-          <ProfilePhoto>
-            <img src="/assets/cv/Profile.JPG" alt="Profile Photo" />
-          </ProfilePhoto>
-        </Header>
+              <JobTitle>SOFTWARE ENGINEER</JobTitle>
+            </NameSection>
+            <ProfilePhoto>
+              <img
+                src="/assets/cv/Profile.JPG"
+                alt="Profile Photo"
+                crossOrigin="anonymous"
+                loading="eager"
+                onLoad={(e) => {
+                  // Ensure image is properly loaded for PDF generation
+                  const img = e.target as HTMLImageElement;
+                  img.style.opacity = '1';
+                }}
+              />
+            </ProfilePhoto>
+          </Header>
 
-        {/* Left Sidebar */}
-        <Sidebar>
-          <ContactSection>
-            <SectionTitle>CONTACT</SectionTitle>
-            <ContactItem onClick={() => handleCopyToClipboard('+84339961844', 'phone')}>
-              <i className="fas fa-phone"></i>
-              <CopyableText>
-                +84 339961844
-                {copiedText === 'phone' && <CopiedIndicator>Copied!</CopiedIndicator>}
-              </CopyableText>
-            </ContactItem>
-            <ContactItem onClick={() => handleCopyToClipboard('kaitran225@gmail.com', 'email')}>
-              <i className="fas fa-envelope"></i>
-              <CopyableText>
-                kaitran225@gmail.com
-                {copiedText === 'email' && <CopiedIndicator>Copied!</CopiedIndicator>}
-              </CopyableText>
-            </ContactItem>
-            <ContactItem>
-              <i className="fas fa-map-marker-alt"></i>
-              <a href="https://maps.google.com/?q=Thủ+Dầu+Một,+Bình+Dương,+Vietnam" target="_blank" rel="noopener noreferrer">
-                Thủ Dầu Một, Bình Dương
-              </a>
-            </ContactItem>
-            <ContactItem>
-              <i className="fab fa-github"></i>
-              <a href="https://github.com/kaitran225" target="_blank" rel="noopener noreferrer">
-                github.com/kaitran225
-              </a>
-            </ContactItem>
-            <ContactItem>
-              <i className="fab fa-linkedin"></i>
-              <a href="https://linkedin.com/in/kaitran2205" target="_blank" rel="noopener noreferrer">
-                linkedin.com/in/kaitran2205
-              </a>
-            </ContactItem>
-            <ContactItem>
-              <i className="fab fa-globe"></i>
-              <a href="http://www.cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
-                cybriadev.com/Portfolio
-              </a>
-            </ContactItem>
-          </ContactSection>
-
-          <ContentSection>
-            <SectionTitle>PROGRAMMING LANGUAGES</SectionTitle>
-            <ProgrammingSkillsList>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
-                <SkillName>Java</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>8 projects</SkillDetailLine>
-                  <SkillDetailLine>3 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
-                <SkillName>C#</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>5 projects</SkillDetailLine>
-                  <SkillDetailLine>2 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
-                <SkillName>JavaScript & TypeScript</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>12 projects</SkillDetailLine>
-                  <SkillDetailLine>4 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
-                <SkillName>Python</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>6 projects</SkillDetailLine>
-                  <SkillDetailLine>2 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" alt="Dart" />
-                <SkillName>Dart (Flutter)</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>3 projects</SkillDetailLine>
-                  <SkillDetailLine>1 year</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" />
-                <SkillName>SQL</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>10 projects</SkillDetailLine>
-                  <SkillDetailLine>3 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
-                <SkillName>HTML5 & CSS3</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>15 projects</SkillDetailLine>
-                  <SkillDetailLine>4 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-              <ProgrammingSkillItem>
-                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" />
-                <SkillName>PowerShell & Bash</SkillName>
-                <SkillDetails>
-                  <SkillDetailLine>4 projects</SkillDetailLine>
-                  <SkillDetailLine>2 years</SkillDetailLine>
-                </SkillDetails>
-              </ProgrammingSkillItem>
-            </ProgrammingSkillsList>
-          </ContentSection>
-
-
-          <ContentSection>
-            <QRSection>
-              <QRCode>
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=http://cybriadev.com/"
-                  alt="Portfolio QR Code"
-                />
-              </QRCode>
-              <QRText>
-                <p>Scan to view my portfolio</p>
-                <a href="http://cybriadev.com/" target="_blank" rel="noopener noreferrer">
-                  wwww.cybriadev.com
+          {/* Left Sidebar */}
+          <Sidebar>
+            <ContactSection>
+              <SectionTitle>CONTACT</SectionTitle>
+              <ContactItem onClick={() => handleCopyToClipboard('+84339961844', 'phone')}>
+                <i className="fas fa-phone"></i>
+                <CopyableText>
+                  +84 339961844
+                  {copiedText === 'phone' && <CopiedIndicator>Copied!</CopiedIndicator>}
+                </CopyableText>
+              </ContactItem>
+              <ContactItem onClick={() => handleCopyToClipboard('kaitran225@gmail.com', 'email')}>
+                <i className="fas fa-envelope"></i>
+                <CopyableText>
+                  kaitran225@gmail.com
+                  {copiedText === 'email' && <CopiedIndicator>Copied!</CopiedIndicator>}
+                </CopyableText>
+              </ContactItem>
+              <ContactItem>
+                <i className="fas fa-map-marker-alt"></i>
+                <a href="https://maps.google.com/?q=Thủ+Dầu+Một,+Bình+Dương,+Vietnam" target="_blank" rel="noopener noreferrer">
+                  Thủ Dầu Một, Bình Dương
                 </a>
-              </QRText>
-            </QRSection>
-          </ContentSection>
-        </Sidebar>
+              </ContactItem>
+              <ContactItem>
+                <i className="fab fa-github"></i>
+                <a href="https://github.com/kaitran225" target="_blank" rel="noopener noreferrer">
+                  github.com/kaitran225
+                </a>
+              </ContactItem>
+              <ContactItem>
+                <i className="fab fa-linkedin"></i>
+                <a href="https://linkedin.com/in/kaitran2205" target="_blank" rel="noopener noreferrer">
+                  linkedin.com/in/kaitran2205
+                </a>
+              </ContactItem>
+              <ContactItem>
+                <i className="fab fa-globe"></i>
+                <a href="http://www.cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
+                  cybriadev.com/Portfolio
+                </a>
+              </ContactItem>
+            </ContactSection>
 
-        {/* Main Content */}
-        <MainContent>
-          <ContentSection>
-            <SectionTitle>PROFILE</SectionTitle>
-            <ProfileText>
-              <strong>Software Engineer</strong> with a passion for building robust backend systems, interactive web applications, and scalable cloud services. Experienced in Spring Boot, TypeScript/React, and containerized deployments using Docker, Render, and Aiven. Skilled at integrating AI assistants, optimizing performance, and delivering full product experiences from backend to frontend. On the side, I also enjoy working on graphic design projects — blending technical precision with creative expression. Always eager to learn, collaborate, and bring ideas to life in clean, maintainable code.
-            </ProfileText>
-          </ContentSection>
-          <ContentSection>
-            <SectionTitle>EXPERIENCE</SectionTitle>
-            <ExperienceItem>
-              <ExperienceHeader>
-                <ExperienceLeft>
-                  <PositionTitle>SELF-TAUGHT SOFTWARE DEVELOPER</PositionTitle>
-                  <CompanyName>Independent Learning & Personal Projects</CompanyName>
-                </ExperienceLeft>
-                <DateRange>2020 - Present</DateRange>
-              </ExperienceHeader>
-              <JobResponsibilities>
-                <li>Self-directed learning of multiple programming languages including Java, C#, Python, and JavaScript</li>
-                <li>Built 17+ personal projects and repositories with 1000+ commits on GitHub</li>
-                <li>Developed full-stack applications using Spring Boot, React, and modern web technologies</li>
-                <li>Created mobile applications using Flutter and cross-platform development frameworks</li>
-                <li>Practiced enterprise development patterns including RESTful APIs, database design, and authentication</li>
-                <li>Continuously learning new technologies and staying updated with industry best practices</li>
-              </JobResponsibilities>
-            </ExperienceItem>
-          </ContentSection>
+            <ContentSection>
+              <SectionTitle>PROGRAMMING LANGUAGES</SectionTitle>
+              <ProgrammingSkillsList>
+                <ProgrammingSkillItem>
+                  <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+                  <SkillName>Java</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>8 projects</SkillDetailLine>
+                    <SkillDetailLine>3 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
+                  <SkillName>C#</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>5 projects</SkillDetailLine>
+                    <SkillDetailLine>2 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
+                  <SkillName>JavaScript & TypeScript</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>12 projects</SkillDetailLine>
+                    <SkillDetailLine>4 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+                  <SkillName>Python</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>6 projects</SkillDetailLine>
+                    <SkillDetailLine>2 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" alt="Dart" />
+                  <SkillName>Dart (Flutter)</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>3 projects</SkillDetailLine>
+                    <SkillDetailLine>1 year</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" />
+                  <SkillName>SQL</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>10 projects</SkillDetailLine>
+                    <SkillDetailLine>3 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <SkillName>HTML5 & CSS3</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>15 projects</SkillDetailLine>
+                    <SkillDetailLine>4 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+                <ProgrammingSkillItem>
+                  <SkillIcon style={{ width: '16px', height: '16px' }} src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" />
+                  <SkillName>PowerShell & Bash</SkillName>
+                  <SkillDetails>
+                    <SkillDetailLine>4 projects</SkillDetailLine>
+                    <SkillDetailLine>2 years</SkillDetailLine>
+                  </SkillDetails>
+                </ProgrammingSkillItem>
+              </ProgrammingSkillsList>
+            </ContentSection>
 
-          <ContentSection>
-            <SectionTitle>FRAMEWORKS & TOOLS</SectionTitle>
-            <FrameworksList>
-              <li>Spring Boot & Spring Framework</li>
-              <li>React.js & Node.js</li>
-              <li>Flutter & Dart SDK</li>
-              <li>MySQL & Database Design</li>
-              <li>Docker & Containerization</li>
-              <li>Git & Version Control</li>
-              <li>RESTful API Development</li>
-              <li>JWT Authentication</li>
-            </FrameworksList>
-          </ContentSection>
-          <ContentSection>
-            <SectionTitle>EDUCATION</SectionTitle>
-            <EducationItem>
-              <EducationTitle>Bachelor of Software Engineering</EducationTitle>
-              <EducationSchool>FPT University</EducationSchool>
-              <EducationDate>2022 - 2025</EducationDate>
-            </EducationItem>
-          </ContentSection>
-        </MainContent>
-      </A4Wrapper>
+
+            <ContentSection>
+              <QRSection>
+                <QRCode>
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=http://cybriadev.com/"
+                    alt="Portfolio QR Code"
+                    crossOrigin="anonymous"
+                    loading="eager"
+                    onLoad={(e) => {
+                      // Ensure image is properly loaded for PDF generation
+                      const img = e.target as HTMLImageElement;
+                      img.style.opacity = '1';
+                    }}
+                  />
+                </QRCode>
+                <QRText>
+                  <p>Scan to view my portfolio</p>
+                  <a href="http://cybriadev.com/" target="_blank" rel="noopener noreferrer">
+                    wwww.cybriadev.com
+                  </a>
+                </QRText>
+              </QRSection>
+            </ContentSection>
+          </Sidebar>
+
+          {/* Main Content */}
+          <MainContent>
+            <ContentSection>
+              <SectionTitle>PROFILE</SectionTitle>
+              <ProfileText>
+                <strong>Software Engineer</strong> with a passion for building robust backend systems, interactive web applications, and scalable cloud services. Experienced in Spring Boot, TypeScript/React, and containerized deployments using Docker, Render, and Aiven. Skilled at integrating AI assistants, optimizing performance, and delivering full product experiences from backend to frontend. On the side, I also enjoy working on graphic design projects — blending technical precision with creative expression. Always eager to learn, collaborate, and bring ideas to life in clean, maintainable code.
+              </ProfileText>
+            </ContentSection>
+            <ContentSection>
+              <SectionTitle>EXPERIENCE</SectionTitle>
+              <ExperienceItem>
+                <ExperienceHeader>
+                  <ExperienceLeft>
+                    <PositionTitle>SELF-TAUGHT SOFTWARE DEVELOPER</PositionTitle>
+                    <CompanyName>Independent Learning & Personal Projects</CompanyName>
+                  </ExperienceLeft>
+                  <DateRange>2020 - Present</DateRange>
+                </ExperienceHeader>
+                <JobResponsibilities>
+                  <li>Self-directed learning of multiple programming languages including Java, C#, Python, and JavaScript</li>
+                  <li>Built 17+ personal projects and repositories with 1000+ commits on GitHub</li>
+                  <li>Developed full-stack applications using Spring Boot, React, and modern web technologies</li>
+                  <li>Created mobile applications using Flutter and cross-platform development frameworks</li>
+                  <li>Practiced enterprise development patterns including RESTful APIs, database design, and authentication</li>
+                  <li>Continuously learning new technologies and staying updated with industry best practices</li>
+                </JobResponsibilities>
+              </ExperienceItem>
+            </ContentSection>
+
+            <ContentSection>
+              <SectionTitle>FRAMEWORKS & TOOLS</SectionTitle>
+              <FrameworksList>
+                <li>Spring Boot & Spring Framework</li>
+                <li>React.js & Node.js</li>
+                <li>Flutter & Dart SDK</li>
+                <li>MySQL & Database Design</li>
+                <li>Docker & Containerization</li>
+                <li>Git & Version Control</li>
+                <li>RESTful API Development</li>
+                <li>JWT Authentication</li>
+              </FrameworksList>
+            </ContentSection>
+            <ContentSection>
+              <SectionTitle>EDUCATION</SectionTitle>
+              <EducationItem>
+                <EducationTitle>Bachelor of Software Engineering</EducationTitle>
+                <EducationSchool>FPT University</EducationSchool>
+                <EducationDate>2022 - 2025</EducationDate>
+              </EducationItem>
+            </ContentSection>
+          </MainContent>
+        </A4Wrapper>
       </RadiusWrapper>
     </CVContainer>
   );
@@ -612,6 +599,8 @@ const ProfilePhoto = styled.div`
     height: 100%;
     object-fit: cover;
     transition: all 0.4s ease;
+    opacity: 1;
+    display: block;
   }
 
   &:hover img {
