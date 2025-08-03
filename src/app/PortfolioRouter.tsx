@@ -78,9 +78,11 @@ const PortfolioRouter: React.FC = () => {
   
   if (projectMatch) {
     const projectId = projectMatch[1];
+    console.log('Project route detected:', { path, projectId });
     
     // Determine project type based on project ID or could be passed as query param
     const projectType = getProjectType(projectId);
+    console.log('Project type determined:', { projectId, projectType });
     
     if (projectType === 'development') {
       return (

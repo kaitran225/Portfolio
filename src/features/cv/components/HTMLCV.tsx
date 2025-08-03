@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../../../contexts/ThemeContext';
 import jsPDF from 'jspdf';
@@ -6,7 +6,18 @@ import html2canvas from 'html2canvas';
 
 const HTMLCV: React.FC = () => {
   const { toggleTheme, isDark } = useTheme();
-  
+  const [copiedText, setCopiedText] = useState<string>('');
+
+  const handleCopyToClipboard = async (text: string, type: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedText(type);
+      setTimeout(() => setCopiedText(''), 2000); // Clear after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   const handleBack = () => {
     // Check if there's history to go back to
     if (window.history.length > 1) {
@@ -45,21 +56,21 @@ const HTMLCV: React.FC = () => {
       // Calculate PDF dimensions (A4 in mm)
       const imgWidth = 210; // A4 width in mm
       const pageHeight = 297; // A4 height in mm
-      
+
       // Calculate image height proportionally
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
+
       // Create PDF
       const pdf = new jsPDF('portrait', 'mm', 'a4');
-      
+
       // If image is taller than A4, we might need multiple pages
       let heightLeft = imgHeight;
       let position = 0;
-      
+
       // Add first page
       pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
-      
+
       // Add additional pages if needed
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
@@ -79,7 +90,7 @@ const HTMLCV: React.FC = () => {
 
     } catch (error) {
       console.error('Error generating PDF:', error);
-      
+
       // Fallback to pre-generated PDF
       const link = document.createElement('a');
       link.href = '/assets/cv/Trần_Nguyên_Khánh_CV.pdf';
@@ -102,45 +113,45 @@ const HTMLCV: React.FC = () => {
       <CVHeader>
         <BackButton onClick={handleBack}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="m12 19-7-7 7-7"/>
-            <path d="M19 12H5"/>
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
           </svg>
           Back
         </BackButton>
-        
+
         <HeaderActions>
           <ThemeToggleButton onClick={toggleTheme} title={`Switch to ${isDark ? 'light' : 'dark'} mode`}>
             {isDark ? (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
               </svg>
             ) : (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             )}
           </ThemeToggleButton>
-          
+
           <DownloadButton onClick={handleDownloadPDF} data-download-button>
             📄 Download PDF
           </DownloadButton>
         </HeaderActions>
       </CVHeader>
-      
+
       <A4Wrapper data-cv-content>
         {/* Header */}
         <Header>
           <NameSection>
             <Name>TRẦN NGUYÊN KHÁNH</Name>
-            <JobTitle>BACKEND DEVELOPER</JobTitle>
+            <JobTitle>SOFTWARE ENGINEER</JobTitle>
           </NameSection>
           <ProfilePhoto>
             <img src="/assets/cv/Profile.JPG" alt="Profile Photo" />
@@ -150,13 +161,20 @@ const HTMLCV: React.FC = () => {
         {/* Left Sidebar */}
         <Sidebar>
           <ContactSection>
-            <ContactItem>
+             <SectionTitle>CONTACT</SectionTitle>
+            <ContactItem onClick={() => handleCopyToClipboard('+84339961844', 'phone')}>
               <i className="fas fa-phone"></i>
-              <a href="tel:+84339961844">+84 339961844</a>
+              <CopyableText>
+                +84 339961844
+                {copiedText === 'phone' && <CopiedIndicator>Copied!</CopiedIndicator>}
+              </CopyableText>
             </ContactItem>
-            <ContactItem>
+            <ContactItem onClick={() => handleCopyToClipboard('kaitran225@gmail.com', 'email')}>
               <i className="fas fa-envelope"></i>
-              <a href="mailto:kaitran225@gmail.com">kaitran225@gmail.com</a>
+              <CopyableText>
+                kaitran225@gmail.com
+                {copiedText === 'email' && <CopiedIndicator>Copied!</CopiedIndicator>}
+              </CopyableText>
             </ContactItem>
             <ContactItem>
               <i className="fas fa-map-marker-alt"></i>
@@ -186,40 +204,87 @@ const HTMLCV: React.FC = () => {
 
           <ContentSection>
             <SectionTitle>PROGRAMMING LANGUAGES</SectionTitle>
-            <SkillsList>
-              <li>Java</li>
-              <li>C#</li>
-              <li>JavaScript & TypeScript</li>
-              <li>Python</li>
-              <li>Dart (Flutter)</li>
-              <li>SQL</li>
-              <li>HTML5 & CSS3</li>
-              <li>PowerShell & Bash</li>
-            </SkillsList>
+            <ProgrammingSkillsList>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+                <SkillName>Java</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>8 projects</SkillDetailLine>
+                  <SkillDetailLine>3 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
+                <SkillName>C#</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>5 projects</SkillDetailLine>
+                  <SkillDetailLine>2 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
+                <SkillName>JavaScript & TypeScript</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>12 projects</SkillDetailLine>
+                  <SkillDetailLine>4 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+                <SkillName>Python</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>6 projects</SkillDetailLine>
+                  <SkillDetailLine>2 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" alt="Dart" />
+                <SkillName>Dart (Flutter)</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>3 projects</SkillDetailLine>
+                  <SkillDetailLine>1 year</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" />
+                <SkillName>SQL</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>10 projects</SkillDetailLine>
+                  <SkillDetailLine>3 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                <SkillName>HTML5 & CSS3</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>15 projects</SkillDetailLine>
+                  <SkillDetailLine>4 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+              <ProgrammingSkillItem>
+                <SkillIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" />
+                <SkillName>PowerShell & Bash</SkillName>
+                <SkillDetails>
+                  <SkillDetailLine>4 projects</SkillDetailLine>
+                  <SkillDetailLine>2 years</SkillDetailLine>
+                </SkillDetails>
+              </ProgrammingSkillItem>
+            </ProgrammingSkillsList>
           </ContentSection>
 
-          <ContentSection>
-            <SectionTitle>EDUCATION</SectionTitle>
-            <EducationItem>
-              <EducationTitle>Bachelor of Software Engineering</EducationTitle>
-              <EducationSchool>FPT University</EducationSchool>
-              <EducationDate>2022 - 2025</EducationDate>
-            </EducationItem>
-          </ContentSection>
 
           <ContentSection>
-            <SectionTitle>PORTFOLIO</SectionTitle>
             <QRSection>
               <QRCode>
-                <img 
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=http://cybriadev.com/Portfolio" 
-                  alt="Portfolio QR Code" 
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=http://cybriadev.com/"
+                  alt="Portfolio QR Code"
                 />
               </QRCode>
               <QRText>
                 <p>Scan to view my portfolio</p>
-                <a href="http://cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
-                  cybriadev.com/Portfolio
+                <a href="http://cybriadev.com/" target="_blank" rel="noopener noreferrer">
+                  wwww.cybriadev.com
                 </a>
               </QRText>
             </QRSection>
@@ -231,19 +296,19 @@ const HTMLCV: React.FC = () => {
           <ContentSection>
             <SectionTitle>PROFILE</SectionTitle>
             <ProfileText>
-              Passionate Backend Developer and Software Engineering student with <strong>1000+ commits</strong> across <strong>17 repositories</strong>, 
-              specializing in modern Java Spring Boot development and full-stack web applications. Strong foundation in enterprise-level 
-              programming with hands-on experience in database design, RESTful APIs, and cloud deployment. Seeking OJT opportunity 
-              to apply technical skills and contribute to innovative software solutions in a professional environment.
+              <strong>Software Engineer</strong> with a passion for building robust backend systems, interactive web applications, and scalable cloud services. Experienced in Spring Boot, TypeScript/React, and containerized deployments using Docker, Render, and Aiven. Skilled at integrating AI assistants, optimizing performance, and delivering full product experiences from backend to frontend. On the side, I also enjoy working on graphic design projects — blending technical precision with creative expression. Always eager to learn, collaborate, and bring ideas to life in clean, maintainable code.
             </ProfileText>
           </ContentSection>
-
           <ContentSection>
             <SectionTitle>EXPERIENCE</SectionTitle>
             <ExperienceItem>
-              <PositionTitle>SELF-TAUGHT SOFTWARE DEVELOPER</PositionTitle>
-              <CompanyName>Independent Learning & Personal Projects</CompanyName>
-              <DateRange>2020 - Present</DateRange>
+              <ExperienceHeader>
+                <ExperienceLeft>
+                  <PositionTitle>SELF-TAUGHT SOFTWARE DEVELOPER</PositionTitle>
+                  <CompanyName>Independent Learning & Personal Projects</CompanyName>
+                </ExperienceLeft>
+                <DateRange>2020 - Present</DateRange>
+              </ExperienceHeader>
               <JobResponsibilities>
                 <li>Self-directed learning of multiple programming languages including Java, C#, Python, and JavaScript</li>
                 <li>Built 17+ personal projects and repositories with 1000+ commits on GitHub</li>
@@ -253,48 +318,6 @@ const HTMLCV: React.FC = () => {
                 <li>Continuously learning new technologies and staying updated with industry best practices</li>
               </JobResponsibilities>
             </ExperienceItem>
-          </ContentSection>
-
-          <ContentSection>
-            <SectionTitle>TECHNICAL SKILLS</SectionTitle>
-            <SkillsGrid>
-              <SkillCategory>
-                <h4>Backend Development</h4>
-                <SkillsList>
-                  <li>Java Spring Boot</li>
-                  <li>C# .NET Framework</li>
-                  <li>Python Development</li>
-                  <li>RESTful API Design</li>
-                </SkillsList>
-              </SkillCategory>
-              <SkillCategory>
-                <h4>Frontend Development</h4>
-                <SkillsList>
-                  <li>React.js & TypeScript</li>
-                  <li>HTML5 & CSS3</li>
-                  <li>Responsive Design</li>
-                  <li>JavaScript ES6+</li>
-                </SkillsList>
-              </SkillCategory>
-              <SkillCategory>
-                <h4>Database & DevOps</h4>
-                <SkillsList>
-                  <li>MySQL & Database Design</li>
-                  <li>Docker & Containerization</li>
-                  <li>Git Version Control</li>
-                  <li>JWT Authentication</li>
-                </SkillsList>
-              </SkillCategory>
-              <SkillCategory>
-                <h4>Mobile & Tools</h4>
-                <SkillsList>
-                  <li>Flutter Mobile Development</li>
-                  <li>Cross-platform Development</li>
-                  <li>IDE (IntelliJ, VS Code)</li>
-                  <li>Testing & Debugging</li>
-                </SkillsList>
-              </SkillCategory>
-            </SkillsGrid>
           </ContentSection>
 
           <ContentSection>
@@ -309,6 +332,14 @@ const HTMLCV: React.FC = () => {
               <li>RESTful API Development</li>
               <li>JWT Authentication</li>
             </FrameworksList>
+          </ContentSection>
+                    <ContentSection>
+            <SectionTitle>EDUCATION</SectionTitle>
+            <EducationItem>
+              <EducationTitle>Bachelor of Software Engineering</EducationTitle>
+              <EducationSchool>FPT University</EducationSchool>
+              <EducationDate>2022 - 2025</EducationDate>
+            </EducationItem>
           </ContentSection>
         </MainContent>
       </A4Wrapper>
@@ -392,7 +423,7 @@ const Header = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  height: 140px;
+  height: 150px;
   background: #1e293b;
   display: flex;
   align-items: center;
@@ -441,12 +472,13 @@ const JobTitle = styled.div`
 `;
 
 const ProfilePhoto = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 20px;
+  margin-top: 50px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  border: 4px solid rgba(255, 255, 255, 0.2);
+  background: #1e293b;
+  border: 6px solid #1e293b;
   transition: transform 0.3s ease;
 
   &:hover {
@@ -469,9 +501,8 @@ const ProfilePhoto = styled.div`
 const Sidebar = styled.div`
   width: 35%;
   background: #f1f5f9;
-  padding: 160px 30px 30px 30px;
+  padding: 160px 25px 25px 25px;
   position: relative;
-  border-right: 1px solid #e2e8f0;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -480,28 +511,33 @@ const Sidebar = styled.div`
 `;
 
 const ContactSection = styled.div`
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 `;
 
 const ContactItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 14px;
-  font-size: 13px;
+  margin-bottom: 8px;
+  font-size: 11px;
   color: #475569;
   transition: color 0.2s ease;
   cursor: pointer;
+  position: relative;
+  padding: 4px 6px;
 
   &:hover {
     color: #2563eb;
+    background: rgba(37, 99, 235, 0.05);
+    border-radius: 4px;
   }
 
   i {
-    width: 20px;
-    margin-right: 12px;
+    width: 16px;
+    margin-right: 8px;
     color: #2563eb;
-    font-size: 13px;
+    font-size: 11px;
     transition: transform 0.2s ease;
+    flex-shrink: 0;
   }
 
   &:hover i {
@@ -512,6 +548,7 @@ const ContactItem = styled.div`
     color: inherit;
     text-decoration: none;
     transition: color 0.2s ease;
+    font-size: 11px;
 
     &:hover {
       color: #2563eb;
@@ -520,27 +557,67 @@ const ContactItem = styled.div`
   }
 `;
 
+const CopyableText = styled.div`
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: #2563eb;
+  }
+`;
+
+const CopiedIndicator = styled.span`
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: fadeInOut 2s ease-in-out;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #10b981;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+    10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+`;
+
 const ContentSection = styled.div`
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 `;
 
 const SectionTitle = styled.div`
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #1e293b;
   letter-spacing: 1px;
   position: relative;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 
   &::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 30px;
-    height: 3px;
+    width: 25px;
+    height: 2px;
     background: #2563eb;
     border-radius: 2px;
   }
@@ -570,121 +647,61 @@ const SkillsList = styled.ul`
   }
 `;
 
+const ProgrammingSkillsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const ProgrammingSkillItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(37, 99, 235, 0.05);
+    border-radius: 4px;
+  }
+`;
+
+const SkillIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+
+  ${ProgrammingSkillItem}:hover & {
+    transform: scale(1.1);
+  }
+`;
+
+const SkillName = styled.div`
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  flex: 1;
+`;
+
+const SkillDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+`;
+
+const SkillDetailLine = styled.div`
+  font-size: 9px;
+  color: #64748b;
+  font-weight: 500;
+  text-align: right;
+  line-height: 1.2;
+`;
+
 const EducationItem = styled.div`
   margin-bottom: 25px;
   padding: 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  }
-`;
-
-const EducationTitle = styled.div`
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #1e293b;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
-`;
-
-const EducationSchool = styled.div`
-  font-size: 12px;
-  color: #2563eb;
-  margin-bottom: 4px;
-  font-weight: 500;
-`;
-
-const EducationDate = styled.div`
-  font-size: 11px;
-  color: #64748b;
-  font-weight: 400;
-`;
-
-const QRSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-`;
-
-const QRCode = styled.div`
-  margin-bottom: 15px;
-
-  img {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 2px solid #f1f5f9;
-  }
-`;
-
-const QRText = styled.div`
-  p {
-    font-size: 12px;
-    color: #64748b;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  a {
-    font-size: 11px;
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
-
-    &:hover {
-      border-bottom-color: #2563eb;
-    }
-  }
-`;
-
-const MainContent = styled.div`
-  flex: 1;
-  padding: 160px 30px 30px 30px;
-  background: white;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
-`;
-
-const ProfileText = styled.div`
-  font-size: 13px;
-  line-height: 1.6;
-  color: #475569;
-  text-align: justify;
-  padding: 20px;
-  background: #f8fafc;
-  border-radius: 12px;
-  border-left: 4px solid #2563eb;
-  position: relative;
-
-  &::before {
-    content: '"';
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    font-size: 24px;
-    color: #2563eb;
-    opacity: 0.3;
-  }
-`;
-
-const ExperienceItem = styled.div`
-  margin-bottom: 30px;
-  padding: 20px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
@@ -698,42 +715,194 @@ const ExperienceItem = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 4px;
+    width: 3px;
     height: 100%;
     background: #2563eb;
   }
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
   }
 `;
 
-const PositionTitle = styled.div`
-  font-size: 15px;
+const EducationTitle = styled.div`
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   color: #1e293b;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   letter-spacing: 0.5px;
+  line-height: 1.2;
+`;
+
+const EducationSchool = styled.div`
+  font-size: 11px;
+  color: #2563eb;
+  margin-bottom: 6px;
+  font-weight: 600;
+  line-height: 1.3;
+`;
+
+const EducationDate = styled.div`
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.2;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+`;
+
+const QRSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+`;
+
+const QRCode = styled.div`
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+  img {
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 2px solid #f1f5f9;
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+const QRText = styled.div`
+  p {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  a {
+    font-size: 10px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+    line-height: 1.2;
+
+    &:hover {
+      border-bottom-color: #2563eb;
+    }
+  }
+`;
+
+const MainContent = styled.div`
+  flex: 1;
+  padding: 160px 25px 25px 25px;
+  background: white;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+`;
+
+const ProfileText = styled.div`
+  font-size: 10px;
+  line-height: 1.4;
+  color: #475569;
+  text-align: justify;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #2563eb;
+  position: relative;
+`;
+
+const ExperienceItem = styled.div`
+  margin-bottom: 25px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: #2563eb;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.1);
+  }
+`;
+
+const ExperienceHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+`;
+
+const ExperienceLeft = styled.div`
+  flex: 1;
+`;
+
+const PositionTitle = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1e293b;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
 `;
 
 const CompanyName = styled.div`
-  font-size: 13px;
+  font-size: 12px;
   color: #2563eb;
-  margin-bottom: 4px;
   font-weight: 500;
+  line-height: 1.3;
 `;
 
 const DateRange = styled.div`
   font-size: 11px;
   color: #64748b;
-  margin-bottom: 12px;
-  font-weight: 400;
+  font-weight: 500;
   background: #f1f5f9;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    align-self: flex-start;
+  }
 `;
 
 const JobResponsibilities = styled.ul`
@@ -742,12 +911,12 @@ const JobResponsibilities = styled.ul`
   padding: 0;
 
   li {
-    margin-bottom: 8px;
-    padding-left: 20px;
+    margin-bottom: 6px;
+    padding-left: 16px;
     position: relative;
-    font-size: 12px;
+    font-size: 11px;
     color: #475569;
-    line-height: 1.5;
+    line-height: 1.4;
 
     &:before {
       content: '▸';
@@ -755,6 +924,7 @@ const JobResponsibilities = styled.ul`
       left: 0;
       color: #2563eb;
       font-weight: bold;
+      font-size: 10px;
     }
   }
 `;
@@ -801,25 +971,25 @@ const FrameworksList = styled.ul`
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 4px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 
   li {
-    padding: 12px 15px;
+    padding: 4px 8px;
     background: #f8fafc;
-    border-radius: 8px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-size: 10px;
     color: #475569;
-    border-left: 3px solid #2563eb;
+    border-left: 2px solid #2563eb;
     transition: all 0.2s ease;
+    line-height: 1.3;
 
     &:hover {
-      background: white;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-      transform: translateY(-2px);
+      background: rgba(37, 99, 235, 0.05);
+      transform: translateX(2px);
     }
   }
 `;
