@@ -1686,7 +1686,7 @@ const FeatureItem = styled.li`
   }
   
   &:hover {
-    color: rgba(255, 255, 255, 1);
+    color: var(--color-green-primary);
     transform: translateX(8px) scale(1.02);
     padding-left: 15px;
   }
