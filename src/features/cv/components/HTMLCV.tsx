@@ -45,6 +45,19 @@ const HTMLCV: React.FC = () => {
         throw new Error('CV content not found');
       }
 
+      // Collect all links before generating PDF
+      const links = Array.from(cvElement.querySelectorAll('a[href]')).map(link => {
+        const rect = link.getBoundingClientRect();
+        const cvRect = cvElement.getBoundingClientRect();
+        return {
+          href: (link as HTMLAnchorElement).href,
+          x: rect.left - cvRect.left,
+          y: rect.top - cvRect.top,
+          width: rect.width,
+          height: rect.height
+        };
+      });
+
       // Temporarily disable animations for PDF generation
       styleElement = document.createElement('style');
       styleElement.textContent = `
@@ -68,7 +81,7 @@ const HTMLCV: React.FC = () => {
 
       // Create high-quality canvas
       const canvas = await html2canvas(cvElement, {
-        scale: 2, // High resolution
+        scale: 5, // High resolution
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
@@ -103,6 +116,10 @@ const HTMLCV: React.FC = () => {
       const xOffset = (pdfWidth - imgWidth) / 2;
       const yOffset = (pdfHeight - imgHeight) / 2;
 
+      // Calculate scaling factors for links
+      const scaleX = imgWidth / cvElement.scrollWidth;
+      const scaleY = imgHeight / cvElement.scrollHeight;
+
       // Create PDF with single page
       const pdf = new jsPDF('portrait', 'mm', 'a4');
 
@@ -115,6 +132,16 @@ const HTMLCV: React.FC = () => {
         imgWidth,
         imgHeight
       );
+
+      // Add clickable links to PDF
+      links.forEach(link => {
+        const linkX = xOffset + (link.x * scaleX);
+        const linkY = yOffset + (link.y * scaleY);
+        const linkWidth = link.width * scaleX;
+        const linkHeight = link.height * scaleY;
+
+        pdf.link(linkX, linkY, linkWidth, linkHeight, { url: link.href });
+      });
 
       // Download the PDF
       pdf.save('Trần_Nguyên_Khánh_CV.pdf');
@@ -247,9 +274,15 @@ const HTMLCV: React.FC = () => {
                 </a>
               </ContactItem>
               <ContactItem>
-                <i className="fab fa-globe"></i>
-                <a href="http://www.cybriadev.com/Portfolio" target="_blank" rel="noopener noreferrer">
-                  cybriadev.com/Portfolio
+                <i className="fas fa-code"></i>
+                <a href="https://leetcode.com/u/kaitran225/" target="_blank" rel="noopener noreferrer">
+                  leetcode.com/u/kaitran225
+                </a>
+              </ContactItem>
+              <ContactItem>
+                <i className="fas fa-globe"></i>
+                <a href="http://www.cybriadev.com" target="_blank" rel="noopener noreferrer">
+                  wwww.cybriadev.com
                 </a>
               </ContactItem>
             </ContactSection>
@@ -357,7 +390,9 @@ const HTMLCV: React.FC = () => {
             <ContentSection>
               <SectionTitle>PROFILE</SectionTitle>
               <ProfileText>
-                <strong>Software Engineer</strong> with a passion for building robust backend systems, interactive web applications, and scalable cloud services. Experienced in Spring Boot, TypeScript/React, and containerized deployments using Docker, Render, and Aiven. Skilled at integrating AI assistants, optimizing performance, and delivering full product experiences from backend to frontend. On the side, I also enjoy working on graphic design projects — blending technical precision with creative expression. Always eager to learn, collaborate, and bring ideas to life in clean, maintainable code.
+                <strong>Software Engineer</strong> passionate about building robust backend systems, interactive web applications, and scalable <strong>cloud services</strong>. Experienced in Spring Boot, TypeScript/React, and containerized deployments using <strong>Docker</strong>, Render, and Aiven. Skilled at integrating AI assistants, optimizing performance, and delivering full product experiences from backend to frontend. On the side, I enjoy graphic design — blending technical precision with creative expression. Always eager to learn, collaborate, and bring ideas to life in <strong>clean, maintainable code</strong>.
+
+
               </ProfileText>
             </ContentSection>
             <ContentSection>
@@ -825,7 +860,7 @@ const SkillsList = styled.ul`
 const ProgrammingSkillsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   animation: slideInRight 0.8s ease-out;
 
   @keyframes slideInRight {
@@ -843,8 +878,8 @@ const ProgrammingSkillsList = styled.div`
 const ProgrammingSkillItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  gap: 12px;
+  padding: 8px 6px;
   line-height: 1.2;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
