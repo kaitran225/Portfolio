@@ -29,6 +29,8 @@ const HTMLCV: React.FC = () => {
   };
 
   const handleDownloadPDF = async () => {
+    let styleElement: HTMLStyleElement | null = null;
+    
     try {
       // Show loading state
       const button = document.querySelector('[data-download-button]') as HTMLButtonElement;
@@ -43,6 +45,42 @@ const HTMLCV: React.FC = () => {
         throw new Error('CV content not found');
       }
 
+      // Temporarily disable animations for PDF generation
+      styleElement = document.createElement('style');
+      styleElement.textContent = `
+        [data-cv-content] *, [data-cv-content] *::before, [data-cv-content] *::after {
+          animation-duration: 0s !important;
+          animation-delay: 0s !important;
+          transition-duration: 0s !important;
+          transition-delay: 0s !important;
+          animation-fill-mode: forwards !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      `;
+      document.head.appendChild(styleElement);
+
+      // Wait a moment for styles to apply
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      // Ensure all images are loaded before capturing
+      const images = cvElement.querySelectorAll('img');
+      const imagePromises = Array.from(images).map(img => {
+        return new Promise((resolve) => {
+          if (img.complete) {
+            resolve(img);
+          } else {
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(img); // Resolve even on error to not block
+            // Set a timeout to prevent hanging
+            setTimeout(() => resolve(img), 3000);
+          }
+        });
+      });
+
+      // Wait for all images to load (or timeout)
+      await Promise.all(imagePromises);
+
       // Create high-quality canvas
       const canvas = await html2canvas(cvElement, {
         scale: 2, // High resolution
@@ -50,34 +88,63 @@ const HTMLCV: React.FC = () => {
         allowTaint: true,
         backgroundColor: '#ffffff',
         width: cvElement.scrollWidth,
-        height: cvElement.scrollHeight
+        height: cvElement.scrollHeight,
+        logging: false, // Disable logging to avoid console spam
+        foreignObjectRendering: true, // Better rendering for external content
+        imageTimeout: 5000, // Wait up to 5 seconds for images
+        onclone: (clonedDoc) => {
+          // Ensure all images are visible and loaded in the cloned document
+          const clonedImages = clonedDoc.querySelectorAll('img');
+          clonedImages.forEach(img => {
+            img.style.display = 'block';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
+            // Force reload if not loaded
+            if (!img.complete) {
+              const src = img.src;
+              img.src = '';
+              img.src = src;
+            }
+          });
+        }
       });
 
       // Calculate PDF dimensions (A4 in mm)
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
+      const pdfWidth = 210; // A4 width in mm
+      const pdfHeight = 297; // A4 height in mm
 
-      // Calculate image height proportionally
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      // Calculate scaling to fit content within a single A4 page
+      const canvasAspectRatio = canvas.width / canvas.height;
+      const pdfAspectRatio = pdfWidth / pdfHeight;
 
-      // Create PDF
+      let imgWidth = pdfWidth;
+      let imgHeight = pdfHeight;
+
+      // Scale to fit within A4 dimensions while maintaining aspect ratio
+      if (canvasAspectRatio > pdfAspectRatio) {
+        // Canvas is wider, scale by width
+        imgHeight = pdfWidth / canvasAspectRatio;
+      } else {
+        // Canvas is taller, scale by height
+        imgWidth = pdfHeight * canvasAspectRatio;
+      }
+
+      // Center the image on the page
+      const xOffset = (pdfWidth - imgWidth) / 2;
+      const yOffset = (pdfHeight - imgHeight) / 2;
+
+      // Create PDF with single page
       const pdf = new jsPDF('portrait', 'mm', 'a4');
 
-      // If image is taller than A4, we might need multiple pages
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      // Add first page
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Add additional pages if needed
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+      // Add image to single page, scaled to fit
+      pdf.addImage(
+        canvas.toDataURL('image/png'), 
+        'PNG', 
+        xOffset, 
+        yOffset, 
+        imgWidth, 
+        imgHeight
+      );
 
       // Download the PDF
       pdf.save('Trần_Nguyên_Khánh_CV.pdf');
@@ -104,6 +171,11 @@ const HTMLCV: React.FC = () => {
       if (button) {
         button.textContent = '📄 Download PDF';
         button.disabled = false;
+      }
+    } finally {
+      // Always clean up the style element
+      if (styleElement && styleElement.parentNode) {
+        document.head.removeChild(styleElement);
       }
     }
   };
@@ -145,12 +217,12 @@ const HTMLCV: React.FC = () => {
           </DownloadButton>
         </HeaderActions>
       </CVHeader>
-
-      <A4Wrapper data-cv-content>
-        {/* Header */}
-        <Header>
-          <NameSection>
-            <Name>TRẦN NGUYÊN KHÁNH</Name>
+      <RadiusWrapper>
+        <A4Wrapper data-cv-content>
+          {/* Header */}
+          <Header>
+            <NameSection>
+              <Name>TRẦN NGUYÊN KHÁNH</Name>
             <JobTitle>SOFTWARE ENGINEER</JobTitle>
           </NameSection>
           <ProfilePhoto>
@@ -161,7 +233,7 @@ const HTMLCV: React.FC = () => {
         {/* Left Sidebar */}
         <Sidebar>
           <ContactSection>
-             <SectionTitle>CONTACT</SectionTitle>
+            <SectionTitle>CONTACT</SectionTitle>
             <ContactItem onClick={() => handleCopyToClipboard('+84339961844', 'phone')}>
               <i className="fas fa-phone"></i>
               <CopyableText>
@@ -333,7 +405,7 @@ const HTMLCV: React.FC = () => {
               <li>JWT Authentication</li>
             </FrameworksList>
           </ContentSection>
-                    <ContentSection>
+          <ContentSection>
             <SectionTitle>EDUCATION</SectionTitle>
             <EducationItem>
               <EducationTitle>Bachelor of Software Engineering</EducationTitle>
@@ -343,6 +415,7 @@ const HTMLCV: React.FC = () => {
           </ContentSection>
         </MainContent>
       </A4Wrapper>
+      </RadiusWrapper>
     </CVContainer>
   );
 };
@@ -397,14 +470,21 @@ const DownloadButton = styled.button`
     font-size: 12px;
   }
 `;
+const RadiusWrapper = styled.div`
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
 
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+`;
 const A4Wrapper = styled.div`
   width: 210mm;
   height: 297mm;
   margin: 0 auto;
   background: white;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
   overflow: hidden;
   display: flex;
   position: relative;
@@ -576,7 +656,6 @@ const ContactSection = styled.div`
 const ContactItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
   font-size: 11px;
   color: #475569;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -681,7 +760,7 @@ const CopiedIndicator = styled.span`
 `;
 
 const ContentSection = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 12px;
 `;
 
 const SectionTitle = styled.div`
@@ -755,7 +834,7 @@ const SkillsList = styled.ul`
 const ProgrammingSkillsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   animation: slideInRight 0.8s ease-out;
 
   @keyframes slideInRight {
@@ -774,7 +853,8 @@ const ProgrammingSkillItem = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 10px;
+  padding: 8px 12px;
+  line-height: 1.2;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
   position: relative;
@@ -859,7 +939,7 @@ const SkillDetailLine = styled.div`
 `;
 
 const EducationItem = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   padding: 15px;
   background: white;
   border-radius: 8px 8px;
@@ -987,7 +1067,7 @@ const ProfileText = styled.div`
 `;
 
 const ExperienceItem = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   padding: 20px;
   background: white;
   border-radius: 12px;
