@@ -17,6 +17,135 @@ interface DevProjectProps {
     projectId: string;
 }
 
+// Fullscreen Modal Components
+const FullscreenModal = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  cursor: zoom-out;
+  overflow: auto;
+`;
+
+const FullscreenContent = styled.div<{ zoom: number; panX: number; panY: number; isPanning: boolean }>`
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: auto;
+  padding: 20px;
+  cursor: ${props => props.isPanning ? 'grabbing' : 'default'};
+  
+  img, video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+    transform: scale(${props => props.zoom}) translate(${props => props.panX / props.zoom}px, ${props => props.panY / props.zoom}px);
+    cursor: ${props => {
+      if (props.isPanning) return 'grabbing';
+      if (props.zoom > 1) return 'grab';
+      return 'zoom-in';
+    }};
+    user-select: none;
+  }
+  
+  video {
+    cursor: default;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+`;
+
+const ZoomInfo = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+  
+  @media (max-width: 768px) {
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+`;
+
+const ZoomIndicator = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+`;
+
 const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'readme' | 'demo'>('overview');
     const [selectedImage, setSelectedImage] = useState(0);
@@ -24,6 +153,11 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     const [headerHeight, setHeaderHeight] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+    const [fullscreenMedia, setFullscreenMedia] = useState<{ src: string; type: 'image' | 'video' } | null>(null);
+    const [zoomLevel, setZoomLevel] = useState(1);
+    const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+    const [isPanning, setIsPanning] = useState(false);
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
     const vantaRef = useRef<HTMLDivElement>(null);
     const vantaEffect = useRef<any>(null);
 
@@ -189,6 +323,137 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
 
     // Get project data from service based on projectId
     const projectData = portfolioDataService.getProjectById(projectId) || portfolioDataService.getDevelopmentProjects()[0];
+    
+    // Fullscreen modal handlers
+    const openFullscreen = (src: string, type: 'image' | 'video') => {
+        setFullscreenMedia({ src, type });
+        setZoomLevel(1); // Reset zoom when opening
+        setPanPosition({ x: 0, y: 0 }); // Reset pan when opening
+    };
+    
+    const closeFullscreen = () => {
+        setFullscreenMedia(null);
+        setZoomLevel(1); // Reset zoom when closing
+        setPanPosition({ x: 0, y: 0 }); // Reset pan when closing
+        setIsPanning(false); // Stop panning when closing
+    };
+    
+    // Handle scroll to zoom in fullscreen
+    const handleWheel = (e: React.WheelEvent) => {
+        if (fullscreenMedia) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1; // Zoom out on scroll down, zoom in on scroll up
+            setZoomLevel(prev => {
+                const newZoom = prev + delta;
+                const clampedZoom = Math.max(0.5, Math.min(3, newZoom)); // Limit zoom between 0.5x and 3x
+                
+                // Reset pan position when zooming back to 1x or below
+                if (clampedZoom <= 1) {
+                    setPanPosition({ x: 0, y: 0 });
+                }
+                
+                return clampedZoom;
+            });
+        }
+    };
+    
+    // Handle click to zoom on images (not videos)
+    const handleImageClick = (e: React.MouseEvent) => {
+        if (fullscreenMedia && fullscreenMedia.type === 'image') {
+            e.stopPropagation();
+            setZoomLevel(prev => prev >= 2 ? 1 : prev + 0.5); // Cycle through zoom levels
+            if (zoomLevel >= 2) {
+                setPanPosition({ x: 0, y: 0 }); // Reset pan when zooming out to 1x
+            }
+        }
+    };
+    
+    // Handle mouse down for panning (middle mouse button)
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (e.button === 1 && fullscreenMedia && zoomLevel > 1) { // Middle mouse button
+            e.preventDefault();
+            setIsPanning(true);
+            setLastMousePosition({ x: e.clientX, y: e.clientY });
+        }
+    };
+    
+    // Handle mouse move for panning
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (isPanning && fullscreenMedia && zoomLevel > 1) {
+            e.preventDefault();
+            const deltaX = e.clientX - lastMousePosition.x;
+            const deltaY = e.clientY - lastMousePosition.y;
+            
+            setPanPosition(prev => ({
+                x: prev.x + deltaX,
+                y: prev.y + deltaY
+            }));
+            
+            setLastMousePosition({ x: e.clientX, y: e.clientY });
+        }
+    };
+    
+    // Handle mouse up to stop panning
+    const handleMouseUp = (e: React.MouseEvent) => {
+        if (e.button === 1) { // Middle mouse button
+            setIsPanning(false);
+        }
+    };
+    
+    // Prevent context menu on middle click
+    const handleContextMenu = (e: React.MouseEvent) => {
+        if (isPanning) {
+            e.preventDefault();
+        }
+    };
+    
+    // Handle escape key to close fullscreen and global mouse events for panning
+    useEffect(() => {
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && fullscreenMedia) {
+                closeFullscreen();
+            }
+        };
+        
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (fullscreenMedia && zoomLevel > 1) {
+                const panStep = 50;
+                switch (event.key) {
+                    case 'ArrowUp':
+                        event.preventDefault();
+                        setPanPosition(prev => ({ x: prev.x, y: prev.y + panStep }));
+                        break;
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        setPanPosition(prev => ({ x: prev.x, y: prev.y - panStep }));
+                        break;
+                    case 'ArrowLeft':
+                        event.preventDefault();
+                        setPanPosition(prev => ({ x: prev.x + panStep, y: prev.y }));
+                        break;
+                    case 'ArrowRight':
+                        event.preventDefault();
+                        setPanPosition(prev => ({ x: prev.x - panStep, y: prev.y }));
+                        break;
+                }
+            }
+        };
+        
+        const handleGlobalMouseUp = () => {
+            setIsPanning(false);
+        };
+        
+        document.addEventListener('keydown', handleEscape);
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('mouseup', handleGlobalMouseUp);
+        
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mouseup', handleGlobalMouseUp);
+        };
+    }, [fullscreenMedia, zoomLevel]);
+    
     const codePreview = portfolioDataService.getCodePreviewForProject(projectId);
     
     // Helper to get images array (handle both string[] and object with arrays)
@@ -279,10 +544,50 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                     {projectImages.length > 0 && (
                                         <>
                                             <MainImage>
-                                                <img
-                                                    src={projectImages[selectedImage] || projectData.thumbnail}
-                                                    alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                                                />
+                                                {(projectImages[selectedImage] || projectData.thumbnail).endsWith('.mp4') ? (
+                                                    <div style={{ 
+                                                             position: 'relative', 
+                                                             cursor: 'zoom-in',
+                                                             border: '2px solid transparent'
+                                                         }} 
+                                                         onClick={(e) => {
+                                                             e.preventDefault();
+                                                             e.stopPropagation();
+                                                             openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'video');
+                                                         }}
+                                                         onMouseEnter={() => {}}
+                                                    >
+                                                        <video
+                                                            autoPlay
+                                                            loop
+                                                            muted
+                                                            playsInline
+                                                            src={projectImages[selectedImage] || projectData.thumbnail}
+                                                            style={{ pointerEvents: 'none' }}
+                                                        />
+                                                        <ZoomIndicator>🔍 Click to fullscreen</ZoomIndicator>
+                                                    </div>
+                                                ) : (
+                                                    <div style={{ 
+                                                             position: 'relative', 
+                                                             cursor: 'zoom-in',
+                                                             border: '2px solid transparent'
+                                                         }} 
+                                                         onClick={(e) => {
+                                                             e.preventDefault();
+                                                             e.stopPropagation();
+                                                             openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'image');
+                                                         }}
+                                                         onMouseEnter={() => {}}
+                                                    >
+                                                        <img
+                                                            src={projectImages[selectedImage] || projectData.thumbnail}
+                                                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                                                            style={{ pointerEvents: 'none' }}
+                                                        />
+                                                        <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                                                    </div>
+                                                )}
                                             </MainImage>
                                             <ImageThumbnails>
                                                 {projectImages.map((image: string, index: number) => (
@@ -290,8 +595,18 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                                         key={index}
                                                         $active={index === selectedImage}
                                                         onClick={() => setSelectedImage(index)}
+                                                        onDoubleClick={() => openFullscreen(image, image.endsWith('.mp4') ? 'video' : 'image')}
+                                                        title="Click to select, double-click to fullscreen"
                                                     >
-                                                        <img src={image} alt={`Thumbnail ${index + 1}`} />
+                                                        {image.endsWith('.mp4') ? (
+                                                            <video
+                                                                muted
+                                                                playsInline
+                                                                src={image}
+                                                            />
+                                                        ) : (
+                                                            <img src={image} alt={`Thumbnail ${index + 1}`} />
+                                                        )}
                                                     </Thumbnail>
                                                 ))}
                                             </ImageThumbnails>
@@ -345,12 +660,34 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                         {activeTab === 'demo' && (
                             <DemoSection key={`demo-${tabKey}`}>
                                 <SectionTitle>Project Demo</SectionTitle>
-                                {projectData.videoDemo && (
+                                {(projectData.demoUrl || projectData.videoDemo) && (
                                     <VideoDemo>
-                                        <video controls width="100%">
-                                            <source src={projectData.videoDemo} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
+                                        <div style={{ position: 'relative' }}>
+                                            <video 
+                                                controls 
+                                                width="100%" 
+                                                autoPlay 
+                                                muted 
+                                                loop
+                                                style={{ borderRadius: '8px' }}
+                                                onDoubleClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    openFullscreen(projectData.demoUrl || projectData.videoDemo || '', 'video');
+                                                }}
+                                            >
+                                                <source src={projectData.demoUrl || projectData.videoDemo} type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
+                                        </div>
+                                        <DemoCaption>
+                                            {projectData.demoUrl && projectData.demoUrl.includes('AI') && "🤖 AI Assistant Demo"}
+                                            {projectData.demoUrl && projectData.demoUrl.includes('AutoFish') && "🎣 Computer Vision Automation Demo"}
+                                            {projectData.demoUrl && projectData.demoUrl.includes('CheckCam') && "📷 Camera Testing System Demo"}
+                                            {projectData.demoUrl && projectData.demoUrl.includes('CSharpMapGenerator') && "🗺️ Procedural Terrain Generation Demo"}
+                                            {!projectData.demoUrl && "🎬 Project Demo Video"}
+                                        </DemoCaption>
                                     </VideoDemo>
                                 )}
                                 <DemoLinks>
@@ -362,12 +699,70 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                             🌐 Try Live Demo
                                         </ProjectLink>
                                     )}
+                                    {projectData.demoUrl && (
+                                        <ProjectLink href={projectData.demoUrl} target="_blank">
+                                            🎬 Watch Demo Video
+                                        </ProjectLink>
+                                    )}
                                 </DemoLinks>
                             </DemoSection>
                         )}
                     </ContentTransition>
                 </ContentContainer>
             </ContentBGContainer>
+            
+            {/* Fullscreen Modal */}
+            <FullscreenModal 
+                isOpen={!!fullscreenMedia} 
+                onClick={closeFullscreen}
+                onWheel={handleWheel}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onContextMenu={handleContextMenu}
+            >
+                {fullscreenMedia && (
+                    <FullscreenContent 
+                        zoom={zoomLevel}
+                        panX={panPosition.x}
+                        panY={panPosition.y}
+                        isPanning={isPanning}
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                        onContextMenu={handleContextMenu}
+                    >
+                        <CloseButton onClick={closeFullscreen}>×</CloseButton>
+                        <ZoomInfo>
+                            {Math.round(zoomLevel * 100)}% 
+                            {fullscreenMedia.type === 'image' && zoomLevel > 1 && ' • Middle-click + drag or ← → ↑ ↓ to pan'}
+                            {fullscreenMedia.type === 'image' && zoomLevel === 1 && ' • Click to zoom • Scroll to zoom'}
+                            {fullscreenMedia.type === 'video' && ' • Scroll to zoom'}
+                        </ZoomInfo>
+                        {fullscreenMedia.type === 'video' ? (
+                            <video 
+                                controls 
+                                autoPlay 
+                                muted 
+                                loop
+                                src={fullscreenMedia.src}
+                            />
+                        ) : (
+                            <img 
+                                src={fullscreenMedia.src} 
+                                alt="Fullscreen view"
+                                onClick={handleImageClick}
+                                onMouseDown={handleMouseDown}
+                                onMouseMove={handleMouseMove}
+                                onMouseUp={handleMouseUp}
+                                onContextMenu={handleContextMenu}
+                                draggable={false}
+                            />
+                        )}
+                    </FullscreenContent>
+                )}
+            </FullscreenModal>
         </ProjectContainer>
     );
 };
@@ -1025,6 +1420,13 @@ const MainImage = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
+  width: 100%;
+  min-height: 300px;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
   
   &::before {
     content: '';
@@ -1034,6 +1436,7 @@ const MainImage = styled.div`
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
+    pointer-events: none;
   }
   
   &:hover {
@@ -1045,15 +1448,35 @@ const MainImage = styled.div`
     opacity: 1;
   }
   
+  &:hover ${ZoomIndicator} {
+    opacity: 1;
+  }
+  
   img {
     width: 100%;
-    height: 400px;
-    object-fit: cover;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
-  &:hover img {
+  video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  &:hover img, &:hover video {
     transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    min-height: 200px;
+    max-height: 60vh;
   }
 `;
 
@@ -1101,12 +1524,14 @@ const Thumbnail = styled.div<{ $active: boolean }>`
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
+    pointer-events: none;
   }
   
-  img {
+  img, video {
     width: 80px;
     height: 60px;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: rgba(0, 0, 0, 0.1);
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
@@ -1120,7 +1545,7 @@ const Thumbnail = styled.div<{ $active: boolean }>`
     opacity: 0.2;
   }
   
-  &:hover img {
+  &:hover img, &:hover video {
     transform: scale(1.1);
   }
   
@@ -1300,6 +1725,23 @@ const VideoDemo = styled.div`
   
   &:hover video {
     transform: scale(1.02);
+  }
+`;
+
+const DemoCaption = styled.div`
+  margin-top: 16px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #00bcd4;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding: 10px 16px;
   }
 `;
 

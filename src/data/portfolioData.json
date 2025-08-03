@@ -346,6 +346,7 @@
         "tags": ["AI", "Python", "React Three Fiber", "Ollama", "WebSocket"],
         "technologies": ["FastAPI", "Python", "Ollama", "React Three Fiber", "WebSocket", "Docker", "Three.js", "TTS"],
         "githubUrl": "https://github.com/kaitran225/project_cybria",
+        "demoUrl": "/assets/Development/AI/43430418490571152361.mp4",
         "images": [
           "/assets/Development/AI/43430418490571152361.mp4",
           "/assets/Development/AI/59213507883087080383.mp4",
@@ -418,6 +419,7 @@
         "tags": ["Python", "Computer Vision", "PyQt6", "Automation", "Image Processing"],
         "technologies": ["Python", "OpenCV", "PyQt6", "NumPy", "PIL", "Threading", "Screen Capture"],
         "githubUrl": "https://github.com/kaitran225/AutoFishing",
+        "demoUrl": "/assets/Development/AutoFish/13316622383915059719.mp4",
         "images": [
           "/assets/Development/AutoFish/13316622383915059719.mp4",
           "/assets/Development/AutoFish/179597055128290523520.mp4",
@@ -455,6 +457,7 @@
         "tags": ["Java", "Flutter", "Cross-Platform", "Camera API", "Device Testing"],
         "technologies": ["Java", "Flutter", "Dart", "Android Studio", "Camera2 API", "REST API"],
         "githubUrl": "https://github.com/kaitran225/CameraCheck",
+        "demoUrl": "/assets/Development/CheckCam/475204197909730576718.mp4",
         "images": [
           "/assets/Development/CheckCam/475204197909730576718.mp4",
           "/assets/Development/CheckCam/51284210469954681857.mp4",
@@ -491,6 +494,7 @@
         "tags": ["C#", "Unity", "Procedural Generation", "Game Development", "Algorithm Design"],
         "technologies": ["C#", "Unity Engine", "Custom Editor Tools", "Perlin Noise", "Data Serialization", "Performance Optimization"],
         "githubUrl": "https://github.com/kaitran225/CSharpMapGenerator",
+        "demoUrl": "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4",
         "images": [
           "/assets/Development/CSharpMapGenerator/Untitled .png",
           "/assets/Development/CSharpMapGenerator/Untitled 1.png",

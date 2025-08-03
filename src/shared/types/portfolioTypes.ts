@@ -56,6 +56,7 @@ export interface Project {
   technologies?: string[];
   githubUrl?: string;
   liveUrl?: string;
+  demoUrl?: string;
   images?: string[] | {
     final?: string[];
     process?: string[];
