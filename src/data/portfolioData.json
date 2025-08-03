@@ -296,16 +296,20 @@
         "category": "development",
         "description": "Enterprise Spring Boot backend with JWT authentication, serving real users in production.",
         "longDescription": "A comprehensive backend system for mental health care management, featuring secure authentication, role-based access control, and RESTful API design. Built with Spring Boot and Java, the system currently serves real users in production with 99.9% uptime.",
-        "thumbnail": "/assets/dev-thumbnails/backend-api.jpg",
+        "thumbnail": "/assets/Development/BackEnd/Screenshot 2025-03-16 151757.png",
         "tags": ["Spring Boot", "Java", "MySQL", "JWT", "Docker"],
         "technologies": ["Spring Boot", "Java", "MySQL", "JWT", "OpenAPI", "Docker", "Render.com", "Aiven", "Gmail SMTP"],
         "githubUrl": "https://github.com/kaitran225/BackEnd",
         "liveUrl": "https://api.cybriadev.com/swagger-ui/index.html",
         "images": [
-          "/assets/projects/backend/swagger-ui.jpg",
-          "/assets/projects/backend/database-schema.jpg",
-          "/assets/projects/backend/authentication-flow.jpg",
-          "/assets/projects/backend/api-endpoints.jpg"
+          "/assets/Development/BackEnd/Screenshot 2025-03-16 151757.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-16 151904.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-16 151934.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-16 151941.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-16 152328.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-17 210209.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-18 084505.png",
+          "/assets/Development/BackEnd/Screenshot 2025-03-18 085905.png"
         ],
         "features": [
           "JWT-based authentication and authorization",
@@ -338,15 +342,15 @@
         "category": "development",
         "description": "Advanced AI assistant with Ollama integration, 3D avatar system, and multiple operational personas.",
         "longDescription": "An innovative AI assistant featuring local Ollama model integration with Nous-Hermes2:7b, 3D character visualization using React Three Fiber, and advanced conversation management. The system includes multiple operational personas and real-time emotional expression rendering.",
-        "thumbnail": "/assets/dev-thumbnails/cybria-ai.jpg",
+        "thumbnail": "/assets/Development/AI/43430418490571152361.mp4",
         "tags": ["AI", "Python", "React Three Fiber", "Ollama", "WebSocket"],
         "technologies": ["FastAPI", "Python", "Ollama", "React Three Fiber", "WebSocket", "Docker", "Three.js", "TTS"],
         "githubUrl": "https://github.com/kaitran225/project_cybria",
         "images": [
-          "/assets/projects/cybria/3d-avatar.jpg",
-          "/assets/projects/cybria/ai-interface.jpg",
-          "/assets/projects/cybria/persona-selection.jpg",
-          "/assets/projects/cybria/conversation-flow.jpg"
+          "/assets/Development/AI/43430418490571152361.mp4",
+          "/assets/Development/AI/59213507883087080383.mp4",
+          "/assets/Development/AI/67191071458407760814.mp4",
+          "/assets/Development/AI/Untitled video - Made with Clipchamp (8).mp4"
         ],
         "features": [
           "Local Ollama AI model integration (Nous-Hermes2:7b)",
@@ -374,15 +378,15 @@
         "category": "development",
         "description": "Production-ready microservice optimized for 2MB RAM usage with JWT security and role-based access.",
         "longDescription": "A highly optimized notification microservice built with Node.js and designed for minimal resource consumption while maintaining production-grade features. The service operates with only 2MB of RAM usage while supporting JWT authentication, role-based access control, and efficient database operations.",
-        "thumbnail": "/assets/dev-thumbnails/notification-service.jpg",
+        "thumbnail": "/assets/Development/NotiService/microservice-architecture.jpg",
         "tags": ["Node.js", "JavaScript", "JWT", "MySQL", "Docker"],
         "technologies": ["Node.js", "Express", "MySQL", "JWT", "Docker", "Docker Compose"],
         "githubUrl": "https://github.com/kaitran225/NotiService",
         "images": [
-          "/assets/projects/notification/api-docs.jpg",
-          "/assets/projects/notification/memory-usage.jpg",
-          "/assets/projects/notification/docker-setup.jpg",
-          "/assets/projects/notification/performance-metrics.jpg"
+          "/assets/Development/NotiService/api-docs.jpg",
+          "/assets/Development/NotiService/memory-usage.jpg",
+          "/assets/Development/NotiService/docker-setup.jpg",
+          "/assets/Development/NotiService/performance-metrics.jpg"
         ],
         "features": [
           "Ultra-low memory usage (2MB RAM optimization)",
@@ -405,20 +409,100 @@
         "featured": true
       },
       {
+        "id": "autofish-automation",
+        "title": "AutoFishing Computer Vision System",
+        "category": "development",
+        "description": "Python-based automation system using computer vision for game automation with PyQt6 interface.",
+        "longDescription": "An advanced computer vision automation system built with Python, featuring real-time screen capture, image processing, and automated control mechanisms. The system includes a modern PyQt6 interface and sophisticated pattern recognition algorithms.",
+        "thumbnail": "/assets/Development/AutoFish/13316622383915059719.mp4",
+        "tags": ["Python", "Computer Vision", "PyQt6", "Automation", "Image Processing"],
+        "technologies": ["Python", "OpenCV", "PyQt6", "NumPy", "PIL", "Threading", "Screen Capture"],
+        "githubUrl": "https://github.com/kaitran225/AutoFishing",
+        "images": [
+          "/assets/Development/AutoFish/13316622383915059719.mp4",
+          "/assets/Development/AutoFish/179597055128290523520.mp4",
+          "/assets/Development/AutoFish/549414752331865986710.mp4",
+          "/assets/Development/AutoFish/580204615567851430817.mp4",
+          "/assets/Development/AutoFish/70313600059084651149.mp4"
+        ],
+        "features": [
+          "Real-time computer vision processing",
+          "Advanced pattern recognition algorithms",
+          "Modern PyQt6 user interface",
+          "Multi-threaded automation system",
+          "Configurable detection parameters",
+          "Screen capture and image analysis",
+          "Automated control mechanisms",
+          "Performance monitoring and logging"
+        ],
+        "challenges": [
+          "Implementing accurate pattern recognition in varying conditions",
+          "Optimizing real-time image processing performance",
+          "Creating responsive PyQt6 interface with smooth operation",
+          "Managing multi-threaded automation without conflicts"
+        ],
+        "year": "2024",
+        "status": "Complete",
+        "featured": true
+      },
+      {
+        "id": "camera-check-system",
+        "title": "Multi-Platform Camera Check System",
+        "category": "development",
+        "description": "Cross-platform camera testing application built with Java and Flutter for comprehensive device testing.",
+        "longDescription": "A comprehensive camera testing and validation system developed for multiple platforms, featuring Java backend services and Flutter mobile interface. The system provides detailed camera diagnostics and performance analysis.",
+        "thumbnail": "/assets/Development/CheckCam/475204197909730576718.mp4",
+        "tags": ["Java", "Flutter", "Cross-Platform", "Camera API", "Device Testing"],
+        "technologies": ["Java", "Flutter", "Dart", "Android Studio", "Camera2 API", "REST API"],
+        "githubUrl": "https://github.com/kaitran225/CameraCheck",
+        "images": [
+          "/assets/Development/CheckCam/475204197909730576718.mp4",
+          "/assets/Development/CheckCam/51284210469954681857.mp4",
+          "/assets/Development/CheckCam/71165190531420841385.mp4",
+          "/assets/Development/CheckCam/80660667309823054556.mp4"
+        ],
+        "features": [
+          "Cross-platform compatibility (Android, iOS, Desktop)",
+          "Comprehensive camera diagnostics and testing",
+          "Flutter-based mobile interface",
+          "Java backend for processing and analysis",
+          "Real-time camera performance monitoring",
+          "Detailed reporting and analytics",
+          "Multi-device testing capabilities",
+          "Export functionality for test results"
+        ],
+        "challenges": [
+          "Ensuring consistent behavior across different platforms",
+          "Implementing efficient camera API integration",
+          "Creating responsive Flutter UI for complex testing workflows",
+          "Managing device-specific camera capabilities and limitations"
+        ],
+        "year": "2024",
+        "status": "Complete",
+        "featured": true
+      },
+      {
         "id": "csharp-map-generator",
         "title": "C# Procedural Terrain Generator",
         "category": "development",
         "description": "Advanced Unity-based procedural terrain generation system with biome distribution and custom editor tools.",
         "longDescription": "A sophisticated procedural terrain generation system built in Unity using C# and advanced mathematical algorithms. This project demonstrates expertise in game development, procedural content generation, and Unity Editor extensibility.",
-        "thumbnail": "/assets/dev-thumbnails/csharp-map-generator.jpg",
+        "thumbnail": "/assets/Development/CSharpMapGenerator/Untitled .png",
         "tags": ["C#", "Unity", "Procedural Generation", "Game Development", "Algorithm Design"],
         "technologies": ["C#", "Unity Engine", "Custom Editor Tools", "Perlin Noise", "Data Serialization", "Performance Optimization"],
         "githubUrl": "https://github.com/kaitran225/CSharpMapGenerator",
         "images": [
-          "/assets/projects/map-generator/terrain-overview.jpg",
-          "/assets/projects/map-generator/biome-distribution.jpg",
-          "/assets/projects/map-generator/noise-generation.jpg",
-          "/assets/projects/map-generator/editor-interface.jpg"
+          "/assets/Development/CSharpMapGenerator/Untitled .png",
+          "/assets/Development/CSharpMapGenerator/Untitled 1.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 2.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 3.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 4.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 5.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 6.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 7.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 8.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 9.png",
+          "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4"
         ],
         "features": [
           "Multi-octave Perlin noise terrain generation",
@@ -439,27 +523,123 @@
         "featured": true
       },
       {
+        "id": "game-prototypes",
+        "title": "Unity Game Prototypes Collection",
+        "category": "development",
+        "description": "Collection of experimental game prototypes and mechanics built in Unity for learning and experimentation.",
+        "longDescription": "A comprehensive collection of game prototypes and experimental mechanics developed in Unity, showcasing various game development concepts, mechanics, and technical implementations.",
+        "thumbnail": "/assets/Development/GamePrototype/placeholder.jpg",
+        "tags": ["Unity", "C#", "Game Development", "Prototyping", "Mechanics"],
+        "technologies": ["Unity Engine", "C#", "Physics Systems", "Animation", "UI Systems"],
+        "githubUrl": "https://github.com/kaitran225/GamePrototypes",
+        "images": [],
+        "features": [
+          "Multiple game mechanic prototypes",
+          "Physics-based gameplay systems",
+          "Custom animation controllers",
+          "Experimental UI designs",
+          "Performance optimization techniques",
+          "Modular code architecture"
+        ],
+        "challenges": [
+          "Rapid prototyping with clean, maintainable code",
+          "Implementing diverse gameplay mechanics efficiently",
+          "Balancing experimental features with performance",
+          "Creating reusable systems for future projects"
+        ],
+        "year": "2023",
+        "status": "Ongoing",
+        "featured": false
+      },
+      {
+        "id": "environment-design-tools",
+        "title": "Environment Design Tools",
+        "category": "development",
+        "description": "Custom tools and utilities for 3D environment design and level creation workflows.",
+        "longDescription": "A suite of custom tools and utilities designed to streamline 3D environment creation and level design workflows, featuring automation scripts and designer-friendly interfaces.",
+        "thumbnail": "/assets/Development/EnviornmentDesign/placeholder.jpg",
+        "tags": ["3D Design", "Tools", "Workflow", "Automation", "Level Design"],
+        "technologies": ["Python", "3D Graphics", "Automation Scripts", "Workflow Tools"],
+        "githubUrl": "https://github.com/kaitran225/EnvironmentDesignTools",
+        "images": [],
+        "features": [
+          "Automated environment generation tools",
+          "Custom workflow utilities",
+          "Designer-friendly interfaces",
+          "Asset management systems",
+          "Performance optimization tools",
+          "Integration with popular 3D software"
+        ],
+        "challenges": [
+          "Creating intuitive tools for non-technical users",
+          "Ensuring compatibility across different software versions",
+          "Optimizing automation scripts for large-scale projects",
+          "Maintaining tool reliability and performance"
+        ],
+        "year": "2023",
+        "status": "Development",
+        "featured": false
+      },
+      {
+        "id": "travel-planner-mobile",
+        "title": "Travel Planner Mobile App",
+        "category": "development",
+        "description": "Cross-platform Flutter mobile application for comprehensive travel planning and management.",
+        "longDescription": "A comprehensive travel planning mobile application built with Flutter and Dart, featuring cross-platform compatibility, RESTful API integration, and modern mobile UI design. The app provides travel planning tools, destination management, and itinerary organization.",
+        "thumbnail": "/assets/Development/TravelPlanner/placeholder.jpg",
+        "tags": ["Flutter", "Dart", "Mobile Development", "Cross-Platform", "Travel"],
+        "technologies": ["Flutter", "Dart", "REST API", "Material Design", "Cross-Platform"],
+        "githubUrl": "https://github.com/kaitran225/travelPlanner",
+        "images": [
+          "/assets/Development/TravelPlanner/app-screenshot-1.jpg",
+          "/assets/Development/TravelPlanner/app-screenshot-2.jpg",
+          "/assets/Development/TravelPlanner/app-screenshot-3.jpg"
+        ],
+        "features": [
+          "Cross-platform mobile application (iOS/Android)",
+          "Modern Flutter UI with Material Design",
+          "RESTful API integration for travel data",
+          "Comprehensive travel planning tools",
+          "Destination discovery and management",
+          "Itinerary planning and organization",
+          "Offline functionality and data sync",
+          "User-friendly navigation and search"
+        ],
+        "challenges": [
+          "Implementing consistent cross-platform behavior",
+          "Optimizing performance for mobile devices",
+          "Creating intuitive travel planning workflows",
+          "Managing offline data synchronization"
+        ],
+        "year": "2024",
+        "status": "Complete",
+        "featured": true
+      },
+      {
         "id": "anti-swearing-chatbox",
         "title": "Anti-Swearing ChatBox Desktop App",
         "category": "development",
-        "description": "C# WPF desktop application with real-time chat filtering and server communication.",
-        "longDescription": "A comprehensive chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design.",
-        "thumbnail": "/assets/dev-thumbnails/anti-swearing-chat.jpg",
+        "description": "Professional C# WPF desktop application with real-time chat filtering and comprehensive server integration.",
+        "longDescription": "A sophisticated chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design. This project demonstrates enterprise-level desktop application development with 146 commits of comprehensive development.",
+        "thumbnail": "/assets/Development/Desktop v1/chatbox-app.jpg",
         "tags": ["C#", "WPF", "Desktop Development", "Real-time Chat", "Content Filtering"],
         "technologies": ["C#", "WPF", "ASP.NET Core", "Entity Framework", "SignalR", "SQL Server"],
         "githubUrl": "https://github.com/kaitran225/AntiSwearingChatBox",
         "images": [
-          "/assets/projects/chatbox/main-chat-interface.jpg",
-          "/assets/projects/chatbox/admin-panel.jpg",
-          "/assets/projects/chatbox/filtering-settings.jpg"
+          "/assets/Development/Desktop v1/main-chat-interface.jpg",
+          "/assets/Development/Desktop v1/admin-panel.jpg",
+          "/assets/Development/Desktop v1/filtering-settings.jpg",
+          "/assets/Development/Desktop v1/user-management.jpg"
         ],
         "features": [
           "Real-time chat with advanced content filtering",
-          "Modern WPF interface with Material Design",
+          "Modern WPF interface with Material Design principles",
           "Server-side API with ASP.NET Core integration",
           "Customizable word filtering with admin controls",
           "User management with role-based permissions",
-          "Real-time notifications with SignalR"
+          "Real-time notifications with SignalR",
+          "Comprehensive logging and monitoring",
+          "Professional desktop application architecture"
         ],
         "challenges": [
           "Implementing real-time content filtering without delay",
@@ -473,64 +653,372 @@
           "commits": 146,
           "linesOfCode": "5000+"
         },
+        "featured": true
+      },
+      {
+        "id": "prn212-coursework-series",
+        "title": "PRN212 C# Desktop Development Series",
+        "category": "development",
+        "description": "Comprehensive C# desktop development coursework demonstrating academic excellence and practical application skills.",
+        "longDescription": "A complete series of C# desktop development projects from FPT University coursework, including 32 structured exercises, perfume management system, and automated development tools. This collection demonstrates strong academic foundation and progression in desktop application development.",
+        "thumbnail": "/assets/Development/PRN212/coursework-overview.jpg",
+        "tags": ["C#", "Academic Projects", "Desktop Development", "SQL Integration", "WPF"],
+        "technologies": ["C#", "WPF", "SQL Server", "Entity Framework", "MVVM Pattern"],
+        "githubUrl": "https://github.com/kaitran225/PRN212",
+        "images": [
+          "/assets/Development/PRN212/exercise-examples.jpg",
+          "/assets/Development/PRN212/perfume-management.jpg",
+          "/assets/Development/PRN212/automation-tools.jpg"
+        ],
+        "features": [
+          "32 structured programming exercises (EXE01-EXE32)",
+          "Perfume Management System with SQL integration",
+          "Automated development tools and templates",
+          "Progressive learning from basics to advanced concepts",
+          "Database integration with Entity Framework",
+          "MVVM architectural pattern implementation",
+          "Professional code organization and documentation",
+          "Academic excellence demonstration"
+        ],
+        "challenges": [
+          "Mastering C# desktop development fundamentals",
+          "Implementing efficient database operations",
+          "Creating maintainable and scalable code architecture",
+          "Demonstrating consistent academic performance"
+        ],
+        "year": "2023",
+        "status": "Complete",
+        "metrics": {
+          "exercises": 32,
+          "commits": 16,
+          "projects": 3
+        },
         "featured": false
       }
     ],
     "design": [
       {
-        "id": "portfolio-visual-design",
-        "title": "Portfolio Visual Identity & UI Design",
+        "id": "zenna-brand-identity",
+        "title": "Zenna Brand Identity & Package Design",
         "category": "design",
-        "client": "Personal Project",
-        "year": "2025",
-        "role": "UI/UX Designer",
-        "description": "Complete visual identity and interface design for personal portfolio website.",
-        "longDescription": "Comprehensive design system for professional portfolio website, featuring dual-mode interfaces for different audiences, modern visual identity, and sophisticated interaction design.",
-        "thumbnail": "/assets/design-thumbnails/portfolio-design.jpg",
-        "tags": ["UI/UX", "Visual Identity", "Design System", "Responsive Design"],
-        "tools": ["Figma", "Adobe Illustrator", "Adobe Photoshop", "Principle"],
+        "client": "Zenna",
+        "year": "2024",
+        "role": "Brand Designer",
+        "description": "Complete brand identity system and packaging design for Zenna brand.",
+        "longDescription": "Comprehensive brand identity development including logo design, visual identity guidelines, packaging design, and marketing materials. The project showcases modern branding techniques and sophisticated package design execution.",
+        "thumbnail": "/assets/GraphicDesgin/Zenna/12215.jpg",
+        "tags": ["Brand Identity", "Package Design", "Logo Design", "Marketing Materials"],
+        "tools": ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign"],
         "images": {
           "final": [
-            "/assets/projects/portfolio-design/final-homepage.jpg",
-            "/assets/projects/portfolio-design/projects-showcase.jpg",
-            "/assets/projects/portfolio-design/contact-interface.jpg"
+            "/assets/GraphicDesgin/Zenna/12215.jpg",
+            "/assets/GraphicDesgin/Zenna/Asset 10@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 11@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 12@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 13@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 14@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 15@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 16@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 17@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 18@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 19@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 20@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 21@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 22@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 23@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 24@2x.png",
+            "/assets/GraphicDesgin/Zenna/Asset 26@2x.png"
+          ],
+          "mockups": [
+            "/assets/GraphicDesgin/Zenna/Free-Folder-Mockup.jpg",
+            "/assets/GraphicDesgin/Zenna/Hardcover-Book-Mockup-Presentation.jpg",
+            "/assets/GraphicDesgin/Zenna/MSF_05.jpg",
+            "/assets/GraphicDesgin/Zenna/Us_Business_Card_Mockup_1.jpg",
+            "/assets/GraphicDesgin/Zenna/Us_Business_Card_Mockup_2.jpg",
+            "/assets/GraphicDesgin/Zenna/Us_Business_Card_Mockup_3.jpg",
+            "/assets/GraphicDesgin/Zenna/Us_Business_Card_Mockup_4.jpg"
           ]
         },
+        "features": [
+          "Complete brand identity system",
+          "Professional packaging design",
+          "Business card and stationery design",
+          "Marketing material templates",
+          "Brand guidelines documentation",
+          "Multiple mockup presentations"
+        ],
         "featured": true
+      },
+      {
+        "id": "heaven-gateway-ui",
+        "title": "Heaven Gateway UI Design",
+        "category": "design",
+        "client": "Heaven Gateway",
+        "year": "2024",
+        "role": "UI/UX Designer",
+        "description": "Modern UI design system for Heaven Gateway application interface.",
+        "longDescription": "Complete user interface design for Heaven Gateway application, featuring modern design principles, intuitive navigation, and comprehensive UI component library.",
+        "thumbnail": "/assets/GraphicDesgin/HeavenGateway/Asset 1GateWay.png",
+        "tags": ["UI Design", "Interface Design", "Design System", "Mobile UI"],
+        "tools": ["Figma", "Adobe XD", "Sketch"],
+        "images": {
+          "final": [
+            "/assets/GraphicDesgin/HeavenGateway/Asset 1GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 2GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 3GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 4GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 5GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 6GateWay.png",
+            "/assets/GraphicDesgin/HeavenGateway/Asset 8GateWay.png"
+          ]
+        },
+        "features": [
+          "Modern interface design",
+          "Comprehensive UI component library",
+          "Responsive design principles",
+          "User-centered design approach",
+          "Interactive prototyping",
+          "Design system documentation"
+        ],
+        "featured": true
+      },
+      {
+        "id": "kai-tran-personal-branding",
+        "title": "Personal Brand Identity",
+        "category": "design",
+        "client": "Personal Project",
+        "year": "2024",
+        "role": "Brand Designer",
+        "description": "Personal brand identity development and visual design system.",
+        "longDescription": "Development of personal brand identity including logo design, visual guidelines, and professional presentation materials for personal branding and professional presence.",
+        "thumbnail": "/assets/GraphicDesgin/KaiTran/Asset 1TTPL.png",
+        "tags": ["Personal Branding", "Logo Design", "Visual Identity", "Professional Materials"],
+        "tools": ["Adobe Illustrator", "Adobe Photoshop"],
+        "images": {
+          "final": [
+            "/assets/GraphicDesgin/KaiTran/Asset 1TTPL.png",
+            "/assets/GraphicDesgin/KaiTran/Asset 21.jpg",
+            "/assets/GraphicDesgin/KaiTran/Asset 2TTPL.png",
+            "/assets/GraphicDesgin/KaiTran/Asset 3TTPL.jpg"
+          ]
+        },
+        "features": [
+          "Personal logo and brand mark",
+          "Professional color palette",
+          "Typography guidelines",
+          "Business material design",
+          "Digital asset optimization",
+          "Brand application examples"
+        ],
+        "featured": true
+      },
+      {
+        "id": "kotezone-brand-design",
+        "title": "KoteZone Brand & Marketing Design",
+        "category": "design",
+        "client": "KoteZone",
+        "year": "2024",
+        "role": "Brand Designer",
+        "description": "Brand identity and marketing material design for KoteZone.",
+        "longDescription": "Complete brand development for KoteZone including logo design, brand identity guidelines, and comprehensive marketing materials for digital and print applications.",
+        "thumbnail": "/assets/GraphicDesgin/KoteZone/placeholder.jpg",
+        "tags": ["Brand Design", "Marketing Materials", "Logo Design", "Digital Design"],
+        "tools": ["Adobe Creative Suite", "Figma"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Brand identity development",
+          "Logo and visual mark design",
+          "Marketing material templates",
+          "Social media asset design",
+          "Brand guideline documentation",
+          "Digital and print optimization"
+        ],
+        "featured": false
+      },
+      {
+        "id": "cloud-visual-identity",
+        "title": "Cloud Services Visual Identity",
+        "category": "design",
+        "client": "Cloud Project",
+        "year": "2024",
+        "role": "Visual Designer",
+        "description": "Visual identity and interface design for cloud services platform.",
+        "longDescription": "Comprehensive visual identity development for cloud services platform, including interface design, iconography, and user experience optimization.",
+        "thumbnail": "/assets/GraphicDesgin/Cloud/placeholder.jpg",
+        "tags": ["Visual Identity", "Cloud Design", "Interface Design", "Iconography"],
+        "tools": ["Adobe Creative Suite", "Sketch", "Figma"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Cloud platform visual identity",
+          "Custom iconography system",
+          "Interface design elements",
+          "User experience optimization",
+          "Technical documentation design",
+          "Platform branding guidelines"
+        ],
+        "featured": false
+      },
+      {
+        "id": "donut-brand-package",
+        "title": "Donut Brand & Package Design",
+        "category": "design",
+        "client": "Donut Brand",
+        "year": "2024",
+        "role": "Package Designer",
+        "description": "Food brand identity and packaging design for donut products.",
+        "longDescription": "Complete food brand development including packaging design, visual identity, and marketing materials specifically designed for donut products and bakery brand positioning.",
+        "thumbnail": "/assets/GraphicDesgin/Donut/placeholder.jpg",
+        "tags": ["Food Branding", "Package Design", "Product Design", "Brand Identity"],
+        "tools": ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Food brand identity design",
+          "Product packaging solutions",
+          "Point-of-sale materials",
+          "Brand color and typography system",
+          "Marketing collateral design",
+          "Package production guidelines"
+        ],
+        "featured": false
+      },
+      {
+        "id": "noddle-restaurant-branding",
+        "title": "Noddle Restaurant Branding",
+        "category": "design",
+        "client": "Noddle Restaurant",
+        "year": "2024",
+        "role": "Brand Designer",
+        "description": "Complete restaurant brand identity and marketing material design.",
+        "longDescription": "Comprehensive restaurant branding project including logo design, menu design, restaurant interior graphics, and complete marketing material system for Noddle restaurant brand.",
+        "thumbnail": "/assets/GraphicDesgin/Noddle/placeholder.jpg",
+        "tags": ["Restaurant Branding", "Menu Design", "Food Service Design", "Marketing Materials"],
+        "tools": ["Adobe Creative Suite", "Typography Design"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Restaurant brand identity",
+          "Menu and price list design",
+          "Interior graphics and signage",
+          "Marketing material system",
+          "Digital presence design",
+          "Brand implementation guidelines"
+        ],
+        "featured": false
+      },
+      {
+        "id": "womens-day-campaign",
+        "title": "Women's Day Campaign Design",
+        "category": "design",
+        "client": "Campaign Project",
+        "year": "2024",
+        "role": "Campaign Designer",
+        "description": "Visual campaign design for International Women's Day celebration.",
+        "longDescription": "Creative campaign design for International Women's Day including social media graphics, promotional materials, and event branding with empowering visual messaging.",
+        "thumbnail": "/assets/GraphicDesgin/WomenDay/placeholder.jpg",
+        "tags": ["Campaign Design", "Social Media Design", "Event Branding", "Promotional Design"],
+        "tools": ["Adobe Creative Suite", "Social Media Templates"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Campaign visual identity",
+          "Social media graphics suite",
+          "Event promotional materials",
+          "Digital and print applications",
+          "Empowerment messaging design",
+          "Multi-platform optimization"
+        ],
+        "featured": false
+      },
+      {
+        "id": "robotoslab-typography-project",
+        "title": "RobotoSlab Typography Project",
+        "category": "design",
+        "client": "Typography Study",
+        "year": "2024",
+        "role": "Typography Designer",
+        "description": "Typography exploration and design system using RobotoSlab font family.",
+        "longDescription": "Comprehensive typography project exploring the RobotoSlab font family, including type specimen design, layout applications, and typographic hierarchy demonstrations.",
+        "thumbnail": "/assets/GraphicDesgin/RobotoSlab/placeholder.jpg",
+        "tags": ["Typography", "Font Design", "Layout Design", "Type Specimen"],
+        "tools": ["Adobe InDesign", "Adobe Illustrator", "Typography Tools"],
+        "images": {
+          "final": []
+        },
+        "features": [
+          "Typography specimen design",
+          "Font application examples",
+          "Typographic hierarchy systems",
+          "Layout design exploration",
+          "Type pairing recommendations",
+          "Design system documentation"
+        ],
+        "featured": false
       }
     ]
   },
   "simplePortfolio": {
     "projectCategories": [
       {
-        "name": "Portfolio",
-        "title": "Professional Portfolio Website",
-        "description": "Modern React portfolio with TypeScript, 3D graphics, and dual-mode interface.",
-        "tech": ["React 19", "TypeScript", "Three.js", "Styled Components"]
+        "name": "Web Development",
+        "title": "Full-Stack Web Applications",
+        "description": "Modern web applications built with React, TypeScript, and cloud technologies.",
+        "tech": ["React 19", "TypeScript", "Spring Boot", "Docker"]
       },
       {
-        "name": "Backend",
-        "title": "Mental Health Care API",
-        "description": "Enterprise Spring Boot backend serving real users in production.",
-        "tech": ["Spring Boot", "Java", "MySQL", "JWT"]
+        "name": "AI & Machine Learning",
+        "title": "AI-Powered Applications",
+        "description": "Advanced AI integration with local models, computer vision, and automation systems.",
+        "tech": ["Python", "Ollama", "Computer Vision", "FastAPI"]
       },
       {
-        "name": "Cybria",
-        "title": "AI Assistant with 3D Avatar",
-        "description": "Advanced AI integration with Ollama models and 3D character system.",
-        "tech": ["Python", "FastAPI", "Ollama", "React Three Fiber"]
+        "name": "Mobile Development",
+        "title": "Cross-Platform Mobile Apps",
+        "description": "Flutter and native mobile applications with modern UI/UX design.",
+        "tech": ["Flutter", "Dart", "Java", "Cross-Platform"]
       },
       {
-        "name": "Unity",
-        "title": "Procedural Terrain Generator",
-        "description": "Advanced Unity C# system for procedural terrain generation.",
-        "tech": ["C#", "Unity", "Procedural Generation", "Custom Editor"]
+        "name": "Desktop Applications",
+        "title": "Professional Desktop Software",
+        "description": "C# WPF applications, Unity tools, and desktop automation systems.",
+        "tech": ["C#", "WPF", "Unity", "PyQt6"]
       },
       {
-        "name": "Desktop",
-        "title": "Desktop Applications",
-        "description": "C# WPF applications and Python automation tools.",
-        "tech": ["C#", "WPF", "Python", "PyQt6"]
+        "name": "Microservices",
+        "title": "Production Microservices",
+        "description": "Ultra-optimized services with JWT security and cloud deployment.",
+        "tech": ["Node.js", "Docker", "JWT", "MySQL"]
+      },
+      {
+        "name": "Game Development",
+        "title": "Unity & C# Game Projects",
+        "description": "Procedural generation systems, game prototypes, and Unity tool development.",
+        "tech": ["C#", "Unity", "Procedural Generation", "Custom Tools"]
+      },
+      {
+        "name": "Backend Systems",
+        "title": "Enterprise Backend Solutions",
+        "description": "Production-grade APIs, microservices, and database systems serving real users.",
+        "tech": ["Spring Boot", "Node.js", "MySQL", "JWT"]
+      },
+      {
+        "name": "Brand Design",
+        "title": "Visual Identity & Branding",
+        "description": "Complete brand identity systems, packaging design, and marketing materials.",
+        "tech": ["Adobe Creative Suite", "Brand Strategy", "Package Design"]
+      },
+      {
+        "name": "UI/UX Design",
+        "title": "Interface & Experience Design",
+        "description": "Modern UI designs, design systems, and user experience optimization.",
+        "tech": ["Figma", "Design Systems", "Prototyping", "User Research"]
       }
     ]
   },
@@ -549,11 +1037,37 @@
         "code": "@RestController\n@RequestMapping(\"/api/v1/appointments\")\n@Validated\n@SecurityRequirement(name = \"Bearer Authentication\")\npublic class AppointmentController {\n    \n    @Autowired\n    private AppointmentService appointmentService;\n    \n    @PostMapping\n    @PreAuthorize(\"hasRole('STUDENT') or hasRole('PSYCHOLOGIST')\")\n    public ResponseEntity<AppointmentResponseDto> createAppointment(\n        @Valid @RequestBody CreateAppointmentRequestDto request,\n        Authentication authentication\n    ) {\n        try {\n            AppointmentResponseDto response = appointmentService\n                .createAppointment(request, authentication.getName());\n            return ResponseEntity.status(HttpStatus.CREATED).body(response);\n        } catch (AppointmentConflictException e) {\n            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());\n        }\n    }\n    \n    @GetMapping\n    @PreAuthorize(\"hasRole('STUDENT') or hasRole('PSYCHOLOGIST') or hasRole('ADMIN')\")\n    public ResponseEntity<List<AppointmentResponseDto>> getAppointments(\n        Authentication authentication,\n        @RequestParam(required = false) String status\n    ) {\n        List<AppointmentResponseDto> appointments = appointmentService\n            .getAppointmentsByUser(authentication.getName(), status);\n        return ResponseEntity.ok(appointments);\n    }\n}"
       }
     ],
+    "cybria-ai-assistant": [
+      {
+        "fileName": "backend/ai_service.py",
+        "language": "python",
+        "code": "from fastapi import FastAPI, WebSocket, WebSocketDisconnect\nfrom fastapi.middleware.cors import CORSMiddleware\nimport ollama\nimport json\nimport asyncio\nfrom typing import Dict, List\n\napp = FastAPI(title=\"Cybria AI Assistant\")\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\nclass ConnectionManager:\n    def __init__(self):\n        self.active_connections: List[WebSocket] = []\n        self.conversation_history: Dict[str, List] = {}\n    \n    async def connect(self, websocket: WebSocket):\n        await websocket.accept()\n        self.active_connections.append(websocket)\n    \n    def disconnect(self, websocket: WebSocket):\n        self.active_connections.remove(websocket)\n    \n    async def send_personal_message(self, message: str, websocket: WebSocket):\n        await websocket.send_text(message)\n\nmanager = ConnectionManager()\n\n@app.websocket(\"/ws/{client_id}\")\nasync def websocket_endpoint(websocket: WebSocket, client_id: str):\n    await manager.connect(websocket)\n    try:\n        while True:\n            data = await websocket.receive_text()\n            message_data = json.loads(data)\n            \n            # Process AI request\n            response = await process_ai_request(\n                message_data['message'], \n                message_data.get('persona', 'assistant')\n            )\n            \n            await manager.send_personal_message(\n                json.dumps({\n                    'type': 'ai_response',\n                    'message': response,\n                    'timestamp': str(datetime.now())\n                }), \n                websocket\n            )\n    except WebSocketDisconnect:\n        manager.disconnect(websocket)\n\nasync def process_ai_request(message: str, persona: str) -> str:\n    try:\n        response = ollama.chat(\n            model='nous-hermes2:7b',\n            messages=[\n                {\n                    'role': 'system',\n                    'content': f'You are {persona}, an AI assistant with advanced capabilities.'\n                },\n                {\n                    'role': 'user',\n                    'content': message\n                }\n            ]\n        )\n        return response['message']['content']\n    except Exception as e:\n        return f\"Error processing request: {str(e)}\""
+      },
+      {
+        "fileName": "frontend/components/Avatar3D.tsx",
+        "language": "typescript",
+        "code": "import React, { useRef, useEffect } from 'react';\nimport { Canvas, useFrame } from '@react-three/fiber';\nimport { OrbitControls, useGLTF } from '@react-three/drei';\nimport * as THREE from 'three';\n\ninterface Avatar3DProps {\n  emotion: 'neutral' | 'happy' | 'thinking' | 'speaking';\n  isAnimating: boolean;\n}\n\nconst AvatarModel: React.FC<{ emotion: string; isAnimating: boolean }> = ({ emotion, isAnimating }) => {\n  const meshRef = useRef<THREE.Mesh>(null);\n  const { scene } = useGLTF('/models/cybria-avatar.glb');\n  \n  useFrame((state) => {\n    if (meshRef.current && isAnimating) {\n      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.1;\n      \n      // Emotional expressions through subtle transformations\n      switch (emotion) {\n        case 'happy':\n          meshRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.02);\n          break;\n        case 'thinking':\n          meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;\n          break;\n        case 'speaking':\n          meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 8) * 0.01;\n          break;\n        default:\n          meshRef.current.scale.setScalar(1);\n          meshRef.current.rotation.x = 0;\n          meshRef.current.position.y = 0;\n      }\n    }\n  });\n  \n  return (\n    <primitive \n      ref={meshRef} \n      object={scene.clone()} \n      scale={1.5} \n      position={[0, -1, 0]} \n    />\n  );\n};\n\nconst Avatar3D: React.FC<Avatar3DProps> = ({ emotion, isAnimating }) => {\n  return (\n    <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>\n      <ambientLight intensity={0.4} />\n      <directionalLight position={[10, 10, 5]} intensity={0.8} />\n      <AvatarModel emotion={emotion} isAnimating={isAnimating} />\n      <OrbitControls enableZoom={false} enablePan={false} />\n    </Canvas>\n  );\n};\n\nexport default Avatar3D;"
+      }
+    ],
+    "autofish-automation": [
+      {
+        "fileName": "src/computer_vision.py",
+        "language": "python",
+        "code": "import cv2\nimport numpy as np\nfrom PIL import ImageGrab\nimport pyautogui\nfrom typing import Tuple, Optional\n\nclass FishingDetector:\n    def __init__(self):\n        self.template_images = self.load_templates()\n        self.fishing_active = False\n        self.detection_threshold = 0.8\n    \n    def load_templates(self) -> dict:\n        \"\"\"Load template images for pattern matching\"\"\"\n        templates = {}\n        template_paths = {\n            'fishing_rod': 'templates/fishing_rod.png',\n            'fish_bite': 'templates/fish_bite.png',\n            'water_ripple': 'templates/water_ripple.png'\n        }\n        \n        for name, path in template_paths.items():\n            try:\n                templates[name] = cv2.imread(path, cv2.IMREAD_GRAYSCALE)\n            except Exception as e:\n                print(f\"Failed to load template {name}: {e}\")\n        \n        return templates\n    \n    def capture_screen_region(self, region: Tuple[int, int, int, int]) -> np.ndarray:\n        \"\"\"Capture specific screen region for analysis\"\"\"\n        screenshot = ImageGrab.grab(bbox=region)\n        screen_array = np.array(screenshot)\n        return cv2.cvtColor(screen_array, cv2.COLOR_RGB2GRAY)\n    \n    def detect_fishing_opportunity(self, screen_region: np.ndarray) -> bool:\n        \"\"\"Detect if fishing opportunity is available\"\"\"\n        if 'fishing_rod' not in self.template_images:\n            return False\n        \n        result = cv2.matchTemplate(\n            screen_region, \n            self.template_images['fishing_rod'], \n            cv2.TM_CCOEFF_NORMED\n        )\n        \n        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)\n        return max_val >= self.detection_threshold\n    \n    def detect_fish_bite(self, screen_region: np.ndarray) -> bool:\n        \"\"\"Detect fish bite indicators\"\"\"\n        if 'fish_bite' not in self.template_images:\n            return False\n        \n        result = cv2.matchTemplate(\n            screen_region, \n            self.template_images['fish_bite'], \n            cv2.TM_CCOEFF_NORMED\n        )\n        \n        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)\n        return max_val >= self.detection_threshold\n    \n    def start_fishing_sequence(self) -> bool:\n        \"\"\"Execute fishing automation sequence\"\"\"\n        try:\n            # Cast fishing line\n            pyautogui.click(button='right')\n            time.sleep(0.5)\n            \n            # Wait for fish bite detection\n            max_wait_time = 30  # seconds\n            start_time = time.time()\n            \n            while time.time() - start_time < max_wait_time:\n                screen = self.capture_screen_region((100, 100, 800, 600))\n                \n                if self.detect_fish_bite(screen):\n                    # Fish detected, reel in\n                    pyautogui.click(button='right')\n                    return True\n                \n                time.sleep(0.1)\n            \n            return False\n            \n        except Exception as e:\n            print(f\"Fishing sequence error: {e}\")\n            return False"
+      }
+    ],
     "csharp-map-generator": [
       {
         "fileName": "MapGenerator.cs",
         "language": "csharp",
-        "code": "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class MapGenerator : MonoBehaviour\n{\n    public enum DrawMode { NoiseMap, BiomesMap, BioGradientColorRange, BiomeDistributionMap }\n    \n    [Header(\"Basic Settings\")]\n    public DrawMode drawMode;\n    public int size = 100;\n    [Range(0, 1)]\n    public float waterLevel = 0.3f;\n    \n    [Header(\"Generation Parameters\")]\n    public bool autoUpdate;\n    public bool useFallOff;\n    public Vector2 offset;\n    public Vector2 mOffset;\n    \n    public void GenerateMap()\n    {\n        noiseMap = Noise.GenerateNoiseMap(width, height, seed, size / 2f, octaves, persistance, lacunarity, offset);\n        fallOffMap = FallOffMap.GenerateFallOffMap(width, height);\n        heightTempMap = TemperaturGenerator.TemperatureMapGeneration(width, height, noiseMap, fallOffMap, useFallOff);\n        heightMoistureMap = MoistureGenerator.MoistureGenerate(width, height, size / 2f, octaves, persistance, lacunarity, mSeed, mOffset, noiseMap, fallOffMap, useFallOff);\n        \n        colorMap = new Color[width * height];\n        \n        MapDisplay display = FindObjectOfType<MapDisplay>();\n        switch (drawMode)\n        {\n            case DrawMode.NoiseMap:\n                colorMap = CreateColorMap(noiseMap, useFallOff, CreateGradient(), fallOffMap);\n                break;\n            case DrawMode.BiomeDistributionMap:\n                bioColorRangeMap = BioColorRangeMapGenerator.BioGeneration(width, height, color);\n                colorMap = BioDistributionGenerator.BioGeneration(width, height, heightTempMap, heightMoistureMap, bioColorRangeMap, noiseMap, CreateGradient(ocean), waterLevel, useFallOff, fallOffMap);\n                break;\n        }\n        \n        display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, width, height));\n    }\n}"
+        "code": "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class MapGenerator : MonoBehaviour\n{\n    public enum DrawMode { NoiseMap, BiomesMap, BioGradientColorRange, BiomeDistributionMap }\n    \n    [Header(\"Basic Settings\")]\n    public DrawMode drawMode;\n    public int size = 100;\n    [Range(0, 1)]\n    public float waterLevel = 0.3f;\n    \n    [Header(\"Generation Parameters\")]\n    public bool autoUpdate;\n    public bool useFallOff;\n    public Vector2 offset;\n    public Vector2 mOffset;\n    \n    [Header(\"Noise Settings\")]\n    public int seed;\n    public int octaves = 4;\n    [Range(0, 1)]\n    public float persistance = 0.5f;\n    public float lacunarity = 2f;\n    \n    private float[,] noiseMap;\n    private float[,] fallOffMap;\n    private float[,] heightTempMap;\n    private float[,] heightMoistureMap;\n    private Color[] colorMap;\n    private Color[,] bioColorRangeMap;\n    \n    public void GenerateMap()\n    {\n        int width = size;\n        int height = size;\n        \n        noiseMap = Noise.GenerateNoiseMap(width, height, seed, size / 2f, octaves, persistance, lacunarity, offset);\n        fallOffMap = FallOffMap.GenerateFallOffMap(width, height);\n        heightTempMap = TemperaturGenerator.TemperatureMapGeneration(width, height, noiseMap, fallOffMap, useFallOff);\n        heightMoistureMap = MoistureGenerator.MoistureGenerate(width, height, size / 2f, octaves, persistance, lacunarity, mSeed, mOffset, noiseMap, fallOffMap, useFallOff);\n        \n        colorMap = new Color[width * height];\n        \n        MapDisplay display = FindObjectOfType<MapDisplay>();\n        switch (drawMode)\n        {\n            case DrawMode.NoiseMap:\n                colorMap = CreateColorMap(noiseMap, useFallOff, CreateGradient(), fallOffMap);\n                break;\n            case DrawMode.BiomeDistributionMap:\n                bioColorRangeMap = BioColorRangeMapGenerator.BioGeneration(width, height, color);\n                colorMap = BioDistributionGenerator.BioGeneration(width, height, heightTempMap, heightMoistureMap, bioColorRangeMap, noiseMap, CreateGradient(ocean), waterLevel, useFallOff, fallOffMap);\n                break;\n        }\n        \n        display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, width, height));\n    }\n    \n    private Color[] CreateColorMap(float[,] noiseMap, bool useFallOff, Gradient gradient, float[,] fallOffMap)\n    {\n        int width = noiseMap.GetLength(0);\n        int height = noiseMap.GetLength(1);\n        Color[] colorMap = new Color[width * height];\n        \n        for (int y = 0; y < height; y++)\n        {\n            for (int x = 0; x < width; x++)\n            {\n                float noiseValue = noiseMap[x, y];\n                if (useFallOff)\n                {\n                    noiseValue = Mathf.Clamp01(noiseValue - fallOffMap[x, y]);\n                }\n                colorMap[y * width + x] = gradient.Evaluate(noiseValue);\n            }\n        }\n        \n        return colorMap;\n    }\n}"
+      }
+    ],
+    "camera-check-system": [
+      {
+        "fileName": "lib/camera_service.dart",
+        "language": "dart",
+        "code": "import 'package:camera/camera.dart';\nimport 'package:flutter/material.dart';\nimport 'package:flutter/services.dart';\n\nclass CameraService {\n  static CameraService? _instance;\n  static CameraService get instance => _instance ??= CameraService._();\n  \n  CameraService._();\n  \n  List<CameraDescription> _cameras = [];\n  CameraController? _controller;\n  bool _isInitialized = false;\n  \n  List<CameraDescription> get cameras => _cameras;\n  CameraController? get controller => _controller;\n  bool get isInitialized => _isInitialized;\n  \n  Future<void> initializeCameras() async {\n    try {\n      _cameras = await availableCameras();\n      if (_cameras.isNotEmpty) {\n        await _initializeController(_cameras.first);\n      }\n    } on CameraException catch (e) {\n      debugPrint('Camera initialization error: ${e.code} - ${e.description}');\n      rethrow;\n    }\n  }\n  \n  Future<void> _initializeController(CameraDescription camera) async {\n    _controller = CameraController(\n      camera,\n      ResolutionPreset.high,\n      enableAudio: false,\n      imageFormatGroup: ImageFormatGroup.jpeg,\n    );\n    \n    try {\n      await _controller!.initialize();\n      _isInitialized = true;\n    } on CameraException catch (e) {\n      debugPrint('Controller initialization error: ${e.code} - ${e.description}');\n      _isInitialized = false;\n      rethrow;\n    }\n  }\n  \n  Future<void> switchCamera(CameraDescription camera) async {\n    if (_controller != null) {\n      await _controller!.dispose();\n    }\n    await _initializeController(camera);\n  }\n  \n  Future<CameraTestResult> runCameraTest() async {\n    if (!_isInitialized || _controller == null) {\n      return CameraTestResult(\n        success: false,\n        error: 'Camera not initialized',\n        timestamp: DateTime.now(),\n      );\n    }\n    \n    try {\n      // Test camera preview\n      final previewSize = _controller!.value.previewSize;\n      if (previewSize == null) {\n        throw CameraException('PREVIEW_ERROR', 'Unable to get preview size');\n      }\n      \n      // Test image capture\n      final XFile image = await _controller!.takePicture();\n      final imageSize = await image.length();\n      \n      // Test flash modes if available\n      final flashModes = await _getAvailableFlashModes();\n      \n      return CameraTestResult(\n        success: true,\n        previewSize: previewSize,\n        imageSize: imageSize,\n        flashModes: flashModes,\n        timestamp: DateTime.now(),\n      );\n      \n    } on CameraException catch (e) {\n      return CameraTestResult(\n        success: false,\n        error: '${e.code}: ${e.description}',\n        timestamp: DateTime.now(),\n      );\n    }\n  }\n  \n  Future<List<FlashMode>> _getAvailableFlashModes() async {\n    final List<FlashMode> modes = [];\n    \n    for (final mode in FlashMode.values) {\n      try {\n        await _controller!.setFlashMode(mode);\n        modes.add(mode);\n      } catch (e) {\n        // Flash mode not supported\n      }\n    }\n    \n    return modes;\n  }\n  \n  void dispose() {\n    _controller?.dispose();\n    _controller = null;\n    _isInitialized = false;\n  }\n}\n\nclass CameraTestResult {\n  final bool success;\n  final String? error;\n  final Size? previewSize;\n  final int? imageSize;\n  final List<FlashMode>? flashModes;\n  final DateTime timestamp;\n  \n  CameraTestResult({\n    required this.success,\n    this.error,\n    this.previewSize,\n    this.imageSize,\n    this.flashModes,\n    required this.timestamp,\n  });\n}"
       }
     ]
   },
