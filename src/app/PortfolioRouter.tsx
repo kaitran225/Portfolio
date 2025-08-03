@@ -116,18 +116,30 @@ const PortfolioRouter: React.FC = () => {
 // Helper function to determine project type based on ID
 const getProjectType = (projectId: string): 'development' | 'design' => {
   const developmentProjects = [
-    'calantha-platform',
-    'ecommerce-platform', 
-    'cloud-infrastructure',
-    'mobile-api'
+    'portfolio-website',
+    'mental-health-backend',
+    'cybria-ai-assistant',
+    'notification-microservice',
+    'autofish-automation',
+    'camera-check-system',
+    'csharp-map-generator',
+    'game-prototypes',
+    'environment-design-tools',
+    'travel-planner-mobile',
+    'anti-swearing-chatbox',
+    'prn212-coursework-series'
   ];
   
   const designProjects = [
-    'brand-identity-zena',
-    'mobile-ui-design',
-    'packaging-design',
-    'web-design-portfolio',
-    'calantha-branding'
+    'zenna-brand-identity',
+    'heaven-gateway-ui',
+    'kai-tran-personal-branding',
+    'kotezone-brand-design',
+    'cloud-visual-identity',
+    'donut-brand-package',
+    'noddle-restaurant-branding',
+    'womens-day-campaign',
+    'robotoslab-typography-project'
   ];
   
   if (developmentProjects.includes(projectId)) {

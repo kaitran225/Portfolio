@@ -147,7 +147,7 @@ const ZoomIndicator = styled.div`
 `;
 
 const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
-    const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'readme' | 'demo'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'folder' | 'readme' | 'demo'>('overview');
     const [selectedImage, setSelectedImage] = useState(0);
     const [isScrolled, setIsScrolled] = useState(false);
     const [headerHeight, setHeaderHeight] = useState(0);
@@ -272,7 +272,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     }, []);
 
     // Enhanced tab switching with transition
-    const handleTabSwitch = (newTab: 'overview' | 'code' | 'readme' | 'demo') => {
+    const handleTabSwitch = (newTab: 'overview' | 'code' | 'folder' | 'readme' | 'demo') => {
         if (newTab === activeTab) return;
 
         setIsTransitioning(true);
@@ -459,13 +459,63 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     // Helper to get images array (handle both string[] and object with arrays)
     const getProjectImages = () => {
         if (!projectData.images) return [];
-        if (Array.isArray(projectData.images)) return projectData.images;
-        // If it's an object, combine all image arrays
+        if (Array.isArray(projectData.images)) {
+            // Filter only image files (no videos)
+            return projectData.images.filter(image => 
+                image.endsWith('.jpg') || 
+                image.endsWith('.jpeg') || 
+                image.endsWith('.png') || 
+                image.endsWith('.webp') || 
+                image.endsWith('.gif')
+            );
+        }
+        // If it's an object, combine all image arrays (design projects)
         const { final = [], process = [], mockups = [] } = projectData.images;
-        return [...final, ...process, ...mockups];
+        return [...final, ...process, ...mockups].filter(image => 
+            image.endsWith('.jpg') || 
+            image.endsWith('.jpeg') || 
+            image.endsWith('.png') || 
+            image.endsWith('.webp') || 
+            image.endsWith('.gif')
+        );
+    };
+    
+    // Helper to get videos array
+    const getProjectVideos = () => {
+        if (!projectData.images) return [];
+        let videos = [];
+        
+        if (Array.isArray(projectData.images)) {
+            // Filter only video files
+            videos = projectData.images.filter(image => 
+                image.endsWith('.mp4') || 
+                image.endsWith('.webm') || 
+                image.endsWith('.mov')
+            );
+        } else {
+            // If it's an object, combine all arrays and filter videos
+            const { final = [], process = [], mockups = [] } = projectData.images;
+            videos = [...final, ...process, ...mockups].filter(image => 
+                image.endsWith('.mp4') || 
+                image.endsWith('.webm') || 
+                image.endsWith('.mov')
+            );
+        }
+        
+        // Also include demoUrl if it's a video
+        if (projectData.demoUrl && (
+            projectData.demoUrl.endsWith('.mp4') || 
+            projectData.demoUrl.endsWith('.webm') || 
+            projectData.demoUrl.endsWith('.mov')
+        )) {
+            videos.unshift(projectData.demoUrl);
+        }
+        
+        return videos;
     };
     
     const projectImages = getProjectImages();
+    const projectVideos = getProjectVideos();
 
     return (
         <ProjectContainer ref={vantaRef}>
@@ -515,6 +565,12 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                     <span>💻</span> Code Preview
                 </Tab>
                 <Tab
+                    $active={activeTab === 'folder'}
+                    onClick={() => handleTabSwitch('folder')}
+                >
+                    <span>📁</span> Project Structure
+                </Tab>
+                <Tab
                     $active={activeTab === 'readme'}
                     onClick={() => handleTabSwitch('readme')}
                 >
@@ -544,50 +600,25 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                     {projectImages.length > 0 && (
                                         <>
                                             <MainImage>
-                                                {(projectImages[selectedImage] || projectData.thumbnail).endsWith('.mp4') ? (
-                                                    <div style={{ 
-                                                             position: 'relative', 
-                                                             cursor: 'zoom-in',
-                                                             border: '2px solid transparent'
-                                                         }} 
-                                                         onClick={(e) => {
-                                                             e.preventDefault();
-                                                             e.stopPropagation();
-                                                             openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'video');
-                                                         }}
-                                                         onMouseEnter={() => {}}
-                                                    >
-                                                        <video
-                                                            autoPlay
-                                                            loop
-                                                            muted
-                                                            playsInline
-                                                            src={projectImages[selectedImage] || projectData.thumbnail}
-                                                            style={{ pointerEvents: 'none' }}
-                                                        />
-                                                        <ZoomIndicator>🔍 Click to fullscreen</ZoomIndicator>
-                                                    </div>
-                                                ) : (
-                                                    <div style={{ 
-                                                             position: 'relative', 
-                                                             cursor: 'zoom-in',
-                                                             border: '2px solid transparent'
-                                                         }} 
-                                                         onClick={(e) => {
-                                                             e.preventDefault();
-                                                             e.stopPropagation();
-                                                             openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'image');
-                                                         }}
-                                                         onMouseEnter={() => {}}
-                                                    >
-                                                        <img
-                                                            src={projectImages[selectedImage] || projectData.thumbnail}
-                                                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                                                            style={{ pointerEvents: 'none' }}
-                                                        />
-                                                        <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
-                                                    </div>
-                                                )}
+                                                <div style={{ 
+                                                         position: 'relative', 
+                                                         cursor: 'zoom-in',
+                                                         border: '2px solid transparent'
+                                                     }} 
+                                                     onClick={(e) => {
+                                                         e.preventDefault();
+                                                         e.stopPropagation();
+                                                         openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'image');
+                                                     }}
+                                                     onMouseEnter={() => {}}
+                                                >
+                                                    <img
+                                                        src={projectImages[selectedImage] || projectData.thumbnail}
+                                                        alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                                                        style={{ pointerEvents: 'none' }}
+                                                    />
+                                                    <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                                                </div>
                                             </MainImage>
                                             <ImageThumbnails>
                                                 {projectImages.map((image: string, index: number) => (
@@ -595,18 +626,10 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                                         key={index}
                                                         $active={index === selectedImage}
                                                         onClick={() => setSelectedImage(index)}
-                                                        onDoubleClick={() => openFullscreen(image, image.endsWith('.mp4') ? 'video' : 'image')}
+                                                        onDoubleClick={() => openFullscreen(image, 'image')}
                                                         title="Click to select, double-click to fullscreen"
                                                     >
-                                                        {image.endsWith('.mp4') ? (
-                                                            <video
-                                                                muted
-                                                                playsInline
-                                                                src={image}
-                                                            />
-                                                        ) : (
-                                                            <img src={image} alt={`Thumbnail ${index + 1}`} />
-                                                        )}
+                                                        <img src={image} alt={`Thumbnail ${index + 1}`} />
                                                     </Thumbnail>
                                                 ))}
                                             </ImageThumbnails>
@@ -650,6 +673,52 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                             </CodeSection>
                         )}
 
+                        {activeTab === 'folder' && (
+                            <FolderSection key={`folder-${tabKey}`}>
+                                <SectionTitle>Project Structure</SectionTitle>
+                                <FolderContent>
+                                    {projectData.githubUrl ? (
+                                        <div>
+                                            <p style={{ marginBottom: '20px', color: 'var(--color-text-secondary)' }}>
+                                                Explore the complete project structure and organization:
+                                            </p>
+                                            <FolderLinks>
+                                                <ProjectLink href={projectData.githubUrl} target="_blank">
+                                                    📂 Browse Repository
+                                                </ProjectLink>
+                                                <ProjectLink href={`${projectData.githubUrl}/tree/main`} target="_blank">
+                                                    🌿 View Main Branch
+                                                </ProjectLink>
+                                                <ProjectLink href={`${projectData.githubUrl}/commits`} target="_blank">
+                                                    📝 Commit History
+                                                </ProjectLink>
+                                                <ProjectLink href={`${projectData.githubUrl}/releases`} target="_blank">
+                                                    🏷️ Releases
+                                                </ProjectLink>
+                                            </FolderLinks>
+                                            <FolderDescription>
+                                                <h3>Key Directories & Files:</h3>
+                                                <ul>
+                                                    <li><strong>src/</strong> - Main source code directory</li>
+                                                    <li><strong>components/</strong> - Reusable UI components</li>
+                                                    <li><strong>utils/</strong> - Utility functions and helpers</li>
+                                                    <li><strong>types/</strong> - TypeScript type definitions</li>
+                                                    <li><strong>tests/</strong> - Test files and test utilities</li>
+                                                    <li><strong>docs/</strong> - Documentation and guides</li>
+                                                    <li><strong>README.md</strong> - Project overview and setup instructions</li>
+                                                    <li><strong>package.json</strong> - Dependencies and scripts</li>
+                                                </ul>
+                                            </FolderDescription>
+                                        </div>
+                                    ) : (
+                                        <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                                            Repository information not available for this project.
+                                        </p>
+                                    )}
+                                </FolderContent>
+                            </FolderSection>
+                        )}
+
                         {activeTab === 'readme' && (
                             <ReadmeSection key={`readme-${tabKey}`}>
                                 <SectionTitle>Project Documentation</SectionTitle>
@@ -660,35 +729,43 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                         {activeTab === 'demo' && (
                             <DemoSection key={`demo-${tabKey}`}>
                                 <SectionTitle>Project Demo</SectionTitle>
-                                {(projectData.demoUrl || projectData.videoDemo) && (
-                                    <VideoDemo>
-                                        <div style={{ position: 'relative' }}>
-                                            <video 
-                                                controls 
-                                                width="100%" 
-                                                autoPlay 
-                                                muted 
-                                                loop
-                                                style={{ borderRadius: '8px' }}
-                                                onDoubleClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    openFullscreen(projectData.demoUrl || projectData.videoDemo || '', 'video');
-                                                }}
-                                            >
-                                                <source src={projectData.demoUrl || projectData.videoDemo} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video>
-                                            <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
-                                        </div>
-                                        <DemoCaption>
-                                            {projectData.demoUrl && projectData.demoUrl.includes('AI') && "🤖 AI Assistant Demo"}
-                                            {projectData.demoUrl && projectData.demoUrl.includes('AutoFish') && "🎣 Computer Vision Automation Demo"}
-                                            {projectData.demoUrl && projectData.demoUrl.includes('CheckCam') && "📷 Camera Testing System Demo"}
-                                            {projectData.demoUrl && projectData.demoUrl.includes('CSharpMapGenerator') && "🗺️ Procedural Terrain Generation Demo"}
-                                            {!projectData.demoUrl && "🎬 Project Demo Video"}
-                                        </DemoCaption>
-                                    </VideoDemo>
+                                {projectVideos.length > 0 ? (
+                                    <VideoGallery>
+                                        {projectVideos.map((video, index) => (
+                                            <VideoDemo key={index}>
+                                                <div style={{ position: 'relative' }}>
+                                                    <video 
+                                                        controls 
+                                                        width="100%" 
+                                                        autoPlay 
+                                                        muted 
+                                                        loop
+                                                        style={{ borderRadius: '8px' }}
+                                                        onDoubleClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            openFullscreen(video, 'video');
+                                                        }}
+                                                    >
+                                                        <source src={video} type="video/mp4" />
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                    <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
+                                                </div>
+                                                <DemoCaption>
+                                                    {video.includes('AI') && "🤖 AI Assistant Demo"}
+                                                    {video.includes('AutoFish') && "🎣 Computer Vision Automation Demo"}
+                                                    {video.includes('CheckCam') && "📷 Camera Testing System Demo"}
+                                                    {video.includes('CSharpMapGenerator') && "🗺️ Procedural Terrain Generation Demo"}
+                                                    {!video.includes('AI') && !video.includes('AutoFish') && !video.includes('CheckCam') && !video.includes('CSharpMapGenerator') && `🎬 Project Demo Video ${index + 1}`}
+                                                </DemoCaption>
+                                            </VideoDemo>
+                                        ))}
+                                    </VideoGallery>
+                                ) : (
+                                    <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                                        No demo videos available for this project.
+                                    </p>
                                 )}
                                 <DemoLinks>
                                     <ProjectLink href={projectData.githubUrl} target="_blank">
@@ -699,7 +776,7 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
                                             🌐 Try Live Demo
                                         </ProjectLink>
                                     )}
-                                    {projectData.demoUrl && (
+                                    {projectData.demoUrl && !projectData.demoUrl.endsWith('.mp4') && (
                                         <ProjectLink href={projectData.demoUrl} target="_blank">
                                             🎬 Watch Demo Video
                                         </ProjectLink>
@@ -1672,6 +1749,67 @@ const ReadmeSection = styled.div`
   }
 `;
 
+const FolderSection = styled.div`
+  animation: folderSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 20px 0;
+  
+  @keyframes folderSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-30px) rotateY(-10deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+    }
+  }
+`;
+
+const FolderContent = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+`;
+
+const FolderLinks = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+`;
+
+const FolderDescription = styled.div`
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  
+  h3 {
+    color: var(--color-text-primary);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    strong {
+      color: var(--color-green-primary);
+      font-family: 'Courier New', monospace;
+    }
+  }
+`;
+
 const DemoSection = styled.div`
   animation: catalogZoomReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   padding: 20px 0;
@@ -1687,6 +1825,18 @@ const DemoSection = styled.div`
       transform: scale(1) rotateZ(0deg);
       filter: blur(0px);
     }
+  }
+`;
+
+const VideoGallery = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 `;
 

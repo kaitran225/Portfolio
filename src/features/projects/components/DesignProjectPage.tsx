@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import portfolioDataService from '../../../shared/services/data/portfolioDataService';
 
 // Vanta.js topology effect
 declare global {
@@ -51,6 +52,14 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+  
+  // Fullscreen modal state
+  const [fullscreenMedia, setFullscreenMedia] = useState<{ src: string; type: 'image' | 'video' } | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+  
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
@@ -182,6 +191,116 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     }, 200);
   };
 
+  // Fullscreen modal handlers
+  const openFullscreen = (src: string, type: 'image' | 'video') => {
+    setFullscreenMedia({ src, type });
+    setZoomLevel(1); // Reset zoom when opening
+    setPanPosition({ x: 0, y: 0 }); // Reset pan when opening
+  };
+  
+  const closeFullscreen = () => {
+    setFullscreenMedia(null);
+    setZoomLevel(1); // Reset zoom when closing
+    setPanPosition({ x: 0, y: 0 }); // Reset pan when closing
+    setIsPanning(false); // Stop panning when closing
+  };
+
+  // Mouse and keyboard event handlers for fullscreen modal
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
+    
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    setZoomLevel(prev => Math.max(0.5, Math.min(3, prev + delta)));
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
+    if (e.button === 1 || (e.button === 0 && zoomLevel > 1)) { // Middle click or left click when zoomed
+      e.preventDefault();
+      setIsPanning(true);
+      setLastMousePosition({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isPanning || !fullscreenMedia || fullscreenMedia.type === 'video') return;
+    
+    const deltaX = e.clientX - lastMousePosition.x;
+    const deltaY = e.clientY - lastMousePosition.y;
+    
+    setPanPosition(prev => ({
+      x: prev.x + deltaX,
+      y: prev.y + deltaY
+    }));
+    
+    setLastMousePosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseUp = () => {
+    setIsPanning(false);
+  };
+
+  const handleImageClick = (e: React.MouseEvent) => {
+    if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
+    e.stopPropagation();
+    setZoomLevel(prev => prev === 1 ? 2 : 1);
+    setPanPosition({ x: 0, y: 0 }); // Reset pan when toggling zoom
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+
+  // Keyboard shortcuts for fullscreen modal
+  useEffect(() => {
+    if (!fullscreenMedia) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeFullscreen();
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
+      
+      const step = 50;
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault();
+          setPanPosition(prev => ({ ...prev, x: prev.x + step }));
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          setPanPosition(prev => ({ ...prev, x: prev.x - step }));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setPanPosition(prev => ({ ...prev, y: prev.y + step }));
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          setPanPosition(prev => ({ ...prev, y: prev.y - step }));
+          break;
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsPanning(false);
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [fullscreenMedia, zoomLevel]);
+
   // Handle scroll for sticky navigation
   useEffect(() => {
     const handleScroll = () => {
@@ -215,46 +334,35 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [headerHeight]);
 
-  // Dummy design project data - replace with real data based on projectId
+  // Get design project data from service based on projectId
+  const serviceData = portfolioDataService.getProjectById(projectId);
+  const designProjects = portfolioDataService.getDesignProjects();
+  const fallbackProject = designProjects[0];
+  
+  // Use real data from service or fallback to first design project
+  const realProjectData = serviceData || fallbackProject;
+  
+  // Transform service data to match DesignProjectData interface
   const projectData: DesignProjectData = {
-    id: 'zena-brand-identity',
-    title: 'Zena Fashion Brand Identity',
-    category: 'Brand Identity Design',
-    description: 'Complete brand identity design including logo, typography, and visual system for a modern fashion brand.',
-    longDescription: `Zena is a contemporary fashion brand targeting young professionals who value both style and sustainability. The brand needed a complete visual identity that would communicate sophistication while maintaining approachability.
-
-The design challenge was to create a brand identity that could work across various touchpoints - from digital platforms to physical packaging and retail spaces. The solution needed to be versatile, memorable, and aligned with the brand's core values of sustainability and modern elegance.
-
-The final identity system includes a custom logotype, comprehensive color palette, typography system, and visual guidelines that ensure consistent brand application across all channels. The design successfully positioned Zena as a premium yet accessible fashion brand in the competitive market.`,
-    client: 'Zena Fashion Co.',
-    year: '2024',
-    role: 'Lead Brand Designer',
-    tools: ['Adobe Illustrator', 'Adobe Photoshop', 'Adobe InDesign', 'Figma', 'Sketch'],
+    id: realProjectData?.id || 'unknown',
+    title: realProjectData?.title || 'Design Project',
+    category: realProjectData?.category || 'Design',
+    description: realProjectData?.description || '',
+    longDescription: realProjectData?.longDescription || realProjectData?.description || '',
+    client: realProjectData?.client || 'Client',
+    year: realProjectData?.year || new Date().getFullYear().toString(),
+    role: realProjectData?.role || 'Designer',
+    tools: realProjectData?.tools || ['Adobe Creative Suite'],
     images: {
-      final: [
-        '/assets/projects/zena/final-logo-variations.jpg',
-        '/assets/projects/zena/brand-applications.jpg',
-        '/assets/projects/zena/packaging-design.jpg',
-        '/assets/projects/zena/website-mockup.jpg',
-        '/assets/projects/zena/business-cards.jpg',
-        '/assets/projects/zena/storefront-signage.jpg'
-      ],
-      process: [
-        '/assets/projects/zena/initial-sketches.jpg',
-        '/assets/projects/zena/concept-exploration.jpg',
-        '/assets/projects/zena/logo-iterations.jpg',
-        '/assets/projects/zena/color-exploration.jpg',
-        '/assets/projects/zena/typography-testing.jpg',
-        '/assets/projects/zena/brand-guidelines.jpg'
-      ],
-      mockups: [
-        '/assets/projects/zena/mobile-app-mockup.jpg',
-        '/assets/projects/zena/social-media-templates.jpg',
-        '/assets/projects/zena/product-tags.jpg',
-        '/assets/projects/zena/tote-bag-design.jpg',
-        '/assets/projects/zena/email-templates.jpg',
-        '/assets/projects/zena/billboard-mockup.jpg'
-      ]
+      final: Array.isArray(realProjectData?.images) 
+        ? realProjectData.images.filter(img => img.endsWith('.jpg') || img.endsWith('.png') || img.endsWith('.webp'))
+        : realProjectData?.images?.final || [],
+      process: Array.isArray(realProjectData?.images) 
+        ? [] 
+        : realProjectData?.images?.process || [],
+      mockups: Array.isArray(realProjectData?.images) 
+        ? [] 
+        : realProjectData?.images?.mockups || []
     },
     colorPalette: ['#1A1A1A', '#F5F5F5', '#D4B996', '#8B4513', '#FFE4E1'],
     typography: {
@@ -263,18 +371,16 @@ The final identity system includes a custom logotype, comprehensive color palett
       body: 'Inter'
     },
     thoughtProcess: {
-      problem: 'Zena Fashion needed a sophisticated brand identity that would appeal to young professionals while communicating their commitment to sustainable fashion. The existing brand lacked cohesion and failed to differentiate from competitors.',
-      solution: 'Developed a minimalist yet elegant brand identity system featuring a custom logotype, earthy color palette, and sophisticated typography that reflects both modernity and sustainability values.',
-      approach: 'Started with extensive market research and competitor analysis. Created mood boards and brand personas. Developed multiple logo concepts and tested them across various applications. Refined the chosen direction based on stakeholder feedback.',
-      outcome: 'The new brand identity successfully positioned Zena as a premium sustainable fashion brand. Brand recognition increased by 85% and social media engagement improved by 120% within the first quarter after launch.'
+      problem: 'Design challenge that needed to be solved through creative problem-solving and user-centered design approach.',
+      solution: 'Comprehensive design solution that addresses user needs and business objectives.',
+      approach: 'Systematic design methodology combining research, ideation, prototyping, and testing.',
+      outcome: 'Successful design implementation that achieves project goals and delivers value.'
     },
-    achievements: [
-      'Brand recognition increased by 85% post-launch',
-      'Social media engagement improved by 120%',
-      'Won "Best Brand Identity" at 2024 Design Awards',
-      'Featured in Design Week magazine',
-      'Successful rollout across 15+ retail locations',
-      'Client satisfaction score: 9.8/10'
+    achievements: realProjectData?.features || [
+      'Successful project completion',
+      'Enhanced user experience',
+      'Improved brand recognition',
+      'Positive client feedback'
     ]
   };
 
@@ -392,10 +498,24 @@ The final identity system includes a custom logotype, comprehensive color palett
               </GalleryHeader>
 
               <MainImage>
-                <img 
-                  src={currentImages[selectedImage]} 
-                  alt={`${projectData.title} ${selectedImageCategory} ${selectedImage + 1}`}
-                />
+                <div style={{ 
+                         position: 'relative', 
+                         cursor: 'zoom-in',
+                         border: '2px solid transparent'
+                     }} 
+                     onClick={(e) => {
+                         e.preventDefault();
+                         e.stopPropagation();
+                         openFullscreen(currentImages[selectedImage], 'image');
+                     }}
+                >
+                  <img 
+                    src={currentImages[selectedImage]} 
+                    alt={`${projectData.title} ${selectedImageCategory} ${selectedImage + 1}`}
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                </div>
               </MainImage>
               
               <ImageThumbnails>
@@ -404,6 +524,8 @@ The final identity system includes a custom logotype, comprehensive color palett
                     key={index}
                     $active={index === selectedImage}
                     onClick={() => setSelectedImage(index)}
+                    onDoubleClick={() => openFullscreen(image, 'image')}
+                    title="Click to select, double-click to fullscreen"
                   >
                     <img src={image} alt={`Thumbnail ${index + 1}`} />
                   </Thumbnail>
@@ -461,7 +583,19 @@ The final identity system includes a custom logotype, comprehensive color palett
               <ProcessImageGrid>
                 {projectData.images.process.map((image, index) => (
                   <ProcessImage key={index}>
-                    <img src={image} alt={`Process step ${index + 1}`} />
+                    <div style={{ 
+                             position: 'relative', 
+                             cursor: 'zoom-in'
+                         }} 
+                         onClick={(e) => {
+                             e.preventDefault();
+                             e.stopPropagation();
+                             openFullscreen(image, 'image');
+                         }}
+                    >
+                      <img src={image} alt={`Process step ${index + 1}`} style={{ pointerEvents: 'none' }} />
+                      <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                    </div>
                   </ProcessImage>
                 ))}
               </ProcessImageGrid>
@@ -520,7 +654,19 @@ The final identity system includes a custom logotype, comprehensive color palett
             <MockupGrid>
               {projectData.images.mockups.map((mockup, index) => (
                 <MockupCard key={index}>
-                  <img src={mockup} alt={`Brand application ${index + 1}`} />
+                  <div style={{ 
+                           position: 'relative', 
+                           cursor: 'zoom-in'
+                       }} 
+                       onClick={(e) => {
+                           e.preventDefault();
+                           e.stopPropagation();
+                           openFullscreen(mockup, 'image');
+                       }}
+                  >
+                    <img src={mockup} alt={`Brand application ${index + 1}`} style={{ pointerEvents: 'none' }} />
+                    <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                  </div>
                 </MockupCard>
               ))}
             </MockupGrid>
@@ -529,6 +675,59 @@ The final identity system includes a custom logotype, comprehensive color palett
         </ContentTransition>
       </ContentContainer>
       </ContentBGContainer>
+      
+      {/* Fullscreen Modal */}
+      <FullscreenModal 
+        isOpen={!!fullscreenMedia} 
+        onClick={closeFullscreen}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onContextMenu={handleContextMenu}
+      >
+        {fullscreenMedia && (
+          <FullscreenContent 
+            zoom={zoomLevel}
+            panX={panPosition.x}
+            panY={panPosition.y}
+            isPanning={isPanning}
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onContextMenu={handleContextMenu}
+          >
+            <CloseButton onClick={closeFullscreen}>×</CloseButton>
+            <ZoomInfo>
+              {Math.round(zoomLevel * 100)}% 
+              {fullscreenMedia.type === 'image' && zoomLevel > 1 && ' • Middle-click + drag or ← → ↑ ↓ to pan'}
+              {fullscreenMedia.type === 'image' && zoomLevel === 1 && ' • Click to zoom • Scroll to zoom'}
+              {fullscreenMedia.type === 'video' && ' • Scroll to zoom'}
+            </ZoomInfo>
+            {fullscreenMedia.type === 'video' ? (
+              <video 
+                controls 
+                autoPlay 
+                muted 
+                loop
+                src={fullscreenMedia.src}
+              />
+            ) : (
+              <img 
+                src={fullscreenMedia.src} 
+                alt="Fullscreen view"
+                onClick={handleImageClick}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onContextMenu={handleContextMenu}
+                draggable={false}
+              />
+            )}
+          </FullscreenContent>
+        )}
+      </FullscreenModal>
     </ProjectContainer>
   );
 };
@@ -1558,6 +1757,120 @@ const MockupCard = styled.div`
   &:active {
     transform: translateY(-5px) scale(1.01);
     transition: all 0.1s ease;
+  }
+`;
+
+// Fullscreen Modal Components
+const FullscreenModal = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  cursor: zoom-out;
+  overflow: auto;
+`;
+
+const FullscreenContent = styled.div<{
+  zoom: number;
+  panX: number;
+  panY: number;
+  isPanning: boolean;
+}>`
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  transform: scale(${props => props.zoom}) translate(${props => props.panX}px, ${props => props.panY}px);
+  transition: ${props => props.isPanning ? 'none' : 'transform 0.3s ease'};
+  cursor: ${props => props.isPanning ? 'grabbing' : 'grab'};
+  
+  img, video {
+    max-width: 100%;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+    user-select: none;
+  }
+  
+  video {
+    cursor: default;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+`;
+
+const ZoomInfo = styled.div`
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+`;
+
+const ZoomIndicator = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  
+  ${ProcessImage}:hover &,
+  ${MockupCard}:hover &,
+  ${MainImage}:hover & {
+    opacity: 1;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 4px 8px;
   }
 `;
 
