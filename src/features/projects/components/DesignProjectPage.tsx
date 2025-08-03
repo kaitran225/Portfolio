@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import portfolioDataService from '../../../shared/services/data/portfolioDataService';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 // Vanta.js topology effect
 declare global {
@@ -52,14 +53,15 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [tabKey, setTabKey] = useState(0); // Force re-render for animations
-  
+
   // Fullscreen modal state
   const [fullscreenMedia, setFullscreenMedia] = useState<{ src: string; type: 'image' | 'video' } | null>(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
   const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-  
+  const { isDark } = useTheme();
+
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
 
@@ -67,102 +69,107 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   useEffect(() => {
     const loadVanta = async () => {
       try {
-        console.log('Starting Vanta.js loading process...');
-        
-        // Load p5.js first
+        console.log('Starting optimized Vanta.js loading for Design...');
+
+        // Create fallback background immediately with design colors
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
+                  radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 60%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)
+                `;
+        }
+
+        // Load scripts asynchronously and non-blocking
+        const loadScript = (src: string, name: string): Promise<void> => {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.onload = () => {
+              console.log(`${name} loaded successfully`);
+              resolve();
+            };
+            script.onerror = () => {
+              console.warn(`Failed to load ${name}, using fallback`);
+              resolve(); // Don't reject, just continue with fallback
+            };
+            document.head.appendChild(script);
+
+            // Timeout to prevent blocking
+            setTimeout(() => {
+              console.warn(`${name} load timeout, using fallback`);
+              resolve();
+            }, 5000);
+          });
+        };
+
+        // Load p5.js only if not already loaded
         if (!window.p5) {
-          console.log('Loading p5.js...');
-          const script1 = document.createElement('script');
-          script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
-          script1.crossOrigin = 'anonymous';
-          document.head.appendChild(script1);
-          
-          await new Promise((resolve, reject) => {
-            script1.onload = () => {
-              console.log('p5.js loaded successfully');
-              resolve(null);
-            };
-            script1.onerror = (error) => {
-              console.error('Failed to load p5.js:', error);
-              reject(error);
-            };
-            setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
-          });
-        } else {
-          console.log('p5.js already loaded');
+          await loadScript('https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js', 'p5.js');
         }
 
-        // Load Vanta.js topology effect
+        // Load Vanta.js only if not already loaded
         if (!window.VANTA) {
-          console.log('Loading Vanta.js...');
-          const script2 = document.createElement('script');
-          script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
-          script2.crossOrigin = 'anonymous';
-          document.head.appendChild(script2);
-          
-          await new Promise((resolve, reject) => {
-            script2.onload = () => {
-              console.log('Vanta.js loaded successfully');
-              resolve(null);
-            };
-            script2.onerror = (error) => {
-              console.error('Failed to load Vanta.js:', error);
-              reject(error);
-            };
-            setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
-          });
-        } else {
-          console.log('Vanta.js already loaded');
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js', 'Vanta.js');
         }
 
-        // Wait a bit for scripts to fully initialize
+        // Small delay to ensure scripts are initialized
         await new Promise(resolve => setTimeout(resolve, 100));
 
-        // Initialize Vanta effect
+        // Initialize Vanta effect only if everything loaded successfully
         if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
-          console.log('Initializing Vanta TOPOLOGY effect...');
+          console.log('Initializing optimized Vanta TOPOLOGY effect for Design...');
+
           vantaEffect.current = window.VANTA.TOPOLOGY({
             el: vantaRef.current,
-            mouseControls: false,
-            touchControls: false,
+            mouseControls: true,
+            touchControls: true,
             gyroControls: false,
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x00ff88, // Green primary (design theme)
-            backgroundColor: 0x0a0a0a, // Dark background
-            points: 8.00,
-            maxDistance: 22.00,
-            spacing: 16.00
+            scaleMobile: 0.8, // Reduce complexity on mobile
+            color: 0x6933ff, // Design-specific blue color
+            backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
+            points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
+            maxDistance: window.innerWidth < 768 ? 15 : 20,
+            spacing: window.innerWidth < 768 ? 12 : 15
           });
-          console.log('Vanta effect initialized:', vantaEffect.current);
+          setTimeout(() => {
+            if (vantaEffect.current?.scene) {
+              vantaEffect.current.scene.traverse((child: { type: string; material: { linewidth: number; }; }) => {
+                if (child.type === "LineSegments" && child.material) {
+                  child.material.linewidth = 10;
+                }
+              });
+            }
+          }, 100);
+          console.log('Vanta effect initialized successfully for Design');
+
+          // Clear fallback background once Vanta is loaded
+          if (vantaRef.current) {
+            vantaRef.current.style.background = '';
+          }
         } else {
-          console.log('Vanta initialization failed:', {
-            VANTA: !!window.VANTA,
-            TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
-            element: !!vantaRef.current,
-            alreadyExists: !!vantaEffect.current
-          });
+          console.log('Using fallback background (Vanta not available)');
         }
       } catch (error) {
-        console.warn('Failed to load Vanta.js:', error);
-        // Fallback: Create a simple animated background
-        if (vantaRef.current) {
-          vantaRef.current.style.background = `
-            radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 40% 60%, rgba(0, 255, 136, 0.1) 0%, transparent 50%)
-          `;
-        }
+        console.warn('Error in Vanta loading, using fallback:', error);
+        // Fallback is already set above
       }
     };
 
-    // Delay loading to ensure DOM is ready
-    const timer = setTimeout(loadVanta, 100);
+    // Use requestIdleCallback for non-critical loading
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => loadVanta());
+    } else {
+      // Delay loading to not block initial render
+      setTimeout(loadVanta, 1000);
+    }
 
     return () => {
-      clearTimeout(timer);
       if (vantaEffect.current) {
         try {
           vantaEffect.current.destroy();
@@ -172,21 +179,22 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         vantaEffect.current = null;
       }
     };
-  }, []);
+  }, [isDark]);
 
   // Enhanced tab switching with transition
   const handleTabSwitch = (newTab: 'overview' | 'process' | 'typography' | 'mockups') => {
     if (newTab === activeTab) return;
-    
+
     setIsTransitioning(true);
-    
+
     // Smooth transition timing with better feel
     setTimeout(() => {
       setActiveTab(newTab);
       setTabKey(prev => prev + 1); // Force animation restart
-      
+
       setTimeout(() => {
         setIsTransitioning(false);
+        resizeVantaCanvas(); // Resize Vanta canvas after transition
       }, 200);
     }, 200);
   };
@@ -197,7 +205,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     setZoomLevel(1); // Reset zoom when opening
     setPanPosition({ x: 0, y: 0 }); // Reset pan when opening
   };
-  
+
   const closeFullscreen = () => {
     setFullscreenMedia(null);
     setZoomLevel(1); // Reset zoom when closing
@@ -208,7 +216,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   // Mouse and keyboard event handlers for fullscreen modal
   const handleWheel = (e: React.WheelEvent) => {
     if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
-    
+
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
     setZoomLevel(prev => Math.max(0.5, Math.min(3, prev + delta)));
@@ -225,15 +233,15 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isPanning || !fullscreenMedia || fullscreenMedia.type === 'video') return;
-    
+
     const deltaX = e.clientX - lastMousePosition.x;
     const deltaY = e.clientY - lastMousePosition.y;
-    
+
     setPanPosition(prev => ({
       x: prev.x + deltaX,
       y: prev.y + deltaY
     }));
-    
+
     setLastMousePosition({ x: e.clientX, y: e.clientY });
   };
 
@@ -264,7 +272,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!fullscreenMedia || fullscreenMedia.type === 'video') return;
-      
+
       const step = 50;
       switch (e.key) {
         case 'ArrowLeft':
@@ -293,7 +301,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     document.addEventListener('keydown', handleEscape);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mouseup', handleGlobalMouseUp);
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('keydown', handleKeyDown);
@@ -306,11 +314,11 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const header = document.querySelector('[data-header="design-project-header"]') as HTMLElement;
-      
+
       if (header && headerHeight === 0) {
         setHeaderHeight(header.offsetHeight);
       }
-      
+
       // Calculate when navigation should become sticky
       const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
       setIsScrolled(shouldBeSticky);
@@ -330,18 +338,34 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
     window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Check initial state
-    
+
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [headerHeight]);
+
+
+  // Function to resize Vanta.js canvas
+  const resizeVantaCanvas = () => {
+    if (vantaEffect.current && vantaEffect.current.resize) {
+      try {
+        vantaEffect.current.resize();
+      } catch (e) {
+        // Some Vanta.js builds may not have resize, fallback to manual size update
+        if (vantaEffect.current.el) {
+          vantaEffect.current.el.style.width = '100%';
+          vantaEffect.current.el.style.height = `${vantaRef.current?.offsetHeight || window.innerHeight}px`;
+        }
+      }
+    }
+  };
 
   // Get design project data from service based on projectId
   const serviceData = portfolioDataService.getProjectById(projectId);
   const designProjects = portfolioDataService.getDesignProjects();
   const fallbackProject = designProjects[0];
-  
+
   // Use real data from service or fallback to first design project
   const realProjectData = serviceData || fallbackProject;
-  
+
   // Transform service data to match DesignProjectData interface
   const projectData: DesignProjectData = {
     id: realProjectData?.id || 'unknown',
@@ -354,14 +378,14 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     role: realProjectData?.role || 'Designer',
     tools: realProjectData?.tools || ['Adobe Creative Suite'],
     images: {
-      final: Array.isArray(realProjectData?.images) 
+      final: Array.isArray(realProjectData?.images)
         ? realProjectData.images.filter(img => img.endsWith('.jpg') || img.endsWith('.png') || img.endsWith('.webp'))
         : realProjectData?.images?.final || [],
-      process: Array.isArray(realProjectData?.images) 
-        ? [] 
+      process: Array.isArray(realProjectData?.images)
+        ? []
         : realProjectData?.images?.process || [],
-      mockups: Array.isArray(realProjectData?.images) 
-        ? [] 
+      mockups: Array.isArray(realProjectData?.images)
+        ? []
         : realProjectData?.images?.mockups || []
     },
     colorPalette: ['#1A1A1A', '#F5F5F5', '#D4B996', '#8B4513', '#FFE4E1'],
@@ -421,29 +445,29 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
       {/* Navigation Tabs */}
       <TabNavigation $isSticky={isScrolled} data-sticky={isScrolled}>
-        <Tab 
-          $active={activeTab === 'overview'} 
+        <Tab
+          $active={activeTab === 'overview'}
           onClick={() => handleTabSwitch('overview')}
           style={{ '--tab-index': 0 } as React.CSSProperties}
         >
           🎨 Overview
         </Tab>
-        <Tab 
-          $active={activeTab === 'process'} 
+        <Tab
+          $active={activeTab === 'process'}
           onClick={() => handleTabSwitch('process')}
           style={{ '--tab-index': 1 } as React.CSSProperties}
         >
           🧠 Thought Process
         </Tab>
-        <Tab 
-          $active={activeTab === 'typography'} 
+        <Tab
+          $active={activeTab === 'typography'}
           onClick={() => handleTabSwitch('typography')}
           style={{ '--tab-index': 2 } as React.CSSProperties}
         >
           🔤 Typography & Colors
         </Tab>
-        <Tab 
-          $active={activeTab === 'mockups'} 
+        <Tab
+          $active={activeTab === 'mockups'}
           onClick={() => handleTabSwitch('mockups')}
           style={{ '--tab-index': 3 } as React.CSSProperties}
         >
@@ -456,229 +480,229 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         <ContentContainer $navHeight={isScrolled ? 70 : 0}>
           <ContentTransition $isTransitioning={isTransitioning}>
             {activeTab === 'overview' && (
-            <OverviewSection key={`overview-${tabKey}`}>
-              <Section>
-                <SectionTitle>Project Overview</SectionTitle>
-                <LongDescription>{projectData.longDescription}</LongDescription>
-              </Section>
+              <OverviewSection key={`overview-${tabKey}`}>
+                <Section>
+                  <SectionTitle>Project Overview</SectionTitle>
+                  <LongDescription>{projectData.longDescription}</LongDescription>
+                </Section>
 
-              {/* Image Gallery */}
-              <ImageGallerySection>
-              <GalleryHeader>
-                <SectionTitle>Final Designs</SectionTitle>
-                <ImageCategoryTabs>
-                  <CategoryTab 
-                    $active={selectedImageCategory === 'final'}
-                    onClick={() => {
-                      setSelectedImageCategory('final');
-                      setSelectedImage(0);
+                {/* Image Gallery */}
+                <ImageGallerySection>
+                  <GalleryHeader>
+                    <SectionTitle>Final Designs</SectionTitle>
+                    <ImageCategoryTabs>
+                      <CategoryTab
+                        $active={selectedImageCategory === 'final'}
+                        onClick={() => {
+                          setSelectedImageCategory('final');
+                          setSelectedImage(0);
+                        }}
+                      >
+                        Final Designs
+                      </CategoryTab>
+                      <CategoryTab
+                        $active={selectedImageCategory === 'process'}
+                        onClick={() => {
+                          setSelectedImageCategory('process');
+                          setSelectedImage(0);
+                        }}
+                      >
+                        Process Work
+                      </CategoryTab>
+                      <CategoryTab
+                        $active={selectedImageCategory === 'mockups'}
+                        onClick={() => {
+                          setSelectedImageCategory('mockups');
+                          setSelectedImage(0);
+                        }}
+                      >
+                        Mockups
+                      </CategoryTab>
+                    </ImageCategoryTabs>
+                  </GalleryHeader>
+
+                  <MainImage>
+                    <div style={{
+                      position: 'relative',
+                      cursor: 'zoom-in',
+                      border: '2px solid transparent'
                     }}
-                  >
-                    Final Designs
-                  </CategoryTab>
-                  <CategoryTab 
-                    $active={selectedImageCategory === 'process'}
-                    onClick={() => {
-                      setSelectedImageCategory('process');
-                      setSelectedImage(0);
-                    }}
-                  >
-                    Process Work
-                  </CategoryTab>
-                  <CategoryTab 
-                    $active={selectedImageCategory === 'mockups'}
-                    onClick={() => {
-                      setSelectedImageCategory('mockups');
-                      setSelectedImage(0);
-                    }}
-                  >
-                    Mockups
-                  </CategoryTab>
-                </ImageCategoryTabs>
-              </GalleryHeader>
-
-              <MainImage>
-                <div style={{ 
-                         position: 'relative', 
-                         cursor: 'zoom-in',
-                         border: '2px solid transparent'
-                     }} 
-                     onClick={(e) => {
-                         e.preventDefault();
-                         e.stopPropagation();
-                         openFullscreen(currentImages[selectedImage], 'image');
-                     }}
-                >
-                  <img 
-                    src={currentImages[selectedImage]} 
-                    alt={`${projectData.title} ${selectedImageCategory} ${selectedImage + 1}`}
-                    style={{ pointerEvents: 'none' }}
-                  />
-                  <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
-                </div>
-              </MainImage>
-              
-              <ImageThumbnails>
-                {currentImages.map((image, index) => (
-                  <Thumbnail 
-                    key={index}
-                    $active={index === selectedImage}
-                    onClick={() => setSelectedImage(index)}
-                    onDoubleClick={() => openFullscreen(image, 'image')}
-                    title="Click to select, double-click to fullscreen"
-                  >
-                    <img src={image} alt={`Thumbnail ${index + 1}`} />
-                  </Thumbnail>
-                ))}
-              </ImageThumbnails>
-            </ImageGallerySection>
-
-            {/* Achievements */}
-            <Section>
-              <SectionTitle>Project Achievements</SectionTitle>
-              <AchievementsList>
-                {projectData.achievements.map((achievement, index) => (
-                  <AchievementItem key={index}>
-                    🏆 {achievement}
-                  </AchievementItem>
-                ))}
-              </AchievementsList>
-            </Section>
-          </OverviewSection>
-        )}
-
-        {activeTab === 'process' && (
-          <ProcessSection key={`process-${tabKey}`}>
-            <SectionTitle>Design Thinking Process</SectionTitle>
-            
-            <ProcessGrid>
-              <ProcessCard>
-                <ProcessIcon>🎯</ProcessIcon>
-                <ProcessTitle>Problem</ProcessTitle>
-                <ProcessDescription>{projectData.thoughtProcess.problem}</ProcessDescription>
-              </ProcessCard>
-              
-              <ProcessCard>
-                <ProcessIcon>💡</ProcessIcon>
-                <ProcessTitle>Solution</ProcessTitle>
-                <ProcessDescription>{projectData.thoughtProcess.solution}</ProcessDescription>
-              </ProcessCard>
-              
-              <ProcessCard>
-                <ProcessIcon>🛠️</ProcessIcon>
-                <ProcessTitle>Approach</ProcessTitle>
-                <ProcessDescription>{projectData.thoughtProcess.approach}</ProcessDescription>
-              </ProcessCard>
-              
-              <ProcessCard>
-                <ProcessIcon>🎉</ProcessIcon>
-                <ProcessTitle>Outcome</ProcessTitle>
-                <ProcessDescription>{projectData.thoughtProcess.outcome}</ProcessDescription>
-              </ProcessCard>
-            </ProcessGrid>
-
-            {/* Process Images */}
-            <Section>
-              <SectionTitle>Process Documentation</SectionTitle>
-              <ProcessImageGrid>
-                {projectData.images.process.map((image, index) => (
-                  <ProcessImage key={index}>
-                    <div style={{ 
-                             position: 'relative', 
-                             cursor: 'zoom-in'
-                         }} 
-                         onClick={(e) => {
-                             e.preventDefault();
-                             e.stopPropagation();
-                             openFullscreen(image, 'image');
-                         }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openFullscreen(currentImages[selectedImage], 'image');
+                      }}
                     >
-                      <img src={image} alt={`Process step ${index + 1}`} style={{ pointerEvents: 'none' }} />
+                      <img
+                        src={currentImages[selectedImage]}
+                        alt={`${projectData.title} ${selectedImageCategory} ${selectedImage + 1}`}
+                        style={{ pointerEvents: 'none' }}
+                      />
                       <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
                     </div>
-                  </ProcessImage>
-                ))}
-              </ProcessImageGrid>
-            </Section>
-          </ProcessSection>
-        )}
+                  </MainImage>
 
-        {activeTab === 'typography' && (
-          <TypographySection key={`typography-${tabKey}`}>
-            <Section>
-              <SectionTitle>Color Palette</SectionTitle>
-              <ColorPalette>
-                {projectData.colorPalette.map((color, index) => (
-                  <ColorSwatch key={index}>
-                    <ColorCircle color={color} />
-                    <ColorCode>{color}</ColorCode>
-                  </ColorSwatch>
-                ))}
-              </ColorPalette>
-            </Section>
+                  <ImageThumbnails>
+                    {currentImages.map((image, index) => (
+                      <Thumbnail
+                        key={index}
+                        $active={index === selectedImage}
+                        onClick={() => setSelectedImage(index)}
+                        onDoubleClick={() => openFullscreen(image, 'image')}
+                        title="Click to select, double-click to fullscreen"
+                      >
+                        <img src={image} alt={`Thumbnail ${index + 1}`} />
+                      </Thumbnail>
+                    ))}
+                  </ImageThumbnails>
+                </ImageGallerySection>
 
-            <Section>
-              <SectionTitle>Typography System</SectionTitle>
-              <TypographyShowcase>
-                <TypeSample>
-                  <TypeLabel>Primary Font - {projectData.typography.primary}</TypeLabel>
-                  <TypeExample style={{ fontFamily: projectData.typography.primary, fontSize: '3rem', fontWeight: 'bold' }}>
-                    Zena Fashion
-                  </TypeExample>
-                  <TypeDescription>Used for headlines, logo, and primary brand messaging</TypeDescription>
-                </TypeSample>
+                {/* Achievements */}
+                <Section>
+                  <SectionTitle>Project Achievements</SectionTitle>
+                  <AchievementsList>
+                    {projectData.achievements.map((achievement, index) => (
+                      <AchievementItem key={index}>
+                        🏆 {achievement}
+                      </AchievementItem>
+                    ))}
+                  </AchievementsList>
+                </Section>
+              </OverviewSection>
+            )}
 
-                <TypeSample>
-                  <TypeLabel>Secondary Font - {projectData.typography.secondary}</TypeLabel>
-                  <TypeExample style={{ fontFamily: projectData.typography.secondary, fontSize: '2rem', fontWeight: '600' }}>
-                    Modern Elegance
-                  </TypeExample>
-                  <TypeDescription>Used for subheadings and important secondary text</TypeDescription>
-                </TypeSample>
+            {activeTab === 'process' && (
+              <ProcessSection key={`process-${tabKey}`}>
+                <SectionTitle>Design Thinking Process</SectionTitle>
 
-                <TypeSample>
-                  <TypeLabel>Body Font - {projectData.typography.body}</TypeLabel>
-                  <TypeExample style={{ fontFamily: projectData.typography.body, fontSize: '1.2rem' }}>
-                    This is the body text that provides excellent readability across all platforms and devices. It maintains clarity while supporting the overall brand aesthetic.
-                  </TypeExample>
-                  <TypeDescription>Used for body text, descriptions, and general content</TypeDescription>
-                </TypeSample>
-              </TypographyShowcase>
-            </Section>
-          </TypographySection>
-        )}
+                <ProcessGrid>
+                  <ProcessCard>
+                    <ProcessIcon>🎯</ProcessIcon>
+                    <ProcessTitle>Problem</ProcessTitle>
+                    <ProcessDescription>{projectData.thoughtProcess.problem}</ProcessDescription>
+                  </ProcessCard>
 
-        {activeTab === 'mockups' && (
-          <MockupsSection key={`mockups-${tabKey}`}>
-            <SectionTitle>Brand Applications</SectionTitle>
-            <MockupGrid>
-              {projectData.images.mockups.map((mockup, index) => (
-                <MockupCard key={index}>
-                  <div style={{ 
-                           position: 'relative', 
-                           cursor: 'zoom-in'
-                       }} 
-                       onClick={(e) => {
-                           e.preventDefault();
-                           e.stopPropagation();
-                           openFullscreen(mockup, 'image');
-                       }}
-                  >
-                    <img src={mockup} alt={`Brand application ${index + 1}`} style={{ pointerEvents: 'none' }} />
-                    <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
-                  </div>
-                </MockupCard>
-              ))}
-            </MockupGrid>
-          </MockupsSection>
-        )}
-        </ContentTransition>
-      </ContentContainer>
+                  <ProcessCard>
+                    <ProcessIcon>💡</ProcessIcon>
+                    <ProcessTitle>Solution</ProcessTitle>
+                    <ProcessDescription>{projectData.thoughtProcess.solution}</ProcessDescription>
+                  </ProcessCard>
+
+                  <ProcessCard>
+                    <ProcessIcon>🛠️</ProcessIcon>
+                    <ProcessTitle>Approach</ProcessTitle>
+                    <ProcessDescription>{projectData.thoughtProcess.approach}</ProcessDescription>
+                  </ProcessCard>
+
+                  <ProcessCard>
+                    <ProcessIcon>🎉</ProcessIcon>
+                    <ProcessTitle>Outcome</ProcessTitle>
+                    <ProcessDescription>{projectData.thoughtProcess.outcome}</ProcessDescription>
+                  </ProcessCard>
+                </ProcessGrid>
+
+                {/* Process Images */}
+                <Section>
+                  <SectionTitle>Process Documentation</SectionTitle>
+                  <ProcessImageGrid>
+                    {projectData.images.process.map((image, index) => (
+                      <ProcessImage key={index}>
+                        <div style={{
+                          position: 'relative',
+                          cursor: 'zoom-in'
+                        }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openFullscreen(image, 'image');
+                          }}
+                        >
+                          <img src={image} alt={`Process step ${index + 1}`} style={{ pointerEvents: 'none' }} />
+                          <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                        </div>
+                      </ProcessImage>
+                    ))}
+                  </ProcessImageGrid>
+                </Section>
+              </ProcessSection>
+            )}
+
+            {activeTab === 'typography' && (
+              <TypographySection key={`typography-${tabKey}`}>
+                <Section>
+                  <SectionTitle>Color Palette</SectionTitle>
+                  <ColorPalette>
+                    {projectData.colorPalette.map((color, index) => (
+                      <ColorSwatch key={index}>
+                        <ColorCircle color={color} />
+                        <ColorCode>{color}</ColorCode>
+                      </ColorSwatch>
+                    ))}
+                  </ColorPalette>
+                </Section>
+
+                <Section>
+                  <SectionTitle>Typography System</SectionTitle>
+                  <TypographyShowcase>
+                    <TypeSample>
+                      <TypeLabel>Primary Font - {projectData.typography.primary}</TypeLabel>
+                      <TypeExample style={{ fontFamily: projectData.typography.primary, fontSize: '3rem', fontWeight: 'bold' }}>
+                        Zena Fashion
+                      </TypeExample>
+                      <TypeDescription>Used for headlines, logo, and primary brand messaging</TypeDescription>
+                    </TypeSample>
+
+                    <TypeSample>
+                      <TypeLabel>Secondary Font - {projectData.typography.secondary}</TypeLabel>
+                      <TypeExample style={{ fontFamily: projectData.typography.secondary, fontSize: '2rem', fontWeight: '600' }}>
+                        Modern Elegance
+                      </TypeExample>
+                      <TypeDescription>Used for subheadings and important secondary text</TypeDescription>
+                    </TypeSample>
+
+                    <TypeSample>
+                      <TypeLabel>Body Font - {projectData.typography.body}</TypeLabel>
+                      <TypeExample style={{ fontFamily: projectData.typography.body, fontSize: '1.2rem' }}>
+                        This is the body text that provides excellent readability across all platforms and devices. It maintains clarity while supporting the overall brand aesthetic.
+                      </TypeExample>
+                      <TypeDescription>Used for body text, descriptions, and general content</TypeDescription>
+                    </TypeSample>
+                  </TypographyShowcase>
+                </Section>
+              </TypographySection>
+            )}
+
+            {activeTab === 'mockups' && (
+              <MockupsSection key={`mockups-${tabKey}`}>
+                <SectionTitle>Brand Applications</SectionTitle>
+                <MockupGrid>
+                  {projectData.images.mockups.map((mockup, index) => (
+                    <MockupCard key={index}>
+                      <div style={{
+                        position: 'relative',
+                        cursor: 'zoom-in'
+                      }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          openFullscreen(mockup, 'image');
+                        }}
+                      >
+                        <img src={mockup} alt={`Brand application ${index + 1}`} style={{ pointerEvents: 'none' }} />
+                        <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                      </div>
+                    </MockupCard>
+                  ))}
+                </MockupGrid>
+              </MockupsSection>
+            )}
+          </ContentTransition>
+        </ContentContainer>
       </ContentBGContainer>
-      
+
       {/* Fullscreen Modal */}
-      <FullscreenModal 
-        isOpen={!!fullscreenMedia} 
+      <FullscreenModal
+        isOpen={!!fullscreenMedia}
         onClick={closeFullscreen}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
@@ -687,7 +711,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         onContextMenu={handleContextMenu}
       >
         {fullscreenMedia && (
-          <FullscreenContent 
+          <FullscreenContent
             zoom={zoomLevel}
             panX={panPosition.x}
             panY={panPosition.y}
@@ -700,22 +724,22 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
           >
             <CloseButton onClick={closeFullscreen}>×</CloseButton>
             <ZoomInfo>
-              {Math.round(zoomLevel * 100)}% 
+              {Math.round(zoomLevel * 100)}%
               {fullscreenMedia.type === 'image' && zoomLevel > 1 && ' • Middle-click + drag or ← → ↑ ↓ to pan'}
               {fullscreenMedia.type === 'image' && zoomLevel === 1 && ' • Click to zoom • Scroll to zoom'}
               {fullscreenMedia.type === 'video' && ' • Scroll to zoom'}
             </ZoomInfo>
             {fullscreenMedia.type === 'video' ? (
-              <video 
-                controls 
-                autoPlay 
-                muted 
+              <video
+                controls
+                autoPlay
+                muted
                 loop
                 src={fullscreenMedia.src}
               />
             ) : (
-              <img 
-                src={fullscreenMedia.src} 
+              <img
+                src={fullscreenMedia.src}
                 alt="Fullscreen view"
                 onClick={handleImageClick}
                 onMouseDown={handleMouseDown}
@@ -875,12 +899,12 @@ const MetaItem = styled.div`
 `;
 
 const MetaLabel = styled.span`
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-secondary);
   font-weight: 600;
 `;
 
 const MetaValue = styled.span`
-  color: white;
+  color: var(--color-text-primary);
   font-weight: 700;
 `;
 
@@ -1197,7 +1221,7 @@ const Tab = styled.button<{ $active: boolean }>`
 const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: 100vh;
+  min-height: unset;
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
@@ -1216,9 +1240,13 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
 `;
 
 const ContentContainer = styled.div<ContentContainerProps>`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 60px 20px;
+    backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 0.5px solid var(--color-purple-secondary);
+  color: var(--color-text-primary);
+  padding: 60px 80px;
   
   ${props => props.$navHeight > 0 && `
     padding-top: ${props.$navHeight + 20}px;
@@ -1241,10 +1269,6 @@ const ContentTransition = styled.div<ContentTransitionProps>`
     content: '';
     position: absolute;
     inset: -20px;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(105, 51, 255, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 60%);
     opacity: ${props => props.$isTransitioning ? '0.4' : '0'};
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -1358,7 +1382,7 @@ const SectionTitle = styled.h2`
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 30px;
-  color: white;
+  color: --color-text-primary;
   position: relative;
   animation: sectionTitleSlide 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
@@ -1394,7 +1418,7 @@ const SectionTitle = styled.h2`
 const LongDescription = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   white-space: pre-line;
   animation: descriptionFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
   
@@ -1429,8 +1453,8 @@ const ImageCategoryTabs = styled.div`
 `;
 
 const CategoryTab = styled.button<{ $active: boolean }>`
-  background: ${props => props.$active ? 'white' : 'rgba(255, 255, 255, 0.1)'};
-  color: ${props => props.$active ? '#ff6b6b' : 'white'};
+  background: ${props => props.$active ? 'rgba(255, 255, 255, 0.1)' : 'var(--color-bg-primary)'};
+  color: ${props => props.$active ? '#ff6b6b' : 'var(--color-text-secondary)'};
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -1439,7 +1463,7 @@ const CategoryTab = styled.button<{ $active: boolean }>`
   transition: all 0.3s ease;
   
   &:hover {
-    background: white;
+    background: var(--color-bg-muted);
     color: #ff6b6b;
   }
 `;
@@ -1470,7 +1494,7 @@ const Thumbnail = styled.div<{ $active: boolean }>`
   cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
-  border: 3px solid ${props => props.$active ? 'white' : 'transparent'};
+  border: 3px solid ${props => props.$active ? 'var(--color-accent)' : 'transparent'};
   transition: all 0.3s ease;
   
   img {
@@ -1496,7 +1520,7 @@ const AchievementItem = styled.li`
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 15px;
-  color: white;
+  color: var(--color-text-primary);
   font-size: 1rem;
   line-height: 1.5;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1595,11 +1619,11 @@ const ProcessTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: white;
+  color: var(--color-text-primary);
 `;
 
 const ProcessDescription = styled.p`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-secondary);
   line-height: 1.6;
 `;
 
@@ -1643,7 +1667,7 @@ const ColorCircle = styled.div<{ color: string }>`
 `;
 
 const ColorCode = styled.p`
-  color: white;
+  color: var(--color-text-primary);
   font-weight: 600;
   font-family: monospace;
 `;
@@ -1662,19 +1686,19 @@ const TypeSample = styled.div`
 `;
 
 const TypeLabel = styled.h4`
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 1rem;
   margin-bottom: 15px;
   font-weight: 600;
 `;
 
 const TypeExample = styled.div`
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 15px;
 `;
 
 const TypeDescription = styled.p`
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   line-height: 1.5;
 `;

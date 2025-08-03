@@ -243,8 +243,11 @@ const ProfilePicture = styled.div`
   .profile-image {
     width: 100%;
     height: 100%;
+    border-radius: 12px;
     min-width: 280px;
     min-height: 280px;
+    max-width: 280px;
+    max-height: 280px;
     object-fit: cover;
     border: 1px solid var(--color-background-primary);
     transition: all 0.3s ease;

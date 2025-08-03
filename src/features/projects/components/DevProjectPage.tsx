@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import IDECodePreview from './IDECodePreview';
 import portfolioDataService from '../../../shared/services/data/portfolioDataService';
 import MarkdownRenderer from '../../../components/ui/MarkdownRenderer';
+import { useTheme } from '../../../contexts/ThemeContext';
+import { opacity } from 'html2canvas/dist/types/css/property-descriptors/opacity';
 
 // Vanta.js topology effect
 declare global {
@@ -158,118 +160,126 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
     const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
     const [isPanning, setIsPanning] = useState(false);
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+      const { isDark } = useTheme();
     const vantaRef = useRef<HTMLDivElement>(null);
     const vantaEffect = useRef<any>(null);
 
-    // Initialize Vanta.js topology background
+    // Handle Vanta.js background effect
     useEffect(() => {
         const loadVanta = async () => {
-            try {
-                console.log('Starting Vanta.js loading process...');
+          try {
+            console.log('Starting optimized Vanta.js loading for Design...');
+    
+            // Create fallback background immediately with design colors
+            if (vantaRef.current) {
+              vantaRef.current.style.background = `
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)
+              `;
+            }
+    
+            // Load scripts asynchronously and non-blocking
+            const loadScript = (src: string, name: string): Promise<void> => {
+              return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = true;
+                script.crossOrigin = 'anonymous';
+                script.onload = () => {
+                  console.log(`${name} loaded successfully`);
+                  resolve();
+                };
+                script.onerror = () => {
+                  console.warn(`Failed to load ${name}, using fallback`);
+                  resolve(); // Don't reject, just continue with fallback
+                };
+                document.head.appendChild(script);
                 
-                // Load p5.js first
-                if (!window.p5) {
-                    console.log('Loading p5.js...');
-                    const script1 = document.createElement('script');
-                    script1.src = 'https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js';
-                    script1.crossOrigin = 'anonymous';
-                    document.head.appendChild(script1);
-
-                    await new Promise((resolve, reject) => {
-                        script1.onload = () => {
-                            console.log('p5.js loaded successfully');
-                            resolve(null);
-                        };
-                        script1.onerror = (error) => {
-                            console.error('Failed to load p5.js:', error);
-                            reject(error);
-                        };
-                        setTimeout(() => reject(new Error('p5.js load timeout')), 10000);
-                    });
-                } else {
-                    console.log('p5.js already loaded');
-                }
-
-                // Load Vanta.js topology effect
-                if (!window.VANTA) {
-                    const script2 = document.createElement('script');
-                    script2.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js';
-                    script2.crossOrigin = 'anonymous';
-                    document.head.appendChild(script2);
-
-                    await new Promise((resolve, reject) => {
-                        script2.onload = () => {
-                            console.log('Vanta.js loaded successfully');
-                            resolve(null);
-                        };
-                        script2.onerror = (error) => {
-                            console.error('Failed to load Vanta.js:', error);
-                            reject(error);
-                        };
-                        setTimeout(() => reject(new Error('Vanta.js load timeout')), 10000);
-                    });
-                } else {
-                    console.log('Vanta.js already loaded');
-                }
-
-                // Wait a bit for scripts to fully initialize
-                await new Promise(resolve => setTimeout(resolve, 100));
-
-                // Initialize Vanta effect
-                if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
-                    console.log('Initializing Vanta TOPOLOGY effect...');
-                    vantaEffect.current = window.VANTA.TOPOLOGY({
-                        el: vantaRef.current,
-                        mouseControls: false,
-                        touchControls: false,
-                        gyroControls: false,
-                        minHeight: 200.00,
-                        minWidth: 200.00,
-                        scale: 1.00,
-                        scaleMobile: 1.00,
-                        color: 0x6933ff, // Purple primary (development theme)
-                        backgroundColor: 0x0a0a0a, // Dark background
-                        points: 12.00,
-                        maxDistance: 25.00,
-                        spacing: 18.00
-                    });
-                    console.log('Vanta effect initialized:', vantaEffect.current);
-                } else {
-                    console.log('Vanta initialization failed:', {
-                        VANTA: !!window.VANTA,
-                        TOPOLOGY: !!(window.VANTA && window.VANTA.TOPOLOGY),
-                        element: !!vantaRef.current,
-                        alreadyExists: !!vantaEffect.current
-                    });
-                }
-            } catch (error) {
-                console.warn('Failed to load Vanta.js:', error);
-                // Fallback: Create a simple animated background
-                if (vantaRef.current) {
-                    vantaRef.current.style.background = `
-            radial-gradient(circle at 20% 20%, rgba(105, 51, 255, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 40% 60%, rgba(105, 51, 255, 0.1) 0%, transparent 50%)
-          `;
-                }
+                // Timeout to prevent blocking
+                setTimeout(() => {
+                  console.warn(`${name} load timeout, using fallback`);
+                  resolve();
+                }, 5000);
+              });
+            };
+    
+            // Load p5.js only if not already loaded
+            if (!window.p5) {
+              await loadScript('https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js', 'p5.js');
             }
+    
+            // Load Vanta.js only if not already loaded
+            if (!window.VANTA) {
+              await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js', 'Vanta.js');
+            }
+    
+            // Small delay to ensure scripts are initialized
+            await new Promise(resolve => setTimeout(resolve, 100));
+    
+            // Initialize Vanta effect only if everything loaded successfully
+            if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+              console.log('Initializing optimized Vanta TOPOLOGY effect for Design...');
+              
+              vantaEffect.current = window.VANTA.TOPOLOGY({
+                el: vantaRef.current,
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                opacity: 0.1, // Reduced opacity for better readability
+                scaleMobile: 0.8, // Reduce complexity on mobile
+                color: 0xff6b6b, // Design-specific coral color
+                backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
+                points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
+                maxDistance: window.innerWidth < 768 ? 15 : 20,
+                spacing: window.innerWidth < 768 ? 12 : 15
+              });
+              setTimeout(() => {
+                if (vantaEffect.current?.scene) {
+                  vantaEffect.current.scene.traverse((child: { type: string; material: { linewidth: number; }; }) => {
+                    if (child.type === "LineSegments" && child.material) {
+                      child.material.linewidth = 10;
+                    }
+                  });
+                }
+              }, 100);
+              console.log('Vanta effect initialized successfully for Design');
+              
+              // Clear fallback background once Vanta is loaded
+              if (vantaRef.current) {
+                vantaRef.current.style.background = '';
+              }
+            } else {
+              console.log('Using fallback background (Vanta not available)');
+            }
+          } catch (error) {
+            console.warn('Error in Vanta loading, using fallback:', error);
+            // Fallback is already set above
+          }
         };
-
-        // Delay loading to ensure DOM is ready
-        const timer = setTimeout(loadVanta, 100);
-
+    
+        // Use requestIdleCallback for non-critical loading
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => loadVanta());
+        } else {
+          // Delay loading to not block initial render
+          setTimeout(loadVanta, 1000);
+        }
+    
         return () => {
-            clearTimeout(timer);
-            if (vantaEffect.current) {
-                try {
-                    vantaEffect.current.destroy();
-                } catch (e) {
-                    console.warn('Error destroying Vanta effect:', e);
-                }
-                vantaEffect.current = null;
+          if (vantaEffect.current) {
+            try {
+              vantaEffect.current.destroy();
+            } catch (e) {
+              console.warn('Error destroying Vanta effect:', e);
             }
+            vantaEffect.current = null;
+          }
         };
-    }, []);
+      }, [isDark]);
 
     // Enhanced tab switching with transition
     const handleTabSwitch = (newTab: 'overview' | 'code' | 'folder' | 'readme' | 'demo') => {
@@ -284,8 +294,24 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
 
             setTimeout(() => {
                 setIsTransitioning(false);
+                resizeVantaCanvas(); // Resize Vanta.js canvas after tab change
             }, 200);
         }, 200);
+    };
+
+    // Function to resize Vanta.js canvas
+    const resizeVantaCanvas = () => {
+      if (vantaEffect.current && vantaEffect.current.resize) {
+        try {
+          vantaEffect.current.resize();
+        } catch (e) {
+          // Some Vanta.js builds may not have resize, fallback to manual size update
+          if (vantaEffect.current.el) {
+            vantaEffect.current.el.style.width = '100%';
+            vantaEffect.current.el.style.height = `${vantaRef.current?.offsetHeight || window.innerHeight}px`;
+          }
+        }
+      }
     };
 
     // Handle scroll for sticky navigation
@@ -586,7 +612,6 @@ const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
 
             {/* Content Sections */}
             <ContentBGContainer $hasSticky={isScrolled} >
-
                 <ContentContainer $hasSticky={isScrolled}>
                     <ContentTransition $isTransitioning={isTransitioning}>
                         {activeTab === 'overview' && (
@@ -878,8 +903,6 @@ const ProjectHeader = styled.header`
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(105, 51, 255, 0.25) 0%, transparent 50%),
-                radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.20) 0%, transparent 40%);
     opacity: 0.15;
     z-index: 1;
   }
@@ -1163,12 +1186,12 @@ const TechTag = styled.span`
 `;
 
 const TabNavigation = styled.nav<TabNavigationProps>`
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-secondary);
   padding: 0 20px;
   display: flex;
   justify-content: center;
   gap: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--color-border-secondary);
   backdrop-filter: blur(10px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 999;
@@ -1179,59 +1202,11 @@ const TabNavigation = styled.nav<TabNavigationProps>`
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    background: var(--bg-primary);
+    box-shadow: 0 4px 20px var(--color-shadow-primary);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(105, 51, 255, 0.3);
-    padding: 0 20px;
-    height: 60px;
-    
-    /* Smooth slide-in animation */
-    animation: slideInFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    @keyframes slideInFromTop {
-      from {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    
-    /* Elegant glow effect */
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        var(--color-purple-primary), 
-        var(--color-green-primary), 
-        var(--color-purple-primary), 
-        transparent
-      );
-      animation: sliverGlow 2s ease-in-out infinite alternate;
-    }
-    
-    @keyframes sliverGlow {
-      from {
-        opacity: 0.5;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+    border-bottom: 1px solid var(--color-purple-primary);
   `}
-  
-  @media (max-width: 768px) {
-    padding: 0 10px;
-    gap: 0;
-  }
 `;
 
 const Tab = styled.button<{ $active: boolean }>`
@@ -1310,7 +1285,7 @@ const Tab = styled.button<{ $active: boolean }>`
 const ContentBGContainer = styled.div<ContentContainerProps>`
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: 100vh;
+  height: auto;
   transition: padding-top 0.3s ease;
   position: relative;
   z-index: 1; /* Above Vanta background but below content */
@@ -1329,9 +1304,13 @@ const ContentBGContainer = styled.div<ContentContainerProps>`
 `;
 
 const ContentContainer = styled.div<ContentContainerProps>`
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1400px;
+  margin: 20px auto;
   padding: 60px 20px;
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 0.5px solid var(--color-purple-secondary);
+  color: var(--color-text-primary);
   transition: padding-top 0.3s ease;
   
   ${props => props.$hasSticky && `
@@ -1351,7 +1330,8 @@ const ContentTransition = styled.div<ContentTransitionProps>`
   position: relative;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: center;
-  
+  min-height: unset;
+  /* Remove any fixed height so content can resize dynamically */
   ${props => props.$isTransitioning && `
     opacity: 0.3;
     transform: translateY(20px) scale(0.98);
@@ -1433,7 +1413,7 @@ const SectionTitle = styled.h2`
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 30px;
-  color: white;
+  color: var(--color-text-primary);
   position: relative;
   overflow: hidden;
   
@@ -1470,7 +1450,7 @@ const SectionTitle = styled.h2`
 const LongDescription = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-secondary);
   white-space: pre-line;
 `;
 
@@ -1669,7 +1649,7 @@ const FeatureList = styled.ul`
 `;
 
 const FeatureItem = styled.li`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 15px;
   font-size: 1rem;
   line-height: 1.5;
