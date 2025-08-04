@@ -41,7 +41,7 @@ export interface Skills {
 export interface CodeFile {
   fileName: string;
   language: string;
-  code: string;
+  filePath: string;
 }
 
 export interface Project {

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import OptimizedImage from '../../../components/media/OptimizedImage';
+import LazyImage from '../../../components/media/LazyImage';
 
 interface Project {
   id: string;
@@ -46,13 +47,11 @@ const ProjectGrid: React.FC<ProjectGridProps> = React.memo(({ projects, isDevelo
           onClick={() => handleViewProject(project.id)}
         >
           <ProjectThumbnail>
-            <OptimizedImage 
-              src={project.thumbnail} 
-              alt={project.title}
-              className={isDevelopment ? "featured-project-image" : "design-project-thumbnail"}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={index < 3} // Prioritize first 3 images
-            />
+            <LazyImage 
+                src={project.thumbnail} 
+                alt={project.title}
+                className="project-thumbnail"
+              />
             {project.featured && <FeaturedBadge>⭐ Featured</FeaturedBadge>}
           </ProjectThumbnail>
           <ProjectInfo>

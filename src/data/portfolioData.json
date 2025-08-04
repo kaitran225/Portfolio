@@ -584,55 +584,6 @@
         "featured": true
       },
       {
-        "id": "notification-microservice",
-        "title": "Ultra-Optimized Notification Microservice",
-        "category": "development",
-        "description": "Production-ready microservice optimized for 2MB RAM usage with JWT security and role-based access.",
-        "longDescription": "A highly optimized notification microservice built with Node.js and designed for minimal resource consumption while maintaining production-grade features. The service operates with only 2MB of RAM usage while supporting JWT authentication, role-based access control, and efficient database operations.",
-        "thumbnail": "/assets/Development/NotiService/microservice-architecture.jpg",
-        "tags": [
-          "Node.js",
-          "JavaScript",
-          "JWT",
-          "MySQL",
-          "Docker"
-        ],
-        "technologies": [
-          "Node.js",
-          "Express",
-          "MySQL",
-          "JWT",
-          "Docker",
-          "Docker Compose"
-        ],
-        "githubUrl": "https://github.com/kaitran225/NotiService",
-        "images": [
-          "/assets/Development/NotiService/api-docs.jpg",
-          "/assets/Development/NotiService/memory-usage.jpg",
-          "/assets/Development/NotiService/docker-setup.jpg",
-          "/assets/Development/NotiService/performance-metrics.jpg"
-        ],
-        "features": [
-          "Ultra-low memory usage (2MB RAM optimization)",
-          "JWT-based authentication and authorization",
-          "Role-based notification filtering (Manager vs User)",
-          "Efficient database connection pooling",
-          "RESTful API with comprehensive documentation",
-          "Docker containerization for easy deployment",
-          "Health monitoring and ping endpoints",
-          "Production-ready error handling"
-        ],
-        "challenges": [
-          "Achieving 2MB RAM usage while maintaining functionality",
-          "Implementing efficient JWT validation without overhead",
-          "Optimizing database connections for minimal memory",
-          "Creating comprehensive API docs with minimal resources"
-        ],
-        "year": "2024",
-        "status": "Production",
-        "featured": false
-      },
-      {
         "id": "autofish-automation",
         "title": "AutoFishing Computer Vision System",
         "category": "development",
@@ -682,6 +633,55 @@
         "year": "2024",
         "status": "Complete",
         "featured": true
+      },
+      {
+        "id": "notification-microservice",
+        "title": "Ultra-Optimized Notification Microservice",
+        "category": "development",
+        "description": "Production-ready microservice optimized for 2MB RAM usage with JWT security and role-based access.",
+        "longDescription": "A highly optimized notification microservice built with Node.js and designed for minimal resource consumption while maintaining production-grade features. The service operates with only 2MB of RAM usage while supporting JWT authentication, role-based access control, and efficient database operations.",
+        "thumbnail": "/assets/Development/NotiService/microservice-architecture.jpg",
+        "tags": [
+          "Node.js",
+          "JavaScript",
+          "JWT",
+          "MySQL",
+          "Docker"
+        ],
+        "technologies": [
+          "Node.js",
+          "Express",
+          "MySQL",
+          "JWT",
+          "Docker",
+          "Docker Compose"
+        ],
+        "githubUrl": "https://github.com/kaitran225/NotiService",
+        "images": [
+          "/assets/Development/NotiService/api-docs.jpg",
+          "/assets/Development/NotiService/memory-usage.jpg",
+          "/assets/Development/NotiService/docker-setup.jpg",
+          "/assets/Development/NotiService/performance-metrics.jpg"
+        ],
+        "features": [
+          "Ultra-low memory usage (2MB RAM optimization)",
+          "JWT-based authentication and authorization",
+          "Role-based notification filtering (Manager vs User)",
+          "Efficient database connection pooling",
+          "RESTful API with comprehensive documentation",
+          "Docker containerization for easy deployment",
+          "Health monitoring and ping endpoints",
+          "Production-ready error handling"
+        ],
+        "challenges": [
+          "Achieving 2MB RAM usage while maintaining functionality",
+          "Implementing efficient JWT validation without overhead",
+          "Optimizing database connections for minimal memory",
+          "Creating comprehensive API docs with minimal resources"
+        ],
+        "year": "2024",
+        "status": "Production",
+        "featured": false
       },
       {
         "id": "camera-check-system",
@@ -755,7 +755,11 @@
           "UI Systems"
         ],
         "githubUrl": "https://github.com/kaitran225/GamePrototypes",
-        "images": [],
+        "images": [
+          "/assets/Development/GamePrototype/VId_1.mp4",
+          "/assets/Development/GamePrototype/VId_2.mp4",
+          "/assets/Development/GamePrototype/VId_3.mp4"
+        ],
         "features": [
           "Multiple game mechanic prototypes",
           "Physics-based gameplay systems",

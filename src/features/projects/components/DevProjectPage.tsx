@@ -8,15 +8,15 @@ import { opacity } from 'html2canvas/dist/types/css/property-descriptors/opacity
 
 // Vanta.js topology effect
 declare global {
-    interface Window {
-        VANTA: any;
-        p5: any;
-        THREE: any; // Ensure THREE.js is available globally
-    }
+  interface Window {
+    VANTA: any;
+    p5: any;
+    THREE: any; // Ensure THREE.js is available globally
+  }
 }
 
 interface DevProjectProps {
-    projectId: string;
+  projectId: string;
 }
 
 // Fullscreen Modal Components
@@ -60,10 +60,10 @@ const FullscreenContent = styled.div<{ zoom: number; panX: number; panY: number;
     transition: transform 0.2s ease;
     transform: scale(${props => props.zoom}) translate(${props => props.panX / props.zoom}px, ${props => props.panY / props.zoom}px);
     cursor: ${props => {
-      if (props.isPanning) return 'grabbing';
-      if (props.zoom > 1) return 'grab';
-      return 'zoom-in';
-    }};
+    if (props.isPanning) return 'grabbing';
+    if (props.zoom > 1) return 'grab';
+    return 'zoom-in';
+  }};
     user-select: none;
   }
   
@@ -149,737 +149,737 @@ const ZoomIndicator = styled.div`
 `;
 
 const DevProjectPage: React.FC<DevProjectProps> = ({ projectId }) => {
-    const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'folder' | 'readme' | 'demo'>('overview');
-    const [selectedImage, setSelectedImage] = useState(0);
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [headerHeight, setHeaderHeight] = useState(0);
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const [tabKey, setTabKey] = useState(0); // Force re-render for animations
-    const [fullscreenMedia, setFullscreenMedia] = useState<{ src: string; type: 'image' | 'video' } | null>(null);
-    const [zoomLevel, setZoomLevel] = useState(1);
-    const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
-    const [isPanning, setIsPanning] = useState(false);
-    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-      const { isDark } = useTheme();
-    const vantaRef = useRef<HTMLDivElement>(null);
-    const vantaEffect = useRef<any>(null);
+  const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'folder' | 'readme' | 'demo'>('overview');
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [tabKey, setTabKey] = useState(0); // Force re-render for animations
+  const [fullscreenMedia, setFullscreenMedia] = useState<{ src: string; type: 'image' | 'video' } | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+  const { isDark } = useTheme();
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
 
-    // Handle Vanta.js background effect
-    useEffect(() => {
-        const loadVanta = async () => {
-          try {
-            console.log('Starting optimized Vanta.js loading for Design...');
-    
-            // Create fallback background immediately with design colors
-            if (vantaRef.current) {
-              vantaRef.current.style.background = `
+  // Handle Vanta.js background effect
+  useEffect(() => {
+    const loadVanta = async () => {
+      try {
+        console.log('Starting optimized Vanta.js loading for Design...');
+
+        // Create fallback background immediately with design colors
+        if (vantaRef.current) {
+          vantaRef.current.style.background = `
                 radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 40% 60%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)
               `;
-            }
-    
-            // Load scripts asynchronously and non-blocking
-            const loadScript = (src: string, name: string): Promise<void> => {
-              return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.async = true;
-                script.crossOrigin = 'anonymous';
-                script.onload = () => {
-                  console.log(`${name} loaded successfully`);
-                  resolve();
-                };
-                script.onerror = () => {
-                  console.warn(`Failed to load ${name}, using fallback`);
-                  resolve(); // Don't reject, just continue with fallback
-                };
-                document.head.appendChild(script);
-                
-                // Timeout to prevent blocking
-                setTimeout(() => {
-                  console.warn(`${name} load timeout, using fallback`);
-                  resolve();
-                }, 5000);
-              });
-            };
-    
-            // Load p5.js only if not already loaded
-            if (!window.p5) {
-              await loadScript('https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js', 'p5.js');
-            }
-    
-            // Load Vanta.js only if not already loaded
-            if (!window.VANTA) {
-              await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js', 'Vanta.js');
-            }
-    
-            // Small delay to ensure scripts are initialized
-            await new Promise(resolve => setTimeout(resolve, 100));
-    
-            // Initialize Vanta effect only if everything loaded successfully
-            if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
-              console.log('Initializing optimized Vanta TOPOLOGY effect for Design...');
-              
-              vantaEffect.current = window.VANTA.TOPOLOGY({
-                el: vantaRef.current,
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                scale: 1.00,
-                opacity: 0.1, // Reduced opacity for better readability
-                scaleMobile: 0.8, // Reduce complexity on mobile
-                color: 0x6633ff, // Design-specific purple color
-                backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
-                points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
-                maxDistance: window.innerWidth < 768 ? 15 : 20,
-                spacing: window.innerWidth < 768 ? 12 : 15
-              });
-              setTimeout(() => {
-                if (vantaEffect.current?.scene) {
-                  vantaEffect.current.scene.traverse((child: { type: string; material: { linewidth: number; }; }) => {
-                    if (child.type === "LineSegments" && child.material) {
-                      child.material.linewidth = 10;
-                    }
-                  });
-                }
-              }, 100);
-              console.log('Vanta effect initialized successfully for Design');
-              
-              // Clear fallback background once Vanta is loaded
-              if (vantaRef.current) {
-                vantaRef.current.style.background = '';
-              }
-            } else {
-              console.log('Using fallback background (Vanta not available)');
-            }
-          } catch (error) {
-            console.warn('Error in Vanta loading, using fallback:', error);
-            // Fallback is already set above
-          }
-        };
-    
-        // Use requestIdleCallback for non-critical loading
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => loadVanta());
-        } else {
-          // Delay loading to not block initial render
-          setTimeout(loadVanta, 1000);
         }
-    
-        return () => {
-          if (vantaEffect.current) {
-            try {
-              vantaEffect.current.destroy();
-            } catch (e) {
-              console.warn('Error destroying Vanta effect:', e);
-            }
-            vantaEffect.current = null;
-          }
-        };
-      }, [isDark]);
 
-    // Enhanced tab switching with transition
-    const handleTabSwitch = (newTab: 'overview' | 'code' | 'folder' | 'readme' | 'demo') => {
-        if (newTab === activeTab) return;
+        // Load scripts asynchronously and non-blocking
+        const loadScript = (src: string, name: string): Promise<void> => {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.onload = () => {
+              console.log(`${name} loaded successfully`);
+              resolve();
+            };
+            script.onerror = () => {
+              console.warn(`Failed to load ${name}, using fallback`);
+              resolve(); // Don't reject, just continue with fallback
+            };
+            document.head.appendChild(script);
 
-        setIsTransitioning(true);
-
-        // Smooth transition timing with better feel
-        setTimeout(() => {
-            setActiveTab(newTab);
-            setTabKey(prev => prev + 1); // Force animation restart
-
+            // Timeout to prevent blocking
             setTimeout(() => {
-                setIsTransitioning(false);
-                resizeVantaCanvas(); // Resize Vanta.js canvas after tab change
-            }, 200);
-        }, 200);
+              console.warn(`${name} load timeout, using fallback`);
+              resolve();
+            }, 5000);
+          });
+        };
+
+        // Load p5.js only if not already loaded
+        if (!window.p5) {
+          await loadScript('https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js', 'p5.js');
+        }
+
+        // Load Vanta.js only if not already loaded
+        if (!window.VANTA) {
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js', 'Vanta.js');
+        }
+
+        // Small delay to ensure scripts are initialized
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Initialize Vanta effect only if everything loaded successfully
+        if (window.VANTA && window.VANTA.TOPOLOGY && vantaRef.current && !vantaEffect.current) {
+          console.log('Initializing optimized Vanta TOPOLOGY effect for Design...');
+
+          vantaEffect.current = window.VANTA.TOPOLOGY({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            opacity: 0.1, // Reduced opacity for better readability
+            scaleMobile: 0.8, // Reduce complexity on mobile
+            color: 0x6633ff, // Design-specific purple color
+            backgroundColor: isDark ? 0x0a0a0a : 0xffffff,
+            points: window.innerWidth < 768 ? 8 : 10, // Fewer points on mobile
+            maxDistance: window.innerWidth < 768 ? 15 : 20,
+            spacing: window.innerWidth < 768 ? 12 : 15
+          });
+          setTimeout(() => {
+            if (vantaEffect.current?.scene) {
+              vantaEffect.current.scene.traverse((child: { type: string; material: { linewidth: number; }; }) => {
+                if (child.type === "LineSegments" && child.material) {
+                  child.material.linewidth = 10;
+                }
+              });
+            }
+          }, 100);
+          console.log('Vanta effect initialized successfully for Design');
+
+          // Clear fallback background once Vanta is loaded
+          if (vantaRef.current) {
+            vantaRef.current.style.background = '';
+          }
+        } else {
+          console.log('Using fallback background (Vanta not available)');
+        }
+      } catch (error) {
+        console.warn('Error in Vanta loading, using fallback:', error);
+        // Fallback is already set above
+      }
     };
 
-    // Function to resize Vanta.js canvas
-    const resizeVantaCanvas = () => {
-      if (vantaEffect.current && vantaEffect.current.resize) {
+    // Use requestIdleCallback for non-critical loading
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => loadVanta());
+    } else {
+      // Delay loading to not block initial render
+      setTimeout(loadVanta, 1000);
+    }
+
+    return () => {
+      if (vantaEffect.current) {
         try {
-          vantaEffect.current.resize();
+          vantaEffect.current.destroy();
         } catch (e) {
-          // Some Vanta.js builds may not have resize, fallback to manual size update
-          if (vantaEffect.current.el) {
-            vantaEffect.current.el.style.width = '100%';
-            vantaEffect.current.el.style.height = `${vantaRef.current?.offsetHeight || window.innerHeight}px`;
-          }
+          console.warn('Error destroying Vanta effect:', e);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, [isDark]);
+
+  // Enhanced tab switching with transition
+  const handleTabSwitch = (newTab: 'overview' | 'code' | 'folder' | 'readme' | 'demo') => {
+    if (newTab === activeTab) return;
+
+    setIsTransitioning(true);
+
+    // Smooth transition timing with better feel
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTabKey(prev => prev + 1); // Force animation restart
+
+      setTimeout(() => {
+        setIsTransitioning(false);
+        resizeVantaCanvas(); // Resize Vanta.js canvas after tab change
+      }, 200);
+    }, 200);
+  };
+
+  // Function to resize Vanta.js canvas
+  const resizeVantaCanvas = () => {
+    if (vantaEffect.current && vantaEffect.current.resize) {
+      try {
+        vantaEffect.current.resize();
+      } catch (e) {
+        // Some Vanta.js builds may not have resize, fallback to manual size update
+        if (vantaEffect.current.el) {
+          vantaEffect.current.el.style.width = '100%';
+          vantaEffect.current.el.style.height = `${vantaRef.current?.offsetHeight || window.innerHeight}px`;
+        }
+      }
+    }
+  };
+
+  // Handle scroll for sticky navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const header = document.querySelector('[data-header="project-header"]') as HTMLElement;
+
+      if (header && headerHeight === 0) {
+        setHeaderHeight(header.offsetHeight);
+      }
+
+      // Calculate when navigation should become sticky
+      const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
+      setIsScrolled(shouldBeSticky);
+    };
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    handleScroll(); // Check initial state
+
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
+  }, [headerHeight]);
+
+  // Get project data from service based on projectId
+  const projectData = portfolioDataService.getProjectById(projectId) || portfolioDataService.getDevelopmentProjects()[0];
+
+  // Fullscreen modal handlers
+  const openFullscreen = (src: string, type: 'image' | 'video') => {
+    setFullscreenMedia({ src, type });
+    setZoomLevel(1); // Reset zoom when opening
+    setPanPosition({ x: 0, y: 0 }); // Reset pan when opening
+  };
+
+  const closeFullscreen = () => {
+    setFullscreenMedia(null);
+    setZoomLevel(1); // Reset zoom when closing
+    setPanPosition({ x: 0, y: 0 }); // Reset pan when closing
+    setIsPanning(false); // Stop panning when closing
+  };
+
+  // Handle scroll to zoom in fullscreen
+  const handleWheel = (e: React.WheelEvent) => {
+    if (fullscreenMedia) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1; // Zoom out on scroll down, zoom in on scroll up
+      setZoomLevel(prev => {
+        const newZoom = prev + delta;
+        const clampedZoom = Math.max(0.5, Math.min(3, newZoom)); // Limit zoom between 0.5x and 3x
+
+        // Reset pan position when zooming back to 1x or below
+        if (clampedZoom <= 1) {
+          setPanPosition({ x: 0, y: 0 });
+        }
+
+        return clampedZoom;
+      });
+    }
+  };
+
+  // Handle click to zoom on images (not videos)
+  const handleImageClick = (e: React.MouseEvent) => {
+    if (fullscreenMedia && fullscreenMedia.type === 'image') {
+      e.stopPropagation();
+      setZoomLevel(prev => prev >= 2 ? 1 : prev + 0.5); // Cycle through zoom levels
+      if (zoomLevel >= 2) {
+        setPanPosition({ x: 0, y: 0 }); // Reset pan when zooming out to 1x
+      }
+    }
+  };
+
+  // Handle mouse down for panning (middle mouse button)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button === 1 && fullscreenMedia && zoomLevel > 1) { // Middle mouse button
+      e.preventDefault();
+      setIsPanning(true);
+      setLastMousePosition({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  // Handle mouse move for panning
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isPanning && fullscreenMedia && zoomLevel > 1) {
+      e.preventDefault();
+      const deltaX = e.clientX - lastMousePosition.x;
+      const deltaY = e.clientY - lastMousePosition.y;
+
+      setPanPosition(prev => ({
+        x: prev.x + deltaX,
+        y: prev.y + deltaY
+      }));
+
+      setLastMousePosition({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  // Handle mouse up to stop panning
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (e.button === 1) { // Middle mouse button
+      setIsPanning(false);
+    }
+  };
+
+  // Prevent context menu on middle click
+  const handleContextMenu = (e: React.MouseEvent) => {
+    if (isPanning) {
+      e.preventDefault();
+    }
+  };
+
+  // Handle escape key to close fullscreen and global mouse events for panning
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && fullscreenMedia) {
+        closeFullscreen();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (fullscreenMedia && zoomLevel > 1) {
+        const panStep = 50;
+        switch (event.key) {
+          case 'ArrowUp':
+            event.preventDefault();
+            setPanPosition(prev => ({ x: prev.x, y: prev.y + panStep }));
+            break;
+          case 'ArrowDown':
+            event.preventDefault();
+            setPanPosition(prev => ({ x: prev.x, y: prev.y - panStep }));
+            break;
+          case 'ArrowLeft':
+            event.preventDefault();
+            setPanPosition(prev => ({ x: prev.x + panStep, y: prev.y }));
+            break;
+          case 'ArrowRight':
+            event.preventDefault();
+            setPanPosition(prev => ({ x: prev.x - panStep, y: prev.y }));
+            break;
         }
       }
     };
 
-    // Handle scroll for sticky navigation
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            const header = document.querySelector('[data-header="project-header"]') as HTMLElement;
+    const handleGlobalMouseUp = () => {
+      setIsPanning(false);
+    };
 
-            if (header && headerHeight === 0) {
-                setHeaderHeight(header.offsetHeight);
-            }
+    document.addEventListener('keydown', handleEscape);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
 
-            // Calculate when navigation should become sticky
-            const shouldBeSticky = scrollTop > headerHeight + 50; // Add some buffer
-            setIsScrolled(shouldBeSticky);
-        };
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [fullscreenMedia, zoomLevel]);
 
-        // Throttle scroll events for better performance
-        let ticking = false;
-        const throttledHandleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
+  const codePreview = portfolioDataService.getCodePreviewForProject(projectId);
 
-        window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-        handleScroll(); // Check initial state
+  // Helper to get images array (handle both string[] and object with arrays)
+  const getProjectImages = () => {
+    if (!projectData.images) return [];
+    if (Array.isArray(projectData.images)) {
+      // Filter only image files (no videos)
+      return projectData.images.filter(image =>
+        image.endsWith('.jpg') ||
+        image.endsWith('.jpeg') ||
+        image.endsWith('.png') ||
+        image.endsWith('.webp') ||
+        image.endsWith('.gif')
+      );
+    }
+    // If it's an object, combine all image arrays (design projects)
+    const { final = [], process = [], mockups = [] } = projectData.images;
+    return [...final, ...process, ...mockups].filter(image =>
+      image.endsWith('.jpg') ||
+      image.endsWith('.jpeg') ||
+      image.endsWith('.png') ||
+      image.endsWith('.webp') ||
+      image.endsWith('.gif')
+    );
+  };
 
-        return () => window.removeEventListener('scroll', throttledHandleScroll);
-    }, [headerHeight]);
+  // Helper to get videos array
+  const getProjectVideos = () => {
+    if (!projectData.images) return [];
+    let videos = [];
 
-    // Get project data from service based on projectId
-    const projectData = portfolioDataService.getProjectById(projectId) || portfolioDataService.getDevelopmentProjects()[0];
-    
-    // Fullscreen modal handlers
-    const openFullscreen = (src: string, type: 'image' | 'video') => {
-        setFullscreenMedia({ src, type });
-        setZoomLevel(1); // Reset zoom when opening
-        setPanPosition({ x: 0, y: 0 }); // Reset pan when opening
-    };
-    
-    const closeFullscreen = () => {
-        setFullscreenMedia(null);
-        setZoomLevel(1); // Reset zoom when closing
-        setPanPosition({ x: 0, y: 0 }); // Reset pan when closing
-        setIsPanning(false); // Stop panning when closing
-    };
-    
-    // Handle scroll to zoom in fullscreen
-    const handleWheel = (e: React.WheelEvent) => {
-        if (fullscreenMedia) {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? -0.1 : 0.1; // Zoom out on scroll down, zoom in on scroll up
-            setZoomLevel(prev => {
-                const newZoom = prev + delta;
-                const clampedZoom = Math.max(0.5, Math.min(3, newZoom)); // Limit zoom between 0.5x and 3x
-                
-                // Reset pan position when zooming back to 1x or below
-                if (clampedZoom <= 1) {
-                    setPanPosition({ x: 0, y: 0 });
-                }
-                
-                return clampedZoom;
-            });
-        }
-    };
-    
-    // Handle click to zoom on images (not videos)
-    const handleImageClick = (e: React.MouseEvent) => {
-        if (fullscreenMedia && fullscreenMedia.type === 'image') {
-            e.stopPropagation();
-            setZoomLevel(prev => prev >= 2 ? 1 : prev + 0.5); // Cycle through zoom levels
-            if (zoomLevel >= 2) {
-                setPanPosition({ x: 0, y: 0 }); // Reset pan when zooming out to 1x
-            }
-        }
-    };
-    
-    // Handle mouse down for panning (middle mouse button)
-    const handleMouseDown = (e: React.MouseEvent) => {
-        if (e.button === 1 && fullscreenMedia && zoomLevel > 1) { // Middle mouse button
-            e.preventDefault();
-            setIsPanning(true);
-            setLastMousePosition({ x: e.clientX, y: e.clientY });
-        }
-    };
-    
-    // Handle mouse move for panning
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (isPanning && fullscreenMedia && zoomLevel > 1) {
-            e.preventDefault();
-            const deltaX = e.clientX - lastMousePosition.x;
-            const deltaY = e.clientY - lastMousePosition.y;
-            
-            setPanPosition(prev => ({
-                x: prev.x + deltaX,
-                y: prev.y + deltaY
-            }));
-            
-            setLastMousePosition({ x: e.clientX, y: e.clientY });
-        }
-    };
-    
-    // Handle mouse up to stop panning
-    const handleMouseUp = (e: React.MouseEvent) => {
-        if (e.button === 1) { // Middle mouse button
-            setIsPanning(false);
-        }
-    };
-    
-    // Prevent context menu on middle click
-    const handleContextMenu = (e: React.MouseEvent) => {
-        if (isPanning) {
-            e.preventDefault();
-        }
-    };
-    
-    // Handle escape key to close fullscreen and global mouse events for panning
-    useEffect(() => {
-        const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape' && fullscreenMedia) {
-                closeFullscreen();
-            }
-        };
-        
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (fullscreenMedia && zoomLevel > 1) {
-                const panStep = 50;
-                switch (event.key) {
-                    case 'ArrowUp':
-                        event.preventDefault();
-                        setPanPosition(prev => ({ x: prev.x, y: prev.y + panStep }));
-                        break;
-                    case 'ArrowDown':
-                        event.preventDefault();
-                        setPanPosition(prev => ({ x: prev.x, y: prev.y - panStep }));
-                        break;
-                    case 'ArrowLeft':
-                        event.preventDefault();
-                        setPanPosition(prev => ({ x: prev.x + panStep, y: prev.y }));
-                        break;
-                    case 'ArrowRight':
-                        event.preventDefault();
-                        setPanPosition(prev => ({ x: prev.x - panStep, y: prev.y }));
-                        break;
-                }
-            }
-        };
-        
-        const handleGlobalMouseUp = () => {
-            setIsPanning(false);
-        };
-        
-        document.addEventListener('keydown', handleEscape);
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('mouseup', handleGlobalMouseUp);
-        
-        return () => {
-            document.removeEventListener('keydown', handleEscape);
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('mouseup', handleGlobalMouseUp);
-        };
-    }, [fullscreenMedia, zoomLevel]);
-    
-    const codePreview = portfolioDataService.getCodePreviewForProject(projectId);
-    
-    // Helper to get images array (handle both string[] and object with arrays)
-    const getProjectImages = () => {
-        if (!projectData.images) return [];
-        if (Array.isArray(projectData.images)) {
-            // Filter only image files (no videos)
-            return projectData.images.filter(image => 
-                image.endsWith('.jpg') || 
-                image.endsWith('.jpeg') || 
-                image.endsWith('.png') || 
-                image.endsWith('.webp') || 
-                image.endsWith('.gif')
-            );
-        }
-        // If it's an object, combine all image arrays (design projects)
-        const { final = [], process = [], mockups = [] } = projectData.images;
-        return [...final, ...process, ...mockups].filter(image => 
-            image.endsWith('.jpg') || 
-            image.endsWith('.jpeg') || 
-            image.endsWith('.png') || 
-            image.endsWith('.webp') || 
-            image.endsWith('.gif')
-        );
-    };
-    
-    // Helper to get videos array
-    const getProjectVideos = () => {
-        if (!projectData.images) return [];
-        let videos = [];
-        
-        if (Array.isArray(projectData.images)) {
-            // Filter only video files
-            videos = projectData.images.filter(image => 
-                image.endsWith('.mp4') || 
-                image.endsWith('.webm') || 
-                image.endsWith('.mov')
-            );
-        } else {
-            // If it's an object, combine all arrays and filter videos
-            const { final = [], process = [], mockups = [] } = projectData.images;
-            videos = [...final, ...process, ...mockups].filter(image => 
-                image.endsWith('.mp4') || 
-                image.endsWith('.webm') || 
-                image.endsWith('.mov')
-            );
-        }
-        
-        // Also include demoUrl if it's a video
-        if (projectData.demoUrl && (
-            projectData.demoUrl.endsWith('.mp4') || 
-            projectData.demoUrl.endsWith('.webm') || 
-            projectData.demoUrl.endsWith('.mov')
-        )) {
-            videos.unshift(projectData.demoUrl);
-        }
-        
-        return videos;
-    };
-    
-    const projectImages = getProjectImages();
-    const projectVideos = getProjectVideos();
+    if (Array.isArray(projectData.images)) {
+      // Filter only video files
+      videos = projectData.images.filter(image =>
+        image.endsWith('.mp4') ||
+        image.endsWith('.webm') ||
+        image.endsWith('.mov')
+      );
+    } else {
+      // If it's an object, combine all arrays and filter videos
+      const { final = [], process = [], mockups = [] } = projectData.images;
+      videos = [...final, ...process, ...mockups].filter(image =>
+        image.endsWith('.mp4') ||
+        image.endsWith('.webm') ||
+        image.endsWith('.mov')
+      );
+    }
 
-    return (
-        <ProjectContainer ref={vantaRef}>
-            {/* Header */}
-            <ProjectHeader data-header="project-header">
-                <BackButton onClick={() => window.history.back()}>
-                    ← Back to Projects
-                </BackButton>
-                <HeaderContent>
-                    <ProjectTitle>{projectData.title}</ProjectTitle>
-                    <ProjectDescription>{projectData.description}</ProjectDescription>
-                    <ProjectLinks>
-                        <ProjectLink href={projectData.githubUrl} target="_blank">
-                            📂 GitHub Repository
-                        </ProjectLink>
-                        {projectData.liveUrl && (
-                            <ProjectLink href={projectData.liveUrl} target="_blank">
-                                🌐 Live Demo
-                            </ProjectLink>
-                        )}
-                    </ProjectLinks>
-                    <TechStack>
-                        {projectData.technologies?.map(tech => (
-                            <TechTag key={tech}>{tech}</TechTag>
-                        )) || projectData.tags?.map(tech => (
-                            <TechTag key={tech}>{tech}</TechTag>
+    // Also include demoUrl if it's a video
+    if (projectData.demoUrl && (
+      projectData.demoUrl.endsWith('.mp4') ||
+      projectData.demoUrl.endsWith('.webm') ||
+      projectData.demoUrl.endsWith('.mov')
+    )) {
+      videos.unshift(projectData.demoUrl);
+    }
+
+    return videos;
+  };
+
+  const projectImages = getProjectImages();
+  const projectVideos = getProjectVideos();
+
+  return (
+    <ProjectContainer ref={vantaRef}>
+      {/* Header */}
+      <ProjectHeader data-header="project-header">
+        <BackButton onClick={() => window.history.back()}>
+          ← Back to Projects
+        </BackButton>
+        <HeaderContent>
+          <ProjectTitle>{projectData.title}</ProjectTitle>
+          <ProjectDescription>{projectData.description}</ProjectDescription>
+          <ProjectLinks>
+            <ProjectLink href={projectData.githubUrl} target="_blank">
+              📂 GitHub Repository
+            </ProjectLink>
+            {projectData.liveUrl && (
+              <ProjectLink href={projectData.liveUrl} target="_blank">
+                🌐 Live Demo
+              </ProjectLink>
+            )}
+          </ProjectLinks>
+          <TechStack>
+            {projectData.technologies?.map(tech => (
+              <TechTag key={tech}>{tech}</TechTag>
+            )) || projectData.tags?.map(tech => (
+              <TechTag key={tech}>{tech}</TechTag>
+            ))}
+          </TechStack>
+        </HeaderContent>
+      </ProjectHeader>
+
+      {/* Navigation Tabs */}
+      <TabNavigation
+        $isSticky={isScrolled}
+        data-nav="tab-navigation"
+      >
+        <Tab
+          $active={activeTab === 'overview'}
+          onClick={() => handleTabSwitch('overview')}
+        >
+          <span>📋</span> Overview
+        </Tab>
+        <Tab
+          $active={activeTab === 'code'}
+          onClick={() => handleTabSwitch('code')}
+        >
+          <span>💻</span> Code Preview
+        </Tab>
+        <Tab
+          $active={activeTab === 'folder'}
+          onClick={() => handleTabSwitch('folder')}
+        >
+          <span>📁</span> Project Structure
+        </Tab>
+        <Tab
+          $active={activeTab === 'readme'}
+          onClick={() => handleTabSwitch('readme')}
+        >
+          <span>📖</span> Documentation
+        </Tab>
+        <Tab
+          $active={activeTab === 'demo'}
+          onClick={() => handleTabSwitch('demo')}
+        >
+          <span>🎥</span> Demo
+        </Tab>
+      </TabNavigation>
+
+      {/* Content Sections */}
+      <ContentBGContainer $hasSticky={isScrolled} >
+        <ContentContainer $hasSticky={isScrolled}>
+          <ContentTransition $isTransitioning={isTransitioning}>
+            {activeTab === 'overview' && (
+              <OverviewSection key={`overview-${tabKey}`}>
+                <Section>
+                  <SectionTitle>Project Overview</SectionTitle>
+                  <LongDescription>{projectData.longDescription}</LongDescription>
+                </Section>
+
+                <ImageGallery>
+                  {projectImages.length > 0 && (
+                    <>
+                      <MainImage>
+                        <div style={{
+                          position: 'relative',
+                          cursor: 'zoom-in',
+                          border: '2px solid transparent'
+                        }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'image');
+                          }}
+                          onMouseEnter={() => {}}
+                        >
+                          <img
+                            src={projectImages[selectedImage] || projectData.thumbnail}
+                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                            style={{ pointerEvents: 'none' }}
+                          />
+                          <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                        </div>
+                      </MainImage>
+                      <ImageThumbnails>
+                        {projectImages.map((image: string, index: number) => (
+                          <Thumbnail
+                            key={index}
+                            $active={index === selectedImage}
+                            onClick={() => setSelectedImage(index)}
+                            onDoubleClick={() => openFullscreen(image, 'image')}
+                            title="Click to select, double-click to fullscreen"
+                          >
+                            <img src={image} alt={`Thumbnail ${index + 1}`} />
+                          </Thumbnail>
                         ))}
-                    </TechStack>
-                </HeaderContent>
-            </ProjectHeader>
+                      </ImageThumbnails>
+                    </>
+                  )}
+                </ImageGallery>
 
-            {/* Navigation Tabs */}
-            <TabNavigation
-                $isSticky={isScrolled}
-                data-nav="tab-navigation"
-            >
-                <Tab
-                    $active={activeTab === 'overview'}
-                    onClick={() => handleTabSwitch('overview')}
-                >
-                    <span>📋</span> Overview
-                </Tab>
-                <Tab
-                    $active={activeTab === 'code'}
-                    onClick={() => handleTabSwitch('code')}
-                >
-                    <span>💻</span> Code Preview
-                </Tab>
-                <Tab
-                    $active={activeTab === 'folder'}
-                    onClick={() => handleTabSwitch('folder')}
-                >
-                    <span>📁</span> Project Structure
-                </Tab>
-                <Tab
-                    $active={activeTab === 'readme'}
-                    onClick={() => handleTabSwitch('readme')}
-                >
-                    <span>📖</span> Documentation
-                </Tab>
-                <Tab
-                    $active={activeTab === 'demo'}
-                    onClick={() => handleTabSwitch('demo')}
-                >
-                    <span>🎥</span> Demo
-                </Tab>
-            </TabNavigation>
+                <FeaturesGrid>
+                  {projectData.features && projectData.features.length > 0 && (
+                    <FeatureColumn>
+                      <SectionTitle>Key Features</SectionTitle>
+                      <FeatureList>
+                        {projectData.features.map((feature: string, index: number) => (
+                          <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
+                            ✅ {feature}
+                          </FeatureItem>
+                        ))}
+                      </FeatureList>
+                    </FeatureColumn>
+                  )}
+                  {projectData.challenges && projectData.challenges.length > 0 && (
+                    <FeatureColumn>
+                      <SectionTitle>Technical Challenges</SectionTitle>
+                      <FeatureList>
+                        {projectData.challenges.map((challenge: string, index: number) => (
+                          <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
+                            🔧 {challenge}
+                          </FeatureItem>
+                        ))}
+                      </FeatureList>
+                    </FeatureColumn>
+                  )}
+                </FeaturesGrid>
+              </OverviewSection>
+            )}
 
-            {/* Content Sections */}
-            <ContentBGContainer $hasSticky={isScrolled} >
-                <ContentContainer $hasSticky={isScrolled}>
-                    <ContentTransition $isTransitioning={isTransitioning}>
-                        {activeTab === 'overview' && (
-                            <OverviewSection key={`overview-${tabKey}`}>
-                                <Section>
-                                    <SectionTitle>Project Overview</SectionTitle>
-                                    <LongDescription>{projectData.longDescription}</LongDescription>
-                                </Section>
+            {activeTab === 'code' && (
+              <CodeSection key={`code-${tabKey}`}>
+                <SectionTitle>Code Preview</SectionTitle>
+                <IDECodePreview files={codePreview} theme="dark" />
+              </CodeSection>
+            )}
 
-                                <ImageGallery>
-                                    {projectImages.length > 0 && (
-                                        <>
-                                            <MainImage>
-                                                <div style={{ 
-                                                         position: 'relative', 
-                                                         cursor: 'zoom-in',
-                                                         border: '2px solid transparent'
-                                                     }} 
-                                                     onClick={(e) => {
-                                                         e.preventDefault();
-                                                         e.stopPropagation();
-                                                         openFullscreen(projectImages[selectedImage] || projectData.thumbnail, 'image');
-                                                     }}
-                                                     onMouseEnter={() => {}}
-                                                >
-                                                    <img
-                                                        src={projectImages[selectedImage] || projectData.thumbnail}
-                                                        alt={`${projectData.title} screenshot ${selectedImage + 1}`}
-                                                        style={{ pointerEvents: 'none' }}
-                                                    />
-                                                    <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
-                                                </div>
-                                            </MainImage>
-                                            <ImageThumbnails>
-                                                {projectImages.map((image: string, index: number) => (
-                                                    <Thumbnail
-                                                        key={index}
-                                                        $active={index === selectedImage}
-                                                        onClick={() => setSelectedImage(index)}
-                                                        onDoubleClick={() => openFullscreen(image, 'image')}
-                                                        title="Click to select, double-click to fullscreen"
-                                                    >
-                                                        <img src={image} alt={`Thumbnail ${index + 1}`} />
-                                                    </Thumbnail>
-                                                ))}
-                                            </ImageThumbnails>
-                                        </>
-                                    )}
-                                </ImageGallery>
+            {activeTab === 'folder' && (
+              <FolderSection key={`folder-${tabKey}`}>
+                <SectionTitle>Project Structure</SectionTitle>
+                <FolderContent>
+                  {projectData.githubUrl ? (
+                    <div>
+                      <p style={{ marginBottom: '20px', color: 'var(--color-text-secondary)' }}>
+                        Explore the complete project structure and organization:
+                      </p>
+                      <FolderLinks>
+                        <ProjectLink href={projectData.githubUrl} target="_blank">
+                          📂 Browse Repository
+                        </ProjectLink>
+                        <ProjectLink href={`${projectData.githubUrl}/tree/main`} target="_blank">
+                          🌿 View Main Branch
+                        </ProjectLink>
+                        <ProjectLink href={`${projectData.githubUrl}/commits`} target="_blank">
+                          📝 Commit History
+                        </ProjectLink>
+                        <ProjectLink href={`${projectData.githubUrl}/releases`} target="_blank">
+                          🏷️ Releases
+                        </ProjectLink>
+                      </FolderLinks>
+                      <FolderDescription>
+                        <h3>Key Directories & Files:</h3>
+                        <ul>
+                          <li><strong>src/</strong> - Main source code directory</li>
+                          <li><strong>components/</strong> - Reusable UI components</li>
+                          <li><strong>utils/</strong> - Utility functions and helpers</li>
+                          <li><strong>types/</strong> - TypeScript type definitions</li>
+                          <li><strong>tests/</strong> - Test files and test utilities</li>
+                          <li><strong>docs/</strong> - Documentation and guides</li>
+                          <li><strong>README.md</strong> - Project overview and setup instructions</li>
+                          <li><strong>package.json</strong> - Dependencies and scripts</li>
+                        </ul>
+                      </FolderDescription>
+                    </div>
+                  ) : (
+                    <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                      Repository information not available for this project.
+                    </p>
+                  )}
+                </FolderContent>
+              </FolderSection>
+            )}
 
-                                <FeaturesGrid>
-                                    {projectData.features && projectData.features.length > 0 && (
-                                        <FeatureColumn>
-                                            <SectionTitle>Key Features</SectionTitle>
-                                            <FeatureList>
-                                                {projectData.features.map((feature: string, index: number) => (
-                                                    <FeatureItem key={index} style={{ animationDelay: `${index * 0.1}s` }}>
-                                                        ✅ {feature}
-                                                    </FeatureItem>
-                                                ))}
-                                            </FeatureList>
-                                        </FeatureColumn>
-                                    )}
-                                    {projectData.challenges && projectData.challenges.length > 0 && (
-                                        <FeatureColumn>
-                                            <SectionTitle>Technical Challenges</SectionTitle>
-                                            <FeatureList>
-                                                {projectData.challenges.map((challenge: string, index: number) => (
-                                                    <FeatureItem key={index} style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
-                                                        🔧 {challenge}
-                                                    </FeatureItem>
-                                                ))}
-                                            </FeatureList>
-                                        </FeatureColumn>
-                                    )}
-                                </FeaturesGrid>
-                            </OverviewSection>
-                        )}
+            {activeTab === 'readme' && (
+              <ReadmeSection key={`readme-${tabKey}`}>
+                <SectionTitle>Project Documentation</SectionTitle>
+                <MarkdownRenderer content={projectData.longDescription || projectData.description || 'No documentation available for this project.'} theme="github-dark" />
+              </ReadmeSection>
+            )}
 
-                        {activeTab === 'code' && (
-                            <CodeSection key={`code-${tabKey}`}>
-                                <SectionTitle>Code Preview</SectionTitle>
-                                <IDECodePreview files={codePreview} theme="dark" />
-                            </CodeSection>
-                        )}
+            {activeTab === 'demo' && (
+              <DemoSection key={`demo-${tabKey}`}>
+                <SectionTitle>Project Demo</SectionTitle>
+                {projectVideos.length > 0 ? (
+                  <VideoGallery>
+                    {projectVideos.map((video, index) => (
+                      <VideoDemo key={index}>
+                        <div style={{ position: 'relative' }}>
+                          <video
+                            controls
+                            width="100%"
+                            autoPlay
+                            muted
+                            loop
+                            style={{ borderRadius: '8px' }}
+                            onDoubleClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              openFullscreen(video, 'video');
+                            }}
+                          >
+                            <source src={video} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                          <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
+                        </div>
+                        <DemoCaption>
+                          {video.includes('AI') && "🤖 AI Assistant Demo"}
+                          {video.includes('AutoFish') && "🎣 Computer Vision Automation Demo"}
+                          {video.includes('CheckCam') && "📷 Camera Testing System Demo"}
+                          {video.includes('CSharpMapGenerator') && "🗺️ Procedural Terrain Generation Demo"}
+                          {!video.includes('AI') && !video.includes('AutoFish') && !video.includes('CheckCam') && !video.includes('CSharpMapGenerator') && `🎬 Project Demo Video ${index + 1}`}
+                        </DemoCaption>
+                      </VideoDemo>
+                    ))}
+                  </VideoGallery>
+                ) : (
+                  <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                    No demo videos available for this project.
+                  </p>
+                )}
+                <DemoLinks>
+                  <ProjectLink href={projectData.githubUrl} target="_blank">
+                    📂 View Source Code
+                  </ProjectLink>
+                  {projectData.liveUrl && (
+                    <ProjectLink href={projectData.liveUrl} target="_blank">
+                      🌐 Try Live Demo
+                    </ProjectLink>
+                  )}
+                  {projectData.demoUrl && !projectData.demoUrl.endsWith('.mp4') && (
+                    <ProjectLink href={projectData.demoUrl} target="_blank">
+                      🎬 Watch Demo Video
+                    </ProjectLink>
+                  )}
+                </DemoLinks>
+              </DemoSection>
+            )}
+          </ContentTransition>
+        </ContentContainer>
+      </ContentBGContainer>
 
-                        {activeTab === 'folder' && (
-                            <FolderSection key={`folder-${tabKey}`}>
-                                <SectionTitle>Project Structure</SectionTitle>
-                                <FolderContent>
-                                    {projectData.githubUrl ? (
-                                        <div>
-                                            <p style={{ marginBottom: '20px', color: 'var(--color-text-secondary)' }}>
-                                                Explore the complete project structure and organization:
-                                            </p>
-                                            <FolderLinks>
-                                                <ProjectLink href={projectData.githubUrl} target="_blank">
-                                                    📂 Browse Repository
-                                                </ProjectLink>
-                                                <ProjectLink href={`${projectData.githubUrl}/tree/main`} target="_blank">
-                                                    🌿 View Main Branch
-                                                </ProjectLink>
-                                                <ProjectLink href={`${projectData.githubUrl}/commits`} target="_blank">
-                                                    📝 Commit History
-                                                </ProjectLink>
-                                                <ProjectLink href={`${projectData.githubUrl}/releases`} target="_blank">
-                                                    🏷️ Releases
-                                                </ProjectLink>
-                                            </FolderLinks>
-                                            <FolderDescription>
-                                                <h3>Key Directories & Files:</h3>
-                                                <ul>
-                                                    <li><strong>src/</strong> - Main source code directory</li>
-                                                    <li><strong>components/</strong> - Reusable UI components</li>
-                                                    <li><strong>utils/</strong> - Utility functions and helpers</li>
-                                                    <li><strong>types/</strong> - TypeScript type definitions</li>
-                                                    <li><strong>tests/</strong> - Test files and test utilities</li>
-                                                    <li><strong>docs/</strong> - Documentation and guides</li>
-                                                    <li><strong>README.md</strong> - Project overview and setup instructions</li>
-                                                    <li><strong>package.json</strong> - Dependencies and scripts</li>
-                                                </ul>
-                                            </FolderDescription>
-                                        </div>
-                                    ) : (
-                                        <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
-                                            Repository information not available for this project.
-                                        </p>
-                                    )}
-                                </FolderContent>
-                            </FolderSection>
-                        )}
-
-                        {activeTab === 'readme' && (
-                            <ReadmeSection key={`readme-${tabKey}`}>
-                                <SectionTitle>Project Documentation</SectionTitle>
-                                <MarkdownRenderer content={projectData.longDescription || projectData.description || 'No documentation available for this project.'} theme="github-dark" />
-                            </ReadmeSection>
-                        )}
-
-                        {activeTab === 'demo' && (
-                            <DemoSection key={`demo-${tabKey}`}>
-                                <SectionTitle>Project Demo</SectionTitle>
-                                {projectVideos.length > 0 ? (
-                                    <VideoGallery>
-                                        {projectVideos.map((video, index) => (
-                                            <VideoDemo key={index}>
-                                                <div style={{ position: 'relative' }}>
-                                                    <video 
-                                                        controls 
-                                                        width="100%" 
-                                                        autoPlay 
-                                                        muted 
-                                                        loop
-                                                        style={{ borderRadius: '8px' }}
-                                                        onDoubleClick={(e) => {
-                                                            e.preventDefault();
-                                                            e.stopPropagation();
-                                                            openFullscreen(video, 'video');
-                                                        }}
-                                                    >
-                                                        <source src={video} type="video/mp4" />
-                                                        Your browser does not support the video tag.
-                                                    </video>
-                                                    <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
-                                                </div>
-                                                <DemoCaption>
-                                                    {video.includes('AI') && "🤖 AI Assistant Demo"}
-                                                    {video.includes('AutoFish') && "🎣 Computer Vision Automation Demo"}
-                                                    {video.includes('CheckCam') && "📷 Camera Testing System Demo"}
-                                                    {video.includes('CSharpMapGenerator') && "🗺️ Procedural Terrain Generation Demo"}
-                                                    {!video.includes('AI') && !video.includes('AutoFish') && !video.includes('CheckCam') && !video.includes('CSharpMapGenerator') && `🎬 Project Demo Video ${index + 1}`}
-                                                </DemoCaption>
-                                            </VideoDemo>
-                                        ))}
-                                    </VideoGallery>
-                                ) : (
-                                    <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
-                                        No demo videos available for this project.
-                                    </p>
-                                )}
-                                <DemoLinks>
-                                    <ProjectLink href={projectData.githubUrl} target="_blank">
-                                        📂 View Source Code
-                                    </ProjectLink>
-                                    {projectData.liveUrl && (
-                                        <ProjectLink href={projectData.liveUrl} target="_blank">
-                                            🌐 Try Live Demo
-                                        </ProjectLink>
-                                    )}
-                                    {projectData.demoUrl && !projectData.demoUrl.endsWith('.mp4') && (
-                                        <ProjectLink href={projectData.demoUrl} target="_blank">
-                                            🎬 Watch Demo Video
-                                        </ProjectLink>
-                                    )}
-                                </DemoLinks>
-                            </DemoSection>
-                        )}
-                    </ContentTransition>
-                </ContentContainer>
-            </ContentBGContainer>
-            
-            {/* Fullscreen Modal */}
-            <FullscreenModal 
-                isOpen={!!fullscreenMedia} 
-                onClick={closeFullscreen}
-                onWheel={handleWheel}
+      {/* Fullscreen Modal */}
+      <FullscreenModal
+        isOpen={!!fullscreenMedia}
+        onClick={closeFullscreen}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onContextMenu={handleContextMenu}
+      >
+        {fullscreenMedia && (
+          <FullscreenContent
+            zoom={zoomLevel}
+            panX={panPosition.x}
+            panY={panPosition.y}
+            isPanning={isPanning}
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onContextMenu={handleContextMenu}
+          >
+            <CloseButton onClick={closeFullscreen}>×</CloseButton>
+            <ZoomInfo>
+              {Math.round(zoomLevel * 100)}%
+              {fullscreenMedia.type === 'image' && zoomLevel > 1 && ' • Middle-click + drag or ← → ↑ ↓ to pan'}
+              {fullscreenMedia.type === 'image' && zoomLevel === 1 && ' • Click to zoom • Scroll to zoom'}
+              {fullscreenMedia.type === 'video' && ' • Scroll to zoom'}
+            </ZoomInfo>
+            {fullscreenMedia.type === 'video' ? (
+              <video
+                controls
+                autoPlay
+                muted
+                loop
+                src={fullscreenMedia.src}
+              />
+            ) : (
+              <img
+                src={fullscreenMedia.src}
+                alt="Fullscreen view"
+                onClick={handleImageClick}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onContextMenu={handleContextMenu}
-            >
-                {fullscreenMedia && (
-                    <FullscreenContent 
-                        zoom={zoomLevel}
-                        panX={panPosition.x}
-                        panY={panPosition.y}
-                        isPanning={isPanning}
-                        onClick={(e) => e.stopPropagation()}
-                        onMouseDown={handleMouseDown}
-                        onMouseMove={handleMouseMove}
-                        onMouseUp={handleMouseUp}
-                        onContextMenu={handleContextMenu}
-                    >
-                        <CloseButton onClick={closeFullscreen}>×</CloseButton>
-                        <ZoomInfo>
-                            {Math.round(zoomLevel * 100)}% 
-                            {fullscreenMedia.type === 'image' && zoomLevel > 1 && ' • Middle-click + drag or ← → ↑ ↓ to pan'}
-                            {fullscreenMedia.type === 'image' && zoomLevel === 1 && ' • Click to zoom • Scroll to zoom'}
-                            {fullscreenMedia.type === 'video' && ' • Scroll to zoom'}
-                        </ZoomInfo>
-                        {fullscreenMedia.type === 'video' ? (
-                            <video 
-                                controls 
-                                autoPlay 
-                                muted 
-                                loop
-                                src={fullscreenMedia.src}
-                            />
-                        ) : (
-                            <img 
-                                src={fullscreenMedia.src} 
-                                alt="Fullscreen view"
-                                onClick={handleImageClick}
-                                onMouseDown={handleMouseDown}
-                                onMouseMove={handleMouseMove}
-                                onMouseUp={handleMouseUp}
-                                onContextMenu={handleContextMenu}
-                                draggable={false}
-                            />
-                        )}
-                    </FullscreenContent>
-                )}
-            </FullscreenModal>
-        </ProjectContainer>
-    );
+                draggable={false}
+              />
+            )}
+          </FullscreenContent>
+        )}
+      </FullscreenModal>
+    </ProjectContainer>
+  );
 };
 
 // Styled Components
 interface TabNavigationProps {
-    $isSticky: boolean;
+  $isSticky: boolean;
 }
 
 interface ContentContainerProps {
-    $hasSticky: boolean;
+  $hasSticky: boolean;
 }
 
 interface ContentTransitionProps {
-    $isTransitioning: boolean;
+  $isTransitioning: boolean;
 }
 
 const ProjectContainer = styled.div`
@@ -1850,6 +1850,10 @@ const VideoDemo = styled.div`
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
+  video::-webkit-media-controls-mute-button {
+    display: none;
+  }
+
   &:hover video {
     transform: scale(1.02);
   }
