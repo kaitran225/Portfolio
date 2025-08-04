@@ -9,7 +9,7 @@
     "contact": {
       "instagram": "https://www.instagram.com/kaitran.prt",
       "github": "https://github.com/kaitran225",
-      "email": "contact@kaitran.dev"
+      "email": "kaitran2205@gmail.com"
     },
     "avatar": "/assets/cv/Profile.JPG"
   },
@@ -217,7 +217,7 @@
         "lastUsed": "2025-08",
         "certified": false
       },
-            {
+      {
         "name": "Aiven Cloud",
         "level": 2,
         "experience": "1+ years",
@@ -808,7 +808,7 @@
         "category": "development",
         "description": "Professional C# WPF desktop application with real-time chat filtering and comprehensive server integration.",
         "longDescription": "A sophisticated chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design. This project demonstrates enterprise-level desktop application development with 146 commits of comprehensive development.",
-        "thumbnail": "/assets/Development/Desktop v1/chatbox-app.jpg",
+        "thumbnail": "/assets/Development/AntiSwearingChatBox/Home.png",
         "tags": [
           "C#",
           "WPF",
@@ -826,10 +826,16 @@
         ],
         "githubUrl": "https://github.com/kaitran225/AntiSwearingChatBox",
         "images": [
-          "/assets/Development/Desktop v1/main-chat-interface.jpg",
-          "/assets/Development/Desktop v1/admin-panel.jpg",
-          "/assets/Development/Desktop v1/filtering-settings.jpg",
-          "/assets/Development/Desktop v1/user-management.jpg"
+          "/assets/Development/AntiSwearingChatBox/Home.png",
+          "/assets/Development/AntiSwearingChatBox/Login.png",
+          "/assets/Development/AntiSwearingChatBox/Welcome.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_1.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_2.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_3.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_4.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_5.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_6.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_7.png"
         ],
         "features": [
           "Real-time chat with advanced content filtering",
