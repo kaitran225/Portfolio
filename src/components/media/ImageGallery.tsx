@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import portfolioData from '../../data/portfolioImages.json';
 
 interface ImageGalleryProps {
   folder: string;
@@ -8,12 +7,6 @@ interface ImageGalleryProps {
 const ImageGallery: React.FC<ImageGalleryProps> = ({ folder }) => {
   const [images, setImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    // Get images for the current folder from our data
-    const folderImages = portfolioData[folder as keyof typeof portfolioData] || [];
-    setImages(folderImages);
-  }, [folder]);
 
   useEffect(() => {
     // Auto-rotate images every 3 seconds

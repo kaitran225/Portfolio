@@ -1023,6 +1023,111 @@
         "featured": true
       },
       {
+        "id": "robotoslab-typography-project",
+        "title": "RobotoSlab Typography Project",
+        "category": "design",
+        "client": "Typography Study",
+        "year": "2024",
+        "role": "Typography Designer",
+        "description": "Typography exploration and design system using RobotoSlab font family.",
+        "longDescription": "Comprehensive typography project exploring the RobotoSlab font family, including type specimen design, layout applications, and typographic hierarchy demonstrations.",
+        "thumbnail": "/assets/GraphicDesgin/RobotoSlab/Asset 15RobotoSlab.png",
+        "tags": [
+          "Typography",
+          "Font Design",
+          "Layout Design",
+          "Type Specimen"
+        ],
+        "tools": [
+          "Adobe InDesign",
+          "Adobe Illustrator",
+          "Typography Tools"
+        ],
+        "images": {
+          "final": [
+            "/assets/GraphicDesgin/RobotoSlab/Asset 15RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 16RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 18RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 19RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 20RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 21RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 22RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 23RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 24RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 25RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 26RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 27RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 28RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 29RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 30RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 31RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 32RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 33RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 34RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 35RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 36RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 37RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 38RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 39RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 40RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 41RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Asset 42RobotoSlab.png",
+            "/assets/GraphicDesgin/RobotoSlab/Video.mp4"
+          ]
+        },
+        "features": [
+          "Typography specimen design",
+          "Font application examples",
+          "Typographic hierarchy systems",
+          "Layout design exploration",
+          "Type pairing recommendations",
+          "Design system documentation"
+        ],
+        "featured": true
+      },
+      {
+        "id": "kotezone-brand-design",
+        "title": "KoteZone Brand & Marketing Design",
+        "category": "design",
+        "client": "KoteZone",
+        "year": "2024",
+        "role": "Brand Designer",
+        "description": "Brand identity and marketing material design for KoteZone.",
+        "longDescription": "Complete brand development for KoteZone including logo design, brand identity guidelines, and comprehensive marketing materials for digital and print applications.",
+        "thumbnail": "/assets/GraphicDesgin/KoteZone/Asset 34.jpg",
+        "tags": [
+          "Brand Design",
+          "Marketing Materials",
+          "Logo Design",
+          "Digital Design"
+        ],
+        "tools": [
+          "Adobe Creative Suite",
+          "Figma"
+        ],
+        "images": {
+          "final": [
+            "/assets/GraphicDesgin/KoteZone/Asset 34.jpg",
+            "/assets/GraphicDesgin/KoteZone/Asset 35.jpg",
+            "/assets/GraphicDesgin/KoteZone/Asset 36.jpg",
+            "/assets/GraphicDesgin/KoteZone/Asset 37.jpg",
+            "/assets/GraphicDesgin/KoteZone/Asset 38.jpg",
+            "/assets/GraphicDesgin/KoteZone/Asset 39.jpg",
+            "/assets/GraphicDesgin/KoteZone/Video.mp4",
+            "/assets/GraphicDesgin/KoteZone/Video_1.mp4"
+          ]
+        },
+        "features": [
+          "Brand identity development",
+          "Logo and visual mark design",
+          "Marketing material templates",
+          "Social media asset design",
+          "Brand guideline documentation",
+          "Digital and print optimization"
+        ],
+        "featured": true
+      },
+      {
         "id": "kai-tran-personal-branding",
         "title": "Personal Brand Identity",
         "category": "design",
@@ -1058,51 +1163,18 @@
           "Digital asset optimization",
           "Brand application examples"
         ],
-        "featured": true
-      },
-      {
-        "id": "kotezone-brand-design",
-        "title": "KoteZone Brand & Marketing Design",
-        "category": "design",
-        "client": "KoteZone",
-        "year": "2024",
-        "role": "Brand Designer",
-        "description": "Brand identity and marketing material design for KoteZone.",
-        "longDescription": "Complete brand development for KoteZone including logo design, brand identity guidelines, and comprehensive marketing materials for digital and print applications.",
-        "thumbnail": "/assets/GraphicDesgin/KoteZone/placeholder.jpg",
-        "tags": [
-          "Brand Design",
-          "Marketing Materials",
-          "Logo Design",
-          "Digital Design"
-        ],
-        "tools": [
-          "Adobe Creative Suite",
-          "Figma"
-        ],
-        "images": {
-          "final": []
-        },
-        "features": [
-          "Brand identity development",
-          "Logo and visual mark design",
-          "Marketing material templates",
-          "Social media asset design",
-          "Brand guideline documentation",
-          "Digital and print optimization"
-        ],
         "featured": false
       },
       {
         "id": "cloud-visual-identity",
-        "title": "Cloud Services Visual Identity",
+        "title": "Cloud Restaurant Visual Identity",
         "category": "design",
         "client": "Cloud Project",
         "year": "2024",
         "role": "Visual Designer",
-        "description": "Visual identity and interface design for cloud services platform.",
-        "longDescription": "Comprehensive visual identity development for cloud services platform, including interface design, iconography, and user experience optimization.",
-        "thumbnail": "/assets/GraphicDesgin/Cloud/placeholder.jpg",
+        "description": "Visual identity and interface design for cloud restaurant platform.",
+        "longDescription": "Comprehensive visual identity development for cloud restaurant platform including custom iconography, interface design, and branding guidelines. The project focuses on creating a cohesive visual experience across digital platforms.",
+        "thumbnail": "/assets/GraphicDesgin/Cloud/Free Eco Package Mockup.jpg",
         "tags": [
           "Visual Identity",
           "Cloud Design",
@@ -1115,7 +1187,22 @@
           "Figma"
         ],
         "images": {
-          "final": []
+          "final": [
+            "/assets/GraphicDesgin/Cloud/Asset 2.png",
+            "/assets/GraphicDesgin/Cloud/Asset 4.png",
+            "/assets/GraphicDesgin/Cloud/Asset 5.png",
+            "/assets/GraphicDesgin/Cloud/Asset 6.png",
+            "/assets/GraphicDesgin/Cloud/Asset 7.png",
+            "/assets/GraphicDesgin/Cloud/Asset 8.png",
+            "/assets/GraphicDesgin/Cloud/Asset 9.png",
+            "/assets/GraphicDesgin/Cloud/Asset 10.png",
+            "/assets/GraphicDesgin/Cloud/Free Eco Package Mockup.jpg",
+            "/assets/GraphicDesgin/Cloud/Free Restaurant Name Board Mockup.jpg",
+            "/assets/GraphicDesgin/Cloud/Free_Id_Holder_Mockup_1.jpg",
+            "/assets/GraphicDesgin/Cloud/free-business-card-mockup2_sachanati.com.jpg",
+            "/assets/GraphicDesgin/Cloud/paper Bag Mockup (2).jpg",
+            "/assets/GraphicDesgin/Cloud/Ass"
+          ]
         },
         "features": [
           "Cloud platform visual identity",
@@ -1136,7 +1223,7 @@
         "role": "Package Designer",
         "description": "Food brand identity and packaging design for donut products.",
         "longDescription": "Complete food brand development including packaging design, visual identity, and marketing materials specifically designed for donut products and bakery brand positioning.",
-        "thumbnail": "/assets/GraphicDesgin/Donut/placeholder.jpg",
+        "thumbnail": "/assets/GraphicDesgin/Donut/1105e0a5fbd65a8803c710.jpg",
         "tags": [
           "Food Branding",
           "Package Design",
@@ -1149,7 +1236,20 @@
           "Adobe InDesign"
         ],
         "images": {
-          "final": []
+          "final": [
+            "/assets/GraphicDesgin/Donut/1eed3ab021c3809dd9d211.jpg",
+            "/assets/GraphicDesgin/Donut/6da3a80bb37812264b699.jpg",
+            "/assets/GraphicDesgin/Donut/1105e0a5fbd65a8803c710.jpg",
+            "/assets/GraphicDesgin/Donut/996590e18b922acc73837.jpg",
+            "/assets/GraphicDesgin/Donut/Asset 1.png",
+            "/assets/GraphicDesgin/Donut/Asset 2.png",
+            "/assets/GraphicDesgin/Donut/Boston.png",
+            "/assets/GraphicDesgin/Donut/d25378e66395c2cb9b848.jpg",
+            "/assets/GraphicDesgin/Donut/Dunkin With Style.png",
+            "/assets/GraphicDesgin/Donut/Glazed.png",
+            "/assets/GraphicDesgin/Donut/Red Velvet.png",
+            "/assets/GraphicDesgin/Donut/Whatcha Dunkin.png"
+          ]
         },
         "features": [
           "Food brand identity design",
@@ -1162,15 +1262,15 @@
         "featured": false
       },
       {
-        "id": "noddle-restaurant-branding",
-        "title": "Noddle Restaurant Branding",
+        "id": "noodle-restaurant-branding",
+        "title": "Noodle Restaurant Branding",
         "category": "design",
-        "client": "Noddle Restaurant",
+        "client": "Noodle Restaurant",
         "year": "2024",
         "role": "Brand Designer",
         "description": "Complete restaurant brand identity and marketing material design.",
         "longDescription": "Comprehensive restaurant branding project including logo design, menu design, restaurant interior graphics, and complete marketing material system for Noddle restaurant brand.",
-        "thumbnail": "/assets/GraphicDesgin/Noddle/placeholder.jpg",
+        "thumbnail": "/assets/GraphicDesgin/Noddle/e7f39db7520efd50a41f6.jpg",
         "tags": [
           "Restaurant Branding",
           "Menu Design",
@@ -1182,7 +1282,14 @@
           "Typography Design"
         ],
         "images": {
-          "final": []
+          "final": [
+            "/assets/GraphicDesgin/Noddle/4aaa9af15548fa16a3593.jpg",
+            "/assets/GraphicDesgin/Noddle/99e351b89e01315f68104.jpg",
+            "/assets/GraphicDesgin/Noddle/b7547b0fb4b61be842a75.jpg",
+            "/assets/GraphicDesgin/Noddle/e7f39db7520efd50a41f6.jpg",
+            "/assets/GraphicDesgin/Noddle/e3640438cb8164df3d902.jpg",
+            "/assets/GraphicDesgin/Noddle/eb26017acec3619d38d21.jpg"
+          ]
         },
         "features": [
           "Restaurant brand identity",
@@ -1191,73 +1298,6 @@
           "Marketing material system",
           "Digital presence design",
           "Brand implementation guidelines"
-        ],
-        "featured": false
-      },
-      {
-        "id": "womens-day-campaign",
-        "title": "Women's Day Campaign Design",
-        "category": "design",
-        "client": "Campaign Project",
-        "year": "2024",
-        "role": "Campaign Designer",
-        "description": "Visual campaign design for International Women's Day celebration.",
-        "longDescription": "Creative campaign design for International Women's Day including social media graphics, promotional materials, and event branding with empowering visual messaging.",
-        "thumbnail": "/assets/GraphicDesgin/WomenDay/placeholder.jpg",
-        "tags": [
-          "Campaign Design",
-          "Social Media Design",
-          "Event Branding",
-          "Promotional Design"
-        ],
-        "tools": [
-          "Adobe Creative Suite",
-          "Social Media Templates"
-        ],
-        "images": {
-          "final": []
-        },
-        "features": [
-          "Campaign visual identity",
-          "Social media graphics suite",
-          "Event promotional materials",
-          "Digital and print applications",
-          "Empowerment messaging design",
-          "Multi-platform optimization"
-        ],
-        "featured": false
-      },
-      {
-        "id": "robotoslab-typography-project",
-        "title": "RobotoSlab Typography Project",
-        "category": "design",
-        "client": "Typography Study",
-        "year": "2024",
-        "role": "Typography Designer",
-        "description": "Typography exploration and design system using RobotoSlab font family.",
-        "longDescription": "Comprehensive typography project exploring the RobotoSlab font family, including type specimen design, layout applications, and typographic hierarchy demonstrations.",
-        "thumbnail": "/assets/GraphicDesgin/RobotoSlab/placeholder.jpg",
-        "tags": [
-          "Typography",
-          "Font Design",
-          "Layout Design",
-          "Type Specimen"
-        ],
-        "tools": [
-          "Adobe InDesign",
-          "Adobe Illustrator",
-          "Typography Tools"
-        ],
-        "images": {
-          "final": []
-        },
-        "features": [
-          "Typography specimen design",
-          "Font application examples",
-          "Typographic hierarchy systems",
-          "Layout design exploration",
-          "Type pairing recommendations",
-          "Design system documentation"
         ],
         "featured": false
       }

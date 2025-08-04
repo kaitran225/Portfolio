@@ -46,8 +46,8 @@ interface DesignProjectData {
 }
 
 const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'typography' | 'mockups'>('overview');
-  const [selectedImageCategory, setSelectedImageCategory] = useState<'final' | 'process' | 'mockups'>('final');
+  const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'typography' | 'mockups' | 'videos'>('overview');
+  const [selectedImageCategory, setSelectedImageCategory] = useState<'final' | 'process' | 'mockups' | 'videos'>('final');
   const [selectedImage, setSelectedImage] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -182,7 +182,7 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
   }, [isDark]);
 
   // Enhanced tab switching with transition
-  const handleTabSwitch = (newTab: 'overview' | 'process' | 'typography' | 'mockups') => {
+  const handleTabSwitch = (newTab: 'overview' | 'process' | 'typography' | 'mockups' | 'videos') => {
     if (newTab === activeTab) return;
 
     setIsTransitioning(true);
@@ -408,7 +408,57 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
     ]
   };
 
-  const currentImages = projectData.images[selectedImageCategory];
+  // Helper to get images array (handle both string[] and object with arrays)
+  const getProjectImages = () => {
+    if (!projectData.images) return [];
+    if (Array.isArray(projectData.images)) {
+      // Filter only image files (no videos)
+      return projectData.images.filter(image =>
+        image.endsWith('.jpg') ||
+        image.endsWith('.jpeg') ||
+        image.endsWith('.png') ||
+        image.endsWith('.webp') ||
+        image.endsWith('.gif')
+      );
+    }
+    // If it's an object, combine all image arrays (design projects)
+    const { final = [], process = [], mockups = [] } = projectData.images;
+    return [...final, ...process, ...mockups].filter(image =>
+      image.endsWith('.jpg') ||
+      image.endsWith('.jpeg') ||
+      image.endsWith('.png') ||
+      image.endsWith('.webp') ||
+      image.endsWith('.gif')
+    );
+  };
+
+  // Helper to get videos array
+  const getProjectVideos = () => {
+    if (!projectData.images) return [];
+    let videos = [];
+
+    if (Array.isArray(projectData.images)) {
+      // Filter only video files
+      videos = projectData.images.filter(image =>
+        image.endsWith('.mp4') ||
+        image.endsWith('.webm') ||
+        image.endsWith('.mov')
+      );
+    } else {
+      // If it's an object, combine all arrays and filter videos
+      const { final = [], process = [], mockups = [] } = projectData.images;
+      videos = [...final, ...process, ...mockups].filter(image =>
+        image.endsWith('.mp4') ||
+        image.endsWith('.webm') ||
+        image.endsWith('.mov')
+
+      );
+    }
+    return videos;
+  };
+
+  const projectImages = getProjectImages();
+  const projectVideos = getProjectVideos();
 
   return (
     <ProjectContainer>
@@ -473,6 +523,13 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
         >
           📱 Applications
         </Tab>
+        <Tab
+          $active={activeTab === 'videos'}
+          onClick={() => handleTabSwitch('videos')}
+          style={{ '--tab-index': 4 } as React.CSSProperties}
+        >
+          🎥 Videos
+        </Tab>
       </TabNavigation>
 
       {/* Content Sections */}
@@ -488,75 +545,46 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
 
                 {/* Image Gallery */}
                 <ImageGallerySection>
-                  <GalleryHeader>
-                    <SectionTitle>Final Designs</SectionTitle>
-                    <ImageCategoryTabs>
-                      <CategoryTab
-                        $active={selectedImageCategory === 'final'}
-                        onClick={() => {
-                          setSelectedImageCategory('final');
-                          setSelectedImage(0);
+                  {projectImages.length > 0 && (
+                    <>
+                      <MainImage>
+                        <div style={{
+                          position: 'relative',
+                          cursor: 'zoom-in',
+                          border: '2px solid transparent'
                         }}
-                      >
-                        Final Designs
-                      </CategoryTab>
-                      <CategoryTab
-                        $active={selectedImageCategory === 'process'}
-                        onClick={() => {
-                          setSelectedImageCategory('process');
-                          setSelectedImage(0);
-                        }}
-                      >
-                        Process Work
-                      </CategoryTab>
-                      <CategoryTab
-                        $active={selectedImageCategory === 'mockups'}
-                        onClick={() => {
-                          setSelectedImageCategory('mockups');
-                          setSelectedImage(0);
-                        }}
-                      >
-                        Mockups
-                      </CategoryTab>
-                    </ImageCategoryTabs>
-                  </GalleryHeader>
-
-                  <MainImage>
-                    <div style={{
-                      position: 'relative',
-                      cursor: 'zoom-in',
-                      border: '2px solid transparent'
-                    }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openFullscreen(currentImages[selectedImage], 'image');
-                      }}
-                    >
-                      <img
-                        src={currentImages[selectedImage]}
-                        alt={`${projectData.title} ${selectedImageCategory} ${selectedImage + 1}`}
-                        style={{ pointerEvents: 'none' }}
-                      />
-                      <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
-                    </div>
-                  </MainImage>
-
-                  <ImageThumbnails>
-                    {currentImages.map((image, index) => (
-                      <Thumbnail
-                        key={index}
-                        $active={index === selectedImage}
-                        onClick={() => setSelectedImage(index)}
-                        onDoubleClick={() => openFullscreen(image, 'image')}
-                        title="Click to select, double-click to fullscreen"
-                      >
-                        <img src={image} alt={`Thumbnail ${index + 1}`} />
-                      </Thumbnail>
-                    ))}
-                  </ImageThumbnails>
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openFullscreen(projectImages[selectedImage], 'image');
+                          }}
+                          onMouseEnter={() => { }}
+                        >
+                          <img
+                            src={projectImages[selectedImage]}
+                            alt={`${projectData.title} screenshot ${selectedImage + 1}`}
+                            style={{ pointerEvents: 'none' }}
+                          />
+                          <ZoomIndicator>🔍 Click to zoom</ZoomIndicator>
+                        </div>
+                      </MainImage>
+                      <ImageThumbnails>
+                        {projectImages.map((image: string, index: number) => (
+                          <Thumbnail
+                            key={index}
+                            $active={index === selectedImage}
+                            onClick={() => setSelectedImage(index)}
+                            onDoubleClick={() => openFullscreen(image, 'image')}
+                            title="Click to select, double-click to fullscreen"
+                          >
+                            <img src={image} alt={`Thumbnail ${index + 1}`} />
+                          </Thumbnail>
+                        ))}
+                      </ImageThumbnails>
+                    </>
+                  )}
+                  
                 </ImageGallerySection>
-
                 {/* Achievements */}
                 <Section>
                   <SectionTitle>Project Achievements</SectionTitle>
@@ -696,6 +724,39 @@ const DesignProjectPage: React.FC<DesignProjectProps> = ({ projectId }) => {
                 </MockupGrid>
               </MockupsSection>
             )}
+
+            {projectVideos.length > 0 && activeTab === 'videos' ? (
+                  <VideoGallery>
+                    {projectVideos.map((video, index) => (
+                      <VideoDemo key={index}>
+                        <div style={{ position: 'relative' }}>
+                          <video
+                            controls
+                            width="100%"
+                            autoPlay
+                            muted
+                            loop
+                            style={{ borderRadius: '8px' }}
+                            onDoubleClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              openFullscreen(video, 'video');
+                            }}
+                          >
+                            <source src={video} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                          <ZoomIndicator style={{ opacity: 1 }}>🔍 Double-click for fullscreen</ZoomIndicator>
+                        </div>
+                       
+                      </VideoDemo>
+                    ))}
+                  </VideoGallery>
+                ) : (
+                  <p style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                    No demo videos available for this project.
+                  </p>
+                )}
           </ContentTransition>
         </ContentContainer>
       </ContentBGContainer>
@@ -785,6 +846,55 @@ const ProjectContainer = styled.div`
     height: 100% !important; /* Will match container height */
     z-index: -10 !important; /* Further behind */
     pointer-events: none !important; /* Prevent interaction blocking */
+  }
+`;
+const VideoGallery = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+`;
+
+const VideoDemo = styled.div`
+  margin-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+  
+  video {
+    border-radius: 8px;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &:hover video {
+    transform: scale(1.02);
   }
 `;
 
