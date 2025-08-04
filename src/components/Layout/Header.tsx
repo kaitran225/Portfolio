@@ -326,8 +326,7 @@ const MobileMenu = styled.div<{ $isOpen: boolean }>`
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--background-primary);
-  backdrop-filter: blur(20px);
+  background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   transform: translateY(${props => props.$isOpen ? '0' : '-100%'});
   opacity: ${props => props.$isOpen ? '1' : '0'};
@@ -343,6 +342,7 @@ const MobileMenu = styled.div<{ $isOpen: boolean }>`
 
 const MobileNavItem = styled.div`
   padding: 1rem 2rem;
+  background: var(--color-background-primary);
   color: var(--color-text-secondary);
   font-weight: 500;
   cursor: pointer;

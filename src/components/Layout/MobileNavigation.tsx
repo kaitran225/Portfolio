@@ -278,6 +278,7 @@ const MobileTopBar = styled.header<{ $isScrolled: boolean }>`
   left: 0;
   right: 0;
   height: 60px;
+  backdrop-filter: blur(10px);
   background: ${props => props.$isScrolled 
     ? 'var(--background-primary-alpha)' 
     : 'transparent'
