@@ -308,7 +308,7 @@
         "category": "development",
         "description": "Modern React portfolio with TypeScript, 3D graphics, and professional dual-mode interface.",
         "longDescription": "A sophisticated personal portfolio website built with React 19 and TypeScript, featuring a dual-mode interface for both HR professionals and technical audiences. The site includes advanced 3D graphics with Three.js and Vanta.js, WebRTC integration for real-time features, and comprehensive project showcases.",
-        "thumbnail": "/assets/dev-thumbnails/portfolio.jpg",
+        "thumbnail":           "/assets/Development/Portfolio/P_1.png",
         "tags": [
           "React",
           "TypeScript",
@@ -329,10 +329,10 @@
         "githubUrl": "https://github.com/kaitran225/Portfolio",
         "liveUrl": "https://kaitran.dev",
         "images": [
-          "/assets/projects/portfolio/homepage.jpg",
-          "/assets/projects/portfolio/projects-page.jpg",
-          "/assets/projects/portfolio/skills-section.jpg",
-          "/assets/projects/portfolio/contact-form.jpg"
+          "/assets/Development/Portfolio/P_1.png",
+          "/assets/Development/Portfolio/P_2.png",
+          "/assets/Development/Portfolio/P_3.png",
+          "/assets/Development/Portfolio/P_4.png"
         ],
         "features": [
           "Dual-mode interface (HR-friendly + Technical showcase)",
@@ -414,6 +414,120 @@
           "contributors": 3,
           "uptime": "99.9%"
         },
+        "featured": true
+      },
+            {
+        "id": "anti-swearing-chatbox",
+        "title": "Anti-Swearing ChatBox Desktop App",
+        "category": "development",
+        "description": "Professional C# WPF desktop application with real-time chat filtering and comprehensive server integration.",
+        "longDescription": "A sophisticated chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design. This project demonstrates enterprise-level desktop application development with 146 commits of comprehensive development.",
+        "thumbnail": "/assets/Development/AntiSwearingChatBox/Welcome.png",
+        "tags": [
+          "C#",
+          "WPF",
+          "Desktop Development",
+          "Real-time Chat",
+          "Content Filtering"
+        ],
+        "technologies": [
+          "C#",
+          "WPF",
+          "ASP.NET Core",
+          "Entity Framework",
+          "SignalR",
+          "SQL Server"
+        ],
+        "githubUrl": "https://github.com/kaitran225/AntiSwearingChatBox",
+        "images": [
+          "/assets/Development/AntiSwearingChatBox/Home.png",
+          "/assets/Development/AntiSwearingChatBox/Login.png",
+          "/assets/Development/AntiSwearingChatBox/Welcome.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_1.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_2.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_3.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_4.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_5.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_6.png",
+          "/assets/Development/AntiSwearingChatBox/Chat_7.png"
+        ],
+        "features": [
+          "Real-time chat with advanced content filtering",
+          "Modern WPF interface with Material Design principles",
+          "Server-side API with ASP.NET Core integration",
+          "Customizable word filtering with admin controls",
+          "User management with role-based permissions",
+          "Real-time notifications with SignalR",
+          "Comprehensive logging and monitoring",
+          "Professional desktop application architecture"
+        ],
+        "challenges": [
+          "Implementing real-time content filtering without delay",
+          "Creating modern WPF interface with smooth animations",
+          "Managing concurrent chat connections efficiently",
+          "Building robust content filtering that's hard to bypass"
+        ],
+        "year": "2023",
+        "status": "Complete",
+        "metrics": {
+          "commits": 146,
+          "linesOfCode": "5000+"
+        },
+        "featured": true
+      },
+       {
+        "id": "csharp-map-generator",
+        "title": "C# Procedural Terrain Generator",
+        "category": "development",
+        "description": "Advanced Unity-based procedural terrain generation system with biome distribution and custom editor tools.",
+        "longDescription": "A sophisticated procedural terrain generation system built in Unity using C# and advanced mathematical algorithms. This project demonstrates expertise in game development, procedural content generation, and Unity Editor extensibility.",
+        "thumbnail": "/assets/Development/CSharpMapGenerator/Untitled .png",
+        "tags": [
+          "C#",
+          "Unity",
+          "Procedural Generation",
+          "Game Development",
+          "Algorithm Design"
+        ],
+        "technologies": [
+          "C#",
+          "Unity Engine",
+          "Custom Editor Tools",
+          "Perlin Noise",
+          "Data Serialization",
+          "Performance Optimization"
+        ],
+        "githubUrl": "https://github.com/kaitran225/CSharpMapGenerator",
+        "demoUrl": "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4",
+        "images": [
+          "/assets/Development/CSharpMapGenerator/Untitled .png",
+          "/assets/Development/CSharpMapGenerator/Untitled 1.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 2.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 3.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 4.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 5.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 6.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 7.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 8.png",
+          "/assets/Development/CSharpMapGenerator/Untitled 9.png",
+          "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4"
+        ],
+        "features": [
+          "Multi-octave Perlin noise terrain generation",
+          "Advanced biome distribution system with temperature/moisture simulation",
+          "Custom Unity Editor tools with real-time preview",
+          "Fall-off map generation for realistic island boundaries",
+          "Comprehensive save/load system for terrain configurations",
+          "Performance-optimized algorithms for large-scale generation"
+        ],
+        "challenges": [
+          "Implementing efficient multi-octave noise algorithms for real-time generation",
+          "Creating realistic biome distribution based on environmental simulation",
+          "Optimizing performance for large terrain sizes without sacrificing quality",
+          "Developing intuitive Unity Editor tools for complex parameter management"
+        ],
+        "year": "2023",
+        "status": "Complete",
         "featured": true
       },
       {
@@ -619,61 +733,7 @@
         "status": "Complete",
         "featured": true
       },
-      {
-        "id": "csharp-map-generator",
-        "title": "C# Procedural Terrain Generator",
-        "category": "development",
-        "description": "Advanced Unity-based procedural terrain generation system with biome distribution and custom editor tools.",
-        "longDescription": "A sophisticated procedural terrain generation system built in Unity using C# and advanced mathematical algorithms. This project demonstrates expertise in game development, procedural content generation, and Unity Editor extensibility.",
-        "thumbnail": "/assets/Development/CSharpMapGenerator/Untitled .png",
-        "tags": [
-          "C#",
-          "Unity",
-          "Procedural Generation",
-          "Game Development",
-          "Algorithm Design"
-        ],
-        "technologies": [
-          "C#",
-          "Unity Engine",
-          "Custom Editor Tools",
-          "Perlin Noise",
-          "Data Serialization",
-          "Performance Optimization"
-        ],
-        "githubUrl": "https://github.com/kaitran225/CSharpMapGenerator",
-        "demoUrl": "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4",
-        "images": [
-          "/assets/Development/CSharpMapGenerator/Untitled .png",
-          "/assets/Development/CSharpMapGenerator/Untitled 1.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 2.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 3.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 4.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 5.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 6.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 7.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 8.png",
-          "/assets/Development/CSharpMapGenerator/Untitled 9.png",
-          "/assets/Development/CSharpMapGenerator/Untitled video - Made with Clipchamp (7).mp4"
-        ],
-        "features": [
-          "Multi-octave Perlin noise terrain generation",
-          "Advanced biome distribution system with temperature/moisture simulation",
-          "Custom Unity Editor tools with real-time preview",
-          "Fall-off map generation for realistic island boundaries",
-          "Comprehensive save/load system for terrain configurations",
-          "Performance-optimized algorithms for large-scale generation"
-        ],
-        "challenges": [
-          "Implementing efficient multi-octave noise algorithms for real-time generation",
-          "Creating realistic biome distribution based on environmental simulation",
-          "Optimizing performance for large terrain sizes without sacrificing quality",
-          "Developing intuitive Unity Editor tools for complex parameter management"
-        ],
-        "year": "2023",
-        "status": "Complete",
-        "featured": true
-      },
+     
       {
         "id": "game-prototypes",
         "title": "Unity Game Prototypes Collection",
@@ -802,65 +862,7 @@
         "status": "Complete",
         "featured": true
       },
-      {
-        "id": "anti-swearing-chatbox",
-        "title": "Anti-Swearing ChatBox Desktop App",
-        "category": "development",
-        "description": "Professional C# WPF desktop application with real-time chat filtering and comprehensive server integration.",
-        "longDescription": "A sophisticated chat application built with C# and WPF, featuring advanced content filtering, real-time communication, and professional desktop interface design. This project demonstrates enterprise-level desktop application development with 146 commits of comprehensive development.",
-        "thumbnail": "/assets/Development/AntiSwearingChatBox/Welcome.png",
-        "tags": [
-          "C#",
-          "WPF",
-          "Desktop Development",
-          "Real-time Chat",
-          "Content Filtering"
-        ],
-        "technologies": [
-          "C#",
-          "WPF",
-          "ASP.NET Core",
-          "Entity Framework",
-          "SignalR",
-          "SQL Server"
-        ],
-        "githubUrl": "https://github.com/kaitran225/AntiSwearingChatBox",
-        "images": [
-          "/assets/Development/AntiSwearingChatBox/Home.png",
-          "/assets/Development/AntiSwearingChatBox/Login.png",
-          "/assets/Development/AntiSwearingChatBox/Welcome.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_1.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_2.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_3.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_4.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_5.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_6.png",
-          "/assets/Development/AntiSwearingChatBox/Chat_7.png"
-        ],
-        "features": [
-          "Real-time chat with advanced content filtering",
-          "Modern WPF interface with Material Design principles",
-          "Server-side API with ASP.NET Core integration",
-          "Customizable word filtering with admin controls",
-          "User management with role-based permissions",
-          "Real-time notifications with SignalR",
-          "Comprehensive logging and monitoring",
-          "Professional desktop application architecture"
-        ],
-        "challenges": [
-          "Implementing real-time content filtering without delay",
-          "Creating modern WPF interface with smooth animations",
-          "Managing concurrent chat connections efficiently",
-          "Building robust content filtering that's hard to bypass"
-        ],
-        "year": "2023",
-        "status": "Complete",
-        "metrics": {
-          "commits": 146,
-          "linesOfCode": "5000+"
-        },
-        "featured": true
-      },
+
       {
         "id": "prn212-coursework-series",
         "title": "PRN212 C# Desktop Development Series",

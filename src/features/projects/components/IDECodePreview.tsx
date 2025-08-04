@@ -208,7 +208,6 @@ const IDEContainer = styled.div`
 
 const TabBar = styled.div`
   background: var(--color-black-secondary);
-  border-bottom: 1px solid var(--color-purple-secondary);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -236,19 +235,15 @@ const TabsList = styled.div`
 
 const Tab = styled.button<TabProps>`
   background: ${props => props.$active ? 'var(--color-black-primary)' : 'transparent'};
-  border: none;
   color: ${props => props.$active ? 'var(--color-text-primary)' : 'var(--color-text-secondary)'};
   padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0px;
   cursor: pointer;
   font-size: 13px;
-  white-space: nowrap;
   position: relative;
-  transition: all 0.2s ease;
-  border-top: 2px solid ${props => props.$active ? 'var(--color-purple-primary)' : 'transparent'};
-  
+  transition: all 0.2s ease;  
   &:hover {
     background: ${props => props.$active ? 'var(--color-black-primary)' : 'var(--color-purple-secondary)'};
     color: var(--color-text-primary);
@@ -269,7 +264,6 @@ const ActiveIndicator = styled.div`
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--color-green-primary);
 `;
 
 const IDEControls = styled.div`
