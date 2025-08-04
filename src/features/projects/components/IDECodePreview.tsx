@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
@@ -9,7 +9,7 @@ interface CodePreviewProps {
   files: Array<{
     fileName: string;
     language: string;
-    code: string;
+    filePath: string;
   }>;
   height?: string;
   theme?: 'vs-dark' | 'light' | 'dark';
@@ -54,10 +54,21 @@ const IDECodePreview: React.FC<CodePreviewProps> = ({ files, height = "800px", t
   const [theme, setTheme] = useState<'vs-dark' | 'light'>(
     initialTheme === 'dark' ? 'vs-dark' : initialTheme === 'light' ? 'light' : 'vs-dark'
   );
+  const [fileContent, setFileContent] = useState<string>('');
 
   const currentFile = files[activeTab];
   const isMarkdownFile = currentFile?.fileName.endsWith('.md');
   const isReadmeFile = currentFile?.fileName.toLowerCase().includes('readme');
+
+  // Load file contents dynamically
+  useEffect(() => {
+    if (currentFile) {
+      fetch(currentFile.filePath)
+        .then((res) => res.text())
+        .then((text) => setFileContent(text))
+        .catch(() => setFileContent('// Error loading file'));
+    }
+  }, [currentFile]);
 
   // Monaco Editor options for VS Code-like experience
   const editorOptions = {
@@ -157,7 +168,7 @@ const IDECodePreview: React.FC<CodePreviewProps> = ({ files, height = "800px", t
                 </MarkdownHeader>
                 <MarkdownContent>
                   <ReactMarkdown components={markdownComponents}>
-                    {currentFile.code}
+                    {fileContent}
                   </ReactMarkdown>
                 </MarkdownContent>
               </MarkdownPreview>
@@ -167,7 +178,7 @@ const IDECodePreview: React.FC<CodePreviewProps> = ({ files, height = "800px", t
                 <Editor
                   height={height}
                   defaultLanguage={currentFile.language}
-                  value={currentFile.code}
+                  value={fileContent}
                   theme={theme}
                   options={editorOptions}
                   loading={<LoadingSpinner>Loading Monaco Editor...</LoadingSpinner>}
