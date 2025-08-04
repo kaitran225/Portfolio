@@ -162,28 +162,6 @@ const EnhancedSkillsVisualization: React.FC<SkillsVisualizationProps> = ({ class
           );
         })}
       </SkillsGrid>
-
-      <SkillsSummary>
-        <SummaryTitle>Skills Summary</SummaryTitle>
-        <SummaryGrid>
-          <SummaryItem>
-            <SummaryNumber>{skillsData.length}</SummaryNumber>
-            <SummaryLabel>Total Skills</SummaryLabel>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryNumber>{skillsData.filter(s => s.level >= 4).length}</SummaryNumber>
-            <SummaryLabel>Advanced Skills</SummaryLabel>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryNumber>{skillsData.reduce((acc, s) => acc + s.projects, 0)}</SummaryNumber>
-            <SummaryLabel>Total Projects</SummaryLabel>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryNumber>3+</SummaryNumber>
-            <SummaryLabel>Years Experience</SummaryLabel>
-          </SummaryItem>
-        </SummaryGrid>
-      </SkillsSummary>
     </SkillsContainer>
   );
 };

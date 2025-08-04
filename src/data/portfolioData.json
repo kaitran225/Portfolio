@@ -185,7 +185,7 @@
         "name": "React",
         "level": 3,
         "experience": "2+ years",
-        "projects": 8,
+        "projects": 4,
         "category": "frontend",
         "lastUsed": "2025-08",
         "certified": false
@@ -194,7 +194,7 @@
         "name": "TypeScript",
         "level": 3,
         "experience": "1.5 years",
-        "projects": 6,
+        "projects": 4,
         "category": "frontend",
         "lastUsed": "2025-08",
         "certified": false
@@ -202,8 +202,8 @@
       {
         "name": "JavaScript",
         "level": 3,
-        "experience": "3+ years",
-        "projects": 12,
+        "experience": "2+ years",
+        "projects": 8,
         "category": "frontend",
         "lastUsed": "2025-08",
         "certified": false
@@ -212,7 +212,7 @@
         "name": "HTML/CSS",
         "level": 3,
         "experience": "3+ years",
-        "projects": 15,
+        "projects": 8,
         "category": "frontend",
         "lastUsed": "2025-08",
         "certified": false
@@ -229,7 +229,7 @@
       {
         "name": "Java",
         "level": 5,
-        "experience": "2 years",
+        "experience": "4+ years",
         "projects": 6,
         "category": "backend",
         "lastUsed": "2025-04",
@@ -266,7 +266,7 @@
         "name": "MySQL",
         "level": 3,
         "experience": "2 years",
-        "projects": 8,
+        "projects": 4,
         "category": "database",
         "lastUsed": "2025-05",
         "certified": false
@@ -275,7 +275,7 @@
         "name": "Docker",
         "level": 3,
         "experience": "1 year",
-        "projects": 6,
+        "projects": 5,
         "category": "tools",
         "lastUsed": "2025-08",
         "certified": false
@@ -284,7 +284,7 @@
         "name": "Git",
         "level": 4,
         "experience": "3+ years",
-        "projects": 20,
+        "projects": 18,
         "category": "tools",
         "lastUsed": "2025-08",
         "certified": false
@@ -308,7 +308,7 @@
         "category": "development",
         "description": "Modern React portfolio with TypeScript, 3D graphics, and professional dual-mode interface.",
         "longDescription": "A sophisticated personal portfolio website built with React 19 and TypeScript, featuring a dual-mode interface for both HR professionals and technical audiences. The site includes advanced 3D graphics with Three.js and Vanta.js, WebRTC integration for real-time features, and comprehensive project showcases.",
-        "thumbnail":           "/assets/Development/Portfolio/P_1.png",
+        "thumbnail": "/assets/Development/Portfolio/P_1.png",
         "tags": [
           "React",
           "TypeScript",
@@ -416,7 +416,7 @@
         },
         "featured": true
       },
-            {
+      {
         "id": "anti-swearing-chatbox",
         "title": "Anti-Swearing ChatBox Desktop App",
         "category": "development",
@@ -475,7 +475,7 @@
         },
         "featured": true
       },
-       {
+      {
         "id": "csharp-map-generator",
         "title": "C# Procedural Terrain Generator",
         "category": "development",
@@ -536,7 +536,7 @@
         "category": "development",
         "description": "Advanced AI assistant with Ollama integration, 3D avatar system, and multiple operational personas.",
         "longDescription": "An innovative AI assistant featuring local Ollama model integration with Nous-Hermes2:7b, 3D character visualization using React Three Fiber, and advanced conversation management. The system includes multiple operational personas and real-time emotional expression rendering.",
-        "thumbnail": "/assets/Development/AI/43430418490571152361.mp4",
+        "thumbnail": "/assets/Development/AI/AI_1.png",
         "tags": [
           "AI",
           "Python",
@@ -555,11 +555,12 @@
           "TTS"
         ],
         "githubUrl": "https://github.com/kaitran225/project_cybria",
-        "demoUrl": "/assets/Development/AI/43430418490571152361.mp4",
+        "demoUrl": "",
         "images": [
-          "/assets/Development/AI/43430418490571152361.mp4",
-          "/assets/Development/AI/59213507883087080383.mp4",
-          "/assets/Development/AI/67191071458407760814.mp4",
+          "/assets/Development/AI/AI_1.png",
+          "/assets/Development/AI/AI_2.png",
+          "/assets/Development/AI/AI_3.png",
+          "/assets/Development/AI/AI_4.png",
           "/assets/Development/AI/Untitled video - Made with Clipchamp (8).mp4"
         ],
         "features": [
@@ -629,7 +630,7 @@
         ],
         "year": "2024",
         "status": "Production",
-        "featured": true
+        "featured": false
       },
       {
         "id": "autofish-automation",
@@ -637,7 +638,7 @@
         "category": "development",
         "description": "Python-based automation system using computer vision for game automation with PyQt6 interface.",
         "longDescription": "An advanced computer vision automation system built with Python, featuring real-time screen capture, image processing, and automated control mechanisms. The system includes a modern PyQt6 interface and sophisticated pattern recognition algorithms.",
-        "thumbnail": "/assets/Development/AutoFish/13316622383915059719.mp4",
+        "thumbnail": "/assets/Development/AutoFish/I_0.png",
         "tags": [
           "Python",
           "Computer Vision",
@@ -655,13 +656,12 @@
           "Screen Capture"
         ],
         "githubUrl": "https://github.com/kaitran225/AutoFishing",
-        "demoUrl": "/assets/Development/AutoFish/13316622383915059719.mp4",
+        "demoUrl": " ",
         "images": [
-          "/assets/Development/AutoFish/13316622383915059719.mp4",
-          "/assets/Development/AutoFish/179597055128290523520.mp4",
-          "/assets/Development/AutoFish/549414752331865986710.mp4",
-          "/assets/Development/AutoFish/580204615567851430817.mp4",
-          "/assets/Development/AutoFish/70313600059084651149.mp4"
+          "/assets/Development/AutoFish/I_0.png",
+          "/assets/Development/AutoFish/Vid_4.mp4",
+          "/assets/Development/AutoFish/Vid_1.mp4",
+          "/assets/Development/AutoFish/Vid_2.mp4"
         ],
         "features": [
           "Real-time computer vision processing",
@@ -731,9 +731,8 @@
         ],
         "year": "2024",
         "status": "Complete",
-        "featured": true
+        "featured": false
       },
-     
       {
         "id": "game-prototypes",
         "title": "Unity Game Prototypes Collection",
@@ -860,9 +859,8 @@
         ],
         "year": "2024",
         "status": "Complete",
-        "featured": true
+        "featured": false
       },
-
       {
         "id": "prn212-coursework-series",
         "title": "PRN212 C# Desktop Development Series",
